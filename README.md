@@ -29,7 +29,9 @@ Playwright.
 
 ## Local setup
 
-Requirements: Bun 1.x, Node.js 20.9 or newer, and Docker with Compose.
+Requirements: Bun 1.x, Node.js 22.22 or newer within the Node 22 LTS line, and
+Docker with Compose. Production deployments intentionally pin Node 22 because
+the webpack build is validated against that runtime.
 
 1. Install dependencies with `bun install`.
 2. Copy `.env.example` to `.env`.
