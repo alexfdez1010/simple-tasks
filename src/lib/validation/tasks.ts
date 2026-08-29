@@ -1,6 +1,8 @@
 import { z } from 'zod';
 
+import { MAX_TASK_PROPERTIES } from '@/lib/properties/limits';
 import { idSchema, indexSchema } from '@/lib/validation/common';
+import { taskPropertyValueInputSchema } from '@/lib/validation/properties';
 
 const titleSchema = z.string().trim().min(1).max(160);
 const descriptionSchema = z.string().trim().max(20_000).nullable();
@@ -11,14 +13,32 @@ export const createTaskSchema = z.object({
   description: descriptionSchema.optional(),
   dueDate: dateInputSchema.optional(),
   statusId: idSchema.optional(),
+  propertyValues: z
+    .array(taskPropertyValueInputSchema)
+    .max(MAX_TASK_PROPERTIES)
+    .optional(),
 });
 
-export const updateTaskSchema = z.object({
-  id: idSchema,
-  title: titleSchema.optional(),
-  description: descriptionSchema.optional(),
-  dueDate: dateInputSchema.optional(),
-});
+export const updateTaskSchema = z
+  .object({
+    id: idSchema,
+    title: titleSchema.optional(),
+    description: descriptionSchema.optional(),
+    dueDate: dateInputSchema.optional(),
+    statusId: idSchema.optional(),
+    index: indexSchema.optional(),
+    propertyValues: z
+      .array(taskPropertyValueInputSchema)
+      .max(MAX_TASK_PROPERTIES)
+      .optional(),
+  })
+  .refine(
+    (input) => (input.statusId === undefined) === (input.index === undefined),
+    {
+      message: 'El estado y la posición deben enviarse juntos.',
+      path: ['statusId'],
+    },
+  );
 
 export const moveTaskSchema = z.object({
   id: idSchema,

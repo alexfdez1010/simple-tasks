@@ -1,13 +1,26 @@
 import type { Status, Task } from '@/generated/prisma';
+import type {
+  PropertyDefinition,
+  TaskPropertyValueData,
+  TaskPropertyValueInput,
+} from '@/lib/properties/types';
 
-export type BoardStatus = Status & { tasks: Task[] };
-export type TaskWithStatus = Task & { status: Status };
+export type TaskWithProperties = Task & {
+  propertyValues: TaskPropertyValueData[];
+};
+export type BoardStatus = Status & { tasks: TaskWithProperties[] };
+export type TaskWithStatus = TaskWithProperties & { status: Status };
+export type BoardSnapshot = {
+  statuses: BoardStatus[];
+  properties: PropertyDefinition[];
+};
 
 export type CreateTaskInput = {
   title: string;
   description?: string | null;
   dueDate?: string | Date | null;
   statusId?: string;
+  propertyValues?: TaskPropertyValueInput[];
 };
 
 export type UpdateTaskInput = {
@@ -15,6 +28,9 @@ export type UpdateTaskInput = {
   title?: string;
   description?: string | null;
   dueDate?: string | Date | null;
+  statusId?: string;
+  index?: number;
+  propertyValues?: TaskPropertyValueInput[];
 };
 
 export type MoveTaskInput = { id: string; statusId: string; index: number };

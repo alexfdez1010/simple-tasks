@@ -16,19 +16,50 @@ model Status {
 }
 
 model Task {
-  id          String    @id @default(cuid())
-  title       String
-  description String?
-  dueDate     DateTime?
-  statusId    String
-  position    Int
-  completedAt DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  status      Status    @relation(fields: [statusId], references: [id], onDelete: Restrict)
+  id             String              @id @default(cuid())
+  title          String
+  description    String?
+  dueDate        DateTime?
+  statusId       String
+  position       Int
+  completedAt    DateTime?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  status         Status              @relation(fields: [statusId], references: [id], onDelete: Restrict)
+  propertyValues TaskPropertyValue[]
 
   @@index([statusId, position])
   @@index([statusId, completedAt(sort: Desc)])
+}
+
+enum TaskPropertyType {
+  TEXT
+  NUMBER
+  DATE
+  SELECT
+  MULTI_SELECT
+}
+
+model TaskPropertyDefinition {
+  id       String              @id @default(cuid())
+  name     String              @unique
+  type     TaskPropertyType
+  position Int
+  options  Json                @default("[]")
+  values   TaskPropertyValue[]
+
+  @@index([position])
+}
+
+model TaskPropertyValue {
+  taskId     String
+  propertyId String
+  value      Json
+  task       Task                   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  property   TaskPropertyDefinition @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@id([taskId, propertyId])
+  @@index([propertyId])
 }
 
 datasource db {

@@ -4,10 +4,22 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 
 import { runMcpTool } from '@/lib/mcp/shared';
+import {
+  MAX_PROPERTY_OPTIONS,
+  MAX_TASK_PROPERTIES,
+} from '@/lib/properties/limits';
 import { taskService } from '@/lib/tasks';
 import { idSchema } from '@/lib/validation/common';
 
 const id = idSchema;
+const propertyValue = z.object({
+  propertyId: id,
+  value: z.union([
+    z.string().max(20_000),
+    z.number().finite(),
+    z.array(z.string().max(80)).max(MAX_PROPERTY_OPTIONS),
+  ]),
+});
 
 /** Registers every MCP task query and mutation against the shared task service. */
 export function registerTaskTools(server: McpServer): void {
@@ -41,6 +53,10 @@ export function registerTaskTools(server: McpServer): void {
         description: z.string().max(20_000).nullable().optional(),
         dueDate: z.string().datetime().nullable().optional(),
         statusId: id.optional(),
+        propertyValues: z
+          .array(propertyValue)
+          .max(MAX_TASK_PROPERTIES)
+          .optional(),
       },
     },
     async (input) => runMcpTool(() => taskService.create(input)),
@@ -50,12 +66,18 @@ export function registerTaskTools(server: McpServer): void {
     {
       title: 'Update a task',
       description:
-        'Update task text or due date. Omitted fields remain unchanged.',
+        'Atomically update task fields and optionally move it by sending statusId and index together. Omitted fields remain unchanged. propertyValues replaces the complete value set; use set_task_property_value to change only one.',
       inputSchema: {
         id,
         title: z.string().trim().min(1).max(160).optional(),
         description: z.string().max(20_000).nullable().optional(),
         dueDate: z.string().datetime().nullable().optional(),
+        statusId: id.optional(),
+        index: z.number().int().nonnegative().optional(),
+        propertyValues: z
+          .array(propertyValue)
+          .max(MAX_TASK_PROPERTIES)
+          .optional(),
       },
     },
     async (input) => runMcpTool(() => taskService.update(input)),

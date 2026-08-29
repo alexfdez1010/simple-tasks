@@ -16,10 +16,11 @@ import {
 /** Creates one task from a trusted authenticated UI request. */
 export async function createTaskAction(
   input: CreateTaskInput,
-): Promise<ActionResult> {
+): Promise<ActionResult<{ id: string }>> {
   return executeBoardAction(async () => {
     await requireAuthenticated();
-    await taskService.create(input);
+    const task = await taskService.create(input);
+    return { id: task.id };
   });
 }
 

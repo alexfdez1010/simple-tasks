@@ -1,7 +1,14 @@
 import type { PrismaClient, Task } from '@/generated/prisma';
 import { runSerializable } from '@/lib/db/transaction';
-import { clampTaskIndex, resequenceTasks } from '@/lib/tasks/ordering';
+import { persistTaskPropertyValues } from '@/lib/properties/value-persistence';
+import { resequenceTasks } from '@/lib/tasks/ordering';
 import type { TaskRepository } from '@/lib/tasks/repository';
+import { serializeTaskWithProperties } from '@/lib/tasks/serialization';
+import {
+  editAndRelocateTask,
+  editTaskPlacement,
+  type EditableTaskFields,
+} from '@/lib/tasks/task-placement';
 import type {
   BoardStatus,
   CreateTaskInput,
@@ -24,7 +31,7 @@ export class PrismaTaskRepository implements TaskRepository {
     });
     return Promise.all(
       statuses.map(async (status): Promise<BoardStatus> => {
-        const tasks = await this.client.task.findMany({
+        const rows = await this.client.task.findMany({
           where: { statusId: status.id },
           orderBy: status.isTerminal
             ? [
@@ -34,18 +41,22 @@ export class PrismaTaskRepository implements TaskRepository {
               ]
             : [{ position: 'asc' }, { createdAt: 'asc' }, { id: 'asc' }],
           ...(status.isTerminal ? { take: 20 } : {}),
+          include: { propertyValues: true },
         });
+        const tasks = rows.map(serializeTaskWithProperties);
         return { ...status, tasks };
       }),
     );
   }
 
   /** Finds one task together with its current status. */
-  findById(id: string): Promise<TaskWithStatus | null> {
-    return this.client.task.findUnique({
+  async findById(id: string): Promise<TaskWithStatus | null> {
+    const task = await this.client.task.findUnique({
       where: { id },
-      include: { status: true },
+      include: { status: true, propertyValues: true },
     });
+    if (!task) return null;
+    return { ...serializeTaskWithProperties(task), status: task.status };
   }
 
   /** Creates a task at the end of an existing or default non-terminal column. */
@@ -65,7 +76,7 @@ export class PrismaTaskRepository implements TaskRepository {
         where: { statusId: status.id },
         _max: { position: true },
       });
-      return transaction.task.create({
+      const task = await transaction.task.create({
         data: {
           title: input.title,
           description: input.description ?? null,
@@ -75,29 +86,55 @@ export class PrismaTaskRepository implements TaskRepository {
           completedAt: status.isTerminal ? new Date() : null,
         },
       });
+      if (input.propertyValues?.length) {
+        await persistTaskPropertyValues(
+          transaction,
+          task.id,
+          input.propertyValues,
+          true,
+        );
+      }
+      return task;
     });
   }
 
-  /** Updates only editable task fields while preserving ordering and status. */
+  /** Atomically updates editable fields and optionally relocates the task. */
   async update(input: UpdateTaskInput): Promise<Task> {
-    if (
-      !(await this.client.task.findUnique({
+    return runSerializable(this.client, async (transaction) => {
+      const task = await transaction.task.findUnique({
         where: { id: input.id },
-        select: { id: true },
-      }))
-    ) {
-      throw notFound('La tarea');
-    }
-    return this.client.task.update({
-      where: { id: input.id },
-      data: {
+      });
+      if (!task) throw notFound('La tarea');
+      const edits: EditableTaskFields = {
         title: input.title,
         description: input.description,
         dueDate:
           input.dueDate instanceof Date || input.dueDate === null
             ? input.dueDate
             : undefined,
-      },
+      };
+      const updated =
+        input.statusId === undefined || input.index === undefined
+          ? await transaction.task.update({
+              where: { id: input.id },
+              data: edits,
+            })
+          : await editAndRelocateTask(
+              transaction,
+              task,
+              input.statusId,
+              input.index,
+              edits,
+            );
+      if (input.propertyValues !== undefined) {
+        await persistTaskPropertyValues(
+          transaction,
+          task.id,
+          input.propertyValues,
+          true,
+        );
+      }
+      return updated;
     });
   }
 
@@ -130,40 +167,7 @@ export class PrismaTaskRepository implements TaskRepository {
       });
       if (!task) throw notFound('La tarea');
       if (!target) throw notFound('El estado');
-      const sourceRows = await transaction.task.findMany({
-        where: { statusId: task.statusId, id: { not: task.id } },
-        orderBy: { position: 'asc' },
-        select: { id: true },
-      });
-      const sourceIds = sourceRows.map((item) => item.id);
-      const targetIds =
-        task.statusId === target.id
-          ? sourceIds
-          : (
-              await transaction.task.findMany({
-                where: { statusId: target.id },
-                orderBy: { position: 'asc' },
-                select: { id: true },
-              })
-            ).map((item) => item.id);
-      targetIds.splice(
-        clampTaskIndex(input.index, targetIds.length),
-        0,
-        task.id,
-      );
-      const updated = await transaction.task.update({
-        where: { id: task.id },
-        data: {
-          statusId: target.id,
-          completedAt: target.isTerminal
-            ? (task.completedAt ?? new Date())
-            : null,
-        },
-      });
-      if (task.statusId !== target.id)
-        await resequenceTasks(transaction, sourceIds);
-      await resequenceTasks(transaction, targetIds);
-      return updated;
+      return editTaskPlacement(transaction, task, target, input.index);
     });
   }
 
