@@ -1,0 +1,137 @@
+'use client';
+
+import { Button, Card } from '@heroui/react';
+import { useState } from 'react';
+
+import { ChevronIcon, EditIcon } from '@/components/board/icons';
+import { StatusForm } from '@/components/board/status-form';
+import type {
+  BoardStatus,
+  MutationResult,
+  StatusValues,
+} from '@/components/board/types';
+
+interface StatusRowProps {
+  status: BoardStatus;
+  isFirst: boolean;
+  isLast: boolean;
+  onSave: (values: StatusValues) => Promise<MutationResult>;
+  onDelete: () => Promise<MutationResult>;
+  onReorder: (direction: -1 | 1) => Promise<MutationResult>;
+}
+
+/**
+ * Renders one state summary with edit, reorder, and delete controls.
+ *
+ * @param props - Workflow state and mutation callbacks.
+ * @returns A compact HeroUI card or its inline edit form.
+ */
+export function StatusRow({
+  status,
+  isFirst,
+  isLast,
+  onSave,
+  onDelete,
+  onReorder,
+}: StatusRowProps) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  /** Saves changes and closes the editor on success. */
+  async function handleSave(values: StatusValues) {
+    const result = await onSave(values);
+    if (result.success) setIsEditing(false);
+    return result;
+  }
+
+  /** Confirms and persists deletion of this state. */
+  async function handleDelete() {
+    if (!window.confirm(`Delete the “${status.name}” status?`)) return;
+    const result = await onDelete();
+    setError(
+      result.success
+        ? null
+        : (result.error ?? 'The status could not be deleted.'),
+    );
+  }
+
+  if (isEditing) {
+    return (
+      <Card className="border border-divider p-4" variant="secondary">
+        <StatusForm
+          initialValues={{
+            name: status.name,
+            color: status.color,
+            isTerminal: status.isTerminal,
+          }}
+          submitLabel="Save"
+          onCancel={() => setIsEditing(false)}
+          onSave={handleSave}
+        />
+      </Card>
+    );
+  }
+
+  return (
+    <Card className="gap-3 border border-divider p-4" variant="default">
+      <div className="flex items-center gap-3">
+        <span
+          className="size-3 shrink-0 rounded-full"
+          style={{ backgroundColor: status.color }}
+        />
+        <Card.Header className="min-w-0 flex-1 gap-0">
+          <Card.Title className="truncate text-base">{status.name}</Card.Title>
+          <Card.Description>
+            {status.isTerminal
+              ? 'Terminal · latest 20'
+              : `${status.tasks.length} ${status.tasks.length === 1 ? 'task' : 'tasks'}`}
+          </Card.Description>
+        </Card.Header>
+        <div className="flex gap-1">
+          <Button
+            isIconOnly
+            isDisabled={isFirst}
+            size="sm"
+            variant="ghost"
+            aria-label={`Move ${status.name} left`}
+            onPress={() => void onReorder(-1)}
+          >
+            <ChevronIcon className="size-4 rotate-180" />
+          </Button>
+          <Button
+            isIconOnly
+            isDisabled={isLast}
+            size="sm"
+            variant="ghost"
+            aria-label={`Move ${status.name} right`}
+            onPress={() => void onReorder(1)}
+          >
+            <ChevronIcon className="size-4" />
+          </Button>
+          <Button
+            isIconOnly
+            size="sm"
+            variant="ghost"
+            aria-label={`Edit ${status.name}`}
+            onPress={() => setIsEditing(true)}
+          >
+            <EditIcon className="size-4" />
+          </Button>
+        </div>
+      </div>
+      <Button
+        size="sm"
+        variant="danger-soft"
+        aria-label={`Delete status ${status.name}`}
+        onPress={handleDelete}
+      >
+        Delete status
+      </Button>
+      {error ? (
+        <p className="text-sm text-danger" role="alert">
+          {error}
+        </p>
+      ) : null}
+    </Card>
+  );
+}

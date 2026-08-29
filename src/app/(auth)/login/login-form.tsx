@@ -20,12 +20,12 @@ export function LoginForm(): React.JSX.Element {
   return (
     <Form action={action} className="flex w-full flex-col gap-5">
       <TextField isInvalid={Boolean(state.error)} isRequired name="password">
-        <Label>Contraseña</Label>
+        <Label>Password</Label>
         <Input autoComplete="current-password" autoFocus type="password" />
         {state.error ? <FieldError>{state.error}</FieldError> : null}
       </TextField>
       <Button fullWidth isPending={isPending} type="submit">
-        {isPending ? 'Entrando…' : 'Entrar'}
+        {isPending ? 'Signing in…' : 'Sign in'}
       </Button>
     </Form>
   );

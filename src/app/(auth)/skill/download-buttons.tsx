@@ -11,14 +11,14 @@ export function DownloadButtons(): React.JSX.Element {
         download
         href="/api/skill?kind=skill"
       >
-        Descargar SKILL.md
+        Download SKILL.md
       </Link>
       <Link
         className="button button--secondary"
         download
         href="/api/skill?kind=config"
       >
-        Descargar configuración MCP
+        Download MCP configuration
       </Link>
     </div>
   );

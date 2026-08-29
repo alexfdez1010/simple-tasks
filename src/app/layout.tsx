@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Next.js + HeroUI template',
-  description: 'Production-ready Next.js template with HeroUI v3.',
+  title: 'Tasks',
+  description: 'A simple, private board for organizing tasks.',
 };
 
 export default function RootLayout({
