@@ -61,7 +61,12 @@
 }
 
 .task-card {
-  background: color-mix(in oklab, var(--surface) 88%, transparent);
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--status-color) 15%, var(--surface)) 0%,
+    color-mix(in oklab, var(--status-color) 7%, var(--surface)) 48%,
+    var(--surface) 100%
+  );
   box-shadow: 0 1px 2px color-mix(in oklab, var(--foreground) 6%, transparent);
   transition:
     background-color 150ms ease,
@@ -69,8 +74,22 @@
 }
 
 .task-card:hover {
-  background: var(--surface);
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--status-color) 19%, var(--surface)) 0%,
+    color-mix(in oklab, var(--status-color) 9%, var(--surface)) 48%,
+    var(--surface) 100%
+  );
   box-shadow: 0 2px 6px color-mix(in oklab, var(--foreground) 8%, transparent);
+}
+
+.column-add-button {
+  background: color-mix(in oklab, var(--status-color) 8%, transparent);
+  color: var(--foreground);
+}
+
+.column-add-button:hover {
+  background: color-mix(in oklab, var(--status-color) 14%, transparent);
 }
 
 .drag-handle {

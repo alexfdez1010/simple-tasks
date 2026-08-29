@@ -11,17 +11,18 @@ async function login(page: Page): Promise<void> {
   await expect(page.getByRole('heading', { name: 'Tasks' })).toBeVisible();
 }
 
-/** Deletes a task through its edit dialog and accepts the native confirmation. */
+/** Deletes a task through its edit and HeroUI confirmation dialogs. */
 async function deleteTask(page: Page, title: string): Promise<void> {
   await page.getByRole('button', { name: `Edit ${title}` }).click();
   const dialog = page.getByRole('dialog', { name: 'Edit task' });
-  page.once('dialog', async (confirmation) => confirmation.accept());
+  await dialog.getByRole('button', { name: 'Delete' }).click();
+  const confirmation = page.getByRole('alertdialog');
   const persistence = page.waitForResponse(
     (response) =>
       response.request().method() === 'POST' &&
       new URL(response.url()).pathname === '/',
   );
-  await dialog.getByRole('button', { name: 'Delete' }).click();
+  await confirmation.getByRole('button', { name: 'Delete task' }).click();
   await persistence;
   await expect(page.getByRole('article', { name: title })).toHaveCount(0);
 }
@@ -32,11 +33,26 @@ async function dragTask(
   title: string,
   targetStatus: string,
 ): Promise<void> {
+  const card = page.getByRole('article', { name: title });
   const handle = page.getByRole('button', { name: `Drag ${title}` });
   const targetList = page
     .getByRole('region', { name: targetStatus })
     .getByRole('list');
-  await handle.dragTo(targetList);
+  const sourceBox = await handle.boundingBox();
+  const targetBox = await targetList.boundingBox();
+  if (!sourceBox || !targetBox)
+    throw new Error('Drag endpoints are not visible.');
+  const sourceX = sourceBox.x + sourceBox.width / 2;
+  const sourceY = sourceBox.y + sourceBox.height / 2;
+  const targetX = targetBox.x + targetBox.width / 2;
+  const targetY = targetBox.y + Math.min(targetBox.height / 2, 80);
+
+  await page.mouse.move(sourceX, sourceY);
+  await page.mouse.down();
+  await page.mouse.move(sourceX + 10, sourceY, { steps: 3 });
+  await expect(card).toHaveClass(/is-dragging/);
+  await page.mouse.move(targetX, targetY, { steps: 16 });
+  await page.mouse.up();
 }
 
 /** Verifies a card exposes dragging and editing without a state selector. */
@@ -89,14 +105,19 @@ test.describe('desktop Kanban board', () => {
   /** Proves Markdown can be previewed, persisted, rendered, and edited safely. */
   test('creates and edits a task with Markdown', async ({ page }) => {
     await login(page);
-    await page.getByRole('button', { name: 'New task' }).click();
+    await page.getByRole('button', { name: 'Add task to To do' }).click();
 
-    const createDialog = page.getByRole('dialog', { name: 'Create task' });
+    const createDialog = page.getByRole('dialog', {
+      name: 'Create task in To do',
+    });
     await createDialog.getByLabel('Title').fill('E2E Markdown');
     await createDialog
       .getByRole('textbox', { exact: true, name: 'Description' })
       .fill('**Important**\n\n- one\n- two\n\n[Guide](https://example.com)');
-    await createDialog.getByLabel('Due date').fill('2026-09-05');
+    const dueDate = createDialog.getByRole('group', { name: 'Due date' });
+    await dueDate.getByRole('spinbutton').nth(0).fill('9');
+    await dueDate.getByRole('spinbutton').nth(1).fill('5');
+    await dueDate.getByRole('spinbutton').nth(2).fill('2026');
     await createDialog.getByRole('button', { name: 'Preview' }).click();
     await expect(createDialog.getByText('Important')).toBeVisible();
     await expect(createDialog.getByRole('listitem')).toHaveCount(2);
@@ -107,6 +128,15 @@ test.describe('desktop Kanban board', () => {
 
     const created = page.getByRole('article', { name: 'E2E Markdown' });
     await expect(created).toBeVisible();
+    await expect(
+      page
+        .getByRole('region', { name: 'To do' })
+        .getByRole('article', { name: 'E2E Markdown' }),
+    ).toBeVisible();
+    await expect(created.locator('.task-card')).toHaveCSS(
+      'background-image',
+      /linear-gradient/,
+    );
     await expect(created.getByText('Important')).toBeVisible();
     await expect(created.getByText('Due Sep 5, 2026')).toBeVisible();
 
@@ -133,9 +163,29 @@ test.describe('desktop Kanban board', () => {
 
     const settings = page.getByRole('dialog', { name: /^Settings/ });
     await settings.getByRole('tab', { name: 'Statuses' }).click();
+
+    const moveRight = page.waitForResponse(
+      (response) =>
+        response.request().method() === 'POST' &&
+        new URL(response.url()).pathname === '/',
+    );
+    await settings.getByRole('button', { name: 'Move Blocked right' }).click();
+    await moveRight;
+    await expect(settings).toBeVisible();
+    const moveLeft = page.waitForResponse(
+      (response) =>
+        response.request().method() === 'POST' &&
+        new URL(response.url()).pathname === '/',
+    );
+    await settings.getByRole('button', { name: 'Move Blocked left' }).click();
+    await moveLeft;
+    await expect(settings).toBeVisible();
+
     await settings.getByRole('button', { name: 'Add status' }).click();
     await settings.getByLabel('Name').fill(statusName);
-    await settings.getByLabel('Color').fill('#A855F7');
+    await settings.getByRole('button', { name: /Color/ }).click();
+    await page.getByLabel('Hex color').fill('#A855F7');
+    await page.keyboard.press('Escape');
     await settings.getByText('Terminal status', { exact: true }).click();
     const creation = page.waitForResponse(
       (response) =>
@@ -155,21 +205,22 @@ test.describe('desktop Kanban board', () => {
     const reopened = page.getByRole('dialog', { name: /^Settings/ });
     await reopened.getByRole('tab', { name: 'Statuses' }).click();
     await reopened.getByRole('button', { name: `Edit ${statusName}` }).click();
-    await expect(reopened.getByLabel('Color')).toHaveValue('#A855F7');
+    await expect(reopened.getByText('#A855F7', { exact: true })).toBeVisible();
     await expect(
       reopened.getByRole('checkbox', { name: 'Terminal status' }),
     ).toBeChecked();
     await reopened.getByRole('button', { name: 'Cancel' }).click();
-    page.once('dialog', async (confirmation) => confirmation.accept());
+    await reopened
+      .getByRole('button', { name: `Delete status ${statusName}` })
+      .last()
+      .click();
+    const confirmation = page.getByRole('alertdialog');
     const deletion = page.waitForResponse(
       (response) =>
         response.request().method() === 'POST' &&
         new URL(response.url()).pathname === '/',
     );
-    await reopened
-      .getByRole('button', { name: `Delete status ${statusName}` })
-      .last()
-      .click();
+    await confirmation.getByRole('button', { name: 'Delete status' }).click();
     await deletion;
     await expect(reopened.getByText(statusName, { exact: true })).toHaveCount(
       0,
@@ -179,8 +230,10 @@ test.describe('desktop Kanban board', () => {
   /** Proves pointer dragging moves a task across columns and persists after reload. */
   test('moves a task by drag and drop', async ({ page }) => {
     await login(page);
-    await page.getByRole('button', { name: 'New task' }).click();
-    const dialog = page.getByRole('dialog', { name: 'Create task' });
+    await page.getByRole('button', { name: 'Add task to Blocked' }).click();
+    const dialog = page.getByRole('dialog', {
+      name: 'Create task in Blocked',
+    });
     await dialog.getByLabel('Title').fill('E2E Drag');
     const creation = page.waitForResponse(
       (response) =>
@@ -189,6 +242,7 @@ test.describe('desktop Kanban board', () => {
     );
     await dialog.getByRole('button', { name: 'Save' }).click();
     await creation;
+    await expect(dialog).toBeHidden();
 
     await expectDragOnlyCard(page.getByRole('article', { name: 'E2E Drag' }));
 
@@ -217,8 +271,10 @@ test.describe('desktop Kanban board', () => {
     page,
   }) => {
     await login(page);
-    await page.getByRole('button', { name: 'New task' }).click();
-    const dialog = page.getByRole('dialog', { name: 'Create task' });
+    await page.getByRole('button', { name: 'Add task to Blocked' }).click();
+    const dialog = page.getByRole('dialog', {
+      name: 'Create task in Blocked',
+    });
     await dialog.getByLabel('Title').fill('E2E Keyboard Drag');
     const creation = page.waitForResponse(
       (response) =>

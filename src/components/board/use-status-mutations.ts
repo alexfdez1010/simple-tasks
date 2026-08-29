@@ -96,7 +96,6 @@ export function useStatusMutations({
       statusIds: positioned.map((status) => status.id),
     });
     if (!result.success) setStatuses(snapshot);
-    else refresh();
     return result;
   }
 

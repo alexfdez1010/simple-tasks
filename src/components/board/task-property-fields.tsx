@@ -5,10 +5,12 @@ import {
   Input,
   Label,
   ListBox,
+  NumberField,
   Select,
   TextField,
 } from '@heroui/react';
 
+import { DatePickerField } from '@/components/board/date-picker-field';
 import type {
   PropertyDefinition,
   TaskPropertyValueData,
@@ -123,39 +125,46 @@ export function TaskPropertyFields({
           );
         }
 
-        const inputType =
-          property.type === 'DATE'
-            ? 'date'
-            : property.type === 'NUMBER'
-              ? 'number'
-              : 'text';
+        if (property.type === 'DATE') {
+          return (
+            <DatePickerField
+              key={property.id}
+              label={property.name}
+              name={`property-${property.id}`}
+              value={typeof value === 'string' ? value : ''}
+              onChange={(date) => setValue(property.id, date)}
+            />
+          );
+        }
+
+        if (property.type === 'NUMBER') {
+          return (
+            <NumberField
+              key={property.id}
+              maxValue={Number.MAX_SAFE_INTEGER}
+              minValue={-Number.MAX_SAFE_INTEGER}
+              step={0.1}
+              value={typeof value === 'number' ? value : undefined}
+              onChange={(number) => setValue(property.id, number ?? '')}
+            >
+              <Label>{property.name}</Label>
+              <NumberField.Group>
+                <NumberField.DecrementButton />
+                <NumberField.Input />
+                <NumberField.IncrementButton />
+              </NumberField.Group>
+            </NumberField>
+          );
+        }
+
         return (
           <TextField
             key={property.id}
-            type={inputType}
             value={Array.isArray(value) ? '' : String(value ?? '')}
-            onChange={(nextValue) =>
-              setValue(
-                property.id,
-                property.type === 'NUMBER' && nextValue !== ''
-                  ? Number(nextValue)
-                  : nextValue,
-              )
-            }
+            onChange={(nextValue) => setValue(property.id, nextValue)}
           >
             <Label>{property.name}</Label>
-            <Input
-              max={
-                property.type === 'NUMBER' ? Number.MAX_SAFE_INTEGER : undefined
-              }
-              min={
-                property.type === 'NUMBER'
-                  ? -Number.MAX_SAFE_INTEGER
-                  : undefined
-              }
-              maxLength={property.type === 'TEXT' ? 20_000 : undefined}
-              step={property.type === 'NUMBER' ? 'any' : undefined}
-            />
+            <Input maxLength={20_000} />
           </TextField>
         );
       })}

@@ -10,6 +10,7 @@ import {
 } from '@heroui/react';
 import { useState } from 'react';
 
+import { StatusColorPicker } from '@/components/board/status-color-picker';
 import type { MutationResult, StatusValues } from '@/components/board/types';
 
 interface StatusFormProps {
@@ -66,30 +67,10 @@ export function StatusForm({
           <Label>Name</Label>
           <Input maxLength={60} placeholder="To do" />
         </TextField>
-        <TextField
-          isRequired
-          name="statusColor"
+        <StatusColorPicker
           value={values.color}
           onChange={(color) => setValues((current) => ({ ...current, color }))}
-        >
-          <Label>Color</Label>
-          <div className="relative">
-            <span
-              className="pointer-events-none absolute start-3 top-1/2 z-10 size-3 -translate-y-1/2 rounded-full"
-              style={{
-                backgroundColor: HEX_COLOR_PATTERN.test(values.color)
-                  ? values.color
-                  : '#888888',
-              }}
-            />
-            <Input
-              className="ps-9 font-mono uppercase"
-              maxLength={7}
-              placeholder="#4A7C59"
-            />
-          </div>
-          <Description>#RRGGBB</Description>
-        </TextField>
+        />
       </div>
 
       <Checkbox

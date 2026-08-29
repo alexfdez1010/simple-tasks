@@ -8,20 +8,28 @@ function getSnapshotKey(
   properties: PropertyDefinition[],
 ): string {
   return JSON.stringify({
-    statuses: statuses.map((status) => ({
-      id: status.id,
-      name: status.name,
-      color: status.color,
-      position: status.position,
-      isTerminal: status.isTerminal,
-      tasks: status.tasks.map((task) => ({
-        id: task.id,
-        statusId: task.statusId,
-        position: task.position,
-        updatedAt: task.updatedAt,
+    statuses: [...statuses]
+      .sort((left, right) => left.id.localeCompare(right.id))
+      .map((status) => ({
+        id: status.id,
+        name: status.name,
+        color: status.color,
+        isTerminal: status.isTerminal,
+        tasks: status.tasks.map((task) => ({
+          id: task.id,
+          statusId: task.statusId,
+          position: task.position,
+          updatedAt: task.updatedAt,
+        })),
       })),
-    })),
-    properties,
+    properties: [...properties]
+      .sort((left, right) => left.id.localeCompare(right.id))
+      .map((property) => ({
+        id: property.id,
+        name: property.name,
+        type: property.type,
+        options: property.options,
+      })),
   });
 }
 

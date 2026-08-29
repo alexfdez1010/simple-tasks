@@ -64,16 +64,17 @@ async function deleteLastProperty(page: Page): Promise<void> {
   await page.getByRole('button', { name: /^Settings/ }).click();
   const settings = page.getByRole('dialog', { name: /^Settings/ });
   await settings.getByRole('tab', { name: 'Properties' }).click();
-  page.once('dialog', async (confirmation) => confirmation.accept());
+  await settings
+    .getByRole('button', { name: 'Delete property' })
+    .last()
+    .click();
+  const confirmation = page.getByRole('alertdialog');
   const persistence = page.waitForResponse(
     (response) =>
       response.request().method() === 'POST' &&
       new URL(response.url()).pathname === '/',
   );
-  await settings
-    .getByRole('button', { name: 'Delete property' })
-    .last()
-    .click();
+  await confirmation.getByRole('button', { name: 'Delete property' }).click();
   await persistence;
 }
 
@@ -90,8 +91,10 @@ test.describe('mobile configurable properties', () => {
       'Work',
       'Personal',
     ]);
-    await page.getByRole('button', { name: 'New' }).click();
-    const createDialog = page.getByRole('dialog', { name: 'Create task' });
+    await page.getByRole('button', { name: 'Add task to Blocked' }).click();
+    const createDialog = page.getByRole('dialog', {
+      name: 'Create task in Blocked',
+    });
     await createDialog.getByLabel('Title').fill(TASK_TITLE);
     await selectOption(page, createDialog, PRIORITY_PROPERTY, 'Urgent');
     await createDialog
@@ -143,13 +146,14 @@ test.describe('mobile configurable properties', () => {
 
     await page.getByRole('button', { name: `Edit ${TASK_TITLE}` }).click();
     const deleteDialog = page.getByRole('dialog', { name: 'Edit task' });
-    page.once('dialog', async (confirmation) => confirmation.accept());
+    await deleteDialog.getByRole('button', { name: 'Delete' }).click();
+    const confirmation = page.getByRole('alertdialog');
     const taskDeletion = page.waitForResponse(
       (response) =>
         response.request().method() === 'POST' &&
         new URL(response.url()).pathname === '/',
     );
-    await deleteDialog.getByRole('button', { name: 'Delete' }).click();
+    await confirmation.getByRole('button', { name: 'Delete task' }).click();
     await taskDeletion;
 
     await deleteLastProperty(page);

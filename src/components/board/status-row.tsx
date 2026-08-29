@@ -4,6 +4,7 @@ import { Button, Card } from '@heroui/react';
 import { useState } from 'react';
 
 import { ChevronIcon, EditIcon } from '@/components/board/icons';
+import { ConfirmationDialog } from '@/components/board/confirmation-dialog';
 import { StatusForm } from '@/components/board/status-form';
 import type {
   BoardStatus,
@@ -44,15 +45,15 @@ export function StatusRow({
     return result;
   }
 
-  /** Confirms and persists deletion of this state. */
-  async function handleDelete() {
-    if (!window.confirm(`Delete the “${status.name}” status?`)) return;
+  /** Persists deletion and reports whether the confirmation may close. */
+  async function handleDelete(): Promise<boolean> {
     const result = await onDelete();
     setError(
       result.success
         ? null
         : (result.error ?? 'The status could not be deleted.'),
     );
+    return result.success;
   }
 
   if (isEditing) {
@@ -119,14 +120,15 @@ export function StatusRow({
           </Button>
         </div>
       </div>
-      <Button
-        size="sm"
-        variant="danger-soft"
-        aria-label={`Delete status ${status.name}`}
-        onPress={handleDelete}
-      >
-        Delete status
-      </Button>
+      <ConfirmationDialog
+        body={`Tasks must be moved or deleted before “${status.name}” can be removed.`}
+        confirmLabel="Delete status"
+        heading={`Delete “${status.name}”?`}
+        triggerAriaLabel={`Delete status ${status.name}`}
+        triggerLabel="Delete status"
+        triggerVariant="danger-soft"
+        onConfirm={handleDelete}
+      />
       {error ? (
         <p className="text-sm text-danger" role="alert">
           {error}

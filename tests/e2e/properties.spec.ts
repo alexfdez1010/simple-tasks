@@ -63,13 +63,14 @@ async function choosePropertyOption(
 async function deleteTask(page: Page, title: string): Promise<void> {
   await page.getByRole('button', { name: `Edit ${title}` }).click();
   const dialog = page.getByRole('dialog', { name: 'Edit task' });
-  page.once('dialog', async (confirmation) => confirmation.accept());
+  await dialog.getByRole('button', { name: 'Delete' }).click();
+  const confirmation = page.getByRole('alertdialog');
   const persistence = page.waitForResponse(
     (response) =>
       response.request().method() === 'POST' &&
       new URL(response.url()).pathname === '/',
   );
-  await dialog.getByRole('button', { name: 'Delete' }).click();
+  await confirmation.getByRole('button', { name: 'Delete task' }).click();
   await persistence;
   await expect(page.getByRole('article', { name: title })).toHaveCount(0);
 }
@@ -79,16 +80,17 @@ async function deleteLastProperty(page: Page): Promise<void> {
   await page.getByRole('button', { name: /^Settings/ }).click();
   const settings = page.getByRole('dialog', { name: /^Settings/ });
   await settings.getByRole('tab', { name: 'Properties' }).click();
-  page.once('dialog', async (confirmation) => confirmation.accept());
+  await settings
+    .getByRole('button', { name: 'Delete property' })
+    .last()
+    .click();
+  const confirmation = page.getByRole('alertdialog');
   const persistence = page.waitForResponse(
     (response) =>
       response.request().method() === 'POST' &&
       new URL(response.url()).pathname === '/',
   );
-  await settings
-    .getByRole('button', { name: 'Delete property' })
-    .last()
-    .click();
+  await confirmation.getByRole('button', { name: 'Delete property' }).click();
   await persistence;
 }
 
@@ -108,8 +110,10 @@ test.describe('desktop configurable properties', () => {
       'Backend',
       'Infra',
     ]);
-    await page.getByRole('button', { name: 'New task' }).click();
-    const createDialog = page.getByRole('dialog', { name: 'Create task' });
+    await page.getByRole('button', { name: 'Add task to Blocked' }).click();
+    const createDialog = page.getByRole('dialog', {
+      name: 'Create task in Blocked',
+    });
     await createDialog.getByLabel('Title').fill(TASK_TITLE);
     await choosePropertyOption(page, createDialog, PRIORITY_PROPERTY, 'High');
     await createDialog

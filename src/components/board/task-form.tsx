@@ -10,6 +10,7 @@ import {
 } from '@heroui/react';
 import { useState } from 'react';
 
+import { DatePickerField } from '@/components/board/date-picker-field';
 import { Markdown } from '@/components/board/markdown';
 import { TaskPropertyFields } from '@/components/board/task-property-fields';
 import type {
@@ -127,19 +128,17 @@ export function TaskForm({
         )}
       </div>
 
-      <TextField
-        className="sm:max-w-64"
-        name="dueDate"
-        type="date"
-        value={values.dueDate}
-        onChange={(dueDate) =>
-          setValues((current) => ({ ...current, dueDate }))
-        }
-      >
-        <Label>Due date</Label>
-        <Input />
-        <Description>Optional</Description>
-      </TextField>
+      <div className="sm:max-w-72">
+        <DatePickerField
+          description="Optional"
+          label="Due date"
+          name="dueDate"
+          value={values.dueDate}
+          onChange={(dueDate) =>
+            setValues((current) => ({ ...current, dueDate }))
+          }
+        />
+      </div>
 
       <TaskPropertyFields
         properties={properties}

@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "bun run database && next dev && bun run database:down",
-    "build": "prisma generate && prisma migrate deploy && prisma db seed && next build --webpack",
+    "build": "prisma generate && prisma migrate deploy && next build --webpack",
     "postinstall": "prisma generate",
     "start": "next start",
     "lint": "eslint . && bun run database:format",
@@ -44,6 +44,7 @@
     "@dnd-kit/react": "^0.5.0",
     "@heroui/react": "^3.2.4",
     "@heroui/styles": "^3.2.4",
+    "@internationalized/date": "^3.12.3",
     "@modelcontextprotocol/sdk": "1.26.0",
     "@prisma/client": "^6.16.3",
     "@react-aria/i18n": "^3.13.1",

@@ -98,8 +98,10 @@ test.describe('mobile Kanban board', () => {
   }, testInfo) => {
     const title = `E2E Mobile Touch ${process.pid}-${testInfo.repeatEachIndex}`;
     await login(page);
-    await page.getByRole('button', { name: 'New' }).click();
-    const dialog = page.getByRole('dialog', { name: 'Create task' });
+    await page.getByRole('button', { name: 'Add task to Blocked' }).click();
+    const dialog = page.getByRole('dialog', {
+      name: 'Create task in Blocked',
+    });
     await dialog.getByLabel('Title').fill(title);
     const creation = page.waitForResponse(
       (response) =>
@@ -137,13 +139,14 @@ test.describe('mobile Kanban board', () => {
 
     await page.getByRole('button', { name: `Edit ${title}` }).click();
     const editDialog = page.getByRole('dialog', { name: 'Edit task' });
-    page.once('dialog', async (confirmation) => confirmation.accept());
+    await editDialog.getByRole('button', { name: 'Delete' }).click();
+    const confirmation = page.getByRole('alertdialog');
     const deletion = page.waitForResponse(
       (response) =>
         response.request().method() === 'POST' &&
         new URL(response.url()).pathname === '/',
     );
-    await editDialog.getByRole('button', { name: 'Delete' }).click();
+    await confirmation.getByRole('button', { name: 'Delete task' }).click();
     await deletion;
     await expect(page.getByRole('article', { name: title })).toHaveCount(0);
   });

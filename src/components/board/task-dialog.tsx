@@ -1,8 +1,10 @@
 'use client';
 
 import { Button, Modal, useOverlayState } from '@heroui/react';
+import type { ReactElement } from 'react';
 import { useState } from 'react';
 
+import { ConfirmationDialog } from '@/components/board/confirmation-dialog';
 import { EditIcon, PlusIcon } from '@/components/board/icons';
 import { TaskForm } from '@/components/board/task-form';
 import type {
@@ -16,6 +18,8 @@ interface TaskDialogProps {
   properties: PropertyDefinition[];
   task?: BoardTask;
   defaultStatusId?: string;
+  createContext?: string;
+  trigger?: ReactElement;
   onSave: (values: TaskValues) => Promise<MutationResult>;
   onDelete?: () => Promise<MutationResult>;
 }
@@ -44,24 +48,31 @@ export function TaskDialog({
   properties,
   task,
   defaultStatusId,
+  createContext,
+  trigger,
   onSave,
   onDelete,
 }: TaskDialogProps) {
   const modalState = useOverlayState();
   const [isPending, setIsPending] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
-  const formId = task ? `edit-task-${task.id}` : 'create-task';
-  const heading = task ? 'Edit task' : 'Create task';
+  const formId = task
+    ? `edit-task-${task.id}`
+    : `create-task-${defaultStatusId ?? 'default'}`;
+  const heading = task
+    ? 'Edit task'
+    : `Create task${createContext ? ` in ${createContext}` : ''}`;
 
-  /** Deletes the task after an explicit browser confirmation. */
-  async function handleDelete() {
-    if (!onDelete || !window.confirm('Delete this task?')) return;
+  /** Deletes the task and reports whether the confirmation may close. */
+  async function handleDelete(): Promise<boolean> {
+    if (!onDelete) return false;
     const result = await onDelete();
     if (result.success) {
       modalState.close();
-      return;
+      return true;
     }
     setDeleteError(result.error ?? 'The task could not be deleted.');
+    return false;
   }
 
   /** Persists form values while exposing pending state to the modal action. */
@@ -74,27 +85,22 @@ export function TaskDialog({
 
   return (
     <Modal state={modalState}>
-      <Button
-        isIconOnly={Boolean(task)}
-        size={task ? 'sm' : 'md'}
-        variant={task ? 'ghost' : 'primary'}
-        aria-label={task ? `Edit ${task.title}` : undefined}
-        onPress={() => {
-          setDeleteError(null);
-        }}
-      >
-        {task ? (
-          <EditIcon className="size-4" />
-        ) : (
-          <PlusIcon className="size-4" />
-        )}
-        {task ? null : (
-          <>
-            <span className="hidden sm:inline">New task</span>
-            <span className="sm:hidden">New</span>
-          </>
-        )}
-      </Button>
+      {trigger ?? (
+        <Button
+          isIconOnly={Boolean(task)}
+          size={task ? 'sm' : 'md'}
+          variant={task ? 'ghost' : 'primary'}
+          aria-label={task ? `Edit ${task.title}` : undefined}
+          onPress={() => setDeleteError(null)}
+        >
+          {task ? (
+            <EditIcon className="size-4" />
+          ) : (
+            <PlusIcon className="size-4" />
+          )}
+          {task ? null : 'New task'}
+        </Button>
+      )}
 
       <Modal.Backdrop>
         <Modal.Container placement="center" size="lg">
@@ -120,9 +126,13 @@ export function TaskDialog({
             </Modal.Body>
             <Modal.Footer className="justify-between">
               {task ? (
-                <Button variant="danger" onPress={handleDelete}>
-                  Delete
-                </Button>
+                <ConfirmationDialog
+                  body="This task and its property values will be permanently removed."
+                  confirmLabel="Delete task"
+                  heading={`Delete “${task.title}”?`}
+                  triggerLabel="Delete"
+                  onConfirm={handleDelete}
+                />
               ) : (
                 <span />
               )}

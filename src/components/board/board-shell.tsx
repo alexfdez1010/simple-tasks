@@ -6,7 +6,6 @@ import { useState } from 'react';
 
 import { BoardSettings } from '@/components/board/board-settings';
 import { KanbanBoard } from '@/components/board/kanban-board';
-import { TaskDialog } from '@/components/board/task-dialog';
 import type { BoardStatus, PropertyDefinition } from '@/components/board/types';
 import { usePropertyMutations } from '@/components/board/use-property-mutations';
 import { useStatusMutations } from '@/components/board/use-status-mutations';
@@ -36,9 +35,6 @@ export function BoardShell({
     (total, status) => total + status.tasks.length,
     0,
   );
-  const defaultStatusId =
-    statuses.find((status) => !status.isTerminal)?.id ?? statuses[0]?.id;
-
   const taskMutations = useTaskMutations({
     statuses,
     setStatuses,
@@ -86,11 +82,6 @@ export function BoardShell({
               onDeleteProperty={propertyMutations.remove}
               onReorderProperty={propertyMutations.reorder}
             />
-            <TaskDialog
-              defaultStatusId={defaultStatusId}
-              properties={properties}
-              onSave={taskMutations.create}
-            />
             <form action={logoutAction}>
               <Button type="submit" variant="ghost">
                 Sign out
@@ -106,6 +97,7 @@ export function BoardShell({
           properties={properties}
           setStatuses={setStatuses}
           onUpdate={taskMutations.update}
+          onCreate={taskMutations.create}
           onDelete={taskMutations.remove}
           onPersistDrag={taskMutations.persistDrag}
         />

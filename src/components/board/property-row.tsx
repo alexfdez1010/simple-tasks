@@ -4,6 +4,7 @@ import { Button, Card } from '@heroui/react';
 import { useState } from 'react';
 
 import { ChevronIcon, EditIcon } from '@/components/board/icons';
+import { ConfirmationDialog } from '@/components/board/confirmation-dialog';
 import { PropertyForm } from '@/components/board/property-form';
 import type {
   MutationResult,
@@ -52,15 +53,15 @@ export function PropertyRow({
     return result;
   }
 
-  /** Confirms deletion before removing the definition and its task values. */
-  async function handleDelete() {
-    if (!window.confirm(`Delete the “${property.name}” property?`)) return;
+  /** Deletes the definition and reports whether the confirmation may close. */
+  async function handleDelete(): Promise<boolean> {
     const result = await onDelete();
     setError(
       result.success
         ? null
         : (result.error ?? 'The property could not be deleted.'),
     );
+    return result.success;
   }
 
   if (isEditing) {
@@ -121,9 +122,15 @@ export function PropertyRow({
           </Button>
         </div>
       </div>
-      <Button size="sm" variant="danger-soft" onPress={handleDelete}>
-        Delete property
-      </Button>
+      <ConfirmationDialog
+        body="This also removes the property value from every task. This action cannot be undone."
+        confirmLabel="Delete property"
+        heading={`Delete “${property.name}”?`}
+        triggerAriaLabel={`Delete property ${property.name}`}
+        triggerLabel="Delete property"
+        triggerVariant="danger-soft"
+        onConfirm={handleDelete}
+      />
       {error ? (
         <p className="text-sm text-danger" role="alert">
           {error}

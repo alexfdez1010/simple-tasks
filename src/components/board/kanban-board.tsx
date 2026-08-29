@@ -22,6 +22,7 @@ interface KanbanBoardProps {
   statuses: BoardStatus[];
   properties: PropertyDefinition[];
   setStatuses: Dispatch<SetStateAction<BoardStatus[]>>;
+  onCreate: (values: TaskValues) => Promise<MutationResult>;
   onUpdate: (taskId: string, values: TaskValues) => Promise<MutationResult>;
   onDelete: (taskId: string) => Promise<MutationResult>;
   onPersistDrag: (
@@ -63,6 +64,7 @@ export function KanbanBoard({
   statuses,
   properties,
   setStatuses,
+  onCreate,
   onUpdate,
   onDelete,
   onPersistDrag,
@@ -116,6 +118,7 @@ export function KanbanBoard({
             key={status.id}
             status={status}
             properties={properties}
+            onCreate={onCreate}
             onUpdate={onUpdate}
             onDelete={onDelete}
           />
