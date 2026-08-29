@@ -6,7 +6,7 @@ the accessible primitives; Tailwind CSS 4 provides layout and product styling.
 
 ## 1. Product foundation
 
-- Product name: Tareas
+- Product name: Tasks
 - One-sentence promise: Captura, mueve y termina trabajo sin perder el foco.
 - Primary audience: A single person or small trusted team using one shared board.
 - Key user needs: See the whole workflow, create or edit quickly, and move tasks
@@ -119,9 +119,9 @@ Component rules:
 - Minimum contrast target: WCAG 2.2 AA.
 - Localization and text expansion rules: Spanish UI; controls tolerate 40% text
   expansion and dates use locale-aware formatting.
-- Voice and tone: Direct, human, and brief. Use verbs such as “Crear”, “Mover”,
-  “Guardar”, and “Eliminar”.
-- Content examples: “Sin tareas”, “Nueva tarea”, “Cambios guardados”.
+- Voice and tone: Direct, human, and brief. Use verbs such as “Create”, “Move”,
+  “Save”, and “Delete”.
+- Content examples: “No tasks”, “New task”, “Changes saved”.
 
 ## 6. Layout and responsive behavior
 
