@@ -29,14 +29,14 @@ the accessible primitives; Tailwind CSS 4 provides layout and product styling.
 
 ### Color
 
-| Token        | Light value              | Dark value               | Usage            |
-| ------------ | ------------------------ | ------------------------ | ---------------- |
-| `background` | `oklch(0.975 0.008 80)` | `oklch(0.17 0.012 70)`  | App canvas       |
-| `foreground` | `oklch(0.22 0.012 65)`  | `oklch(0.94 0.008 80)`  | Primary text     |
-| `surface`    | `oklch(0.995 0.004 80)` | `oklch(0.22 0.012 70)`  | Cards and panels |
-| `accent`     | `oklch(0.54 0.11 155)`  | `oklch(0.72 0.11 155)`  | Primary action   |
-| `muted`      | `oklch(0.52 0.018 65)`  | `oklch(0.72 0.015 75)`  | Secondary text   |
-| `danger`     | `oklch(0.55 0.19 28)`   | `oklch(0.7 0.16 28)`    | Destructive UI   |
+| Token        | Light value             | Dark value             | Usage            |
+| ------------ | ----------------------- | ---------------------- | ---------------- |
+| `background` | `oklch(0.975 0.008 80)` | `oklch(0.17 0.012 70)` | App canvas       |
+| `foreground` | `oklch(0.22 0.012 65)`  | `oklch(0.94 0.008 80)` | Primary text     |
+| `surface`    | `oklch(0.995 0.004 80)` | `oklch(0.22 0.012 70)` | Cards and panels |
+| `accent`     | `oklch(0.54 0.11 155)`  | `oklch(0.72 0.11 155)` | Primary action   |
+| `muted`      | `oklch(0.52 0.018 65)`  | `oklch(0.72 0.015 75)` | Secondary text   |
+| `danger`     | `oklch(0.55 0.19 28)`   | `oklch(0.7 0.16 28)`   | Destructive UI   |
 
 Workflow colours are user-configurable hex values. They are rendered as rails,
 dots, and low-opacity tints, never as body-text colour. Text therefore retains
@@ -74,15 +74,16 @@ large text, component boundaries, and focus indicators.
 
 ## 4. Component system
 
-| Component/pattern | HeroUI primitive          | Approved variants                 | Usage guidance |
-| ----------------- | ------------------------- | --------------------------------- | -------------- |
-| Button            | `Button`                  | primary, secondary, ghost, danger | One primary action per surface |
-| Link              | `Link`                    | primary, secondary                | Navigation and documentation only |
-| Card              | `Card` compound API       | secondary, tertiary               | Tasks and focused panels |
-| Form field        | `TextField`, `TextArea`   | default                           | Visible labels; descriptions for constraints |
-| Selection         | `Select`                  | default                           | Workflow state only |
-| Overlay           | `Modal` compound API      | default                           | Create, edit, and state settings |
-| Feedback          | `Alert`, inline field error | success, danger                 | Specific, short, actionable |
+| Component/pattern | HeroUI primitive            | Approved variants                 | Usage guidance                               |
+| ----------------- | --------------------------- | --------------------------------- | -------------------------------------------- |
+| Button            | `Button`                    | primary, secondary, ghost, danger | One primary action per surface               |
+| Link              | `Link`                      | primary, secondary                | Navigation and documentation only            |
+| Card              | `Card` compound API         | secondary, tertiary               | Tasks and focused panels                     |
+| Form field        | `TextField`, `TextArea`     | default                           | Visible labels; descriptions for constraints |
+| Selection         | `Select`                    | single, multiple                  | Workflow state and configurable properties   |
+| Property value    | `TextField`, `Select`       | text, number, date, select, multi | Generated from a focused property definition |
+| Overlay           | `Modal` compound API        | default                           | Create, edit, and state settings             |
+| Feedback          | `Alert`, inline field error | success, danger                   | Specific, short, actionable                  |
 
 Component rules:
 
@@ -94,6 +95,12 @@ Component rules:
 - Error states: Keep user input, focus the first invalid field, and explain how
   to recover.
 - Destructive actions: Require explicit confirmation for task or state deletion.
+- Property definitions: Managed in settings as a compact ordered list. Type is
+  explicit and immutable after creation when changing it could discard values.
+- Property options: Select and multi-select options use short visible labels;
+  empty, duplicate, and whitespace-only options are rejected inline.
+- Property values: Optional by default. Empty values are omitted from cards so
+  configured metadata never overwhelms the task title and due date.
 - Responsive behavior: Modals become near-full-width sheets on small screens;
   the Kanban remains horizontally scrollable with 84vw columns and snap points.
 
@@ -120,15 +127,20 @@ Component rules:
   scrolling rather than stacking every workflow into a very long page.
 - Data-density strategy: Active states show all tasks. Terminal states show only
   their 20 most recently updated tasks, with the limit explained in the column.
+- Property-density strategy: Task cards show non-empty values in a compact
+  two-column metadata list. Multi-select values wrap as quiet chips. Property
+  settings and task forms use one column on mobile and two where space permits.
 
 ## 7. Decision log
 
-| Date       | Decision | Reason | Owner |
-| ---------- | -------- | ------ | ----- |
-| 2026-08-29 | Keep a single shared-password session instead of user accounts | Matches the requested private, simple board | Product |
-| 2026-08-29 | Use horizontally scrollable columns on mobile | Preserves the spatial workflow and supports touch drag | Design |
-| 2026-08-29 | Treat workflow colours as accents, not text colours | User-selected colours cannot guarantee readable contrast | Design |
-| 2026-08-29 | Limit every terminal state to its 20 most recently updated tasks | Keeps completed work available without overwhelming the board | Product |
+| Date       | Decision                                                         | Reason                                                               | Owner   |
+| ---------- | ---------------------------------------------------------------- | -------------------------------------------------------------------- | ------- |
+| 2026-08-29 | Keep a single shared-password session instead of user accounts   | Matches the requested private, simple board                          | Product |
+| 2026-08-29 | Use horizontally scrollable columns on mobile                    | Preserves the spatial workflow and supports touch drag               | Design  |
+| 2026-08-29 | Treat workflow colours as accents, not text colours              | User-selected colours cannot guarantee readable contrast             | Design  |
+| 2026-08-29 | Limit every terminal state to its 20 most recently updated tasks | Keeps completed work available without overwhelming the board        | Product |
+| 2026-08-29 | Model custom properties as definitions plus typed task values    | Keeps the board extensible without adding permanent task fields      | Product |
+| 2026-08-29 | Support text, number, date, select, and multi-select initially   | Covers useful metadata while preserving the deliberately small scope | Product |
 
 ## 8. Review checklist
 
