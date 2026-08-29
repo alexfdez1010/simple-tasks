@@ -1,6 +1,9 @@
-import { defineConfig } from 'vitest/config';
 import { config } from 'dotenv';
 import path from 'node:path';
+import { defineConfig } from 'vitest/config';
+
+config({ path: '.env.test', override: false });
+config({ override: false });
 
 export default defineConfig({
   resolve: {
@@ -9,11 +12,13 @@ export default defineConfig({
     },
   },
   test: {
-    testTimeout: 10000,
+    clearMocks: true,
     environment: 'node',
+    exclude: ['tests/e2e/**', 'node_modules/**'],
+    include: ['**/*.{test,spec}.{ts,tsx}'],
+    isolate: true,
+    restoreMocks: true,
     setupFiles: './tests/setup.ts',
-    env: {
-      ...config().parsed,
-    },
+    testTimeout: 10_000,
   },
 });
