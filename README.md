@@ -79,6 +79,10 @@ After signing in, open `/skill` to download:
 - `simple-tasks.mcp.json`, containing the server URL and a reference to the
   local `SIMPLE_TASKS_MCP_TOKEN` variable.
 
+The same protected page shows the server token masked by default, with explicit
+reveal and copy actions. Use it to populate `SIMPLE_TASKS_MCP_TOKEN` without
+placing the credential in the downloaded files.
+
 Set `SIMPLE_TASKS_MCP_TOKEN` in the MCP client's environment to the same value
 as the server's `MCP_TOKEN`. The MCP catalog includes:
 

@@ -1,6 +1,11 @@
 import { DownloadButtons } from '@/app/(auth)/skill/download-buttons';
+import { TokenReveal } from '@/app/(auth)/skill/token-reveal';
+import { getMcpToken } from '@/lib/mcp/config';
 import { MCP_CLIENT_TOKEN_ENV } from '@/lib/mcp/skill';
 import Link from 'next/link';
+
+/** Prevents the MCP credential from entering static build output or caches. */
+export const dynamic = 'force-dynamic';
 
 /** Renders concise setup instructions for connecting an AI agent. */
 export default function SkillPage(): React.JSX.Element {
@@ -25,6 +30,7 @@ export default function SkillPage(): React.JSX.Element {
             on the server.
           </p>
         </div>
+        <TokenReveal token={getMcpToken()} />
         <DownloadButtons />
       </section>
     </main>

@@ -100,6 +100,9 @@ Component rules:
 - Destructive actions: Require explicit confirmation for task or state deletion.
 - Native browser confirmation and date-picker UI is not used; HeroUI owns these
   experiences for consistent styling, focus management, and mobile behavior.
+- MCP credentials: The protected AI setup page may reveal the configured token
+  on explicit request and offer a copy action. It is masked by default and the
+  page renders dynamically so secrets never enter static build output.
 - Property definitions: Managed in settings as a compact ordered list. Type is
   explicit and immutable after creation when changing it could discard values.
 - Property options: Select and multi-select options use short visible labels;
@@ -146,18 +149,19 @@ Component rules:
 
 ## 7. Decision log
 
-| Date       | Decision                                                         | Reason                                                                | Owner   |
-| ---------- | ---------------------------------------------------------------- | --------------------------------------------------------------------- | ------- |
-| 2026-08-29 | Keep a single shared-password session instead of user accounts   | Matches the requested private, simple board                           | Product |
-| 2026-08-29 | Use horizontally scrollable columns on mobile                    | Preserves the spatial workflow and supports touch drag                | Design  |
-| 2026-08-29 | Treat workflow colours as accents, not text colours              | User-selected colours cannot guarantee readable contrast              | Design  |
-| 2026-08-29 | Limit every terminal state to its 20 most recently updated tasks | Keeps completed work available without overwhelming the board         | Product |
-| 2026-08-29 | Model custom properties as definitions plus typed task values    | Keeps the board extensible without adding permanent task fields       | Product |
-| 2026-08-29 | Support text, number, date, select, and multi-select initially   | Covers useful metadata while preserving the deliberately small scope  | Product |
-| 2026-08-29 | Remove decorative borders and the per-card state selector        | Makes the board lighter and keeps state changes spatial through drag  | Design  |
-| 2026-08-29 | Reduce card height and metadata density                          | More tasks remain scannable without turning cards into mini forms     | Design  |
-| 2026-08-29 | Add per-column creation and status-tinted card gradients         | Makes placement faster and workflow ownership visually memorable      | Design  |
-| 2026-08-29 | Replace native date, colour, number, and confirmation controls   | Keeps interaction styling and accessibility consistent through HeroUI | Design  |
+| Date       | Decision                                                         | Reason                                                                | Owner    |
+| ---------- | ---------------------------------------------------------------- | --------------------------------------------------------------------- | -------- |
+| 2026-08-29 | Keep a single shared-password session instead of user accounts   | Matches the requested private, simple board                           | Product  |
+| 2026-08-29 | Use horizontally scrollable columns on mobile                    | Preserves the spatial workflow and supports touch drag                | Design   |
+| 2026-08-29 | Treat workflow colours as accents, not text colours              | User-selected colours cannot guarantee readable contrast              | Design   |
+| 2026-08-29 | Limit every terminal state to its 20 most recently updated tasks | Keeps completed work available without overwhelming the board         | Product  |
+| 2026-08-29 | Model custom properties as definitions plus typed task values    | Keeps the board extensible without adding permanent task fields       | Product  |
+| 2026-08-29 | Support text, number, date, select, and multi-select initially   | Covers useful metadata while preserving the deliberately small scope  | Product  |
+| 2026-08-29 | Remove decorative borders and the per-card state selector        | Makes the board lighter and keeps state changes spatial through drag  | Design   |
+| 2026-08-29 | Reduce card height and metadata density                          | More tasks remain scannable without turning cards into mini forms     | Design   |
+| 2026-08-29 | Add per-column creation and status-tinted card gradients         | Makes placement faster and workflow ownership visually memorable      | Design   |
+| 2026-08-29 | Replace native date, colour, number, and confirmation controls   | Keeps interaction styling and accessibility consistent through HeroUI | Design   |
+| 2026-08-29 | Reveal and copy the MCP token only from the protected setup page | Makes agent setup easier without placing the secret in static output  | Security |
 
 ## 8. Review checklist
 
