@@ -7,13 +7,13 @@ the accessible primitives; Tailwind CSS 4 provides layout and product styling.
 ## 1. Product foundation
 
 - Product name: Tasks
-- One-sentence promise: Captura, mueve y termina trabajo sin perder el foco.
+- One-sentence promise: Capture, move, and finish work without losing focus.
 - Primary audience: A single person or small trusted team using one shared board.
 - Key user needs: See the whole workflow, create or edit quickly, and move tasks
   reliably on pointer, touch, or keyboard.
 - Brand personality: Calm, precise, useful, quietly crafted.
 - Words and patterns to avoid: Marketing copy, gamification, jargon, decorative
-  dashboards, gradients, and controls without an immediate task.
+  dashboards, and controls without an immediate task.
 
 ## 2. Visual direction
 
@@ -40,8 +40,8 @@ the accessible primitives; Tailwind CSS 4 provides layout and product styling.
 | `danger`     | `oklch(0.55 0.19 28)`   | `oklch(0.7 0.16 28)`   | Destructive UI   |
 
 Workflow colours are user-configurable hex values. They are rendered as rails,
-dots, and low-opacity tints, never as body-text colour. Text therefore retains
-WCAG contrast independently of the chosen workflow colour.
+dots, and restrained card-to-surface gradients, never as body-text colour. Text
+therefore retains WCAG contrast independently of the chosen workflow colour.
 
 Contrast requirements: WCAG 2.2 AA, at least 4.5:1 for normal text and 3:1 for
 large text, component boundaries, and focus indicators.
@@ -76,16 +76,17 @@ large text, component boundaries, and focus indicators.
 
 ## 4. Component system
 
-| Component/pattern | HeroUI primitive            | Approved variants                 | Usage guidance                               |
-| ----------------- | --------------------------- | --------------------------------- | -------------------------------------------- |
-| Button            | `Button`                    | primary, secondary, ghost, danger | One primary action per surface               |
-| Link              | `Link`                      | primary, secondary                | Navigation and documentation only            |
-| Card              | `Card` compound API         | secondary, tertiary               | Tasks and focused panels                     |
-| Form field        | `TextField`, `TextArea`     | default                           | Visible labels; descriptions for constraints |
-| Selection         | `Select`                    | single, multiple                  | Configurable properties only                 |
-| Property value    | `TextField`, `Select`       | text, number, date, select, multi | Generated from a focused property definition |
-| Overlay           | `Modal` compound API        | default                           | Create, edit, and state settings             |
-| Feedback          | `Alert`, inline field error | success, danger                   | Specific, short, actionable                  |
+| Component/pattern | HeroUI primitive                                   | Approved variants                 | Usage guidance                               |
+| ----------------- | -------------------------------------------------- | --------------------------------- | -------------------------------------------- |
+| Button            | `Button`                                           | primary, secondary, ghost, danger | One primary action per surface               |
+| Link              | `Link`                                             | primary, secondary                | Navigation and documentation only            |
+| Card              | `Card` compound API                                | secondary, tertiary               | Tasks and focused panels                     |
+| Form field        | `TextField`, `TextArea`                            | default                           | Visible labels; descriptions for constraints |
+| Selection         | `Select`                                           | single, multiple                  | Configurable properties only                 |
+| Property value    | `TextField`, `NumberField`, `DatePicker`, `Select` | typed values                      | Generated from a focused property definition |
+| Colour control    | `ColorPicker` compound API                         | controlled                        | Workflow colour configuration                |
+| Overlay           | `Modal`, `AlertDialog`                             | default, danger                   | Editing, settings, and confirmations         |
+| Feedback          | `Alert`, inline field error                        | success, danger                   | Specific, short, actionable                  |
 
 Component rules:
 
@@ -97,6 +98,8 @@ Component rules:
 - Error states: Keep user input, focus the first invalid field, and explain how
   to recover.
 - Destructive actions: Require explicit confirmation for task or state deletion.
+- Native browser confirmation and date-picker UI is not used; HeroUI owns these
+  experiences for consistent styling, focus management, and mobile behavior.
 - Property definitions: Managed in settings as a compact ordered list. Type is
   explicit and immutable after creation when changing it could discard values.
 - Property options: Select and multi-select options use short visible labels;
@@ -105,8 +108,12 @@ Component rules:
   configured metadata never overwhelms the task title and due date.
 - Task transitions: Dragging is the only state-change control. The drag handle
   supports pointer, touch, and keyboard operation and announces the destination.
+- Task creation: Every workflow column exposes an Add action. It opens the shared
+  task dialog with that column preselected; the state remains implicit and cannot
+  be changed from the form.
 - Task cards: Keep title and edit affordance on the first row; clamp long
-  descriptions and render property values as a quiet, wrapping metadata line.
+  descriptions, render property values as a quiet wrapping metadata line, and
+  use a low-opacity gradient derived from the owning workflow colour.
 - Responsive behavior: Modals become near-full-width sheets on small screens;
   the Kanban remains horizontally scrollable with 84vw columns and snap points.
 
@@ -117,7 +124,7 @@ Component rules:
 - Screen-reader and semantic HTML requirements: Landmarks, named lists/regions,
   task cards as articles, live announcements for moves, and real form labels.
 - Minimum contrast target: WCAG 2.2 AA.
-- Localization and text expansion rules: Spanish UI; controls tolerate 40% text
+- Localization and text expansion rules: English UI; controls tolerate 40% text
   expansion and dates use locale-aware formatting.
 - Voice and tone: Direct, human, and brief. Use verbs such as “Create”, “Move”,
   “Save”, and “Delete”.
@@ -139,16 +146,18 @@ Component rules:
 
 ## 7. Decision log
 
-| Date       | Decision                                                         | Reason                                                               | Owner   |
-| ---------- | ---------------------------------------------------------------- | -------------------------------------------------------------------- | ------- |
-| 2026-08-29 | Keep a single shared-password session instead of user accounts   | Matches the requested private, simple board                          | Product |
-| 2026-08-29 | Use horizontally scrollable columns on mobile                    | Preserves the spatial workflow and supports touch drag               | Design  |
-| 2026-08-29 | Treat workflow colours as accents, not text colours              | User-selected colours cannot guarantee readable contrast             | Design  |
-| 2026-08-29 | Limit every terminal state to its 20 most recently updated tasks | Keeps completed work available without overwhelming the board        | Product |
-| 2026-08-29 | Model custom properties as definitions plus typed task values    | Keeps the board extensible without adding permanent task fields      | Product |
-| 2026-08-29 | Support text, number, date, select, and multi-select initially   | Covers useful metadata while preserving the deliberately small scope | Product |
-| 2026-08-29 | Remove decorative borders and the per-card state selector        | Makes the board lighter and keeps state changes spatial through drag | Design  |
-| 2026-08-29 | Reduce card height and metadata density                          | More tasks remain scannable without turning cards into mini forms    | Design  |
+| Date       | Decision                                                         | Reason                                                                | Owner   |
+| ---------- | ---------------------------------------------------------------- | --------------------------------------------------------------------- | ------- |
+| 2026-08-29 | Keep a single shared-password session instead of user accounts   | Matches the requested private, simple board                           | Product |
+| 2026-08-29 | Use horizontally scrollable columns on mobile                    | Preserves the spatial workflow and supports touch drag                | Design  |
+| 2026-08-29 | Treat workflow colours as accents, not text colours              | User-selected colours cannot guarantee readable contrast              | Design  |
+| 2026-08-29 | Limit every terminal state to its 20 most recently updated tasks | Keeps completed work available without overwhelming the board         | Product |
+| 2026-08-29 | Model custom properties as definitions plus typed task values    | Keeps the board extensible without adding permanent task fields       | Product |
+| 2026-08-29 | Support text, number, date, select, and multi-select initially   | Covers useful metadata while preserving the deliberately small scope  | Product |
+| 2026-08-29 | Remove decorative borders and the per-card state selector        | Makes the board lighter and keeps state changes spatial through drag  | Design  |
+| 2026-08-29 | Reduce card height and metadata density                          | More tasks remain scannable without turning cards into mini forms     | Design  |
+| 2026-08-29 | Add per-column creation and status-tinted card gradients         | Makes placement faster and workflow ownership visually memorable      | Design  |
+| 2026-08-29 | Replace native date, colour, number, and confirmation controls   | Keeps interaction styling and accessibility consistent through HeroUI | Design  |
 
 ## 8. Review checklist
 
