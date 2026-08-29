@@ -5,7 +5,7 @@ import { timingSafeMatch } from '@/lib/auth/token';
 /** Reads the independently configured MCP bearer token. */
 function getExpectedMcpToken(): string {
   const token = process.env.MCP_TOKEN;
-  if (!token) throw new Error('MCP_TOKEN es obligatorio.');
+  if (!token) throw new Error('MCP_TOKEN is required.');
   return token;
 }
 

@@ -12,7 +12,7 @@ export class DomainError extends Error {
 
 /** Creates a missing-resource error. */
 export function notFound(resource: string): DomainError {
-  return new DomainError(`${resource} no existe.`, 'NOT_FOUND');
+  return new DomainError(`${resource} does not exist.`, 'NOT_FOUND');
 }
 
 /** Creates an invariant or state-conflict error. */
@@ -24,7 +24,7 @@ export function conflict(message: string): DomainError {
 export function getErrorMessage(error: unknown): string {
   if (error instanceof DomainError) return error.message;
   if (error instanceof Error && error.name === 'ZodError') {
-    return 'Los datos enviados no son válidos.';
+    return 'The submitted data is invalid.';
   }
-  return 'No se pudo completar la operación.';
+  return 'The operation could not be completed.';
 }

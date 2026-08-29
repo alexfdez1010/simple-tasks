@@ -16,12 +16,12 @@ export async function persistTaskPropertyValues(
 ): Promise<TaskPropertyValueData[]> {
   const propertyIds = inputs.map((input) => input.propertyId);
   if (new Set(propertyIds).size !== propertyIds.length)
-    throw conflict('Cada propiedad debe aparecer una sola vez.');
+    throw conflict('Each property may appear only once.');
   const properties = await transaction.taskPropertyDefinition.findMany({
     where: { id: { in: propertyIds } },
   });
   if (properties.length !== propertyIds.length)
-    throw notFound('Alguna propiedad');
+    throw notFound('One or more properties');
   const byId = new Map(properties.map((property) => [property.id, property]));
   const normalized = inputs.map((input) => {
     const property = byId.get(input.propertyId)!;

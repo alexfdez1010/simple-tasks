@@ -50,6 +50,6 @@ export async function isAuthenticated(): Promise<boolean> {
 /** Rejects unauthenticated server-side mutations. */
 export async function requireAuthenticated(): Promise<void> {
   if (!(await isAuthenticated())) {
-    throw new DomainError('La sesión ha caducado.', 'UNAUTHORIZED');
+    throw new DomainError('The session has expired.', 'UNAUTHORIZED');
   }
 }

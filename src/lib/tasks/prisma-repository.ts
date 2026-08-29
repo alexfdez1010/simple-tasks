@@ -71,7 +71,7 @@ export class PrismaTaskRepository implements TaskRepository {
       status ??= input.statusId
         ? null
         : await transaction.status.findFirst({ orderBy: { position: 'asc' } });
-      if (!status) throw notFound('El estado');
+      if (!status) throw notFound('The status');
       const aggregate = await transaction.task.aggregate({
         where: { statusId: status.id },
         _max: { position: true },
@@ -104,7 +104,7 @@ export class PrismaTaskRepository implements TaskRepository {
       const task = await transaction.task.findUnique({
         where: { id: input.id },
       });
-      if (!task) throw notFound('La tarea');
+      if (!task) throw notFound('The task');
       const edits: EditableTaskFields = {
         title: input.title,
         description: input.description,
@@ -142,7 +142,7 @@ export class PrismaTaskRepository implements TaskRepository {
   async delete(id: string): Promise<void> {
     await runSerializable(this.client, async (transaction) => {
       const task = await transaction.task.findUnique({ where: { id } });
-      if (!task) throw notFound('La tarea');
+      if (!task) throw notFound('The task');
       await transaction.task.delete({ where: { id } });
       const remaining = await transaction.task.findMany({
         where: { statusId: task.statusId },
@@ -165,8 +165,8 @@ export class PrismaTaskRepository implements TaskRepository {
       const target = await transaction.status.findUnique({
         where: { id: input.statusId },
       });
-      if (!task) throw notFound('La tarea');
-      if (!target) throw notFound('El estado');
+      if (!task) throw notFound('The task');
+      if (!target) throw notFound('The status');
       return editTaskPlacement(transaction, task, target, input.index);
     });
   }
@@ -177,9 +177,9 @@ export class PrismaTaskRepository implements TaskRepository {
       const status = await transaction.status.findUnique({
         where: { id: input.statusId },
       });
-      if (!status) throw notFound('El estado');
+      if (!status) throw notFound('The status');
       if (status.isTerminal)
-        throw conflict('Los estados terminales se ordenan por finalización.');
+        throw conflict('Terminal statuses are ordered by completion time.');
       const rows = await transaction.task.findMany({
         where: { statusId: input.statusId },
         select: { id: true },
@@ -191,7 +191,7 @@ export class PrismaTaskRepository implements TaskRepository {
         expected.some((id, index) => id !== received[index])
       ) {
         throw conflict(
-          'El orden debe incluir exactamente todas las tareas del estado.',
+          'The order must include every task in the status exactly once.',
         );
       }
       await resequenceTasks(transaction, input.taskIds);

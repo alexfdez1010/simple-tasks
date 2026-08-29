@@ -13,7 +13,7 @@ export async function loginAction(
 ): Promise<LoginState> {
   const password = formData.get('password');
   if (typeof password !== 'string' || !(await createSession(password))) {
-    return { error: 'Contraseña incorrecta.' };
+    return { error: 'Incorrect password.' };
   }
   redirect('/');
 }

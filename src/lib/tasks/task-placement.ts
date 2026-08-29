@@ -59,6 +59,6 @@ export async function editAndRelocateTask(
   const target = await transaction.status.findUnique({
     where: { id: statusId },
   });
-  if (!target) throw notFound('El estado');
+  if (!target) throw notFound('The status');
   return editTaskPlacement(transaction, task, target, index, edits);
 }

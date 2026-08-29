@@ -5,28 +5,28 @@ const prisma = new PrismaClient();
 const DEFAULT_STATUSES = [
   {
     id: 'blocked',
-    name: 'Bloqueado',
+    name: 'Blocked',
     color: '#ef4444',
     position: 0,
     isTerminal: false,
   },
   {
     id: 'todo',
-    name: 'Por hacer',
+    name: 'To do',
     color: '#64748b',
     position: 1,
     isTerminal: false,
   },
   {
     id: 'in-progress',
-    name: 'En progreso',
+    name: 'In progress',
     color: '#3b82f6',
     position: 2,
     isTerminal: false,
   },
   {
     id: 'done',
-    name: 'Terminado',
+    name: 'Done',
     color: '#22c55e',
     position: 3,
     isTerminal: true,

@@ -12,7 +12,7 @@ const optionsSchema = z
   .array(optionSchema)
   .max(MAX_PROPERTY_OPTIONS)
   .refine((options) => new Set(options).size === options.length, {
-    message: 'Las opciones no pueden repetirse.',
+    message: 'Options must be unique.',
   });
 const selectableTypes = new Set<TaskPropertyType>([
   TaskPropertyType.SELECT,
@@ -28,14 +28,14 @@ function validateOptions(
   if (selectableTypes.has(type) && (!options || options.length === 0)) {
     context.addIssue({
       code: z.ZodIssueCode.custom,
-      message: 'Las propiedades de selección necesitan opciones.',
+      message: 'Selection properties require options.',
       path: ['options'],
     });
   }
   if (!selectableTypes.has(type) && options && options.length > 0) {
     context.addIssue({
       code: z.ZodIssueCode.custom,
-      message: 'Este tipo de propiedad no admite opciones.',
+      message: 'This property type does not support options.',
       path: ['options'],
     });
   }
@@ -100,7 +100,7 @@ export function parsePropertyValue(
   const selected = z.array(z.string()).max(MAX_PROPERTY_OPTIONS).parse(value);
   if (new Set(selected).size !== selected.length)
     throw new z.ZodError([
-      { code: 'custom', message: 'No repitas opciones.', path: [] },
+      { code: 'custom', message: 'Selected options must be unique.', path: [] },
     ]);
   return selected.map((item) =>
     z.enum(options as [string, ...string[]]).parse(item),
@@ -119,7 +119,7 @@ function parseDateValue(value: unknown): string {
     parsed.toISOString().slice(0, 10) !== date
   )
     throw new z.ZodError([
-      { code: 'custom', message: 'La fecha no es válida.', path: [] },
+      { code: 'custom', message: 'The date is invalid.', path: [] },
     ]);
   return date;
 }

@@ -28,12 +28,12 @@ export async function assertCompatiblePropertyChange(
     select: { value: true },
   });
   if (values.length > 0 && currentType !== nextType)
-    throw conflict('Borra los valores antes de cambiar el tipo de propiedad.');
+    throw conflict('Delete existing values before changing the property type.');
   try {
     for (const item of values)
       parsePropertyValue(nextType, nextOptions, item.value);
   } catch {
-    throw conflict('Las opciones nuevas eliminarían valores que están en uso.');
+    throw conflict('The new options would remove values that are in use.');
   }
 }
 
@@ -43,7 +43,7 @@ export function rethrowUniquePropertyName(error: unknown): never {
     error instanceof Prisma.PrismaClientKnownRequestError &&
     error.code === 'P2002'
   ) {
-    throw conflict('Ya existe una propiedad con ese nombre.');
+    throw conflict('A property with that name already exists.');
   }
   throw error;
 }

@@ -30,7 +30,7 @@ export class TaskService {
   /** Returns one task or a domain-level missing-resource error. */
   async getById(id: string): Promise<TaskWithStatus> {
     const task = await this.repository.findById(idSchema.parse(id));
-    if (!task) throw notFound('La tarea');
+    if (!task) throw notFound('The task');
     return task;
   }
 

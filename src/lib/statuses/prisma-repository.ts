@@ -46,7 +46,7 @@ export class PrismaStatusRepository implements StatusRepository {
       const current = await transaction.status.findUnique({
         where: { id: input.id },
       });
-      if (!current) throw notFound('El estado');
+      if (!current) throw notFound('The status');
       const status = await transaction.status.update({
         where: { id: input.id },
         data: {
@@ -79,11 +79,11 @@ export class PrismaStatusRepository implements StatusRepository {
       const taskCount = await transaction.task.count({
         where: { statusId: id },
       });
-      if (!status) throw notFound('El estado');
+      if (!status) throw notFound('The status');
       if (statusCount <= 1)
-        throw conflict('El tablero debe conservar al menos un estado.');
+        throw conflict('The board must keep at least one status.');
       if (taskCount > 0)
-        throw conflict('Mueve o elimina las tareas antes de borrar el estado.');
+        throw conflict('Move or delete the tasks before deleting the status.');
       await transaction.status.delete({ where: { id } });
       const remaining = await transaction.status.findMany({
         orderBy: { position: 'asc' },
@@ -106,7 +106,7 @@ export class PrismaStatusRepository implements StatusRepository {
         expected.length !== received.length ||
         expected.some((id, index) => id !== received[index])
       ) {
-        throw conflict('El orden debe incluir exactamente todos los estados.');
+        throw conflict('The order must include every status exactly once.');
       }
       await resequence(transaction, input.statusIds);
     });

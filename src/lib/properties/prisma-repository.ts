@@ -49,7 +49,7 @@ export class PrismaPropertyRepository implements PropertyRepository {
             await transaction.taskPropertyDefinition.count();
           if (propertyCount >= MAX_TASK_PROPERTIES) {
             throw conflict(
-              `El tablero admite como máximo ${MAX_TASK_PROPERTIES} propiedades.`,
+              `The board supports at most ${MAX_TASK_PROPERTIES} properties.`,
             );
           }
           const aggregate = await transaction.taskPropertyDefinition.aggregate({
@@ -79,7 +79,7 @@ export class PrismaPropertyRepository implements PropertyRepository {
           const current = await transaction.taskPropertyDefinition.findUnique({
             where: { id: input.id },
           });
-          if (!current) throw notFound('La propiedad');
+          if (!current) throw notFound('The property');
           const nextType = input.type ?? current.type;
           const currentOptions = deserializeOptions(current.options);
           const nextOptions =
@@ -115,7 +115,7 @@ export class PrismaPropertyRepository implements PropertyRepository {
       const result = await transaction.taskPropertyDefinition.deleteMany({
         where: { id },
       });
-      if (result.count === 0) throw notFound('La propiedad');
+      if (result.count === 0) throw notFound('The property');
       const remaining = await transaction.taskPropertyDefinition.findMany({
         orderBy: { position: 'asc' },
         select: { id: true },
@@ -139,9 +139,7 @@ export class PrismaPropertyRepository implements PropertyRepository {
         expected.length !== received.length ||
         expected.some((id, index) => id !== received[index])
       ) {
-        throw conflict(
-          'El orden debe incluir exactamente todas las propiedades.',
-        );
+        throw conflict('The order must include every property exactly once.');
       }
       await resequenceProperties(transaction, input.propertyIds);
     });
@@ -153,7 +151,7 @@ export class PrismaPropertyRepository implements PropertyRepository {
   ): Promise<TaskPropertyValueData> {
     return runSerializable(this.client, async (transaction) => {
       if (!(await transaction.task.findUnique({ where: { id: input.taskId } })))
-        throw notFound('La tarea');
+        throw notFound('The task');
       const [value] = await persistTaskPropertyValues(
         transaction,
         input.taskId,
@@ -169,6 +167,6 @@ export class PrismaPropertyRepository implements PropertyRepository {
     const result = await this.client.taskPropertyValue.deleteMany({
       where: { taskId, propertyId },
     });
-    if (result.count === 0) throw notFound('El valor de la propiedad');
+    if (result.count === 0) throw notFound('The property value');
   }
 }

@@ -27,5 +27,5 @@ export async function runSerializable<T>(
       await waitForTransactionRetry(attempt);
     }
   }
-  throw new Error('No se pudo completar la transacción.');
+  throw new Error('The transaction could not be completed.');
 }

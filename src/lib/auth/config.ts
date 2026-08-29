@@ -7,7 +7,7 @@ export type AuthConfig = {
 export function getAuthConfig(): AuthConfig {
   const password = process.env.PASSWORD;
   const secret = process.env.AUTH_SECRET;
-  if (!password) throw new Error('PASSWORD es obligatoria.');
-  if (!secret) throw new Error('AUTH_SECRET es obligatoria.');
+  if (!password) throw new Error('PASSWORD is required.');
+  if (!secret) throw new Error('AUTH_SECRET is required.');
   return { password, secret };
 }

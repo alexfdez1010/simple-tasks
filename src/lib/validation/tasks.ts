@@ -35,7 +35,7 @@ export const updateTaskSchema = z
   .refine(
     (input) => (input.statusId === undefined) === (input.index === undefined),
     {
-      message: 'El estado y la posición deben enviarse juntos.',
+      message: 'Status and position must be provided together.',
       path: ['statusId'],
     },
   );
