@@ -1,13 +1,34 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider      = "prisma-client-js"
-  output        = "../generated/prisma"
+  output        = "../src/generated/prisma"
   binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+model Status {
+  id         String  @id @default(cuid())
+  name       String  @unique
+  color      String
+  position   Int
+  isTerminal Boolean @default(false)
+  tasks      Task[]
+
+  @@index([position])
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  dueDate     DateTime?
+  statusId    String
+  position    Int
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  status      Status    @relation(fields: [statusId], references: [id], onDelete: Restrict)
+
+  @@index([statusId, position])
+  @@index([statusId, completedAt(sort: Desc)])
 }
 
 datasource db {
