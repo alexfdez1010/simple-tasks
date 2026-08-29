@@ -22,7 +22,8 @@ the accessible primitives; Tailwind CSS 4 provides layout and product styling.
   density of a well-kept workshop board.
 - What makes this product recognisable: Warm paper surfaces, ink typography, and
   a slim configurable colour rail that follows each workflow state.
-- Density: Balanced; compact controls with comfortable task-card spacing.
+- Density: Compact; task cards expose only scannable information and expand into
+  the edit dialog for detail.
 - Shape language: Soft rectangles with restrained 10–16 px radii.
 
 ## 3. Foundations
@@ -59,9 +60,10 @@ large text, component boundaries, and focus indicators.
 - Base spacing unit: 4 px.
 - Spacing scale: 4, 8, 12, 16, 24, 32, 48 px.
 - Border radii: 10 px controls, 14 px cards, 16 px panels.
-- Border treatment: 1 px low-contrast ink tint; never a border on every layer.
-- Shadow/elevation levels: No shadow by default; one subtle lifted shadow while
-  dragging or for modal overlays.
+- Border treatment: Use only for input boundaries, dashed empty states, and
+  structural separators. Columns and task cards do not receive decorative boxes.
+- Shadow/elevation levels: A very soft card shadow replaces card borders; one
+  clearer lifted shadow appears while dragging or for modal overlays.
 - Focus ring treatment: 2 px accent ring with 2 px canvas offset.
 
 ### Motion
@@ -80,7 +82,7 @@ large text, component boundaries, and focus indicators.
 | Link              | `Link`                      | primary, secondary                | Navigation and documentation only            |
 | Card              | `Card` compound API         | secondary, tertiary               | Tasks and focused panels                     |
 | Form field        | `TextField`, `TextArea`     | default                           | Visible labels; descriptions for constraints |
-| Selection         | `Select`                    | single, multiple                  | Workflow state and configurable properties   |
+| Selection         | `Select`                    | single, multiple                  | Configurable properties only                 |
 | Property value    | `TextField`, `Select`       | text, number, date, select, multi | Generated from a focused property definition |
 | Overlay           | `Modal` compound API        | default                           | Create, edit, and state settings             |
 | Feedback          | `Alert`, inline field error | success, danger                   | Specific, short, actionable                  |
@@ -101,6 +103,10 @@ Component rules:
   empty, duplicate, and whitespace-only options are rejected inline.
 - Property values: Optional by default. Empty values are omitted from cards so
   configured metadata never overwhelms the task title and due date.
+- Task transitions: Dragging is the only state-change control. The drag handle
+  supports pointer, touch, and keyboard operation and announces the destination.
+- Task cards: Keep title and edit affordance on the first row; clamp long
+  descriptions and render property values as a quiet, wrapping metadata line.
 - Responsive behavior: Modals become near-full-width sheets on small screens;
   the Kanban remains horizontally scrollable with 84vw columns and snap points.
 
@@ -141,6 +147,8 @@ Component rules:
 | 2026-08-29 | Limit every terminal state to its 20 most recently updated tasks | Keeps completed work available without overwhelming the board        | Product |
 | 2026-08-29 | Model custom properties as definitions plus typed task values    | Keeps the board extensible without adding permanent task fields      | Product |
 | 2026-08-29 | Support text, number, date, select, and multi-select initially   | Covers useful metadata while preserving the deliberately small scope | Product |
+| 2026-08-29 | Remove decorative borders and the per-card state selector        | Makes the board lighter and keeps state changes spatial through drag | Design  |
+| 2026-08-29 | Reduce card height and metadata density                          | More tasks remain scannable without turning cards into mini forms    | Design  |
 
 ## 8. Review checklist
 
