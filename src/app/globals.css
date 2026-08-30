@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @import '@heroui/styles';
+@import '../components/board/board-shell.css';
 @import '../components/board/board.css';
+@import '../components/board/task-card.css';
 
 :root {
   --background: oklch(0.975 0.008 80);

@@ -63,6 +63,7 @@ async function selectOption(
 async function deleteLastProperty(page: Page): Promise<void> {
   await page.getByRole('button', { name: /^Settings/ }).click();
   const settings = page.getByRole('dialog', { name: /^Settings/ });
+  await expect(settings).toBeVisible();
   await settings.getByRole('tab', { name: 'Properties' }).click();
   await settings
     .getByRole('button', { name: 'Delete property' })
@@ -76,6 +77,7 @@ async function deleteLastProperty(page: Page): Promise<void> {
   );
   await confirmation.getByRole('button', { name: 'Delete property' }).click();
   await persistence;
+  await expect(settings).toHaveCount(0);
 }
 
 test.describe('mobile configurable properties', () => {
@@ -155,6 +157,10 @@ test.describe('mobile configurable properties', () => {
     );
     await confirmation.getByRole('button', { name: 'Delete task' }).click();
     await taskDeletion;
+    await expect(deleteDialog).toHaveCount(0);
+    await expect(page.getByRole('article', { name: TASK_TITLE })).toHaveCount(
+      0,
+    );
 
     await deleteLastProperty(page);
     await deleteLastProperty(page);

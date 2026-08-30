@@ -115,7 +115,11 @@ export function useTaskMutations({
     const before = findTask(snapshot, taskId);
     const after = findTask(finalBoard, taskId);
     if (!before || !after) return;
-    if (before.status.id === after.status.id && after.status.isTerminal) return;
+    if (before.status.id === after.status.id && after.status.isTerminal) {
+      setStatuses(snapshot);
+      announce(`${after.status.name} stays ordered by completion time.`);
+      return;
+    }
     const result =
       before.status.id === after.status.id
         ? await reorderTasksAction({

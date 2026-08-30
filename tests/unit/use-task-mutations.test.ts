@@ -133,8 +133,8 @@ describe('useTaskMutations', () => {
     expect(refresh).toHaveBeenCalledOnce();
   });
 
-  /** Proves terminal-column drags remain local and never persist unsupported order. */
-  it('does not persist reordering within a terminal status', async () => {
+  /** Proves terminal-column drags restore the canonical completion-time order. */
+  it('restores reordering within a terminal status without persistence', async () => {
     const terminalTasks = BOARD[0]!.tasks.map((task, index) => ({
       ...task,
       id: `done-${index}`,
@@ -145,10 +145,11 @@ describe('useTaskMutations', () => {
     snapshot[1]!.tasks = terminalTasks;
     const finalBoard = structuredClone(snapshot);
     finalBoard[1]!.tasks.reverse();
+    const announce = vi.fn();
     const setStatuses = vi.fn();
     const refresh = vi.fn();
     const mutations = useTaskMutations({
-      announce: vi.fn(),
+      announce,
       refresh,
       setStatuses,
       statuses: snapshot,
@@ -158,7 +159,11 @@ describe('useTaskMutations', () => {
 
     expect(actions.move).not.toHaveBeenCalled();
     expect(actions.reorder).not.toHaveBeenCalled();
-    expect(setStatuses).not.toHaveBeenCalled();
+    expect(setStatuses).toHaveBeenCalledOnce();
+    expect(setStatuses).toHaveBeenCalledWith(snapshot);
+    expect(announce).toHaveBeenCalledWith(
+      'Done stays ordered by completion time.',
+    );
     expect(refresh).not.toHaveBeenCalled();
   });
 

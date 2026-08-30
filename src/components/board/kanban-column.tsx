@@ -47,7 +47,7 @@ export function KanbanColumn({
       aria-labelledby={`status-${status.id}`}
       style={{ '--status-color': status.color } as React.CSSProperties}
     >
-      <header className="flex items-start justify-between gap-2 px-2">
+      <header className="kanban-column-header">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
             <span className="status-dot" aria-hidden="true" />
@@ -57,7 +57,10 @@ export function KanbanColumn({
             >
               {status.name}
             </h2>
-            <span className="font-mono text-[10px] text-muted">
+            <span
+              className="status-count"
+              aria-label={`${status.tasks.length} ${status.tasks.length === 1 ? 'task' : 'tasks'}`}
+            >
               {status.tasks.length}
             </span>
           </div>
@@ -88,16 +91,23 @@ export function KanbanColumn({
 
       <div
         ref={droppableRef}
-        className="flex min-h-28 flex-col gap-2 pt-3"
+        className="kanban-task-list"
         role="list"
+        aria-label={`${status.name} tasks`}
       >
         {status.tasks.length === 0 ? (
-          <div className="grid min-h-20 place-items-center px-3 text-center text-xs text-muted">
-            No tasks
+          <div className="kanban-empty-state">
+            <span className="kanban-empty-icon" aria-hidden="true">
+              <PlusIcon className="size-4" />
+            </span>
+            <p className="font-medium text-foreground">No tasks here</p>
+            <p className="text-[11px] leading-4 text-muted">
+              Add one or move work into this stage.
+            </p>
           </div>
         ) : (
           status.tasks.map((task, index) => (
-            <div key={task.id} role="listitem">
+            <div className="kanban-task-item" key={task.id} role="listitem">
               <TaskCard
                 task={task}
                 index={index}

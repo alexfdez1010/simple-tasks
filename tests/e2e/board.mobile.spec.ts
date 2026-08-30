@@ -21,7 +21,7 @@ async function touchDragTask(
   const handle = card.getByRole('button', { name: `Drag ${title}` });
   const target = page
     .getByRole('region', { name: targetStatus })
-    .getByRole('list');
+    .getByRole('list', { name: `${targetStatus} tasks` });
   await handle.evaluate((element) =>
     element.scrollIntoView({ block: 'center', inline: 'center' }),
   );

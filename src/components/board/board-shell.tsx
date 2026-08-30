@@ -1,11 +1,13 @@
 'use client';
 
-import { Button, Link } from '@heroui/react';
+import { Button, Link, ProgressBar } from '@heroui/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { BoardSettings } from '@/components/board/board-settings';
+import { getBoardMetrics } from '@/components/board/board-metrics';
 import { KanbanBoard } from '@/components/board/kanban-board';
+import { BoardIcon } from '@/components/board/icons';
 import type { BoardStatus, PropertyDefinition } from '@/components/board/types';
 import { usePropertyMutations } from '@/components/board/use-property-mutations';
 import { useStatusMutations } from '@/components/board/use-status-mutations';
@@ -31,10 +33,7 @@ export function BoardShell({
   const [statuses, setStatuses] = useState(initialStatuses);
   const [properties, setProperties] = useState(initialProperties);
   const [announcement, setAnnouncement] = useState('');
-  const taskCount = statuses.reduce(
-    (total, status) => total + status.tasks.length,
-    0,
-  );
+  const metrics = getBoardMetrics(statuses);
   const taskMutations = useTaskMutations({
     statuses,
     setStatuses,
@@ -55,18 +54,25 @@ export function BoardShell({
   });
 
   return (
-    <main className="flex min-h-dvh flex-col bg-background text-foreground">
-      <header className="border-b border-divider bg-background/90 px-4 py-3 backdrop-blur-sm sm:px-6">
-        <div className="mx-auto flex max-w-[1600px] flex-wrap items-center justify-between gap-3">
-          <div className="min-w-0">
-            <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">
-              Tasks
-            </h1>
-            <p className="hidden text-sm text-muted sm:block">
-              {taskCount} {taskCount === 1 ? 'task' : 'tasks'} on the board
-            </p>
+    <div className="board-app min-h-dvh bg-background text-foreground">
+      <a className="skip-link" href="#task-board">
+        Skip to task board
+      </a>
+      <header className="board-toolbar-wrap">
+        <div className="board-toolbar">
+          <div className="flex min-w-0 items-center gap-3">
+            <span className="board-mark" aria-hidden="true">
+              <BoardIcon className="size-5" />
+            </span>
+            <div className="min-w-0">
+              <p className="board-eyebrow">Workspace / Flow</p>
+              <h1 className="text-xl font-semibold tracking-[-0.035em] sm:text-2xl">
+                Tasks
+              </h1>
+            </div>
           </div>
-          <div className="ms-auto flex items-center gap-1.5 sm:gap-2">
+
+          <div className="board-actions">
             <Link className="px-2 text-sm font-medium" href="/skill">
               AI
             </Link>
@@ -88,10 +94,36 @@ export function BoardShell({
               </Button>
             </form>
           </div>
+
+          <div className="board-metrics" aria-label="Visible board summary">
+            <p className="board-metric-copy">
+              <span className="font-semibold text-foreground tabular-nums">
+                {metrics.activeCount}
+              </span>{' '}
+              active
+              <span aria-hidden="true"> · </span>
+              <span className="font-semibold text-foreground tabular-nums">
+                {metrics.completedCount}
+              </span>{' '}
+              finished
+            </p>
+            <ProgressBar
+              aria-label={`${metrics.completionPercentage}% of visible tasks finished`}
+              className="board-progress"
+              value={metrics.completionPercentage}
+            >
+              <ProgressBar.Track className="board-progress-track">
+                <ProgressBar.Fill className="board-progress-fill" />
+              </ProgressBar.Track>
+            </ProgressBar>
+            <p className="board-visible-count tabular-nums">
+              {metrics.visibleCount} visible
+            </p>
+          </div>
         </div>
       </header>
 
-      <div className="flex-1 overflow-hidden py-5 sm:py-6">
+      <main id="task-board" className="board-workspace">
         <KanbanBoard
           statuses={statuses}
           properties={properties}
@@ -101,10 +133,10 @@ export function BoardShell({
           onDelete={taskMutations.remove}
           onPersistDrag={taskMutations.persistDrag}
         />
-      </div>
+      </main>
       <p className="sr-only" aria-live="polite" aria-atomic="true">
         {announcement}
       </p>
-    </main>
+    </div>
   );
 }

@@ -37,7 +37,7 @@ async function dragTask(
   const handle = page.getByRole('button', { name: `Drag ${title}` });
   const targetList = page
     .getByRole('region', { name: targetStatus })
-    .getByRole('list');
+    .getByRole('list', { name: `${targetStatus} tasks` });
   const sourceBox = await handle.boundingBox();
   const targetBox = await targetList.boundingBox();
   if (!sourceBox || !targetBox)
@@ -133,10 +133,13 @@ test.describe('desktop Kanban board', () => {
         .getByRole('region', { name: 'To do' })
         .getByRole('article', { name: 'E2E Markdown' }),
     ).toBeVisible();
-    await expect(created.locator('.task-card')).toHaveCSS(
-      'background-image',
-      /linear-gradient/,
-    );
+    const statusRailColor = await created
+      .locator('.task-card')
+      .evaluate(
+        (element) => getComputedStyle(element, '::before').backgroundColor,
+      );
+    expect(statusRailColor).not.toBe('rgba(0, 0, 0, 0)');
+    expect(statusRailColor).not.toBe('transparent');
     await expect(created.getByText('Important')).toBeVisible();
     await expect(created.getByText('Due Sep 5, 2026')).toBeVisible();
 

@@ -46,11 +46,11 @@
     "@heroui/styles": "^3.2.4",
     "@internationalized/date": "^3.12.3",
     "@modelcontextprotocol/sdk": "1.26.0",
-    "@prisma/client": "^6.16.3",
+    "@prisma/client": "^6.19.3",
     "@react-aria/i18n": "^3.13.1",
     "@react-aria/ssr": "^3.10.1",
     "@react-aria/utils": "^3.34.1",
-    "dotenv": "^17.2.3",
+    "dotenv": "^17.4.2",
     "mcp-handler": "^1.1.0",
     "next": "^16.3.3",
     "react": "19.2.8",
@@ -60,21 +60,31 @@
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
     "server-only": "0.0.1",
-    "zod": "^3.24.1"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@playwright/test": "^1.55.1",
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@playwright/test": "^1.62.1",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^20.19.43",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.5",
-    "eslint": "^9",
+    "eslint": "^9.39.5",
     "eslint-config-next": "16.3.3",
     "heroui-cli": "^3.0.4",
-    "prisma": "^6.16.3",
-    "start-server-and-test": "^2.1.2",
-    "tailwindcss": "^4",
-    "typescript": "^5",
-    "vitest": "^3.2.4"
+    "prisma": "^6.19.3",
+    "start-server-and-test": "^2.1.5",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.7"
+  },
+  "overrides": {
+    "deepmerge-ts": "8.0.2",
+    "defu": "6.1.7",
+    "flatted": "3.4.4",
+    "nanoid": "3.3.18",
+    "postcss": "8.5.26",
+    "rollup": "4.63.1",
+    "tar": "7.5.22",
+    "vite": "7.3.6"
   }
 }

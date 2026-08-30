@@ -11,7 +11,7 @@ the accessible primitives; Tailwind CSS 4 provides layout and product styling.
 - Primary audience: A single person or small trusted team using one shared board.
 - Key user needs: See the whole workflow, create or edit quickly, and move tasks
   reliably on pointer, touch, or keyboard.
-- Brand personality: Calm, precise, useful, quietly crafted.
+- Brand personality: Calm, precise, tactile, quietly confident.
 - Words and patterns to avoid: Marketing copy, gamification, jargon, decorative
   dashboards, and controls without an immediate task.
 
@@ -20,11 +20,13 @@ the accessible primitives; Tailwind CSS 4 provides layout and product styling.
 - Design principles, in priority order: Clarity, speed, restraint, accessibility.
 - Reference products or visual inspirations: Editorial index cards and the calm
   density of a well-kept workshop board.
-- What makes this product recognisable: Warm paper surfaces, ink typography, and
-  a slim configurable colour rail that follows each workflow state.
+- What makes this product recognisable: A warm workflow-studio canvas, ink
+  typography, softly recessed columns, and configurable colour signals that
+  follow each workflow state.
 - Density: Compact; task cards expose only scannable information and expand into
   the edit dialog for detail.
-- Shape language: Soft rectangles with restrained 10–16 px radii.
+- Shape language: Soft rectangles with nested 10–20 px radii; outer workspace
+  surfaces are softer than the controls and cards within them.
 
 ## 3. Foundations
 
@@ -38,6 +40,12 @@ the accessible primitives; Tailwind CSS 4 provides layout and product styling.
 | `accent`     | `oklch(0.54 0.11 155)`  | `oklch(0.72 0.11 155)` | Primary action   |
 | `muted`      | `oklch(0.52 0.018 65)`  | `oklch(0.72 0.015 75)` | Secondary text   |
 | `danger`     | `oklch(0.55 0.19 28)`   | `oklch(0.7 0.16 28)`   | Destructive UI   |
+
+The canvas uses a low-contrast radial wash and a sparse dot grid to create depth
+without competing with content. These textures are CSS-only, remain below 5%
+contrast, and disappear in forced-colours mode. The primary accent stays green;
+workflow colours are local wayfinding signals rather than additional brand
+accents.
 
 Workflow colours are user-configurable hex values. They are rendered as rails,
 dots, and restrained card-to-surface gradients, never as body-text colour. Text
@@ -59,11 +67,14 @@ large text, component boundaries, and focus indicators.
 
 - Base spacing unit: 4 px.
 - Spacing scale: 4, 8, 12, 16, 24, 32, 48 px.
-- Border radii: 10 px controls, 14 px cards, 16 px panels.
+- Border radii: 10 px controls, 14 px cards, 18 px columns, 20 px workspace
+  panels.
 - Border treatment: Use only for input boundaries, dashed empty states, and
   structural separators. Columns and task cards do not receive decorative boxes.
-- Shadow/elevation levels: A very soft card shadow replaces card borders; one
-  clearer lifted shadow appears while dragging or for modal overlays.
+- Shadow/elevation levels: A recessed inner shadow defines each column well; a
+  tinted two-layer shadow lifts task cards; a clearer lifted shadow appears
+  while dragging or for modal overlays. All shadows share a top-left light
+  source.
 - Focus ring treatment: 2 px accent ring with 2 px canvas offset.
 
 ### Motion
@@ -111,14 +122,24 @@ Component rules:
   configured metadata never overwhelms the task title and due date.
 - Task transitions: Dragging is the only state-change control. The drag handle
   supports pointer, touch, and keyboard operation and announces the destination.
+- Terminal ordering: Terminal columns are ordered by completion time. A drag
+  within one terminal column returns to the persisted order and explains why;
+  dragging out to another column remains available.
 - Task creation: Every workflow column exposes an Add action. It opens the shared
   task dialog with that column preselected; the state remains implicit and cannot
   be changed from the form.
-- Task cards: Keep title and edit affordance on the first row; clamp long
-  descriptions, render property values as a quiet wrapping metadata line, and
-  use a low-opacity gradient derived from the owning workflow colour.
+- Task cards: Keep title and edit affordance on the first row; use a narrow
+  workflow-colour cap, clamp long descriptions with a visible fade rather than
+  cutting content abruptly, render property values as a quiet wrapping metadata
+  line, and group dates in a compact footer chip.
+- Board header: Use one floating utility bar with the product mark, total and
+  active task context, a compact completion meter, and existing AI/settings/
+  sign-out actions. Metrics are descriptive, never gamified.
+- Column wells: Give each workflow a stable surface, a status-colour top edge,
+  a named header, a tabular count, and a purposeful empty state. The well must
+  remain visually legible during drag-over without relying on colour alone.
 - Responsive behavior: Modals become near-full-width sheets on small screens;
-  the Kanban remains horizontally scrollable with 84vw columns and snap points.
+  the Kanban remains horizontally scrollable with 88vw columns and snap points.
 
 ## 5. Accessibility and content
 
@@ -126,6 +147,8 @@ Component rules:
   be moved and reordered with keyboard drag controls; Escape closes overlays.
 - Screen-reader and semantic HTML requirements: Landmarks, named lists/regions,
   task cards as articles, live announcements for moves, and real form labels.
+- Drag alternatives: The keyboard drag contract remains available and terminal
+  ordering constraints are announced through the same polite live region.
 - Minimum contrast target: WCAG 2.2 AA.
 - Localization and text expansion rules: English UI; controls tolerate 40% text
   expansion and dates use locale-aware formatting.
@@ -135,12 +158,15 @@ Component rules:
 
 ## 6. Layout and responsive behavior
 
-- Container widths: Full viewport board; header content capped at 1600 px.
+- Container widths: Full viewport board; workspace content capped at 1800 px so
+  columns retain readable widths on very large displays.
 - Breakpoints: Tailwind defaults, with the primary mode shift at 768 px.
 - Navigation behavior by breakpoint: One compact top bar at all sizes; secondary
   settings actions collapse to icon-labelled controls on mobile.
 - Mobile-first exceptions: Kanban columns preserve task context through horizontal
-  scrolling rather than stacking every workflow into a very long page.
+  scrolling rather than stacking every workflow into a very long page. Columns
+  occupy 88vw with 16 px gutters and scroll snapping; the utility bar wraps
+  metrics beneath the brand/actions row without hiding task controls.
 - Data-density strategy: Active states show all tasks. Terminal states show only
   their 20 most recently updated tasks, with the limit explained in the column.
 - Property-density strategy: Task cards show non-empty values in a compact
@@ -162,6 +188,9 @@ Component rules:
 | 2026-08-29 | Add per-column creation and status-tinted card gradients         | Makes placement faster and workflow ownership visually memorable      | Design   |
 | 2026-08-29 | Replace native date, colour, number, and confirmation controls   | Keeps interaction styling and accessibility consistent through HeroUI | Design   |
 | 2026-08-29 | Reveal and copy the MCP token only from the protected setup page | Makes agent setup easier without placing the secret in static output  | Security |
+| 2026-08-30 | Treat the board as a tactile workflow studio with recessed wells | Adds hierarchy and depth while keeping task content primary           | Design   |
+| 2026-08-30 | Show active/finished context and a restrained completion meter   | Makes board state scannable without introducing dashboard clutter     | Product  |
+| 2026-08-30 | Restore completion-time order after same-terminal-column drags   | Prevents optimistic UI from displaying an order that cannot persist   | Product  |
 
 ## 8. Review checklist
 
@@ -169,5 +198,5 @@ Component rules:
 - [x] Tokens are semantic and have light/dark values where needed.
 - [x] Keyboard, focus, contrast, and reduced-motion behavior are defined.
 - [x] Approved HeroUI primitives and variants are listed.
-- [ ] A representative page has been checked at mobile and desktop widths.
+- [x] A representative page has been checked at mobile and desktop widths.
 - [x] The design system is approved as the implementation baseline.

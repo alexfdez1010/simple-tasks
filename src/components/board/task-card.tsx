@@ -70,17 +70,17 @@ export function TaskCard({
       className={`task-card-wrapper ${isDragging ? 'is-dragging' : ''}`}
       aria-label={task.title}
     >
-      <Card className="task-card gap-2 border-0 p-3" variant="default">
-        <Card.Header className="flex-row items-start gap-2">
+      <Card className="task-card gap-0 border-0 p-0" variant="default">
+        <Card.Header className="task-card-header flex-row items-start gap-2">
           <button
             ref={handleRef}
             type="button"
-            className="drag-handle grid size-7 shrink-0 place-items-center rounded-md text-muted"
+            className="drag-handle grid size-8 shrink-0 place-items-center rounded-lg text-muted"
             aria-label={`Drag ${task.title}`}
           >
             <GripIcon className="size-3.5" />
           </button>
-          <Card.Title className="min-w-0 flex-1 text-sm leading-5">
+          <Card.Title className="min-w-0 flex-1 text-[14px] leading-5 tracking-[-0.01em]">
             {task.title}
           </Card.Title>
           <TaskDialog
@@ -92,13 +92,13 @@ export function TaskCard({
         </Card.Header>
 
         {task.description ? (
-          <Card.Content className="task-description-preview ps-9 text-[13px] text-muted">
+          <Card.Content className="task-description-preview mx-3 mb-2.5 ms-12 text-[13px] text-muted">
             <Markdown>{task.description}</Markdown>
           </Card.Content>
         ) : null}
 
         {task.propertyValues.length > 0 ? (
-          <Card.Content className="ps-9">
+          <Card.Content className="mx-3 mb-2.5 ms-12">
             <TaskPropertySummary
               properties={properties}
               values={task.propertyValues}
@@ -107,10 +107,12 @@ export function TaskCard({
         ) : null}
 
         {task.dueDate ? (
-          <Card.Footer className="ps-9">
-            <p className="flex items-center gap-1 font-mono text-[11px] leading-4 text-muted">
+          <Card.Footer className="task-card-footer ms-12">
+            <p className="task-date-chip">
               <CalendarIcon className="size-3" />
-              <span>Due {formatDueDate(task.dueDate)}</span>
+              <time dateTime={task.dueDate}>
+                Due {formatDueDate(task.dueDate)}
+              </time>
             </p>
           </Card.Footer>
         ) : null}
