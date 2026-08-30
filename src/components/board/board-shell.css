@@ -69,15 +69,12 @@
 }
 
 .board-mark {
-  display: grid;
   width: 2.5rem;
   height: 2.5rem;
   flex: none;
-  place-items: center;
-  border-radius: 0.75rem;
-  background: var(--foreground);
-  color: var(--background);
-  box-shadow: 0 5px 14px color-mix(in oklab, var(--foreground) 18%, transparent);
+  filter: drop-shadow(
+    0 5px 9px color-mix(in oklab, var(--foreground) 14%, transparent)
+  );
 }
 
 .board-actions {

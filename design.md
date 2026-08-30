@@ -137,8 +137,9 @@ Component rules:
   sign-out actions. Metrics are descriptive, never gamified. Do not add an
   eyebrow or category label when the page title already communicates the
   product context.
-- Brand icon: Reuse the workflow-board product mark as the browser app icon so
-  the tab and in-product identity remain consistent.
+- Brand icon: Use the supplied green-and-ivory checkmark artwork as the single
+  source for both the in-product mark and browser app icon. Do not redraw or
+  substitute it with a different workflow symbol.
 - Settings continuity: Successful create, update, delete, and reorder actions
   reconcile board data without dismissing the settings modal. Only the close
   trigger, Done action, Escape, or backdrop dismissal closes it.
@@ -182,24 +183,24 @@ Component rules:
 
 ## 7. Decision log
 
-| Date       | Decision                                                          | Reason                                                                | Owner    |
-| ---------- | ----------------------------------------------------------------- | --------------------------------------------------------------------- | -------- |
-| 2026-08-29 | Keep a single shared-password session instead of user accounts    | Matches the requested private, simple board                           | Product  |
-| 2026-08-29 | Use horizontally scrollable columns on mobile                     | Preserves the spatial workflow and supports touch drag                | Design   |
-| 2026-08-29 | Treat workflow colours as accents, not text colours               | User-selected colours cannot guarantee readable contrast              | Design   |
-| 2026-08-29 | Limit every terminal state to its 20 most recently updated tasks  | Keeps completed work available without overwhelming the board         | Product  |
-| 2026-08-29 | Model custom properties as definitions plus typed task values     | Keeps the board extensible without adding permanent task fields       | Product  |
-| 2026-08-29 | Support text, number, date, select, and multi-select initially    | Covers useful metadata while preserving the deliberately small scope  | Product  |
-| 2026-08-29 | Remove decorative borders and the per-card state selector         | Makes the board lighter and keeps state changes spatial through drag  | Design   |
-| 2026-08-29 | Reduce card height and metadata density                           | More tasks remain scannable without turning cards into mini forms     | Design   |
-| 2026-08-29 | Add per-column creation and status-tinted card gradients          | Makes placement faster and workflow ownership visually memorable      | Design   |
-| 2026-08-29 | Replace native date, colour, number, and confirmation controls    | Keeps interaction styling and accessibility consistent through HeroUI | Design   |
-| 2026-08-29 | Reveal and copy the MCP token only from the protected setup page  | Makes agent setup easier without placing the secret in static output  | Security |
-| 2026-08-30 | Treat the board as a tactile workflow studio with recessed wells  | Adds hierarchy and depth while keeping task content primary           | Design   |
-| 2026-08-30 | Show active/finished context and a restrained completion meter    | Makes board state scannable without introducing dashboard clutter     | Product  |
-| 2026-08-30 | Restore completion-time order after same-terminal-column drags    | Prevents optimistic UI from displaying an order that cannot persist   | Product  |
-| 2026-08-30 | Keep settings mounted while refreshed snapshots reconcile         | Prevents successful mutations from unexpectedly dismissing the dialog | Product  |
-| 2026-08-30 | Reuse the board mark as the browser icon and remove header filler | Creates a clearer, consistent identity without redundant copy         | Design   |
+| Date       | Decision                                                         | Reason                                                                | Owner    |
+| ---------- | ---------------------------------------------------------------- | --------------------------------------------------------------------- | -------- |
+| 2026-08-29 | Keep a single shared-password session instead of user accounts   | Matches the requested private, simple board                           | Product  |
+| 2026-08-29 | Use horizontally scrollable columns on mobile                    | Preserves the spatial workflow and supports touch drag                | Design   |
+| 2026-08-29 | Treat workflow colours as accents, not text colours              | User-selected colours cannot guarantee readable contrast              | Design   |
+| 2026-08-29 | Limit every terminal state to its 20 most recently updated tasks | Keeps completed work available without overwhelming the board         | Product  |
+| 2026-08-29 | Model custom properties as definitions plus typed task values    | Keeps the board extensible without adding permanent task fields       | Product  |
+| 2026-08-29 | Support text, number, date, select, and multi-select initially   | Covers useful metadata while preserving the deliberately small scope  | Product  |
+| 2026-08-29 | Remove decorative borders and the per-card state selector        | Makes the board lighter and keeps state changes spatial through drag  | Design   |
+| 2026-08-29 | Reduce card height and metadata density                          | More tasks remain scannable without turning cards into mini forms     | Design   |
+| 2026-08-29 | Add per-column creation and status-tinted card gradients         | Makes placement faster and workflow ownership visually memorable      | Design   |
+| 2026-08-29 | Replace native date, colour, number, and confirmation controls   | Keeps interaction styling and accessibility consistent through HeroUI | Design   |
+| 2026-08-29 | Reveal and copy the MCP token only from the protected setup page | Makes agent setup easier without placing the secret in static output  | Security |
+| 2026-08-30 | Treat the board as a tactile workflow studio with recessed wells | Adds hierarchy and depth while keeping task content primary           | Design   |
+| 2026-08-30 | Show active/finished context and a restrained completion meter   | Makes board state scannable without introducing dashboard clutter     | Product  |
+| 2026-08-30 | Restore completion-time order after same-terminal-column drags   | Prevents optimistic UI from displaying an order that cannot persist   | Product  |
+| 2026-08-30 | Keep settings mounted while refreshed snapshots reconcile        | Prevents successful mutations from unexpectedly dismissing the dialog | Product  |
+| 2026-08-30 | Use the supplied green checkmark as the shared app and tab icon  | Preserves the intended identity with one artwork source               | Design   |
 
 ## 8. Review checklist
 

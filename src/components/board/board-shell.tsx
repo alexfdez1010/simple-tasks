@@ -1,13 +1,14 @@
 'use client';
 
 import { Button, Link, ProgressBar } from '@heroui/react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import appIcon from '@/app/icon.png';
 import { BoardSettings } from '@/components/board/board-settings';
 import { getBoardMetrics } from '@/components/board/board-metrics';
 import { KanbanBoard } from '@/components/board/kanban-board';
-import { BoardIcon } from '@/components/board/icons';
 import type { BoardStatus, PropertyDefinition } from '@/components/board/types';
 import { usePropertyMutations } from '@/components/board/use-property-mutations';
 import { useServerReconciledState } from '@/components/board/use-server-reconciled-state';
@@ -65,7 +66,13 @@ export function BoardShell({
         <div className="board-toolbar">
           <div className="flex min-w-0 items-center gap-3">
             <span className="board-mark" aria-hidden="true">
-              <BoardIcon className="size-5" />
+              <Image
+                alt=""
+                className="size-full"
+                priority
+                sizes="40px"
+                src={appIcon}
+              />
             </span>
             <h1 className="min-w-0 text-xl font-semibold tracking-[-0.035em] sm:text-2xl">
               Tasks

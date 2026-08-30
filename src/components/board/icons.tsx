@@ -2,33 +2,6 @@ import type { SVGProps } from 'react';
 
 type IconProps = SVGProps<SVGSVGElement>;
 
-/** Renders the compact workflow-board product mark. */
-export function BoardIcon(props: IconProps) {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" {...props}>
-      <rect x="3" y="3.5" width="4" height="13" rx="1.4" fill="currentColor" />
-      <rect
-        x="8.5"
-        y="3.5"
-        width="3.5"
-        height="8"
-        rx="1.3"
-        fill="currentColor"
-        opacity="0.72"
-      />
-      <rect
-        x="13.5"
-        y="3.5"
-        width="3.5"
-        height="10.5"
-        rx="1.3"
-        fill="currentColor"
-        opacity="0.44"
-      />
-    </svg>
-  );
-}
-
 /** Renders a compact plus icon. */
 export function PlusIcon(props: IconProps) {
   return (
