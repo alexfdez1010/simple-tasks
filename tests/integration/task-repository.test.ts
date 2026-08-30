@@ -38,9 +38,10 @@ async function createTask(
   title: string,
   position: number,
   completedAt: Date | null = null,
+  dueDate: Date | null = null,
 ): Promise<Task> {
   return db.task.create({
-    data: { completedAt, position, statusId, title },
+    data: { completedAt, dueDate, position, statusId, title },
   });
 }
 
@@ -61,12 +62,24 @@ describe('PrismaTaskRepository', () => {
     await db.$disconnect();
   });
 
-  /** Proves board order and the per-terminal-column twenty-item retention rule. */
-  it('orders active tasks and returns only the 20 latest terminal tasks', async () => {
+  /** Proves due-date ordering and the per-terminal-column twenty-item limit. */
+  it('orders tasks by due date and returns only the 20 terminal tasks with latest due dates', async () => {
     const active = await createStatus('active', 100);
     const terminal = await createStatus('terminal', 101, true);
-    await createTask(active.id, 'active-last', 2);
-    await createTask(active.id, 'active-first', 0);
+    await createTask(
+      active.id,
+      'active-last',
+      0,
+      null,
+      new Date('2026-09-10T00:00:00.000Z'),
+    );
+    await createTask(
+      active.id,
+      'active-first',
+      2,
+      null,
+      new Date('2026-09-01T00:00:00.000Z'),
+    );
 
     const completedOrigin = Date.parse('2026-08-01T12:00:00.000Z');
     for (let index = 0; index < 22; index += 1) {
@@ -97,6 +110,41 @@ describe('PrismaTaskRepository', () => {
         (_, index) => `terminal-${(21 - index).toString().padStart(2, '0')}`,
       ),
     );
+  });
+
+  /** Proves terminal due dates take precedence over completion timestamps. */
+  it('orders terminal tasks by descending due date and leaves undated tasks last', async () => {
+    const terminal = await createStatus('dated-terminal', 100, true);
+    await createTask(
+      terminal.id,
+      'latest-deadline',
+      0,
+      new Date('2026-08-01T12:00:00.000Z'),
+      new Date('2026-09-20T00:00:00.000Z'),
+    );
+    await createTask(
+      terminal.id,
+      'earlier-deadline',
+      1,
+      new Date('2026-08-03T12:00:00.000Z'),
+      new Date('2026-09-10T00:00:00.000Z'),
+    );
+    await createTask(
+      terminal.id,
+      'undated',
+      2,
+      new Date('2026-08-04T12:00:00.000Z'),
+    );
+
+    const [fixtureStatus] = (await repository.listBoard()).filter((status) =>
+      status.name.startsWith(FIXTURE_PREFIX),
+    );
+
+    expect(fixtureStatus?.tasks.map((task) => task.title)).toEqual([
+      'latest-deadline',
+      'earlier-deadline',
+      'undated',
+    ]);
   });
 
   /** Proves cross-column moves compact positions and synchronize completedAt. */
@@ -226,7 +274,7 @@ describe('PrismaTaskRepository', () => {
       repository.reorder({ statusId: terminal.id, taskIds: [] }),
     ).rejects.toMatchObject({
       code: 'CONFLICT',
-      message: 'Terminal statuses are ordered by completion time.',
+      message: 'Terminal statuses are ordered by due date.',
     });
   });
 });

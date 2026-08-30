@@ -46,7 +46,8 @@ export const en = {
   'status.color': 'Color',
   'status.invalidColor': 'Enter a name and a color in #RRGGBB format.',
   'status.terminal': 'Terminal status',
-  'status.terminalDescription': 'Shows only the 20 most recent tasks.',
+  'status.terminalDescription':
+    'Shows only the 20 tasks with the latest due dates.',
   'status.cancel': 'Cancel',
   'status.save': 'Save',
   'status.saveFallback': 'The status could not be saved.',
@@ -58,7 +59,7 @@ export const en = {
   'status.deleteFallback': 'The status could not be deleted.',
   'status.taskCount.one': '{count} task',
   'status.taskCount.other': '{count} tasks',
-  'status.latestTasks': 'Terminal · latest {count}',
+  'status.latestTasks': 'Terminal · latest {count} by due date',
   'status.moveLeft': 'Move {name} left',
   'status.moveRight': 'Move {name} right',
   'status.edit': 'Edit {name}',
@@ -123,14 +124,14 @@ export const en = {
   'task.board': 'Task board',
   'task.count.one': '{count} task',
   'task.count.other': '{count} tasks',
-  'task.latest': 'Latest {count} tasks',
+  'task.latest': 'Latest {count} by due date',
   'task.addTo': 'Add task to {status}',
   'task.add': 'Add',
   'task.list': '{status} tasks',
   'task.empty': 'No tasks here',
   'task.emptyHint': 'Add one or move work into this stage.',
   'task.movedAnnouncement': 'Task moved to {status}.',
-  'task.terminalAnnouncement': '{status} stays ordered by completion time.',
+  'task.terminalAnnouncement': '{status} stays ordered by due date.',
   'date.clear': 'Clear {label}',
   'date.choose': 'Choose {label}',
   'color.area': 'Color area',
@@ -177,8 +178,7 @@ export const en = {
   'error.statusTasksBeforeDelete':
     'Move or delete the tasks before deleting the status.',
   'error.statusOrder': 'The order must include every status exactly once.',
-  'error.taskTerminalOrder':
-    'Terminal statuses are ordered by completion time.',
+  'error.taskTerminalOrder': 'Terminal statuses are ordered by due date.',
   'error.taskOrder':
     'The order must include every task in the status exactly once.',
   'error.propertyTypeChange':

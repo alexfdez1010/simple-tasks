@@ -28,7 +28,7 @@ export function registerTaskTools(server: McpServer): void {
     {
       title: 'List the Kanban board',
       description:
-        'Return ordered statuses and tasks. Terminal statuses include only their 20 most recent completions.',
+        'Return ordered statuses and tasks. Non-terminal statuses sort by due date ascending; terminal statuses sort by due date descending and include only their 20 latest due dates.',
       inputSchema: {},
     },
     async () => runMcpTool(() => taskService.listBoard()),

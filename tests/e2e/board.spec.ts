@@ -219,7 +219,7 @@ test.describe('desktop Kanban board', () => {
     const column = page.getByRole('region', { name: updatedStatusName });
     await expect(column).toBeVisible();
     await expect(column).toHaveCSS('--status-color', '#A855F7');
-    await expect(column.getByText('Latest 20 tasks')).toBeVisible();
+    await expect(column.getByText('Latest 20 by due date')).toBeVisible();
 
     await page.getByRole('button', { name: /^Settings/ }).click();
     const reopened = page.getByRole('dialog', { name: /^Settings/ });

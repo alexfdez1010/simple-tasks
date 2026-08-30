@@ -24,7 +24,7 @@ export class PrismaTaskRepository implements TaskRepository {
   /** Injects the process-level Prisma client. */
   constructor(private readonly client: PrismaClient) {}
 
-  /** Lists statuses and tasks in display order, limiting every terminal status to 20. */
+  /** Lists tasks by due date, reversing the direction for terminal statuses. */
   async listBoard(): Promise<BoardStatus[]> {
     const statuses = await this.client.status.findMany({
       orderBy: [{ position: 'asc' }, { id: 'asc' }],
@@ -35,11 +35,17 @@ export class PrismaTaskRepository implements TaskRepository {
           where: { statusId: status.id },
           orderBy: status.isTerminal
             ? [
+                { dueDate: { sort: 'desc', nulls: 'last' } },
                 { completedAt: { sort: 'desc', nulls: 'last' } },
                 { updatedAt: 'desc' },
                 { id: 'asc' },
               ]
-            : [{ position: 'asc' }, { createdAt: 'asc' }, { id: 'asc' }],
+            : [
+                { dueDate: { sort: 'asc', nulls: 'last' } },
+                { position: 'asc' },
+                { createdAt: 'asc' },
+                { id: 'asc' },
+              ],
           ...(status.isTerminal ? { take: 20 } : {}),
           include: { propertyValues: true },
         });
@@ -179,7 +185,7 @@ export class PrismaTaskRepository implements TaskRepository {
       });
       if (!status) throw notFound('The status');
       if (status.isTerminal)
-        throw conflict('Terminal statuses are ordered by completion time.');
+        throw conflict('Terminal statuses are ordered by due date.');
       const rows = await transaction.task.findMany({
         where: { statusId: input.statusId },
         select: { id: true },

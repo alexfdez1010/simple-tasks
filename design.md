@@ -123,9 +123,10 @@ Component rules:
   configured metadata never overwhelms the task title and due date.
 - Task transitions: Dragging is the only state-change control. The drag handle
   supports pointer, touch, and keyboard operation and announces the destination.
-- Terminal ordering: Terminal columns are ordered by completion time. A drag
-  within one terminal column returns to the persisted order and explains why;
-  dragging out to another column remains available.
+- Task ordering: Non-terminal columns are ordered by due date ascending and
+  terminal columns by due date descending. Tasks without a due date come last.
+  A drag within one terminal column returns to the persisted order and explains
+  why; dragging out to another column remains available.
 - Task creation: Every workflow column exposes an Add action. It opens the shared
   task dialog with that column preselected; the state remains implicit and cannot
   be changed from the form.
@@ -187,7 +188,7 @@ Component rules:
   sticky on small screens so navigation and board context remain reachable in
   long columns, and its outer spacing includes display-cutout safe areas.
 - Data-density strategy: Active states show all tasks. Terminal states show only
-  their 20 most recently updated tasks, with the limit explained in the column.
+  their 20 latest-due-date tasks, with the limit explained in the column.
 - Property-density strategy: Task cards show non-empty values in a compact
   two-column metadata list. Multi-select values wrap as quiet chips. Property
   settings and task forms use one column on mobile and two where space permits.
@@ -199,7 +200,7 @@ Component rules:
 | 2026-08-29 | Keep a single shared-password session instead of user accounts   | Matches the requested private, simple board                             | Product  |
 | 2026-08-29 | Use horizontally scrollable columns on mobile                    | Preserves the spatial workflow and supports touch drag                  | Design   |
 | 2026-08-29 | Treat workflow colours as accents, not text colours              | User-selected colours cannot guarantee readable contrast                | Design   |
-| 2026-08-29 | Limit every terminal state to its 20 most recently updated tasks | Keeps completed work available without overwhelming the board           | Product  |
+| 2026-08-29 | Limit every terminal state to 20 visible tasks                   | Keeps completed work available without overwhelming the board           | Product  |
 | 2026-08-29 | Model custom properties as definitions plus typed task values    | Keeps the board extensible without adding permanent task fields         | Product  |
 | 2026-08-29 | Support text, number, date, select, and multi-select initially   | Covers useful metadata while preserving the deliberately small scope    | Product  |
 | 2026-08-29 | Remove decorative borders and the per-card state selector        | Makes the board lighter and keeps state changes spatial through drag    | Design   |
@@ -209,7 +210,7 @@ Component rules:
 | 2026-08-29 | Reveal and copy the MCP token only from the protected setup page | Makes agent setup easier without placing the secret in static output    | Security |
 | 2026-08-30 | Treat the board as a tactile workflow studio with recessed wells | Adds hierarchy and depth while keeping task content primary             | Design   |
 | 2026-08-30 | Show active/finished context and a restrained completion meter   | Makes board state scannable without introducing dashboard clutter       | Product  |
-| 2026-08-30 | Restore completion-time order after same-terminal-column drags   | Prevents optimistic UI from displaying an order that cannot persist     | Product  |
+| 2026-08-30 | Sort tasks by due date per status type                           | Makes upcoming and terminal work easy to scan                           | Product  |
 | 2026-08-30 | Keep settings mounted while refreshed snapshots reconcile        | Prevents successful mutations from unexpectedly dismissing the dialog   | Product  |
 | 2026-08-30 | Use the supplied green checkmark as the shared app and tab icon  | Preserves the intended identity with one artwork source                 | Design   |
 | 2026-08-30 | Make the mobile toolbar sticky and overlays bottom-aligned       | Keeps frequent controls reachable and forms comfortable on touch        | Design   |
