@@ -17,6 +17,7 @@ import type {
   PropertyDefinition,
   TaskValues,
 } from '@/components/board/types';
+import { useI18n } from '@/lib/i18n/provider';
 
 interface KanbanBoardProps {
   statuses: BoardStatus[];
@@ -69,6 +70,7 @@ export function KanbanBoard({
   onDelete,
   onPersistDrag,
 }: KanbanBoardProps) {
+  const { t } = useI18n();
   const snapshotRef = useRef<BoardStatus[]>(statuses);
   const latestRef = useRef<BoardStatus[]>(statuses);
 
@@ -112,7 +114,7 @@ export function KanbanBoard({
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
-      <div className="kanban-board" aria-label="Task board">
+      <div className="kanban-board" aria-label={t('task.board')}>
         {statuses.map((status) => (
           <KanbanColumn
             key={status.id}

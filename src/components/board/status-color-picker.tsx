@@ -11,6 +11,8 @@ import {
   parseColor,
 } from '@heroui/react';
 
+import { useI18n } from '@/lib/i18n/provider';
+
 interface StatusColorPickerProps {
   value: string;
   onChange: (value: string) => void;
@@ -34,6 +36,8 @@ const COLOR_PRESETS = [
  * @returns A swatch trigger with presets, colour area, hue slider, and hex field.
  */
 export function StatusColorPicker({ value, onChange }: StatusColorPickerProps) {
+  const { t } = useI18n();
+
   return (
     <ColorPicker
       value={parseColor(value)}
@@ -41,7 +45,7 @@ export function StatusColorPicker({ value, onChange }: StatusColorPickerProps) {
     >
       <ColorPicker.Trigger className="w-full justify-start">
         <ColorSwatch size="sm" />
-        <Label>Color</Label>
+        <Label>{t('status.color')}</Label>
         <span className="ms-auto font-mono text-xs text-muted">{value}</span>
       </ColorPicker.Trigger>
       <ColorPicker.Popover className="gap-3">
@@ -53,7 +57,7 @@ export function StatusColorPicker({ value, onChange }: StatusColorPickerProps) {
           ))}
         </ColorSwatchPicker>
         <ColorArea
-          aria-label="Color area"
+          aria-label={t('color.area')}
           className="max-w-full"
           colorSpace="hsb"
           xChannel="saturation"
@@ -61,12 +65,12 @@ export function StatusColorPicker({ value, onChange }: StatusColorPickerProps) {
         >
           <ColorArea.Thumb />
         </ColorArea>
-        <ColorSlider aria-label="Hue" channel="hue" colorSpace="hsb">
+        <ColorSlider aria-label={t('color.hue')} channel="hue" colorSpace="hsb">
           <ColorSlider.Track>
             <ColorSlider.Thumb />
           </ColorSlider.Track>
         </ColorSlider>
-        <ColorField aria-label="Hex color">
+        <ColorField aria-label={t('color.hex')}>
           <ColorField.Group variant="secondary">
             <ColorField.Prefix>
               <ColorSwatch size="xs" />

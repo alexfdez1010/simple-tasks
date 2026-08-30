@@ -2,6 +2,7 @@
 
 import { Card } from '@heroui/react';
 import { useSortable } from '@dnd-kit/react/sortable';
+import { useDateFormatter } from '@react-aria/i18n';
 
 import { CalendarIcon, GripIcon } from '@/components/board/icons';
 import { Markdown } from '@/components/board/markdown';
@@ -13,6 +14,7 @@ import type {
   PropertyDefinition,
   TaskValues,
 } from '@/components/board/types';
+import { useI18n } from '@/lib/i18n/provider';
 
 interface TaskCardProps {
   task: BoardTask;
@@ -20,18 +22,6 @@ interface TaskCardProps {
   properties: PropertyDefinition[];
   onSave: (values: TaskValues) => Promise<MutationResult>;
   onDelete: () => Promise<MutationResult>;
-}
-
-const DATE_FORMATTER = new Intl.DateTimeFormat('en-US', {
-  day: 'numeric',
-  month: 'short',
-  year: 'numeric',
-  timeZone: 'UTC',
-});
-
-/** Formats an ISO date for a stable, localised presentation. */
-function formatDueDate(value: string): string {
-  return DATE_FORMATTER.format(new Date(value));
 }
 
 /**
@@ -47,6 +37,13 @@ export function TaskCard({
   onSave,
   onDelete,
 }: TaskCardProps) {
+  const { t } = useI18n();
+  const dateFormatter = useDateFormatter({
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
   const {
     ref: sortableRef,
     handleRef,
@@ -76,7 +73,7 @@ export function TaskCard({
             ref={handleRef}
             type="button"
             className="drag-handle grid shrink-0 place-items-center rounded-lg text-muted"
-            aria-label={`Drag ${task.title}`}
+            aria-label={t('task.drag', { title: task.title })}
           >
             <GripIcon className="size-3.5" />
           </button>
@@ -111,7 +108,9 @@ export function TaskCard({
             <p className="task-date-chip">
               <CalendarIcon className="size-3" />
               <time dateTime={task.dueDate}>
-                Due {formatDueDate(task.dueDate)}
+                {t('task.due', {
+                  date: dateFormatter.format(new Date(task.dueDate)),
+                })}
               </time>
             </p>
           </Card.Footer>

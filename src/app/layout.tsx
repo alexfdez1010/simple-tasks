@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
 import { AppProviders } from '@/app/providers';
+import { getCurrentLanguage } from '@/lib/i18n/server';
+import { translate } from '@/lib/i18n/translations';
 
 import './globals.css';
 
@@ -15,10 +17,14 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-export const metadata: Metadata = {
-  title: 'Tasks',
-  description: 'A simple, private board for organizing tasks.',
-};
+/** Builds localized document metadata from the persisted language preference. */
+export async function generateMetadata(): Promise<Metadata> {
+  const language = await getCurrentLanguage();
+  return {
+    title: translate(language, 'app.title'),
+    description: translate(language, 'app.description'),
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: [
@@ -28,17 +34,25 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
-export default function RootLayout({
+/**
+ * Renders the application document with the request's persisted language.
+ *
+ * @param props - The route subtree rendered inside the document shell.
+ * @returns The localized HTML document and shared application providers.
+ */
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>): Promise<React.JSX.Element> {
+  const language = await getCurrentLanguage();
+
   return (
-    <html lang="en">
+    <html lang={language}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AppProviders>{children}</AppProviders>
+        <AppProviders language={language}>{children}</AppProviders>
       </body>
     </html>
   );

@@ -15,6 +15,7 @@ import type {
   PropertyDefinition,
   TaskPropertyValueData,
 } from '@/components/board/types';
+import { useI18n } from '@/lib/i18n/provider';
 
 interface TaskPropertyFieldsProps {
   properties: PropertyDefinition[];
@@ -48,6 +49,7 @@ export function TaskPropertyFields({
   values,
   onChange,
 }: TaskPropertyFieldsProps) {
+  const { t } = useI18n();
   /** Replaces or removes one property value in the draft. */
   function setValue(propertyId: string, value: TaskPropertyValueData['value']) {
     const remaining = values.filter((entry) => entry.propertyId !== propertyId);
@@ -61,7 +63,7 @@ export function TaskPropertyFields({
   return (
     <fieldset className="grid gap-4 sm:grid-cols-2">
       <legend className="col-span-full mb-1 text-sm font-semibold">
-        Properties
+        {t('property.title')}
       </legend>
       {properties.map((property) => {
         const value = getValue(values, property.id);
@@ -82,7 +84,7 @@ export function TaskPropertyFields({
             <div className="flex min-w-0 items-end gap-2" key={property.id}>
               <Select
                 className="min-w-0 flex-1"
-                placeholder="No value"
+                placeholder={t('task.noValue')}
                 selectionMode={isMultiple ? 'multiple' : 'single'}
                 value={selected}
                 onChange={(selection) =>
@@ -115,7 +117,7 @@ export function TaskPropertyFields({
                   isIconOnly
                   type="button"
                   variant="ghost"
-                  aria-label={`Clear ${property.name}`}
+                  aria-label={t('task.clearProperty', { name: property.name })}
                   onPress={() => setValue(property.id, isMultiple ? [] : '')}
                 >
                   <span aria-hidden="true">×</span>

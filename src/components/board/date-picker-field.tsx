@@ -11,6 +11,8 @@ import {
   Label,
 } from '@heroui/react';
 
+import { useI18n } from '@/lib/i18n/provider';
+
 interface DatePickerFieldProps {
   description?: string;
   label: string;
@@ -42,6 +44,9 @@ export function DatePickerField({
   value,
   onChange,
 }: DatePickerFieldProps) {
+  const { locale, t } = useI18n();
+  const accessibleLabel = label.toLocaleLowerCase(locale);
+
   return (
     <DatePicker
       name={name}
@@ -60,7 +65,7 @@ export function DatePickerField({
               size="sm"
               type="button"
               variant="ghost"
-              aria-label={`Clear ${label.toLowerCase()}`}
+              aria-label={t('date.clear', { label: accessibleLabel })}
               onPress={() => onChange('')}
             >
               <span aria-hidden="true">×</span>
@@ -73,7 +78,7 @@ export function DatePickerField({
       </DateField.Group>
       {description ? <Description>{description}</Description> : null}
       <DatePicker.Popover>
-        <Calendar aria-label={`Choose ${label.toLowerCase()}`}>
+        <Calendar aria-label={t('date.choose', { label: accessibleLabel })}>
           <Calendar.Header>
             <Calendar.YearPickerTrigger>
               <Calendar.YearPickerTriggerHeading />

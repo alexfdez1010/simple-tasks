@@ -22,12 +22,19 @@ import type {
   MutationResult,
   TaskValues,
 } from '@/components/board/types';
+import {
+  translate,
+  type TranslationKey,
+  type TranslationValues,
+} from '@/lib/i18n/translations';
 
 interface TaskMutationOptions {
   statuses: BoardStatus[];
   setStatuses: Dispatch<SetStateAction<BoardStatus[]>>;
   refresh: () => void;
   announce: (message: string) => void;
+  /** Optional application translator; English is used for direct unit callers. */
+  t?: (key: TranslationKey, values?: TranslationValues) => string;
 }
 
 /**
@@ -41,7 +48,13 @@ export function useTaskMutations({
   setStatuses,
   refresh,
   announce,
+  t,
 }: TaskMutationOptions) {
+  /** Translates an announcement using the injected app locale or English fallback. */
+  const localize =
+    t ??
+    ((key: TranslationKey, values?: TranslationValues) =>
+      translate('en', key, values));
   /** Creates a temporary task and rolls back when persistence fails. */
   async function create(values: TaskValues): Promise<MutationResult> {
     const snapshot = cloneBoard(statuses);
@@ -117,7 +130,9 @@ export function useTaskMutations({
     if (!before || !after) return;
     if (before.status.id === after.status.id && after.status.isTerminal) {
       setStatuses(snapshot);
-      announce(`${after.status.name} stays ordered by completion time.`);
+      announce(
+        localize('task.terminalAnnouncement', { status: after.status.name }),
+      );
       return;
     }
     const result =
@@ -133,7 +148,9 @@ export function useTaskMutations({
           });
     if (!result.success) setStatuses(snapshot);
     else {
-      announce(`Task moved to ${after.status.name}.`);
+      announce(
+        localize('task.movedAnnouncement', { status: after.status.name }),
+      );
       refresh();
     }
   }

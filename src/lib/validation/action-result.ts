@@ -1,5 +1,7 @@
 import { revalidatePath } from 'next/cache';
 
+import { translateErrorMessage } from '@/lib/i18n/error-messages';
+import { getCurrentLanguage } from '@/lib/i18n/server';
 import { getErrorMessage } from '@/lib/validation/errors';
 
 export type ActionResult<T = void> =
@@ -14,6 +16,10 @@ export async function executeBoardAction<T = void>(
     revalidatePath('/');
     return data === undefined ? { success: true } : { success: true, data };
   } catch (error) {
-    return { success: false, error: getErrorMessage(error) };
+    const language = await getCurrentLanguage();
+    return {
+      success: false,
+      error: translateErrorMessage(language, getErrorMessage(error)),
+    };
   }
 }

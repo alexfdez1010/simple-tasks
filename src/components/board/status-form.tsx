@@ -12,6 +12,7 @@ import { useState } from 'react';
 
 import { StatusColorPicker } from '@/components/board/status-color-picker';
 import type { MutationResult, StatusValues } from '@/components/board/types';
+import { useI18n } from '@/lib/i18n/provider';
 
 interface StatusFormProps {
   initialValues: StatusValues;
@@ -34,6 +35,7 @@ export function StatusForm({
   onCancel,
   onSave,
 }: StatusFormProps) {
+  const { t } = useI18n();
   const [values, setValues] = useState(initialValues);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,15 +46,14 @@ export function StatusForm({
     const name = values.name.trim();
     const color = values.color.toUpperCase();
     if (!name || !HEX_COLOR_PATTERN.test(color)) {
-      setError('Enter a name and a color in #RRGGBB format.');
+      setError(t('status.invalidColor'));
       return;
     }
     setError(null);
     setIsPending(true);
     const result = await onSave({ ...values, name, color });
     setIsPending(false);
-    if (!result.success)
-      setError(result.error ?? 'The status could not be saved.');
+    if (!result.success) setError(result.error ?? t('status.saveFallback'));
   }
 
   return (
@@ -64,8 +65,8 @@ export function StatusForm({
           value={values.name}
           onChange={(name) => setValues((current) => ({ ...current, name }))}
         >
-          <Label>Name</Label>
-          <Input maxLength={60} placeholder="To do" />
+          <Label>{t('status.name')}</Label>
+          <Input maxLength={60} placeholder={t('status.namePlaceholder')} />
         </TextField>
         <StatusColorPicker
           value={values.color}
@@ -83,9 +84,9 @@ export function StatusForm({
           <Checkbox.Control>
             <Checkbox.Indicator />
           </Checkbox.Control>
-          Terminal status
+          {t('status.terminal')}
         </Checkbox.Content>
-        <Description>Shows only the 20 most recent tasks.</Description>
+        <Description>{t('status.terminalDescription')}</Description>
       </Checkbox>
 
       {error ? (
@@ -96,7 +97,7 @@ export function StatusForm({
       <div className="flex justify-end gap-2">
         {onCancel ? (
           <Button type="button" variant="ghost" onPress={onCancel}>
-            Cancel
+            {t('status.cancel')}
           </Button>
         ) : null}
         <Button type="submit" isPending={isPending}>

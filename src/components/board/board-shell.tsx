@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, Link, ProgressBar } from '@heroui/react';
+import { useNumberFormatter } from '@react-aria/i18n';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -15,6 +16,8 @@ import { useServerReconciledState } from '@/components/board/use-server-reconcil
 import { useStatusMutations } from '@/components/board/use-status-mutations';
 import { useTaskMutations } from '@/components/board/use-task-mutations';
 import { logoutAction } from '@/lib/auth/actions';
+import { useI18n } from '@/lib/i18n/provider';
+import type { TranslationKey } from '@/lib/i18n/translations';
 
 interface BoardShellProps {
   initialStatuses: BoardStatus[];
@@ -32,17 +35,24 @@ export function BoardShell({
   initialProperties,
 }: BoardShellProps) {
   const router = useRouter();
+  const { t } = useI18n();
+  const numberFormatter = useNumberFormatter();
   const [statuses, setStatuses] = useServerReconciledState(initialStatuses);
   const [properties, setProperties] =
     useServerReconciledState(initialProperties);
   const [announcement, setAnnouncement] = useState('');
   const metrics = getBoardMetrics(statuses);
 
+  /** Gets the localized metric label while keeping its count separately emphasized. */
+  const metricLabel = (key: TranslationKey): string =>
+    t(key, { count: '' }).trim();
+
   const taskMutations = useTaskMutations({
     statuses,
     setStatuses,
     refresh: router.refresh,
     announce: setAnnouncement,
+    t,
   });
   const statusMutations = useStatusMutations({
     statuses,
@@ -60,7 +70,7 @@ export function BoardShell({
   return (
     <div className="board-app min-h-dvh bg-background text-foreground">
       <a className="skip-link" href="#task-board">
-        Skip to task board
+        {t('board.skipToTaskBoard')}
       </a>
       <header className="board-toolbar-wrap">
         <div className="board-toolbar">
@@ -75,7 +85,7 @@ export function BoardShell({
               />
             </span>
             <h1 className="min-w-0 text-xl font-semibold tracking-[-0.035em] sm:text-2xl">
-              Tasks
+              {t('board.title')}
             </h1>
           </div>
 
@@ -84,7 +94,7 @@ export function BoardShell({
               className="board-action-link text-sm font-medium"
               href="/skill"
             >
-              AI
+              {t('board.ai')}
             </Link>
             <BoardSettings
               statuses={statuses}
@@ -104,25 +114,43 @@ export function BoardShell({
                 type="submit"
                 variant="ghost"
               >
-                Sign out
+                {t('board.signOut')}
               </Button>
             </form>
           </div>
 
-          <div className="board-metrics" aria-label="Visible board summary">
+          <div className="board-metrics" aria-label={t('board.summary')}>
             <p className="board-metric-copy">
               <span className="font-semibold text-foreground tabular-nums">
-                {metrics.activeCount}
+                {numberFormatter.format(metrics.activeCount)}
               </span>{' '}
-              active
+              {metricLabel(
+                metrics.activeCount === 1
+                  ? 'board.active.one'
+                  : 'board.active.other',
+              )}
               <span aria-hidden="true"> · </span>
               <span className="font-semibold text-foreground tabular-nums">
-                {metrics.completedCount}
+                {numberFormatter.format(metrics.completedCount)}
               </span>{' '}
-              finished
+              {metricLabel(
+                metrics.completedCount === 1
+                  ? 'board.finished.one'
+                  : 'board.finished.other',
+              )}
             </p>
             <ProgressBar
-              aria-label={`${metrics.completionPercentage}% of visible tasks finished`}
+              aria-label={t(
+                metrics.visibleCount === 1
+                  ? 'board.progress.one'
+                  : 'board.progress.other',
+                {
+                  count: numberFormatter.format(metrics.visibleCount),
+                  percentage: numberFormatter.format(
+                    metrics.completionPercentage,
+                  ),
+                },
+              )}
               className="board-progress"
               value={metrics.completionPercentage}
             >
@@ -131,7 +159,12 @@ export function BoardShell({
               </ProgressBar.Track>
             </ProgressBar>
             <p className="board-visible-count tabular-nums">
-              {metrics.visibleCount} visible
+              {t(
+                metrics.visibleCount === 1
+                  ? 'board.visible.one'
+                  : 'board.visible.other',
+                { count: numberFormatter.format(metrics.visibleCount) },
+              )}
             </p>
           </div>
         </div>

@@ -11,6 +11,8 @@ import type {
   PropertyDefinition,
   PropertyValues,
 } from '@/components/board/types';
+import { useI18n } from '@/lib/i18n/provider';
+import type { TranslationKey } from '@/lib/i18n/translations';
 
 interface PropertyRowProps {
   property: PropertyDefinition;
@@ -21,12 +23,12 @@ interface PropertyRowProps {
   onReorder: (direction: -1 | 1) => Promise<MutationResult>;
 }
 
-const TYPE_LABELS = {
-  TEXT: 'Text',
-  NUMBER: 'Number',
-  DATE: 'Date',
-  SELECT: 'Select',
-  MULTI_SELECT: 'Multi-select',
+const TYPE_LABELS: Record<PropertyDefinition['type'], TranslationKey> = {
+  TEXT: 'property.typeText',
+  NUMBER: 'property.typeNumber',
+  DATE: 'property.typeDate',
+  SELECT: 'property.typeSelect',
+  MULTI_SELECT: 'property.typeMultiSelect',
 } as const;
 
 /**
@@ -43,6 +45,7 @@ export function PropertyRow({
   onDelete,
   onReorder,
 }: PropertyRowProps) {
+  const { t } = useI18n();
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -57,9 +60,7 @@ export function PropertyRow({
   async function handleDelete(): Promise<boolean> {
     const result = await onDelete();
     setError(
-      result.success
-        ? null
-        : (result.error ?? 'The property could not be deleted.'),
+      result.success ? null : (result.error ?? t('property.deleteFallback')),
     );
     return result.success;
   }
@@ -73,7 +74,7 @@ export function PropertyRow({
             type: property.type,
             options: property.options,
           }}
-          submitLabel="Save"
+          submitLabel={t('common.save')}
           onCancel={() => setIsEditing(false)}
           onSave={handleSave}
         />
@@ -88,7 +89,7 @@ export function PropertyRow({
           <Card.Title className="truncate text-base">
             {property.name}
           </Card.Title>
-          <Card.Description>{TYPE_LABELS[property.type]}</Card.Description>
+          <Card.Description>{t(TYPE_LABELS[property.type])}</Card.Description>
         </Card.Header>
         <div className="flex gap-1">
           <Button
@@ -96,7 +97,7 @@ export function PropertyRow({
             isDisabled={isFirst}
             size="sm"
             variant="ghost"
-            aria-label={`Move ${property.name} up`}
+            aria-label={t('property.moveUp', { name: property.name })}
             onPress={() => void onReorder(-1)}
           >
             <ChevronIcon className="size-4 -rotate-90" />
@@ -106,7 +107,7 @@ export function PropertyRow({
             isDisabled={isLast}
             size="sm"
             variant="ghost"
-            aria-label={`Move ${property.name} down`}
+            aria-label={t('property.moveDown', { name: property.name })}
             onPress={() => void onReorder(1)}
           >
             <ChevronIcon className="size-4 rotate-90" />
@@ -115,7 +116,7 @@ export function PropertyRow({
             isIconOnly
             size="sm"
             variant="ghost"
-            aria-label={`Edit ${property.name}`}
+            aria-label={t('property.edit', { name: property.name })}
             onPress={() => setIsEditing(true)}
           >
             <EditIcon className="size-4" />
@@ -123,11 +124,11 @@ export function PropertyRow({
         </div>
       </div>
       <ConfirmationDialog
-        body="This also removes the property value from every task. This action cannot be undone."
-        confirmLabel="Delete property"
-        heading={`Delete “${property.name}”?`}
-        triggerAriaLabel={`Delete property ${property.name}`}
-        triggerLabel="Delete property"
+        body={t('property.deleteBody')}
+        confirmLabel={t('property.delete')}
+        heading={t('property.deleteHeading', { name: property.name })}
+        triggerAriaLabel={t('property.deleteAria', { name: property.name })}
+        triggerLabel={t('property.delete')}
         triggerVariant="danger-soft"
         onConfirm={handleDelete}
       />

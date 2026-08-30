@@ -18,6 +18,7 @@ import type {
   PropertyDefinition,
   TaskValues,
 } from '@/components/board/types';
+import { useI18n } from '@/lib/i18n/provider';
 
 interface TaskFormProps {
   id: string;
@@ -40,6 +41,7 @@ export function TaskForm({
   onSave,
   onSaved,
 }: TaskFormProps) {
+  const { t } = useI18n();
   const [values, setValues] = useState(initialValues);
   const [showPreview, setShowPreview] = useState(false);
   const [isPending, setIsPending] = useState(false);
@@ -49,7 +51,7 @@ export function TaskForm({
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!values.title.trim()) {
-      setError('Enter a task title.');
+      setError(t('task.enterTitle'));
       return;
     }
 
@@ -58,7 +60,7 @@ export function TaskForm({
     const result = await onSave({ ...values, title: values.title.trim() });
     setIsPending(false);
     if (!result.success) {
-      setError(result.error ?? 'The changes could not be saved.');
+      setError(result.error ?? t('task.saveFallback'));
       return;
     }
     onSaved();
@@ -72,17 +74,21 @@ export function TaskForm({
         value={values.title}
         onChange={(title) => setValues((current) => ({ ...current, title }))}
       >
-        <Label>Title</Label>
-        <Input autoFocus maxLength={160} placeholder="What needs to be done" />
+        <Label>{t('task.title')}</Label>
+        <Input
+          autoFocus
+          maxLength={160}
+          placeholder={t('task.titlePlaceholder')}
+        />
       </TextField>
 
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between gap-3">
-          <Label htmlFor={`${id}-description`}>Description</Label>
+          <Label htmlFor={`${id}-description`}>{t('task.description')}</Label>
           <div
             className="flex gap-1"
             role="group"
-            aria-label="Description mode"
+            aria-label={t('task.descriptionMode')}
           >
             <Button
               type="button"
@@ -91,7 +97,7 @@ export function TaskForm({
               variant={showPreview ? 'ghost' : 'secondary'}
               onPress={() => setShowPreview(false)}
             >
-              Write
+              {t('task.write')}
             </Button>
             <Button
               type="button"
@@ -100,7 +106,7 @@ export function TaskForm({
               variant={showPreview ? 'secondary' : 'ghost'}
               onPress={() => setShowPreview(true)}
             >
-              Preview
+              {t('task.preview')}
             </Button>
           </div>
         </div>
@@ -110,7 +116,7 @@ export function TaskForm({
           </div>
         ) : (
           <TextField
-            aria-label="Description"
+            aria-label={t('task.description')}
             name="description"
             value={values.description}
             onChange={(description) =>
@@ -121,17 +127,17 @@ export function TaskForm({
               id={`${id}-description`}
               className="min-h-36 font-mono text-sm"
               maxLength={20_000}
-              placeholder="Supports Markdown"
+              placeholder={t('task.descriptionPlaceholder')}
             />
-            <Description>Optional · Supports Markdown</Description>
+            <Description>{t('task.descriptionOptional')}</Description>
           </TextField>
         )}
       </div>
 
       <div className="sm:max-w-72">
         <DatePickerField
-          description="Optional"
-          label="Due date"
+          description={t('common.optional')}
+          label={t('task.dueDate')}
           name="dueDate"
           value={values.dueDate}
           onChange={(dueDate) =>

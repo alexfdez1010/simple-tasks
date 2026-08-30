@@ -1,36 +1,42 @@
+'use client';
+
+import {
+  useDateFormatter,
+  useListFormatter,
+  useNumberFormatter,
+} from '@react-aria/i18n';
+
 import type {
   PropertyDefinition,
   TaskPropertyValueData,
 } from '@/components/board/types';
+import { useI18n } from '@/lib/i18n/provider';
 
 interface TaskPropertySummaryProps {
   properties: PropertyDefinition[];
   values: TaskPropertyValueData[];
 }
 
-const DATE_FORMATTER = new Intl.DateTimeFormat('en-US', {
-  day: 'numeric',
-  month: 'short',
-  year: 'numeric',
-  timeZone: 'UTC',
-});
-
-const NUMBER_FORMATTER = new Intl.NumberFormat('en-US', {
-  maximumFractionDigits: 6,
-});
-
 /** Formats one stored property value according to its configured type. */
 function formatValue(
   property: PropertyDefinition,
   value: TaskPropertyValueData['value'],
+  locale: string,
+  dateFormatter: Intl.DateTimeFormat,
+  numberFormatter: Intl.NumberFormat,
+  listFormatter: Intl.ListFormat,
 ): string {
-  if (Array.isArray(value)) return value.join(', ');
+  if (Array.isArray(value)) {
+    return locale.startsWith('en-')
+      ? value.join(', ')
+      : listFormatter.format(value);
+  }
   if (property.type === 'NUMBER' && typeof value === 'number') {
-    return NUMBER_FORMATTER.format(value);
+    return numberFormatter.format(value);
   }
   if (property.type === 'DATE' && typeof value === 'string') {
     const date = new Date(`${value.slice(0, 10)}T00:00:00.000Z`);
-    return Number.isNaN(date.valueOf()) ? value : DATE_FORMATTER.format(date);
+    return Number.isNaN(date.valueOf()) ? value : dateFormatter.format(date);
   }
   return String(value);
 }
@@ -45,6 +51,18 @@ export function TaskPropertySummary({
   properties,
   values,
 }: TaskPropertySummaryProps) {
+  const { locale } = useI18n();
+  const dateFormatter = useDateFormatter({
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
+  const numberFormatter = useNumberFormatter({ maximumFractionDigits: 6 });
+  const listFormatter = useListFormatter({
+    style: 'short',
+    type: 'conjunction',
+  });
   const valueByProperty = new Map(
     values.map((entry) => [entry.propertyId, entry.value]),
   );
@@ -57,7 +75,19 @@ export function TaskPropertySummary({
     ) {
       return [];
     }
-    return [{ property, displayValue: formatValue(property, value) }];
+    return [
+      {
+        property,
+        displayValue: formatValue(
+          property,
+          value,
+          locale,
+          dateFormatter,
+          numberFormatter,
+          listFormatter,
+        ),
+      },
+    ];
   });
 
   if (populated.length === 0) return null;

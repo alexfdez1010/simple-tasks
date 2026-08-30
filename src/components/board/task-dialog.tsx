@@ -13,6 +13,7 @@ import type {
   PropertyDefinition,
   TaskValues,
 } from '@/components/board/types';
+import { useI18n } from '@/lib/i18n/provider';
 
 interface TaskDialogProps {
   properties: PropertyDefinition[];
@@ -53,6 +54,7 @@ export function TaskDialog({
   onSave,
   onDelete,
 }: TaskDialogProps) {
+  const { t } = useI18n();
   const modalState = useOverlayState();
   const [isPending, setIsPending] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
@@ -60,8 +62,10 @@ export function TaskDialog({
     ? `edit-task-${task.id}`
     : `create-task-${defaultStatusId ?? 'default'}`;
   const heading = task
-    ? 'Edit task'
-    : `Create task${createContext ? ` in ${createContext}` : ''}`;
+    ? t('task.edit')
+    : createContext
+      ? t('task.createIn', { status: createContext })
+      : t('task.new');
 
   /** Deletes the task and reports whether the confirmation may close. */
   async function handleDelete(): Promise<boolean> {
@@ -71,7 +75,7 @@ export function TaskDialog({
       modalState.close();
       return true;
     }
-    setDeleteError(result.error ?? 'The task could not be deleted.');
+    setDeleteError(result.error ?? t('task.deleteFallback'));
     return false;
   }
 
@@ -91,7 +95,9 @@ export function TaskDialog({
           isIconOnly={Boolean(task)}
           size={task ? 'sm' : 'md'}
           variant={task ? 'ghost' : 'primary'}
-          aria-label={task ? `Edit ${task.title}` : undefined}
+          aria-label={
+            task ? t('task.editAria', { title: task.title }) : undefined
+          }
           onPress={() => setDeleteError(null)}
         >
           {task ? (
@@ -99,7 +105,7 @@ export function TaskDialog({
           ) : (
             <PlusIcon className="size-4" />
           )}
-          {task ? null : 'New task'}
+          {task ? null : t('task.new')}
         </Button>
       )}
 
@@ -132,10 +138,10 @@ export function TaskDialog({
             <Modal.Footer className="justify-between">
               {task ? (
                 <ConfirmationDialog
-                  body="This task and its property values will be permanently removed."
-                  confirmLabel="Delete task"
-                  heading={`Delete “${task.title}”?`}
-                  triggerLabel="Delete"
+                  body={t('task.deleteBody')}
+                  confirmLabel={t('task.deleteTask')}
+                  heading={t('task.deleteHeading', { title: task.title })}
+                  triggerLabel={t('task.delete')}
                   onConfirm={handleDelete}
                 />
               ) : (
@@ -143,10 +149,10 @@ export function TaskDialog({
               )}
               <div className="flex gap-2">
                 <Button slot="close" variant="ghost">
-                  Cancel
+                  {t('common.cancel')}
                 </Button>
                 <Button type="submit" form={formId} isPending={isPending}>
-                  Save
+                  {t('common.save')}
                 </Button>
               </div>
             </Modal.Footer>

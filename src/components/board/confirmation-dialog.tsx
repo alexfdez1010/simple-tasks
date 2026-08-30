@@ -3,6 +3,8 @@
 import { AlertDialog, Button } from '@heroui/react';
 import { useState } from 'react';
 
+import { useI18n } from '@/lib/i18n/provider';
+
 interface ConfirmationDialogProps {
   body: string;
   confirmLabel: string;
@@ -28,6 +30,7 @@ export function ConfirmationDialog({
   triggerVariant = 'danger',
   onConfirm,
 }: ConfirmationDialogProps) {
+  const { t } = useI18n();
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, setIsPending] = useState(false);
 
@@ -66,7 +69,7 @@ export function ConfirmationDialog({
             </AlertDialog.Body>
             <AlertDialog.Footer>
               <Button slot="close" variant="tertiary">
-                Cancel
+                {t('common.cancel')}
               </Button>
               <Button
                 isPending={isPending}

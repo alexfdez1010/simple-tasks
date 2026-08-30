@@ -3,6 +3,8 @@
 import { Button, Input, Label, TextField } from '@heroui/react';
 import { useState } from 'react';
 
+import { useI18n } from '@/lib/i18n/provider';
+
 interface TokenRevealProps {
   token: string;
 }
@@ -14,6 +16,7 @@ interface TokenRevealProps {
  * @returns A read-only credential field with reveal, hide, and copy actions.
  */
 export function TokenReveal({ token }: TokenRevealProps) {
+  const { t } = useI18n();
   const [isRevealed, setIsRevealed] = useState(false);
   const [didCopy, setDidCopy] = useState(false);
 
@@ -26,7 +29,7 @@ export function TokenReveal({ token }: TokenRevealProps) {
   return (
     <div className="rounded-2xl bg-surface-secondary p-4 sm:p-5">
       <TextField isReadOnly value={token}>
-        <Label>MCP token</Label>
+        <Label>{t('ai.mcpToken')}</Label>
         <Input type={isRevealed ? 'text' : 'password'} />
       </TextField>
       <div className="mt-3 flex flex-wrap gap-2">
@@ -35,14 +38,14 @@ export function TokenReveal({ token }: TokenRevealProps) {
           variant="secondary"
           onPress={() => setIsRevealed((current) => !current)}
         >
-          {isRevealed ? 'Hide token' : 'Reveal token'}
+          {isRevealed ? t('ai.hideToken') : t('ai.revealToken')}
         </Button>
         <Button size="sm" variant="ghost" onPress={() => void handleCopy()}>
-          {didCopy ? 'Copied' : 'Copy token'}
+          {didCopy ? t('ai.copied') : t('ai.copyToken')}
         </Button>
       </div>
       <p className="sr-only" aria-live="polite">
-        {didCopy ? 'MCP token copied.' : ''}
+        {didCopy ? t('ai.copiedAnnouncement') : ''}
       </p>
     </div>
   );

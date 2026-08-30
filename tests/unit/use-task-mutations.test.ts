@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { BoardStatus } from '@/components/board/types';
 import { useTaskMutations } from '@/components/board/use-task-mutations';
+import { translate } from '@/lib/i18n/translations';
 
 const actions = vi.hoisted(() => ({
   create: vi.fn(),
@@ -165,6 +166,31 @@ describe('useTaskMutations', () => {
       'Done stays ordered by completion time.',
     );
     expect(refresh).not.toHaveBeenCalled();
+  });
+
+  /** Proves drag announcements use the active application language. */
+  it('localizes terminal-order announcements', async () => {
+    const terminalBoard = structuredClone(BOARD);
+    const task = terminalBoard[0]!.tasks[0]!;
+    terminalBoard[0]!.tasks = [];
+    terminalBoard[1]!.tasks = [{ ...task, statusId: 'done' }];
+    const announce = vi.fn();
+    const finalBoard = structuredClone(terminalBoard);
+    finalBoard[1]!.tasks.reverse();
+
+    const mutations = useTaskMutations({
+      announce,
+      refresh: vi.fn(),
+      setStatuses: vi.fn(),
+      statuses: terminalBoard,
+      t: (key, values) => translate('es', key, values),
+    });
+
+    await mutations.persistDrag(task.id, terminalBoard, finalBoard);
+
+    expect(announce).toHaveBeenCalledWith(
+      'Done mantiene el orden por fecha de finalización.',
+    );
   });
 
   /** Proves cross-column drag persistence still delegates one atomic move. */

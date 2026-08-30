@@ -94,6 +94,7 @@ large text, component boundaries, and focus indicators.
 | Card              | `Card` compound API                                | secondary, tertiary               | Tasks and focused panels                     |
 | Form field        | `TextField`, `TextArea`                            | default                           | Visible labels; descriptions for constraints |
 | Selection         | `Select`                                           | single, multiple                  | Configurable properties only                 |
+| Language choice   | `RadioGroup`, `Radio`                              | secondary                         | English and Spanish in settings              |
 | Property value    | `TextField`, `NumberField`, `DatePicker`, `Select` | typed values                      | Generated from a focused property definition |
 | Colour control    | `ColorPicker` compound API                         | controlled                        | Workflow colour configuration                |
 | Overlay           | `Modal`, `AlertDialog`                             | default, danger                   | Editing, settings, and confirmations         |
@@ -164,8 +165,10 @@ Component rules:
 - Drag alternatives: The keyboard drag contract remains available and terminal
   ordering constraints are announced through the same polite live region.
 - Minimum contrast target: WCAG 2.2 AA.
-- Localization and text expansion rules: English UI; controls tolerate 40% text
-  expansion and dates use locale-aware formatting.
+- Localization and text expansion rules: English is the default UI language;
+  Spanish is available from Settings and persists in a functional, app-wide
+  cookie. Controls tolerate 40% text expansion, accessible names change with
+  the selected language, and dates and numbers use locale-aware formatting.
 - Voice and tone: Direct, human, and brief. Use verbs such as “Create”, “Move”,
   “Save”, and “Delete”.
 - Content examples: “No tasks”, “New task”, “Changes saved”.
@@ -191,26 +194,27 @@ Component rules:
 
 ## 7. Decision log
 
-| Date       | Decision                                                         | Reason                                                                | Owner    |
-| ---------- | ---------------------------------------------------------------- | --------------------------------------------------------------------- | -------- |
-| 2026-08-29 | Keep a single shared-password session instead of user accounts   | Matches the requested private, simple board                           | Product  |
-| 2026-08-29 | Use horizontally scrollable columns on mobile                    | Preserves the spatial workflow and supports touch drag                | Design   |
-| 2026-08-29 | Treat workflow colours as accents, not text colours              | User-selected colours cannot guarantee readable contrast              | Design   |
-| 2026-08-29 | Limit every terminal state to its 20 most recently updated tasks | Keeps completed work available without overwhelming the board         | Product  |
-| 2026-08-29 | Model custom properties as definitions plus typed task values    | Keeps the board extensible without adding permanent task fields       | Product  |
-| 2026-08-29 | Support text, number, date, select, and multi-select initially   | Covers useful metadata while preserving the deliberately small scope  | Product  |
-| 2026-08-29 | Remove decorative borders and the per-card state selector        | Makes the board lighter and keeps state changes spatial through drag  | Design   |
-| 2026-08-29 | Reduce card height and metadata density                          | More tasks remain scannable without turning cards into mini forms     | Design   |
-| 2026-08-29 | Add per-column creation and status-tinted card gradients         | Makes placement faster and workflow ownership visually memorable      | Design   |
-| 2026-08-29 | Replace native date, colour, number, and confirmation controls   | Keeps interaction styling and accessibility consistent through HeroUI | Design   |
-| 2026-08-29 | Reveal and copy the MCP token only from the protected setup page | Makes agent setup easier without placing the secret in static output  | Security |
-| 2026-08-30 | Treat the board as a tactile workflow studio with recessed wells | Adds hierarchy and depth while keeping task content primary           | Design   |
-| 2026-08-30 | Show active/finished context and a restrained completion meter   | Makes board state scannable without introducing dashboard clutter     | Product  |
-| 2026-08-30 | Restore completion-time order after same-terminal-column drags   | Prevents optimistic UI from displaying an order that cannot persist   | Product  |
-| 2026-08-30 | Keep settings mounted while refreshed snapshots reconcile        | Prevents successful mutations from unexpectedly dismissing the dialog | Product  |
-| 2026-08-30 | Use the supplied green checkmark as the shared app and tab icon  | Preserves the intended identity with one artwork source               | Design   |
-| 2026-08-30 | Make the mobile toolbar sticky and overlays bottom-aligned       | Keeps frequent controls reachable and forms comfortable on touch      | Design   |
-| 2026-08-30 | Standardise frequent mobile actions on 44 px touch targets       | Reduces accidental activation and exceeds WCAG 2.2 target minimum     | Design   |
+| Date       | Decision                                                         | Reason                                                                  | Owner    |
+| ---------- | ---------------------------------------------------------------- | ----------------------------------------------------------------------- | -------- |
+| 2026-08-29 | Keep a single shared-password session instead of user accounts   | Matches the requested private, simple board                             | Product  |
+| 2026-08-29 | Use horizontally scrollable columns on mobile                    | Preserves the spatial workflow and supports touch drag                  | Design   |
+| 2026-08-29 | Treat workflow colours as accents, not text colours              | User-selected colours cannot guarantee readable contrast                | Design   |
+| 2026-08-29 | Limit every terminal state to its 20 most recently updated tasks | Keeps completed work available without overwhelming the board           | Product  |
+| 2026-08-29 | Model custom properties as definitions plus typed task values    | Keeps the board extensible without adding permanent task fields         | Product  |
+| 2026-08-29 | Support text, number, date, select, and multi-select initially   | Covers useful metadata while preserving the deliberately small scope    | Product  |
+| 2026-08-29 | Remove decorative borders and the per-card state selector        | Makes the board lighter and keeps state changes spatial through drag    | Design   |
+| 2026-08-29 | Reduce card height and metadata density                          | More tasks remain scannable without turning cards into mini forms       | Design   |
+| 2026-08-29 | Add per-column creation and status-tinted card gradients         | Makes placement faster and workflow ownership visually memorable        | Design   |
+| 2026-08-29 | Replace native date, colour, number, and confirmation controls   | Keeps interaction styling and accessibility consistent through HeroUI   | Design   |
+| 2026-08-29 | Reveal and copy the MCP token only from the protected setup page | Makes agent setup easier without placing the secret in static output    | Security |
+| 2026-08-30 | Treat the board as a tactile workflow studio with recessed wells | Adds hierarchy and depth while keeping task content primary             | Design   |
+| 2026-08-30 | Show active/finished context and a restrained completion meter   | Makes board state scannable without introducing dashboard clutter       | Product  |
+| 2026-08-30 | Restore completion-time order after same-terminal-column drags   | Prevents optimistic UI from displaying an order that cannot persist     | Product  |
+| 2026-08-30 | Keep settings mounted while refreshed snapshots reconcile        | Prevents successful mutations from unexpectedly dismissing the dialog   | Product  |
+| 2026-08-30 | Use the supplied green checkmark as the shared app and tab icon  | Preserves the intended identity with one artwork source                 | Design   |
+| 2026-08-30 | Make the mobile toolbar sticky and overlays bottom-aligned       | Keeps frequent controls reachable and forms comfortable on touch        | Design   |
+| 2026-08-30 | Standardise frequent mobile actions on 44 px touch targets       | Reduces accidental activation and exceeds WCAG 2.2 target minimum       | Design   |
+| 2026-08-30 | Default to English with Spanish selectable in Settings           | Keeps current behavior stable while adding a persistent language choice | Product  |
 
 ## 8. Review checklist
 

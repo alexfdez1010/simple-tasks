@@ -15,6 +15,7 @@ through an authenticated MCP server for AI agents.
 - Terminal states show only their 20 most recently completed tasks.
 - Responsive horizontal board with column snapping on mobile.
 - Shared password authentication backed by a signed `HttpOnly` session.
+- English interface by default, with persistent Spanish selection in Settings.
 - Independently authenticated Streamable HTTP MCP endpoint.
 
 ## Stack
@@ -69,6 +70,11 @@ Settings also manages ordered task properties. Select and multi-select
 properties have their own option lists. Empty values stay off task cards to keep
 the board compact. A property type cannot change, and an option cannot be
 removed, while stored task values depend on it.
+
+The Language section in Settings switches the full interface between English
+and Spanish, including accessible labels and locale-aware dates and numbers.
+The selection is stored for one year in the `simple-tasks-language` `HttpOnly`
+cookie; absent or unsupported values safely fall back to English.
 
 ## MCP integration
 

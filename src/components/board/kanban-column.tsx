@@ -2,6 +2,7 @@
 
 import { useDroppable } from '@dnd-kit/react';
 import { Button } from '@heroui/react';
+import { useNumberFormatter } from '@react-aria/i18n';
 
 import { PlusIcon } from '@/components/board/icons';
 import { TaskCard } from '@/components/board/task-card';
@@ -12,6 +13,7 @@ import type {
   PropertyDefinition,
   TaskValues,
 } from '@/components/board/types';
+import { useI18n } from '@/lib/i18n/provider';
 
 interface KanbanColumnProps {
   status: BoardStatus;
@@ -34,6 +36,9 @@ export function KanbanColumn({
   onUpdate,
   onDelete,
 }: KanbanColumnProps) {
+  const { t } = useI18n();
+  const numberFormatter = useNumberFormatter();
+  const taskCount = numberFormatter.format(status.tasks.length);
   const { ref: droppableRef, isDropTarget } = useDroppable({
     id: status.id,
     type: 'column',
@@ -59,14 +64,19 @@ export function KanbanColumn({
             </h2>
             <span
               className="status-count"
-              aria-label={`${status.tasks.length} ${status.tasks.length === 1 ? 'task' : 'tasks'}`}
+              aria-label={t(
+                status.tasks.length === 1
+                  ? 'task.count.one'
+                  : 'task.count.other',
+                { count: taskCount },
+              )}
             >
-              {status.tasks.length}
+              {taskCount}
             </span>
           </div>
           {status.isTerminal ? (
             <p className="mt-0.5 ps-4 text-[11px] text-muted">
-              Latest 20 tasks
+              {t('task.latest', { count: 20 })}
             </p>
           ) : null}
         </div>
@@ -79,10 +89,10 @@ export function KanbanColumn({
               className="column-add-button"
               size="sm"
               variant="ghost"
-              aria-label={`Add task to ${status.name}`}
+              aria-label={t('task.addTo', { status: status.name })}
             >
               <PlusIcon className="size-3.5" />
-              Add
+              {t('task.add')}
             </Button>
           }
           onSave={onCreate}
@@ -93,16 +103,16 @@ export function KanbanColumn({
         ref={droppableRef}
         className="kanban-task-list"
         role="list"
-        aria-label={`${status.name} tasks`}
+        aria-label={t('task.list', { status: status.name })}
       >
         {status.tasks.length === 0 ? (
           <div className="kanban-empty-state">
             <span className="kanban-empty-icon" aria-hidden="true">
               <PlusIcon className="size-4" />
             </span>
-            <p className="font-medium text-foreground">No tasks here</p>
+            <p className="font-medium text-foreground">{t('task.empty')}</p>
             <p className="text-[11px] leading-4 text-muted">
-              Add one or move work into this stage.
+              {t('task.emptyHint')}
             </p>
           </div>
         ) : (

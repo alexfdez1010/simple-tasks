@@ -10,6 +10,7 @@ import type {
   PropertyDefinition,
   PropertyValues,
 } from '@/components/board/types';
+import { useI18n } from '@/lib/i18n/provider';
 
 interface PropertySettingsProps {
   properties: PropertyDefinition[];
@@ -41,6 +42,7 @@ export function PropertySettings({
   onDelete,
   onReorder,
 }: PropertySettingsProps) {
+  const { t } = useI18n();
   const [isCreating, setIsCreating] = useState(false);
 
   /** Creates a property and closes the form after successful persistence. */
@@ -57,9 +59,9 @@ export function PropertySettings({
     >
       <div>
         <h2 id="properties-heading" className="font-semibold">
-          Properties
+          {t('property.title')}
         </h2>
-        <p className="text-sm text-muted">Additional task fields.</p>
+        <p className="text-sm text-muted">{t('property.description')}</p>
       </div>
       <div className="flex flex-col gap-3">
         {properties.map((property, index) => (
@@ -76,21 +78,21 @@ export function PropertySettings({
       </div>
       {properties.length === 0 && !isCreating ? (
         <p className="rounded-xl border border-dashed border-divider p-4 text-center text-sm text-muted">
-          No properties
+          {t('property.empty')}
         </p>
       ) : null}
       {isCreating ? (
         <div className="rounded-2xl border border-divider bg-surface-secondary p-4">
           <PropertyForm
             initialValues={NEW_PROPERTY_VALUES}
-            submitLabel="Create property"
+            submitLabel={t('property.create')}
             onCancel={() => setIsCreating(false)}
             onSave={handleCreate}
           />
         </div>
       ) : (
         <Button variant="secondary" onPress={() => setIsCreating(true)}>
-          Add property
+          {t('property.add')}
         </Button>
       )}
     </section>

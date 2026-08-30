@@ -11,6 +11,7 @@ import type {
   MutationResult,
   StatusValues,
 } from '@/components/board/types';
+import { useI18n } from '@/lib/i18n/provider';
 
 interface StatusRowProps {
   status: BoardStatus;
@@ -35,6 +36,7 @@ export function StatusRow({
   onDelete,
   onReorder,
 }: StatusRowProps) {
+  const { t } = useI18n();
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -49,9 +51,7 @@ export function StatusRow({
   async function handleDelete(): Promise<boolean> {
     const result = await onDelete();
     setError(
-      result.success
-        ? null
-        : (result.error ?? 'The status could not be deleted.'),
+      result.success ? null : (result.error ?? t('status.deleteFallback')),
     );
     return result.success;
   }
@@ -65,7 +65,7 @@ export function StatusRow({
             color: status.color,
             isTerminal: status.isTerminal,
           }}
-          submitLabel="Save"
+          submitLabel={t('status.save')}
           onCancel={() => setIsEditing(false)}
           onSave={handleSave}
         />
@@ -84,8 +84,13 @@ export function StatusRow({
           <Card.Title className="truncate text-base">{status.name}</Card.Title>
           <Card.Description>
             {status.isTerminal
-              ? 'Terminal · latest 20'
-              : `${status.tasks.length} ${status.tasks.length === 1 ? 'task' : 'tasks'}`}
+              ? t('status.latestTasks', { count: 20 })
+              : t(
+                  status.tasks.length === 1
+                    ? 'status.taskCount.one'
+                    : 'status.taskCount.other',
+                  { count: status.tasks.length },
+                )}
           </Card.Description>
         </Card.Header>
         <div className="flex gap-1">
@@ -94,7 +99,7 @@ export function StatusRow({
             isDisabled={isFirst}
             size="sm"
             variant="ghost"
-            aria-label={`Move ${status.name} left`}
+            aria-label={t('status.moveLeft', { name: status.name })}
             onPress={() => void onReorder(-1)}
           >
             <ChevronIcon className="size-4 rotate-180" />
@@ -104,7 +109,7 @@ export function StatusRow({
             isDisabled={isLast}
             size="sm"
             variant="ghost"
-            aria-label={`Move ${status.name} right`}
+            aria-label={t('status.moveRight', { name: status.name })}
             onPress={() => void onReorder(1)}
           >
             <ChevronIcon className="size-4" />
@@ -113,7 +118,7 @@ export function StatusRow({
             isIconOnly
             size="sm"
             variant="ghost"
-            aria-label={`Edit ${status.name}`}
+            aria-label={t('status.edit', { name: status.name })}
             onPress={() => setIsEditing(true)}
           >
             <EditIcon className="size-4" />
@@ -121,11 +126,11 @@ export function StatusRow({
         </div>
       </div>
       <ConfirmationDialog
-        body={`Tasks must be moved or deleted before “${status.name}” can be removed.`}
-        confirmLabel="Delete status"
-        heading={`Delete “${status.name}”?`}
-        triggerAriaLabel={`Delete status ${status.name}`}
-        triggerLabel="Delete status"
+        body={t('status.deleteBody', { name: status.name })}
+        confirmLabel={t('status.delete')}
+        heading={t('status.deleteHeading', { name: status.name })}
+        triggerAriaLabel={t('status.deleteAria', { name: status.name })}
+        triggerLabel={t('status.delete')}
         triggerVariant="danger-soft"
         onConfirm={handleDelete}
       />
