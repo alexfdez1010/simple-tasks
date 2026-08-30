@@ -1,7 +1,7 @@
 .board-app {
   position: relative;
   isolation: isolate;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .board-app::before {
@@ -81,6 +81,19 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
+}
+
+.board-actions form {
+  display: flex;
+}
+
+.board-action-link {
+  display: inline-flex;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 0.75rem;
 }
 
 .board-metrics {

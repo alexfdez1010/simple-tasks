@@ -1,0 +1,63 @@
+@media (max-width: 767px) {
+  .board-toolbar-wrap {
+    position: sticky;
+    top: 0;
+    padding-top: max(0.5rem, env(safe-area-inset-top));
+    padding-right: max(0.75rem, env(safe-area-inset-right));
+    padding-bottom: 0.375rem;
+    padding-left: max(0.75rem, env(safe-area-inset-left));
+    background: linear-gradient(
+      to bottom,
+      var(--background) 78%,
+      color-mix(in oklab, var(--background) 84%, transparent)
+    );
+  }
+
+  .board-toolbar {
+    gap: 0.625rem 0.75rem;
+    border-radius: 1rem;
+    padding: 0.625rem;
+  }
+
+  .board-mark {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .board-action-button {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+  }
+
+  .board-metrics {
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+  }
+
+  .board-metric-copy,
+  .board-visible-count {
+    font-size: 0.75rem;
+  }
+
+  .board-workspace {
+    padding-top: 0.5rem;
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  }
+
+  .kanban-board {
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-left: max(1rem, env(safe-area-inset-left));
+    scroll-padding-right: max(1rem, env(safe-area-inset-right));
+    scroll-padding-left: max(1rem, env(safe-area-inset-left));
+  }
+
+  .board-app :focus {
+    scroll-margin-top: 9rem;
+  }
+
+  .board-modal-container {
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    padding-left: max(1rem, env(safe-area-inset-left));
+  }
+}

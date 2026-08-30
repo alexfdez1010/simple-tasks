@@ -50,7 +50,11 @@ export function ConfirmationDialog({
         {triggerLabel}
       </Button>
       <AlertDialog.Backdrop isOpen={isOpen} onOpenChange={setIsOpen}>
-        <AlertDialog.Container placement="center" size="sm">
+        <AlertDialog.Container
+          className="board-modal-container"
+          placement="auto"
+          size="sm"
+        >
           <AlertDialog.Dialog>
             <AlertDialog.CloseTrigger />
             <AlertDialog.Header>

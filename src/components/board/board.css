@@ -22,6 +22,7 @@
   min-height: calc(100dvh - 10.5rem);
   overflow: hidden;
   scroll-snap-align: start;
+  scroll-snap-stop: always;
   border: 1px solid color-mix(in oklab, var(--divider) 72%, transparent);
   border-radius: 1.125rem;
   background:
@@ -141,6 +142,16 @@
     padding-inline: 1.5rem;
     scroll-padding-inline: 1.5rem;
     scroll-snap-type: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .column-add-button {
+    min-height: 2.75rem;
+  }
+
+  .kanban-task-item {
+    scroll-margin-block-start: 9rem;
   }
 }
 

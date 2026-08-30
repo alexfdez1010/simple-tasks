@@ -87,6 +87,7 @@ export function TaskDialog({
     <Modal state={modalState}>
       {trigger ?? (
         <Button
+          className={task ? 'task-edit-button' : undefined}
           isIconOnly={Boolean(task)}
           size={task ? 'sm' : 'md'}
           variant={task ? 'ghost' : 'primary'}
@@ -103,7 +104,11 @@ export function TaskDialog({
       )}
 
       <Modal.Backdrop>
-        <Modal.Container placement="center" size="lg">
+        <Modal.Container
+          className="board-modal-container"
+          placement="auto"
+          size="lg"
+        >
           <Modal.Dialog>
             <Modal.CloseTrigger />
             <Modal.Header>

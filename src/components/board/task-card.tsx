@@ -75,7 +75,7 @@ export function TaskCard({
           <button
             ref={handleRef}
             type="button"
-            className="drag-handle grid size-8 shrink-0 place-items-center rounded-lg text-muted"
+            className="drag-handle grid shrink-0 place-items-center rounded-lg text-muted"
             aria-label={`Drag ${task.title}`}
           >
             <GripIcon className="size-3.5" />
@@ -92,13 +92,13 @@ export function TaskCard({
         </Card.Header>
 
         {task.description ? (
-          <Card.Content className="task-description-preview mx-3 mb-2.5 ms-12 text-[13px] text-muted">
+          <Card.Content className="task-description-preview mx-3 mb-2.5 ms-16 text-[13px] text-muted md:ms-12">
             <Markdown>{task.description}</Markdown>
           </Card.Content>
         ) : null}
 
         {task.propertyValues.length > 0 ? (
-          <Card.Content className="mx-3 mb-2.5 ms-12">
+          <Card.Content className="mx-3 mb-2.5 ms-16 md:ms-12">
             <TaskPropertySummary
               properties={properties}
               values={task.propertyValues}
@@ -107,7 +107,7 @@ export function TaskCard({
         ) : null}
 
         {task.dueDate ? (
-          <Card.Footer className="task-card-footer ms-12">
+          <Card.Footer className="task-card-footer ms-16 md:ms-12">
             <p className="task-date-chip">
               <CalendarIcon className="size-3" />
               <time dateTime={task.dueDate}>

@@ -1,4 +1,4 @@
-import type { Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 import { expect, test } from '@playwright/test';
 
 const PASSWORD = process.env.PASSWORD ?? 'dev-password';
@@ -9,6 +9,14 @@ async function login(page: Page): Promise<void> {
   await page.getByLabel('Password').fill(PASSWORD);
   await page.getByRole('button', { name: 'Sign in' }).click();
   await expect(page.getByRole('heading', { name: 'Tasks' })).toBeVisible();
+}
+
+/** Verifies that a frequently used control is comfortably touch accessible. */
+async function expectTouchTarget(locator: Locator): Promise<void> {
+  const box = await locator.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box?.width).toBeGreaterThanOrEqual(44);
+  expect(box?.height).toBeGreaterThanOrEqual(44);
 }
 
 /** Drags a card with native Chromium touch input after long-press activation. */
@@ -98,10 +106,31 @@ test.describe('mobile Kanban board', () => {
   }, testInfo) => {
     const title = `E2E Mobile Touch ${process.pid}-${testInfo.repeatEachIndex}`;
     await login(page);
+
+    await expect(page.locator('.board-toolbar-wrap')).toHaveCSS(
+      'position',
+      'sticky',
+    );
+    await expectTouchTarget(page.getByRole('link', { name: 'AI' }));
+    await expectTouchTarget(page.getByRole('button', { name: /Settings/ }));
+    await expectTouchTarget(page.getByRole('button', { name: 'Sign out' }));
+    await expectTouchTarget(
+      page.getByRole('button', { name: 'Add task to Blocked' }),
+    );
+
     await page.getByRole('button', { name: 'Add task to Blocked' }).click();
     const dialog = page.getByRole('dialog', {
       name: 'Create task in Blocked',
     });
+    const dialogBox = await dialog.boundingBox();
+    const dialogViewport = page.viewportSize();
+    expect(dialogBox).not.toBeNull();
+    expect(dialogViewport).not.toBeNull();
+    expect(
+      (dialogViewport?.height ?? 0) -
+        (dialogBox?.y ?? 0) -
+        (dialogBox?.height ?? 0),
+    ).toBeLessThanOrEqual(20);
     await dialog.getByLabel('Title').fill(title);
     const creation = page.waitForResponse(
       (response) =>
@@ -119,6 +148,12 @@ test.describe('mobile Kanban board', () => {
     await expect(
       card.getByRole('button', { name: `Drag ${title}` }),
     ).toBeVisible();
+    await expectTouchTarget(
+      card.getByRole('button', { name: `Drag ${title}` }),
+    );
+    await expectTouchTarget(
+      card.getByRole('button', { name: `Edit ${title}` }),
+    );
     const persistence = page.waitForResponse(
       (response) =>
         response.request().method() === 'POST' &&

@@ -41,6 +41,7 @@ export function BoardSettings(props: BoardSettingsProps) {
   return (
     <Modal state={modalState}>
       <Button
+        className="board-action-button"
         variant="secondary"
         aria-label="Settings · Configure statuses and properties"
       >
@@ -48,7 +49,11 @@ export function BoardSettings(props: BoardSettingsProps) {
         <span className="hidden sm:inline">Settings</span>
       </Button>
       <Modal.Backdrop>
-        <Modal.Container placement="center" size="lg">
+        <Modal.Container
+          className="board-modal-container"
+          placement="auto"
+          size="lg"
+        >
           <Modal.Dialog aria-label="Settings · Configure statuses and properties">
             <Modal.CloseTrigger />
             <Modal.Header>

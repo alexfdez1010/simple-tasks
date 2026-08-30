@@ -80,7 +80,10 @@ export function BoardShell({
           </div>
 
           <div className="board-actions">
-            <Link className="px-2 text-sm font-medium" href="/skill">
+            <Link
+              className="board-action-link text-sm font-medium"
+              href="/skill"
+            >
               AI
             </Link>
             <BoardSettings
@@ -96,7 +99,11 @@ export function BoardShell({
               onReorderProperty={propertyMutations.reorder}
             />
             <form action={logoutAction}>
-              <Button type="submit" variant="ghost">
+              <Button
+                className="board-action-button"
+                type="submit"
+                variant="ghost"
+              >
                 Sign out
               </Button>
             </form>

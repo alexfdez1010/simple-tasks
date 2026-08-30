@@ -148,6 +148,12 @@ Component rules:
   remain visually legible during drag-over without relying on colour alone.
 - Responsive behavior: Modals become near-full-width sheets on small screens;
   the Kanban remains horizontally scrollable with 88vw columns and snap points.
+- Mobile touch behavior: Primary toolbar, column, drag, and card actions expose a
+  minimum 44 px touch target. Their visual glyphs may remain compact, but the
+  interactive area must not shrink below the target.
+- Mobile overlays: Task and settings modals dock to the bottom edge as rounded
+  sheets, respect device safe areas, and keep their action footer visible while
+  the body scrolls. Desktop overlays remain centred.
 
 ## 5. Accessibility and content
 
@@ -174,7 +180,9 @@ Component rules:
 - Mobile-first exceptions: Kanban columns preserve task context through horizontal
   scrolling rather than stacking every workflow into a very long page. Columns
   occupy 88vw with 16 px gutters and scroll snapping; the utility bar wraps
-  metrics beneath the brand/actions row without hiding task controls.
+  metrics beneath the brand/actions row without hiding task controls. The bar is
+  sticky on small screens so navigation and board context remain reachable in
+  long columns, and its outer spacing includes display-cutout safe areas.
 - Data-density strategy: Active states show all tasks. Terminal states show only
   their 20 most recently updated tasks, with the limit explained in the column.
 - Property-density strategy: Task cards show non-empty values in a compact
@@ -201,6 +209,8 @@ Component rules:
 | 2026-08-30 | Restore completion-time order after same-terminal-column drags   | Prevents optimistic UI from displaying an order that cannot persist   | Product  |
 | 2026-08-30 | Keep settings mounted while refreshed snapshots reconcile        | Prevents successful mutations from unexpectedly dismissing the dialog | Product  |
 | 2026-08-30 | Use the supplied green checkmark as the shared app and tab icon  | Preserves the intended identity with one artwork source               | Design   |
+| 2026-08-30 | Make the mobile toolbar sticky and overlays bottom-aligned       | Keeps frequent controls reachable and forms comfortable on touch      | Design   |
+| 2026-08-30 | Standardise frequent mobile actions on 44 px touch targets       | Reduces accidental activation and exceeds WCAG 2.2 target minimum     | Design   |
 
 ## 8. Review checklist
 

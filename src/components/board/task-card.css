@@ -49,8 +49,15 @@
 }
 
 .drag-handle {
+  width: 2.75rem;
+  height: 2.75rem;
   cursor: grab;
   touch-action: none;
+}
+
+.task-edit-button {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
 }
 
 .drag-handle:hover {
@@ -139,5 +146,17 @@
   .task-card:hover,
   .task-card-wrapper.is-dragging {
     transform: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .drag-handle {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .task-edit-button {
+    min-width: 2rem;
+    min-height: 2rem;
   }
 }
