@@ -110,6 +110,8 @@ test.describe('mobile Kanban board', () => {
     );
     await dialog.getByRole('button', { name: 'Save' }).click();
     await creation;
+    await expect(dialog).toBeHidden();
+    await page.waitForLoadState('networkidle');
 
     const card = page.getByRole('article', { name: title });
     await expect(card.getByRole('button', { name: /Move to/ })).toHaveCount(0);

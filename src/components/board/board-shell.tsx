@@ -10,6 +10,7 @@ import { KanbanBoard } from '@/components/board/kanban-board';
 import { BoardIcon } from '@/components/board/icons';
 import type { BoardStatus, PropertyDefinition } from '@/components/board/types';
 import { usePropertyMutations } from '@/components/board/use-property-mutations';
+import { useServerReconciledState } from '@/components/board/use-server-reconciled-state';
 import { useStatusMutations } from '@/components/board/use-status-mutations';
 import { useTaskMutations } from '@/components/board/use-task-mutations';
 import { logoutAction } from '@/lib/auth/actions';
@@ -30,10 +31,12 @@ export function BoardShell({
   initialProperties,
 }: BoardShellProps) {
   const router = useRouter();
-  const [statuses, setStatuses] = useState(initialStatuses);
-  const [properties, setProperties] = useState(initialProperties);
+  const [statuses, setStatuses] = useServerReconciledState(initialStatuses);
+  const [properties, setProperties] =
+    useServerReconciledState(initialProperties);
   const [announcement, setAnnouncement] = useState('');
   const metrics = getBoardMetrics(statuses);
+
   const taskMutations = useTaskMutations({
     statuses,
     setStatuses,
@@ -64,12 +67,9 @@ export function BoardShell({
             <span className="board-mark" aria-hidden="true">
               <BoardIcon className="size-5" />
             </span>
-            <div className="min-w-0">
-              <p className="board-eyebrow">Workspace / Flow</p>
-              <h1 className="text-xl font-semibold tracking-[-0.035em] sm:text-2xl">
-                Tasks
-              </h1>
-            </div>
+            <h1 className="min-w-0 text-xl font-semibold tracking-[-0.035em] sm:text-2xl">
+              Tasks
+            </h1>
           </div>
 
           <div className="board-actions">

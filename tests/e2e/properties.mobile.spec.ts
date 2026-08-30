@@ -41,7 +41,9 @@ async function createProperty(
   );
   await settings.getByRole('button', { name: 'Create property' }).click();
   await persistence;
-  await expect(settings).toHaveCount(0);
+  await expect(settings).toBeVisible();
+  await settings.getByRole('button', { exact: true, name: 'Done' }).click();
+  await expect(settings).toBeHidden();
 }
 
 /** Opens a named task property trigger and selects one option. */
@@ -77,7 +79,9 @@ async function deleteLastProperty(page: Page): Promise<void> {
   );
   await confirmation.getByRole('button', { name: 'Delete property' }).click();
   await persistence;
-  await expect(settings).toHaveCount(0);
+  await expect(settings).toBeVisible();
+  await settings.getByRole('button', { exact: true, name: 'Done' }).click();
+  await expect(settings).toBeHidden();
 }
 
 test.describe('mobile configurable properties', () => {

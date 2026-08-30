@@ -161,6 +161,7 @@ test.describe('desktop Kanban board', () => {
   /** Proves configurable terminal color reaches the rendered Kanban column. */
   test('configures a colored terminal status', async ({ page }, testInfo) => {
     const statusName = `E2E Archived ${process.pid}-${testInfo.repeatEachIndex}`;
+    const updatedStatusName = `${statusName} updated`;
     await login(page);
     await page.getByRole('button', { name: /^Settings/ }).click();
 
@@ -197,9 +198,25 @@ test.describe('desktop Kanban board', () => {
     );
     await settings.getByRole('button', { name: 'Create status' }).click();
     await creation;
-    await expect(settings).toHaveCount(0);
+    await expect(settings).toBeVisible();
+    await settings.getByRole('button', { name: `Edit ${statusName}` }).click();
+    await settings
+      .getByRole('textbox', { name: 'Name' })
+      .fill(updatedStatusName);
+    const update = page.waitForResponse(
+      (response) =>
+        response.request().method() === 'POST' &&
+        new URL(response.url()).pathname === '/',
+    );
+    await settings.getByRole('button', { name: 'Save' }).click();
+    await update;
+    await expect(settings).toBeVisible();
+    await expect(
+      settings.getByText(updatedStatusName, { exact: true }),
+    ).toBeVisible();
+    await settings.getByRole('button', { exact: true, name: 'Done' }).click();
 
-    const column = page.getByRole('region', { name: statusName });
+    const column = page.getByRole('region', { name: updatedStatusName });
     await expect(column).toBeVisible();
     await expect(column).toHaveCSS('--status-color', '#A855F7');
     await expect(column.getByText('Latest 20 tasks')).toBeVisible();
@@ -207,14 +224,16 @@ test.describe('desktop Kanban board', () => {
     await page.getByRole('button', { name: /^Settings/ }).click();
     const reopened = page.getByRole('dialog', { name: /^Settings/ });
     await reopened.getByRole('tab', { name: 'Statuses' }).click();
-    await reopened.getByRole('button', { name: `Edit ${statusName}` }).click();
+    await reopened
+      .getByRole('button', { name: `Edit ${updatedStatusName}` })
+      .click();
     await expect(reopened.getByText('#A855F7', { exact: true })).toBeVisible();
     await expect(
       reopened.getByRole('checkbox', { name: 'Terminal status' }),
     ).toBeChecked();
     await reopened.getByRole('button', { name: 'Cancel' }).click();
     await reopened
-      .getByRole('button', { name: `Delete status ${statusName}` })
+      .getByRole('button', { name: `Delete status ${updatedStatusName}` })
       .last()
       .click();
     const confirmation = page.getByRole('alertdialog');
@@ -225,9 +244,10 @@ test.describe('desktop Kanban board', () => {
     );
     await confirmation.getByRole('button', { name: 'Delete status' }).click();
     await deletion;
-    await expect(reopened.getByText(statusName, { exact: true })).toHaveCount(
-      0,
-    );
+    await expect(reopened).toBeVisible();
+    await expect(
+      reopened.getByText(updatedStatusName, { exact: true }),
+    ).toHaveCount(0);
   });
 
   /** Proves pointer dragging moves a task across columns and persists after reload. */

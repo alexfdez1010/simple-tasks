@@ -136,6 +136,7 @@ export function usePropertyMutations({
       propertyIds: positioned.map((property) => property.id),
     });
     if (!result.success) setProperties(snapshot);
+    else refresh();
     return result;
   }
 

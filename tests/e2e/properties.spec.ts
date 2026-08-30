@@ -3,6 +3,7 @@ import { expect, test } from '@playwright/test';
 
 const PASSWORD = process.env.PASSWORD ?? 'dev-password';
 const PRIORITY_PROPERTY = `E2E Priority ${process.pid}`;
+const UPDATED_PRIORITY_PROPERTY = `${PRIORITY_PROPERTY} updated`;
 const AREAS_PROPERTY = `E2E Areas ${process.pid}`;
 const TASK_TITLE = `E2E Properties ${process.pid}`;
 
@@ -41,7 +42,10 @@ async function createSelectableProperty(
   );
   await settings.getByRole('button', { name: 'Create property' }).click();
   await persistence;
-  await expect(settings).toHaveCount(0);
+  await expect(settings).toBeVisible();
+  await expect(settings.getByText(name, { exact: true })).toBeVisible();
+  await settings.getByRole('button', { exact: true, name: 'Done' }).click();
+  await expect(settings).toBeHidden();
 }
 
 /** Opens a task property Select and chooses one visible option. */
@@ -92,6 +96,9 @@ async function deleteLastProperty(page: Page): Promise<void> {
   );
   await confirmation.getByRole('button', { name: 'Delete property' }).click();
   await persistence;
+  await expect(settings).toBeVisible();
+  await settings.getByRole('button', { exact: true, name: 'Done' }).click();
+  await expect(settings).toBeHidden();
 }
 
 test.describe('desktop configurable properties', () => {
@@ -110,12 +117,40 @@ test.describe('desktop configurable properties', () => {
       'Backend',
       'Infra',
     ]);
+
+    await page.getByRole('button', { name: /^Settings/ }).click();
+    const settings = page.getByRole('dialog', { name: /^Settings/ });
+    await settings.getByRole('tab', { name: 'Properties' }).click();
+    await settings
+      .getByRole('button', { name: `Edit ${PRIORITY_PROPERTY}` })
+      .click();
+    await settings
+      .getByRole('textbox', { name: 'Name' })
+      .fill(UPDATED_PRIORITY_PROPERTY);
+    const propertyUpdate = page.waitForResponse(
+      (response) =>
+        response.request().method() === 'POST' &&
+        new URL(response.url()).pathname === '/',
+    );
+    await settings.getByRole('button', { name: 'Save' }).click();
+    await propertyUpdate;
+    await expect(settings).toBeVisible();
+    await expect(
+      settings.getByText(UPDATED_PRIORITY_PROPERTY, { exact: true }),
+    ).toBeVisible();
+    await settings.getByRole('button', { exact: true, name: 'Done' }).click();
+
     await page.getByRole('button', { name: 'Add task to Blocked' }).click();
     const createDialog = page.getByRole('dialog', {
       name: 'Create task in Blocked',
     });
     await createDialog.getByLabel('Title').fill(TASK_TITLE);
-    await choosePropertyOption(page, createDialog, PRIORITY_PROPERTY, 'High');
+    await choosePropertyOption(
+      page,
+      createDialog,
+      UPDATED_PRIORITY_PROPERTY,
+      'High',
+    );
     await createDialog
       .getByRole('button', {
         name: new RegExp(`^(?!Clear ).*${AREAS_PROPERTY}`),
@@ -133,14 +168,19 @@ test.describe('desktop configurable properties', () => {
     await taskCreation;
 
     const card = page.getByRole('article', { name: TASK_TITLE });
-    await expect(card.getByText(PRIORITY_PROPERTY)).toBeVisible();
+    await expect(card.getByText(UPDATED_PRIORITY_PROPERTY)).toBeVisible();
     await expect(card.getByText('High', { exact: true })).toBeVisible();
     await expect(card.getByText(AREAS_PROPERTY)).toBeVisible();
     await expect(card.getByText('Frontend, Infra')).toBeVisible();
 
     await page.getByRole('button', { name: `Edit ${TASK_TITLE}` }).click();
     const editDialog = page.getByRole('dialog', { name: 'Edit task' });
-    await choosePropertyOption(page, editDialog, PRIORITY_PROPERTY, 'Low');
+    await choosePropertyOption(
+      page,
+      editDialog,
+      UPDATED_PRIORITY_PROPERTY,
+      'Low',
+    );
     await editDialog
       .getByRole('button', {
         name: new RegExp(`^(?!Clear ).*${AREAS_PROPERTY}`),
@@ -169,7 +209,7 @@ test.describe('desktop configurable properties', () => {
     await page.getByRole('button', { name: /^Settings/ }).click();
     const cleanup = page.getByRole('dialog', { name: /^Settings/ });
     await cleanup.getByRole('tab', { name: 'Properties' }).click();
-    await expect(cleanup.getByText(PRIORITY_PROPERTY)).toHaveCount(0);
+    await expect(cleanup.getByText(UPDATED_PRIORITY_PROPERTY)).toHaveCount(0);
     await expect(cleanup.getByText(AREAS_PROPERTY)).toHaveCount(0);
   });
 });

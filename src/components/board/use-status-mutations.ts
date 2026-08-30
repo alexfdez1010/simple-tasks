@@ -35,8 +35,9 @@ export function useStatusMutations({
   /** Creates a temporary state and restores the board on failure. */
   async function create(values: StatusValues): Promise<MutationResult> {
     const snapshot = cloneBoard(statuses);
+    const optimisticId = `optimistic-${crypto.randomUUID()}`;
     const optimistic: BoardStatus = {
-      id: `optimistic-${crypto.randomUUID()}`,
+      id: optimisticId,
       ...values,
       position: snapshot.length,
       tasks: [],
@@ -44,7 +45,17 @@ export function useStatusMutations({
     setStatuses([...snapshot, optimistic]);
     const result = await createStatusAction(values);
     if (!result.success) setStatuses(snapshot);
-    else refresh();
+    else {
+      const saved = result.data;
+      if (saved) {
+        setStatuses((current) =>
+          current.map((status) =>
+            status.id === optimisticId ? { ...saved, tasks: [] } : status,
+          ),
+        );
+      }
+      refresh();
+    }
     return result;
   }
 
@@ -61,7 +72,17 @@ export function useStatusMutations({
     );
     const result = await updateStatusAction({ id: statusId, ...values });
     if (!result.success) setStatuses(snapshot);
-    else refresh();
+    else {
+      const saved = result.data;
+      if (saved) {
+        setStatuses((current) =>
+          current.map((status) =>
+            status.id === statusId ? { ...status, ...saved } : status,
+          ),
+        );
+      }
+      refresh();
+    }
     return result;
   }
 
@@ -96,6 +117,7 @@ export function useStatusMutations({
       statusIds: positioned.map((status) => status.id),
     });
     if (!result.success) setStatuses(snapshot);
+    else refresh();
     return result;
   }
 

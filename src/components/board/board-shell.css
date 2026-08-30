@@ -80,15 +80,6 @@
   box-shadow: 0 5px 14px color-mix(in oklab, var(--foreground) 18%, transparent);
 }
 
-.board-eyebrow {
-  color: var(--muted);
-  font-size: 0.625rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  line-height: 1.2;
-  text-transform: uppercase;
-}
-
 .board-actions {
   display: flex;
   align-items: center;
