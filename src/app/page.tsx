@@ -1,6 +1,5 @@
 import { BoardShell } from '@/components/board/board-shell';
 import type { BoardStatus, PropertyDefinition } from '@/components/board/types';
-import type { AutomationDefinition } from '@/lib/automations/types';
 import { getBoardSnapshot } from '@/lib/tasks/queries';
 
 /** Ensures every board request reads the latest persisted workflow state. */
@@ -33,13 +32,10 @@ export default async function Home() {
     })),
   }));
   const initialProperties: PropertyDefinition[] = snapshot.properties;
-  const initialAutomations: AutomationDefinition[] = snapshot.automations;
-
   return (
     <BoardShell
       initialStatuses={initialStatuses}
       initialProperties={initialProperties}
-      initialAutomations={initialAutomations}
     />
   );
 }

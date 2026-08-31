@@ -6,6 +6,7 @@ import type {
 } from '@/lib/automations/types';
 import { idSchema } from '@/lib/validation/common';
 import { automationSchema } from '@/lib/automations/validation';
+import { normalizeAutomationInput } from '@/lib/automations/normalization';
 
 /** Application service for status-transition and scheduled automation rules. */
 export class AutomationService {
@@ -20,13 +21,17 @@ export class AutomationService {
   /** Validates and creates one automation. */
   create(input: CreateAutomationInput): Promise<AutomationDefinition> {
     const parsed = automationSchema.parse(input);
-    return this.repository.create(parsed as CreateAutomationInput);
+    return this.repository.create(
+      normalizeAutomationInput(parsed as CreateAutomationInput),
+    );
   }
 
   /** Validates and updates one automation. */
   update(input: UpdateAutomationInput): Promise<AutomationDefinition> {
     const parsed = automationSchema.parse(input);
-    return this.repository.update(parsed as UpdateAutomationInput);
+    return this.repository.update(
+      normalizeAutomationInput(parsed as UpdateAutomationInput),
+    );
   }
 
   /** Deletes one validated automation. */

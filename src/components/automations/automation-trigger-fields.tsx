@@ -2,47 +2,40 @@
 
 import { Label, ListBox, Select } from '@heroui/react';
 
+import { changeAutomationTrigger } from '@/components/automations/automation-draft';
+import type {
+  AutomationStatus,
+  AutomationValues,
+} from '@/components/automations/types';
 import { DatePickerField } from '@/components/board/date-picker-field';
-import type { AutomationValues, BoardStatus } from '@/components/board/types';
 import { useI18n } from '@/lib/i18n/provider';
 
 interface AutomationTriggerFieldsProps {
-  statuses: BoardStatus[];
+  statuses: AutomationStatus[];
   values: AutomationValues;
   onChange: (values: AutomationValues) => void;
 }
 
-/** Renders the trigger mode and its status or calendar date selector. */
+/** Renders the trigger mode and its status or calendar selector. */
 export function AutomationTriggerFields({
   statuses,
   values,
   onChange,
-}: AutomationTriggerFieldsProps) {
+}: AutomationTriggerFieldsProps): React.JSX.Element {
   const { t } = useI18n();
-  const fallbackStatusId = statuses[0]?.id ?? '';
-
-  /** Switches modes and clears fields that belong to the previous trigger. */
-  function changeTrigger(triggerType: AutomationValues['triggerType']) {
-    const isScheduled = triggerType === 'SCHEDULED';
-    onChange({
-      ...values,
-      triggerType,
-      triggerStatusId: isScheduled
-        ? null
-        : (values.triggerStatusId ?? fallbackStatusId),
-      scheduledAt: isScheduled ? values.scheduledAt : null,
-      actionType: isScheduled ? 'CREATE_TASK' : 'SET_COMPLETION_DATE_TODAY',
-      propertyId: isScheduled ? null : values.propertyId,
-      propertyValue: isScheduled ? null : values.propertyValue,
-    });
-  }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="grid gap-4 md:grid-cols-2">
       <Select
         selectedKey={values.triggerType}
         onSelectionChange={(triggerType) =>
-          changeTrigger(String(triggerType) as AutomationValues['triggerType'])
+          onChange(
+            changeAutomationTrigger(
+              values,
+              String(triggerType) as AutomationValues['triggerType'],
+              statuses,
+            ),
+          )
         }
       >
         <Label>{t('automation.triggerType')}</Label>
@@ -97,7 +90,17 @@ export function AutomationTriggerFields({
                   id={status.id}
                   textValue={status.name}
                 >
-                  {status.name}
+                  <span className="automation-status-option">
+                    <span
+                      className="automation-status-dot"
+                      style={
+                        {
+                          '--status-color': status.color,
+                        } as React.CSSProperties
+                      }
+                    />
+                    {status.name}
+                  </span>
                   <ListBox.ItemIndicator />
                 </ListBox.Item>
               ))}

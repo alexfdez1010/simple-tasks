@@ -23,6 +23,10 @@ the accessible primitives; Tailwind CSS 4 provides layout and product styling.
 - What makes this product recognisable: A warm workflow-studio canvas, ink
   typography, softly recessed columns, and configurable colour signals that
   follow each workflow state.
+- Automation workspace: A focused rule workshop with a narrow scannable rail
+  and a clause builder that reads vertically as “When” then “Then”. Subtle
+  connector lines and numbered clauses make rule causality memorable without
+  turning the product into a diagramming tool.
 - Density: Compact; task cards expose only scannable information and expand into
   the edit dialog for detail.
 - Shape language: Soft rectangles with nested 10–20 px radii; outer workspace
@@ -156,9 +160,21 @@ Component rules:
 - Mobile overlays: Task and settings modals dock to the bottom edge as rounded
   sheets, respect device safe areas, and keep their action footer visible while
   the body scrolls. Desktop overlays remain centred.
-- Temporal automations: Use a quiet “scheduled” rule form with one execution
-  date, a task template, a destination status, and optional typed properties.
-  Show the pending/executed state in the rule list; editing a rule re-arms it.
+- Automation navigation: Automations live at `/automations`, linked directly
+  from the board toolbar. Settings remains limited to board configuration,
+  while the automation page owns rule creation, editing, execution state, and
+  deletion. Every automation page includes an explicit route back to the board.
+- Automation builder: Compose one visible clause for the trigger and one for
+  the action. Keep rule naming and validation in the same focused form; clear
+  fields that do not belong to the selected trigger or action before saving.
+- Temporal automations: Use a quiet “scheduled” clause with one execution date,
+  a task template, a destination status, and optional typed properties. Show
+  pending and executed rules as distinct states; editing an executed rule
+  explicitly re-arms it.
+- Automation list: Group workflow rules and scheduled tasks, show natural-
+  language summaries, and keep one selected rule visually anchored to its
+  editor. Empty state copy explains both supported rule types and exposes one
+  primary creation action.
 
 ## 5. Accessibility and content
 
@@ -192,38 +208,45 @@ Component rules:
   long columns, and its outer spacing includes display-cutout safe areas.
 - Data-density strategy: Active states show all tasks. Terminal states show only
   their 20 latest-due-date tasks, with the limit explained in the column.
+- Automation workspace: Cap content at 1280 px. On desktop use a 5/7 split with
+  the rule rail remaining visible beside a sticky editor. Below 768 px the
+  editor becomes the primary view while creating or editing, with a clear
+  return action to the rule list; all controls retain 44 px targets.
 - Property-density strategy: Task cards show non-empty values in a compact
   two-column metadata list. Multi-select values wrap as quiet chips. Property
   settings and task forms use one column on mobile and two where space permits.
 
 ## 7. Decision log
 
-| Date       | Decision                                                               | Reason                                                                                         | Owner       |
-| ---------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ----------- |
-| 2026-08-29 | Keep a single shared-password session instead of user accounts         | Matches the requested private, simple board                                                    | Product     |
-| 2026-08-29 | Use horizontally scrollable columns on mobile                          | Preserves the spatial workflow and supports touch drag                                         | Design      |
-| 2026-08-29 | Treat workflow colours as accents, not text colours                    | User-selected colours cannot guarantee readable contrast                                       | Design      |
-| 2026-08-29 | Limit every terminal state to 20 visible tasks                         | Keeps completed work available without overwhelming the board                                  | Product     |
-| 2026-08-29 | Model custom properties as definitions plus typed task values          | Keeps the board extensible without adding permanent task fields                                | Product     |
-| 2026-08-29 | Support text, number, date, select, and multi-select initially         | Covers useful metadata while preserving the deliberately small scope                           | Product     |
-| 2026-08-29 | Remove decorative borders and the per-card state selector              | Makes the board lighter and keeps state changes spatial through drag                           | Design      |
-| 2026-08-29 | Reduce card height and metadata density                                | More tasks remain scannable without turning cards into mini forms                              | Design      |
-| 2026-08-29 | Add per-column creation and status-tinted card gradients               | Makes placement faster and workflow ownership visually memorable                               | Design      |
-| 2026-08-29 | Replace native date, colour, number, and confirmation controls         | Keeps interaction styling and accessibility consistent through HeroUI                          | Design      |
-| 2026-08-29 | Reveal and copy the MCP token only from the protected setup page       | Makes agent setup easier without placing the secret in static output                           | Security    |
-| 2026-08-30 | Treat the board as a tactile workflow studio with recessed wells       | Adds hierarchy and depth while keeping task content primary                                    | Design      |
-| 2026-08-30 | Show active/finished context and a restrained completion meter         | Makes board state scannable without introducing dashboard clutter                              | Product     |
-| 2026-08-30 | Sort tasks by due date per status type                                 | Makes upcoming and terminal work easy to scan                                                  | Product     |
-| 2026-08-30 | Keep settings mounted while refreshed snapshots reconcile              | Prevents successful mutations from unexpectedly dismissing the dialog                          | Product     |
-| 2026-08-30 | Use the supplied green checkmark as the shared app and tab icon        | Preserves the intended identity with one artwork source                                        | Design      |
-| 2026-08-30 | Make the mobile toolbar sticky and overlays bottom-aligned             | Keeps frequent controls reachable and forms comfortable on touch                               | Design      |
-| 2026-08-30 | Standardise frequent mobile actions on 44 px touch targets             | Reduces accidental activation and exceeds WCAG 2.2 target minimum                              | Design      |
-| 2026-08-30 | Default to English with Spanish selectable in Settings                 | Keeps current behavior stable while adding a persistent language choice                        | Product     |
-| 2026-08-31 | Open task details from the card and keep editing as a secondary action | Makes Markdown, dates, status, and every property discoverable without crowding cards          | Product     |
-| 2026-08-31 | Model automations as status-transition rules with typed actions        | Keeps the first automation slice explicit, testable, and extensible for property actions       | Engineering |
-| 2026-08-31 | Evaluate one-shot temporal automations on authenticated reads          | Provides catch-up behavior without cron while keeping execution idempotent in one transaction  | Engineering |
-| 2026-08-31 | Use date-templated generated tasks with typed property values          | Makes scheduled work reusable without adding a general-purpose scripting language              | Product     |
-| 2026-08-31 | Ship completion-date and property-value actions                        | Guarantees the final-status completion date use case while making configured properties useful | Product     |
+| Date       | Decision                                                                 | Reason                                                                                         | Owner       |
+| ---------- | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- | ----------- |
+| 2026-08-29 | Keep a single shared-password session instead of user accounts           | Matches the requested private, simple board                                                    | Product     |
+| 2026-08-29 | Use horizontally scrollable columns on mobile                            | Preserves the spatial workflow and supports touch drag                                         | Design      |
+| 2026-08-29 | Treat workflow colours as accents, not text colours                      | User-selected colours cannot guarantee readable contrast                                       | Design      |
+| 2026-08-29 | Limit every terminal state to 20 visible tasks                           | Keeps completed work available without overwhelming the board                                  | Product     |
+| 2026-08-29 | Model custom properties as definitions plus typed task values            | Keeps the board extensible without adding permanent task fields                                | Product     |
+| 2026-08-29 | Support text, number, date, select, and multi-select initially           | Covers useful metadata while preserving the deliberately small scope                           | Product     |
+| 2026-08-29 | Remove decorative borders and the per-card state selector                | Makes the board lighter and keeps state changes spatial through drag                           | Design      |
+| 2026-08-29 | Reduce card height and metadata density                                  | More tasks remain scannable without turning cards into mini forms                              | Design      |
+| 2026-08-29 | Add per-column creation and status-tinted card gradients                 | Makes placement faster and workflow ownership visually memorable                               | Design      |
+| 2026-08-29 | Replace native date, colour, number, and confirmation controls           | Keeps interaction styling and accessibility consistent through HeroUI                          | Design      |
+| 2026-08-29 | Reveal and copy the MCP token only from the protected setup page         | Makes agent setup easier without placing the secret in static output                           | Security    |
+| 2026-08-30 | Treat the board as a tactile workflow studio with recessed wells         | Adds hierarchy and depth while keeping task content primary                                    | Design      |
+| 2026-08-30 | Show active/finished context and a restrained completion meter           | Makes board state scannable without introducing dashboard clutter                              | Product     |
+| 2026-08-30 | Sort tasks by due date per status type                                   | Makes upcoming and terminal work easy to scan                                                  | Product     |
+| 2026-08-30 | Keep settings mounted while refreshed snapshots reconcile                | Prevents successful mutations from unexpectedly dismissing the dialog                          | Product     |
+| 2026-08-30 | Use the supplied green checkmark as the shared app and tab icon          | Preserves the intended identity with one artwork source                                        | Design      |
+| 2026-08-30 | Make the mobile toolbar sticky and overlays bottom-aligned               | Keeps frequent controls reachable and forms comfortable on touch                               | Design      |
+| 2026-08-30 | Standardise frequent mobile actions on 44 px touch targets               | Reduces accidental activation and exceeds WCAG 2.2 target minimum                              | Design      |
+| 2026-08-30 | Default to English with Spanish selectable in Settings                   | Keeps current behavior stable while adding a persistent language choice                        | Product     |
+| 2026-08-31 | Open task details from the card and keep editing as a secondary action   | Makes Markdown, dates, status, and every property discoverable without crowding cards          | Product     |
+| 2026-08-31 | Model automations as status-transition rules with typed actions          | Keeps the first automation slice explicit, testable, and extensible for property actions       | Engineering |
+| 2026-08-31 | Evaluate one-shot temporal automations on authenticated reads            | Provides catch-up behavior without cron while keeping execution idempotent in one transaction  | Engineering |
+| 2026-08-31 | Use date-templated generated tasks with typed property values            | Makes scheduled work reusable without adding a general-purpose scripting language              | Product     |
+| 2026-08-31 | Ship completion-date and property-value actions                          | Guarantees the final-status completion date use case while making configured properties useful | Product     |
+| 2026-08-31 | Move automation management to its own rule-workshop page                 | Gives rule scanning and editing enough space while keeping board settings focused              | Product     |
+| 2026-08-31 | Normalize trigger-specific and action-specific fields before persistence | Prevents hidden stale values from surviving mode changes or corrupting later edits             | Engineering |
+| 2026-08-31 | Use a rule rail beside a vertical “When → Then” clause builder           | Makes causality and selection clear on desktop while collapsing to a focused mobile flow       | Design      |
 
 ## 8. Review checklist
 

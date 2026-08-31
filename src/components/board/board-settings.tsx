@@ -3,7 +3,6 @@
 import { Button, Modal, Tabs, useOverlayState } from '@heroui/react';
 
 import { SettingsIcon } from '@/components/board/icons';
-import { AutomationSettings } from '@/components/board/automation-settings';
 import { LanguageSettings } from '@/components/board/language-settings';
 import { PropertySettings } from '@/components/board/property-settings';
 import { StatusSettings } from '@/components/board/status-settings';
@@ -14,14 +13,11 @@ import type {
   PropertyDefinition,
   PropertyValues,
   StatusValues,
-  AutomationDefinition,
-  AutomationValues,
 } from '@/components/board/types';
 
 interface BoardSettingsProps {
   statuses: BoardStatus[];
   properties: PropertyDefinition[];
-  automations: AutomationDefinition[];
   onCreateStatus: (values: StatusValues) => Promise<MutationResult>;
   onUpdateStatus: (id: string, values: StatusValues) => Promise<MutationResult>;
   onDeleteStatus: (id: string) => Promise<MutationResult>;
@@ -33,12 +29,6 @@ interface BoardSettingsProps {
   ) => Promise<MutationResult>;
   onDeleteProperty: (id: string) => Promise<MutationResult>;
   onReorderProperty: (id: string, direction: -1 | 1) => Promise<MutationResult>;
-  onCreateAutomation: (values: AutomationValues) => Promise<MutationResult>;
-  onUpdateAutomation: (
-    id: string,
-    values: AutomationValues,
-  ) => Promise<MutationResult>;
-  onDeleteAutomation: (id: string) => Promise<MutationResult>;
 }
 
 /**
@@ -84,10 +74,6 @@ export function BoardSettings(props: BoardSettingsProps) {
                       {t('settings.properties')}
                       <Tabs.Indicator />
                     </Tabs.Tab>
-                    <Tabs.Tab id="automations">
-                      {t('settings.automations')}
-                      <Tabs.Indicator />
-                    </Tabs.Tab>
                     <Tabs.Tab id="language">
                       {t('settings.language')}
                       <Tabs.Indicator />
@@ -114,16 +100,6 @@ export function BoardSettings(props: BoardSettingsProps) {
                 </Tabs.Panel>
                 <Tabs.Panel className="pt-5" id="language">
                   <LanguageSettings />
-                </Tabs.Panel>
-                <Tabs.Panel className="pt-5" id="automations">
-                  <AutomationSettings
-                    automations={props.automations}
-                    statuses={props.statuses}
-                    properties={props.properties}
-                    onCreate={props.onCreateAutomation}
-                    onUpdate={props.onUpdateAutomation}
-                    onDelete={props.onDeleteAutomation}
-                  />
                 </Tabs.Panel>
               </Tabs>
             </Modal.Body>

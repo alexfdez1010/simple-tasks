@@ -2,29 +2,30 @@
 
 import { Label, ListBox, Select } from '@heroui/react';
 
-import { AutomationScheduledFields } from '@/components/board/automation-scheduled-fields';
-import { TaskPropertyFields } from '@/components/board/task-property-fields';
+import { changeAutomationAction } from '@/components/automations/automation-draft';
+import { AutomationScheduledFields } from '@/components/automations/automation-scheduled-fields';
 import type {
+  AutomationStatus,
   AutomationValues,
-  BoardStatus,
   PropertyDefinition,
-} from '@/components/board/types';
+} from '@/components/automations/types';
+import { TaskPropertyFields } from '@/components/board/task-property-fields';
 import { useI18n } from '@/lib/i18n/provider';
 
 interface AutomationActionFieldsProps {
-  statuses: BoardStatus[];
+  statuses: AutomationStatus[];
   properties: PropertyDefinition[];
   values: AutomationValues;
   onChange: (values: AutomationValues) => void;
 }
 
-/** Renders the action selector and the matching typed property editor. */
+/** Renders the action selector and the matching typed editor. */
 export function AutomationActionFields({
   statuses,
   properties,
   values,
   onChange,
-}: AutomationActionFieldsProps) {
+}: AutomationActionFieldsProps): React.JSX.Element {
   const { t } = useI18n();
   const selectedProperty = properties.find(
     (property) => property.id === values.propertyId,
@@ -41,24 +42,17 @@ export function AutomationActionFields({
     );
   }
 
-  /** Changes action and removes stale fields from the other action type. */
-  function changeAction(actionType: AutomationValues['actionType']) {
-    onChange({
-      ...values,
-      actionType,
-      propertyId:
-        actionType === 'SET_PROPERTY_VALUE' ? values.propertyId : null,
-      propertyValue:
-        actionType === 'SET_PROPERTY_VALUE' ? values.propertyValue : null,
-    });
-  }
-
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <Select
         selectedKey={values.actionType}
         onSelectionChange={(actionType) =>
-          changeAction(String(actionType) as AutomationValues['actionType'])
+          onChange(
+            changeAutomationAction(
+              values,
+              String(actionType) as AutomationValues['actionType'],
+            ),
+          )
         }
       >
         <Label>{t('automation.action')}</Label>
@@ -87,7 +81,7 @@ export function AutomationActionFields({
       </Select>
       {values.actionType === 'SET_PROPERTY_VALUE' ? (
         properties.length > 0 ? (
-          <div className="flex flex-col gap-4 rounded-xl bg-surface-secondary p-3 sm:col-span-2">
+          <div className="automation-property-action">
             <Select
               selectedKey={values.propertyId ?? undefined}
               onSelectionChange={(propertyId) =>
@@ -141,15 +135,15 @@ export function AutomationActionFields({
             ) : null}
           </div>
         ) : (
-          <p className="text-sm text-muted sm:col-span-2">
+          <p className="automation-inline-note">
             {t('automation.noProperties')}
           </p>
         )
       ) : (
-        <p className="rounded-xl bg-surface-secondary p-3 text-sm text-muted sm:col-span-2">
+        <p className="automation-inline-note">
           {t('automation.completionHint')}
         </p>
       )}
-    </>
+    </div>
   );
 }

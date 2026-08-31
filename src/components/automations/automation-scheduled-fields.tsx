@@ -10,32 +10,32 @@ import {
   TextField,
 } from '@heroui/react';
 
-import { TaskPropertyFields } from '@/components/board/task-property-fields';
 import type {
+  AutomationStatus,
   AutomationValues,
-  BoardStatus,
   PropertyDefinition,
-} from '@/components/board/types';
+} from '@/components/automations/types';
+import { TaskPropertyFields } from '@/components/board/task-property-fields';
 import { useI18n } from '@/lib/i18n/provider';
 
 interface AutomationScheduledFieldsProps {
   properties: PropertyDefinition[];
-  statuses: BoardStatus[];
+  statuses: AutomationStatus[];
   values: AutomationValues;
   onChange: (values: AutomationValues) => void;
 }
 
-/** Renders the parameterized task template for a scheduled automation. */
+/** Renders the task template produced by a scheduled automation. */
 export function AutomationScheduledFields({
   properties,
   statuses,
   values,
   onChange,
-}: AutomationScheduledFieldsProps) {
+}: AutomationScheduledFieldsProps): React.JSX.Element {
   const { t } = useI18n();
 
   return (
-    <div className="flex flex-col gap-4 rounded-xl bg-surface-secondary p-3 sm:col-span-2">
+    <div className="flex flex-col gap-4">
       <TextField
         isRequired
         value={values.taskTitleTemplate ?? ''}
@@ -57,7 +57,7 @@ export function AutomationScheduledFields({
       >
         <Label>{t('automation.taskDescriptionTemplate')}</Label>
         <TextArea
-          className="min-h-24 font-mono text-sm"
+          className="min-h-28 font-mono text-sm"
           maxLength={20_000}
           placeholder={t('automation.taskDescriptionPlaceholder')}
         />
@@ -109,14 +109,18 @@ export function AutomationScheduledFields({
           </NumberField.Group>
         </NumberField>
       </div>
-      <TaskPropertyFields
-        properties={properties}
-        values={values.taskPropertyValues}
-        onChange={(taskPropertyValues) =>
-          onChange({ ...values, taskPropertyValues })
-        }
-      />
-      <p className="text-xs text-muted">{t('automation.templateHint')}</p>
+      <div className="automation-template-properties">
+        <TaskPropertyFields
+          properties={properties}
+          values={values.taskPropertyValues}
+          onChange={(taskPropertyValues) =>
+            onChange({ ...values, taskPropertyValues })
+          }
+        />
+      </div>
+      <p className="text-xs leading-5 text-muted">
+        {t('automation.templateHint')}
+      </p>
     </div>
   );
 }

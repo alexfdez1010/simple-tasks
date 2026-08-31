@@ -11,8 +11,6 @@ import { BoardSettings } from '@/components/board/board-settings';
 import { getBoardMetrics } from '@/components/board/board-metrics';
 import { KanbanBoard } from '@/components/board/kanban-board';
 import type { BoardStatus, PropertyDefinition } from '@/components/board/types';
-import type { AutomationDefinition } from '@/lib/automations/types';
-import { useAutomationMutations } from '@/components/board/use-automation-mutations';
 import { usePropertyMutations } from '@/components/board/use-property-mutations';
 import { useServerReconciledState } from '@/components/board/use-server-reconciled-state';
 import { useStatusMutations } from '@/components/board/use-status-mutations';
@@ -24,7 +22,6 @@ import type { TranslationKey } from '@/lib/i18n/translations';
 interface BoardShellProps {
   initialStatuses: BoardStatus[];
   initialProperties: PropertyDefinition[];
-  initialAutomations: AutomationDefinition[];
 }
 
 /**
@@ -36,7 +33,6 @@ interface BoardShellProps {
 export function BoardShell({
   initialStatuses,
   initialProperties,
-  initialAutomations,
 }: BoardShellProps) {
   const router = useRouter();
   const { t } = useI18n();
@@ -44,8 +40,6 @@ export function BoardShell({
   const [statuses, setStatuses] = useServerReconciledState(initialStatuses);
   const [properties, setProperties] =
     useServerReconciledState(initialProperties);
-  const [automations, setAutomations] =
-    useServerReconciledState(initialAutomations);
   const [announcement, setAnnouncement] = useState('');
   const metrics = getBoardMetrics(statuses);
 
@@ -70,11 +64,6 @@ export function BoardShell({
     properties,
     setStatuses,
     setProperties,
-    refresh: router.refresh,
-  });
-  const automationMutations = useAutomationMutations({
-    automations,
-    setAutomations,
     refresh: router.refresh,
   });
 
@@ -103,6 +92,12 @@ export function BoardShell({
           <div className="board-actions">
             <Link
               className="board-action-link text-sm font-medium"
+              href="/automations"
+            >
+              {t('board.automations')}
+            </Link>
+            <Link
+              className="board-action-link text-sm font-medium"
               href="/skill"
             >
               {t('board.ai')}
@@ -110,7 +105,6 @@ export function BoardShell({
             <BoardSettings
               statuses={statuses}
               properties={properties}
-              automations={automations}
               onCreateStatus={statusMutations.create}
               onUpdateStatus={statusMutations.update}
               onDeleteStatus={statusMutations.remove}
@@ -119,9 +113,6 @@ export function BoardShell({
               onUpdateProperty={propertyMutations.update}
               onDeleteProperty={propertyMutations.remove}
               onReorderProperty={propertyMutations.reorder}
-              onCreateAutomation={automationMutations.create}
-              onUpdateAutomation={automationMutations.update}
-              onDeleteAutomation={automationMutations.remove}
             />
             <form action={logoutAction}>
               <Button

@@ -15,10 +15,9 @@ export async function getBoard(): Promise<BoardStatus[]> {
 export async function getBoardSnapshot(): Promise<BoardSnapshot> {
   await requireAuthenticated();
   await automationService.runDue();
-  const [statuses, properties, automations] = await Promise.all([
+  const [statuses, properties] = await Promise.all([
     taskService.listBoard(),
     propertyService.list(),
-    automationService.list(),
   ]);
-  return { statuses, properties, automations };
+  return { statuses, properties };
 }

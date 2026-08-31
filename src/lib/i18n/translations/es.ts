@@ -15,6 +15,7 @@ export const es: Record<TranslationKey, string> = {
   'common.optional': 'Opcional',
   'board.skipToTaskBoard': 'Saltar al tablero de tareas',
   'board.title': 'Tareas',
+  'board.automations': 'Automatizaciones',
   'board.ai': 'IA',
   'board.signOut': 'Cerrar sesión',
   'board.summary': 'Resumen del tablero visible',
@@ -143,6 +144,44 @@ export const es: Record<TranslationKey, string> = {
   'automation.title': 'Automatizaciones',
   'automation.description':
     'Ejecuta acciones tipadas al cambiar de estado o cuando llega una fecha.',
+  'automation.pageDescription':
+    'Crea reglas pequeñas que mantienen el trabajo rutinario en marcha sin ocultar qué ocurrirá después.',
+  'automation.backToBoard': 'Volver al tablero',
+  'automation.skipToRules': 'Saltar a las reglas de automatización',
+  'automation.newRule': 'Nueva regla',
+  'automation.summary': 'Resumen de automatizaciones',
+  'automation.ruleCount.one': 'regla',
+  'automation.ruleCount.other': 'reglas',
+  'automation.pendingCount.one': 'tarea programada pendiente',
+  'automation.pendingCount.other': 'tareas programadas pendientes',
+  'automation.ruleList': 'Lista de reglas de automatización',
+  'automation.editor': 'Editor de automatizaciones',
+  'automation.workflowRules': 'Reglas de flujo',
+  'automation.scheduledTasks': 'Tareas programadas',
+  'automation.alwaysOn': 'Siempre activa',
+  'automation.scheduled': 'Programada',
+  'automation.emptyTitle': 'Aún no hay reglas',
+  'automation.emptyDescription':
+    'Crea una regla de flujo o programa una tarea única. Cada regla seguirá visible y editable aquí.',
+  'automation.startFirst': 'Crear la primera regla',
+  'automation.guideKicker': 'Taller de reglas',
+  'automation.guideTitle': 'Elige una regla o crea otra',
+  'automation.guideDescription':
+    'Las reglas son deliberadamente pequeñas: un activador claro y una acción predecible.',
+  'automation.workflowGuide':
+    'Reacciona cuando una tarea entra en un estado y rellena su fecha de finalización o una propiedad.',
+  'automation.scheduledGuide':
+    'Crea una tarea desde una plantilla la primera vez que se consulte el tablero después de una fecha.',
+  'automation.editorNew': 'Nueva regla',
+  'automation.editorEditing': 'Editando regla',
+  'automation.editorCreateTitle': 'Crear una automatización',
+  'automation.editorEditTitle': 'Ajustar esta automatización',
+  'automation.editorDescription':
+    'Da un nombre claro a la regla y define cuándo comienza y qué modifica.',
+  'automation.when': 'Cuando',
+  'automation.whenDescription': 'Elige el evento que inicia esta regla.',
+  'automation.then': 'Entonces',
+  'automation.thenDescription': 'Elige la única acción que ejecutará la regla.',
   'automation.empty': 'No hay automatizaciones configuradas.',
   'automation.add': 'Añadir automatización',
   'automation.create': 'Crear automatización',
@@ -176,6 +215,7 @@ export const es: Record<TranslationKey, string> = {
   'automation.completeTaskTemplate':
     'Añade un título y un estado destino para la tarea generada.',
   'automation.enterName': 'Introduce un nombre para la automatización.',
+  'automation.chooseTriggerStatus': 'Elige el estado que inicia esta regla.',
   'automation.chooseProperty': 'Elige una propiedad y asígnale un valor.',
   'automation.saveFallback': 'No se pudo guardar la automatización.',
   'automation.rule':

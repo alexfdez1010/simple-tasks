@@ -1,0 +1,147 @@
+.automation-app {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+}
+
+.automation-app::before {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  background-image:
+    radial-gradient(
+      circle at 72% -8%,
+      color-mix(in oklab, var(--accent) 13%, transparent),
+      transparent 34rem
+    ),
+    linear-gradient(
+      90deg,
+      transparent 0 49.9%,
+      color-mix(in oklab, var(--foreground) 3%, transparent) 50%,
+      transparent 50.1%
+    );
+  background-size:
+    auto,
+    32px 32px;
+  content: '';
+  opacity: 0.72;
+}
+
+.automation-topbar {
+  border-bottom: 1px solid color-mix(in oklab, var(--divider) 72%, transparent);
+  background: color-mix(in oklab, var(--background) 88%, transparent);
+  backdrop-filter: blur(18px);
+}
+
+.automation-topbar-inner {
+  display: flex;
+  max-width: 1280px;
+  min-height: 4.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.automation-back-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.automation-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.875rem;
+}
+
+.automation-brand > span:not(.automation-brand-mark) {
+  color: var(--muted);
+}
+
+.automation-brand-mark,
+.automation-brand-mark img {
+  width: 2rem;
+  height: 2rem;
+}
+
+.automation-main {
+  width: min(100% - 3rem, 1280px);
+  margin-inline: auto;
+  padding-block: 4.5rem 6rem;
+}
+
+.automation-hero {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.automation-hero > div {
+  display: grid;
+  max-width: 48rem;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 0.875rem;
+  align-items: center;
+}
+
+.automation-hero-icon {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  grid-row: 1 / 3;
+  place-items: center;
+  border-radius: 0.875rem;
+  background: color-mix(in oklab, var(--accent) 14%, var(--surface));
+  color: var(--accent);
+}
+
+.automation-hero h1 {
+  font-size: clamp(2.5rem, 6vw, 4.75rem);
+  font-weight: 650;
+  letter-spacing: -0.065em;
+  line-height: 0.95;
+}
+
+.automation-hero p {
+  max-width: 62ch;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.automation-metrics {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-block: 2.5rem 1.25rem;
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.automation-metrics strong {
+  color: var(--foreground);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 1rem;
+}
+
+.automation-metrics > span {
+  width: 2.75rem;
+  height: 1px;
+  background: var(--divider);
+}
+
+.automation-workspace {
+  display: grid;
+  grid-template-columns: minmax(20rem, 5fr) minmax(0, 7fr);
+  gap: 1.25rem;
+  align-items: start;
+}

@@ -4,6 +4,11 @@
 @import '../components/board/board.css';
 @import '../components/board/task-card.css';
 @import '../components/board/board-mobile.css';
+@import '../components/automations/automation-page.css';
+@import '../components/automations/automation-rule-list.css';
+@import '../components/automations/automation-editor.css';
+@import '../components/automations/automation-empty.css';
+@import '../components/automations/automation-mobile.css';
 
 :root {
   --background: oklch(0.975 0.008 80);

@@ -85,15 +85,21 @@ and Spanish, including accessible labels and locale-aware dates and numbers.
 The selection is stored for one year in the `simple-tasks-language` `HttpOnly`
 cookie; absent or unsupported values safely fall back to English.
 
-The Automations section creates rules in the form “when status becomes X, do Y”
-or “on date, create a task”. The built-in completion action fills `completedAt`
-with the current date when a task enters the selected state. The property action
-uses the selected property's own type editor, so text, number, date, select, and
-multi-select values are validated before saving. Scheduled task templates can
-use `{{date}}` and `{{datetime}}` in their title and Markdown description, and
-set a due-date offset and typed properties. They are one-shot: the first
-dashboard load or `list_board`/`get_task` MCP read after the scheduled date
-creates the task and marks the rule executed. Editing the rule re-arms it.
+Open **Automations** from the board toolbar to manage rules on the dedicated
+`/automations` page. Choose **New rule**, give it a name, then configure one
+**When** clause and one **Then** clause. Workflow rules take the form “when
+status becomes X, do Y”; scheduled rules take the form “on date, create a
+task”. Editing an existing rule uses the action on its card, and deletion always
+requires confirmation.
+
+The built-in completion action fills `completedAt` with the current date when a
+task enters the selected state. The property action uses the selected
+property's own type editor, so text, number, date, select, and multi-select
+values are validated before saving. Scheduled task templates can use `{{date}}`
+and `{{datetime}}` in their title and Markdown description, and set a due-date
+offset and typed properties. They are one-shot: the first dashboard load or
+`list_board`/`get_task` MCP read after the scheduled date creates the task and
+marks the rule completed. Editing the rule re-arms it.
 
 ## MCP integration
 

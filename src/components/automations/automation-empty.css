@@ -1,0 +1,71 @@
+.automation-guide-options {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0 1.5rem 1.5rem;
+}
+
+.automation-guide-options article {
+  display: flex;
+  gap: 0.875rem;
+  border-radius: 1rem;
+  background: var(--surface-secondary);
+  padding: 1rem;
+}
+
+.automation-guide-options h3 {
+  font-size: 0.875rem;
+  font-weight: 650;
+}
+
+.automation-guide-options p {
+  margin-top: 0.25rem;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.automation-guide-icon {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: none;
+  place-items: center;
+  border-radius: 0.75rem;
+  background: var(--surface);
+  color: var(--accent);
+}
+
+.automation-welcome > .card__footer {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.automation-empty-state {
+  display: flex;
+  min-height: 24rem;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  border: 1px dashed var(--divider);
+  border-radius: 1.25rem;
+  padding: 2rem;
+}
+
+.automation-empty-mark {
+  margin-bottom: 1rem;
+  color: var(--accent);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.75rem;
+}
+
+.automation-empty-state h2 {
+  font-size: 1.25rem;
+  font-weight: 650;
+}
+
+.automation-empty-state p {
+  max-width: 34ch;
+  margin-block: 0.5rem 1.25rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
