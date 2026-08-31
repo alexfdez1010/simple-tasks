@@ -11,7 +11,11 @@ through an authenticated MCP server for AI agents.
 - Default states: Blocked, To do, In progress, and Done.
 - Compact drag-only Kanban interactions with pointer, touch, and keyboard input.
 - Tasks with a title, optional Markdown description, and optional due date.
+- Clickable task inspector with rendered Markdown, lifecycle dates, ID, status,
+  and every configured property, including empty values.
 - Configurable text, number, date, select, and multi-select task properties.
+- Status-transition automations with completion-date and typed property-value
+  actions.
 - Terminal states show only their 20 most recently completed tasks.
 - Responsive horizontal board with column snapping on mobile.
 - Shared password authentication backed by a signed `HttpOnly` session.
@@ -63,8 +67,10 @@ with a pointer, touch input, and the keyboard; there is no separate state-change
 control. Select a task's edit action to change its content.
 
 Descriptions are stored as Markdown. Rendering rejects raw HTML and remote
-images. Open “Settings” to add, rename, color, reorder, or mark workflow states
-as terminal. A state can be deleted only when it is empty.
+images. Click a task card's title or content to inspect its complete record;
+choose Edit inside the inspector to modify it. Open “Settings” to add, rename,
+color, reorder, or mark workflow states as terminal. A state can be deleted only
+when it is empty.
 
 Settings also manages ordered task properties. Select and multi-select
 properties have their own option lists. Empty values stay off task cards to keep
@@ -75,6 +81,13 @@ The Language section in Settings switches the full interface between English
 and Spanish, including accessible labels and locale-aware dates and numbers.
 The selection is stored for one year in the `simple-tasks-language` `HttpOnly`
 cookie; absent or unsupported values safely fall back to English.
+
+The Automations section creates rules in the form “when status becomes X, do Y”.
+The built-in completion action fills `completedAt` with the current date when a
+task enters the selected state. The property action uses the selected property's
+own type editor, so text, number, date, select, and multi-select values are
+validated before saving. Rules run atomically with a cross-status move and do
+not run for ordinary edits or reordering.
 
 ## MCP integration
 

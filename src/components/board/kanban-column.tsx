@@ -120,6 +120,7 @@ export function KanbanColumn({
             <div className="kanban-task-item" key={task.id} role="listitem">
               <TaskCard
                 task={task}
+                status={status}
                 index={index}
                 properties={properties}
                 onSave={(values) => onUpdate(task.id, values)}

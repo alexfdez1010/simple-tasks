@@ -5,12 +5,13 @@ generator client {
 }
 
 model Status {
-  id         String  @id @default(cuid())
-  name       String  @unique
-  color      String
-  position   Int
-  isTerminal Boolean @default(false)
-  tasks      Task[]
+  id          String       @id @default(cuid())
+  name        String       @unique
+  color       String
+  position    Int
+  isTerminal  Boolean      @default(false)
+  tasks       Task[]
+  automations Automation[]
 
   @@index([position])
 }
@@ -41,14 +42,36 @@ enum TaskPropertyType {
 }
 
 model TaskPropertyDefinition {
-  id       String              @id @default(cuid())
-  name     String              @unique
-  type     TaskPropertyType
-  position Int
-  options  Json                @default("[]")
-  values   TaskPropertyValue[]
+  id          String              @id @default(cuid())
+  name        String              @unique
+  type        TaskPropertyType
+  position    Int
+  options     Json                @default("[]")
+  values      TaskPropertyValue[]
+  automations Automation[]
 
   @@index([position])
+}
+
+enum AutomationActionType {
+  SET_COMPLETION_DATE_TODAY
+  SET_PROPERTY_VALUE
+}
+
+model Automation {
+  id              String                  @id @default(cuid())
+  name            String
+  triggerStatusId String
+  actionType      AutomationActionType
+  propertyId      String?
+  propertyValue   Json?
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
+  triggerStatus   Status                  @relation(fields: [triggerStatusId], references: [id], onDelete: Cascade)
+  property        TaskPropertyDefinition? @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@index([triggerStatusId])
+  @@index([propertyId])
 }
 
 model TaskPropertyValue {

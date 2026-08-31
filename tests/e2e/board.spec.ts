@@ -143,6 +143,17 @@ test.describe('desktop Kanban board', () => {
     await expect(created.getByText('Important')).toBeVisible();
     await expect(created.getByText('Due Sep 5, 2026')).toBeVisible();
 
+    await created.locator('.task-card').click();
+    const detailDialog = page.getByRole('dialog', { name: 'E2E Markdown' });
+    await expect(
+      detailDialog.getByRole('heading', { name: 'Description' }),
+    ).toBeVisible();
+    await expect(
+      detailDialog.getByRole('heading', { name: 'Properties' }),
+    ).toBeVisible();
+    await expect(detailDialog.getByText('Important')).toBeVisible();
+    await detailDialog.getByRole('button', { name: 'Cancel' }).click();
+
     await page.getByRole('button', { name: 'Edit E2E Markdown' }).click();
     const editDialog = page.getByRole('dialog', { name: 'Edit task' });
     await editDialog.getByLabel('Title').fill('E2E Markdown edited');
@@ -156,6 +167,82 @@ test.describe('desktop Kanban board', () => {
     await expect(edited).toBeVisible();
     await expect(edited.getByRole('heading', { name: 'Result' })).toBeVisible();
     await deleteTask(page, 'E2E Markdown edited');
+  });
+
+  /** Proves a configured terminal transition fills the completion date. */
+  test('creates a completion-date automation and runs it on transition', async ({
+    page,
+  }, testInfo) => {
+    const automationName = `E2E Complete date ${process.pid}-${testInfo.repeatEachIndex}`;
+    const taskTitle = `E2E Automation ${process.pid}-${testInfo.repeatEachIndex}`;
+    await login(page);
+    await page.getByRole('button', { name: /^Settings/ }).click();
+    const settings = page.getByRole('dialog', { name: /^Settings/ });
+    await settings.getByRole('tab', { name: 'Automations' }).click();
+    await settings.getByRole('button', { name: 'Add automation' }).click();
+    await settings.getByLabel('Name').fill(automationName);
+    const creation = page.waitForResponse(
+      (response) =>
+        response.request().method() === 'POST' &&
+        new URL(response.url()).pathname === '/',
+    );
+    await settings.getByRole('button', { name: 'Create automation' }).click();
+    await creation;
+    await expect(
+      settings.getByText(automationName, { exact: true }),
+    ).toBeVisible();
+    await settings.getByRole('button', { exact: true, name: 'Done' }).click();
+
+    await page.getByRole('button', { name: 'Add task to Blocked' }).click();
+    const taskDialog = page.getByRole('dialog', {
+      name: 'Create task in Blocked',
+    });
+    await taskDialog.getByLabel('Title').fill(taskTitle);
+    const taskCreation = page.waitForResponse(
+      (response) =>
+        response.request().method() === 'POST' &&
+        new URL(response.url()).pathname === '/',
+    );
+    await taskDialog.getByRole('button', { name: 'Save' }).click();
+    await taskCreation;
+    await page.reload();
+    await expect(page.getByRole('article', { name: taskTitle })).toBeVisible();
+    await page.evaluate(
+      () =>
+        new Promise<void>((resolve) =>
+          requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+        ),
+    );
+    await dragTask(page, taskTitle, 'Done');
+
+    const card = page.getByRole('article', { name: taskTitle });
+    await card.locator('.task-card').click();
+    const detail = page.getByRole('dialog', { name: taskTitle });
+    await expect(detail.getByText('Completed', { exact: true })).toBeVisible();
+    await expect(detail.getByText('No value')).toHaveCount(1);
+    await detail.getByRole('button', { name: 'Cancel' }).click();
+
+    await page.getByRole('button', { name: /^Settings/ }).click();
+    const cleanup = page.getByRole('dialog', { name: /^Settings/ });
+    await cleanup.getByRole('tab', { name: 'Automations' }).click();
+    const automationRow = cleanup
+      .getByRole('article')
+      .filter({ hasText: automationName });
+    await automationRow
+      .getByRole('button', { name: 'Delete', exact: true })
+      .click();
+    const confirmation = page.getByRole('alertdialog');
+    const deletion = page.waitForResponse(
+      (response) =>
+        response.request().method() === 'POST' &&
+        new URL(response.url()).pathname === '/',
+    );
+    await confirmation
+      .getByRole('button', { name: 'Delete', exact: true })
+      .click();
+    await deletion;
+    await cleanup.getByRole('button', { exact: true, name: 'Done' }).click();
+    await deleteTask(page, taskTitle);
   });
 
   /** Proves configurable terminal color reaches the rendered Kanban column. */

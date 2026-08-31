@@ -4,6 +4,7 @@ import type {
   TaskPropertyValueData,
   TaskPropertyValueInput,
 } from '@/lib/properties/types';
+import type { AutomationDefinition } from '@/lib/automations/types';
 
 export type TaskWithProperties = Task & {
   propertyValues: TaskPropertyValueData[];
@@ -13,6 +14,7 @@ export type TaskWithStatus = TaskWithProperties & { status: Status };
 export type BoardSnapshot = {
   statuses: BoardStatus[];
   properties: PropertyDefinition[];
+  automations: AutomationDefinition[];
 };
 
 export type CreateTaskInput = {

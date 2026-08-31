@@ -51,6 +51,8 @@ export function addTask(
     statusId: values.statusId,
     position: statusPosition(statuses, values.statusId),
     updatedAt: now,
+    createdAt: now,
+    completedAt: null,
     propertyValues: values.propertyValues ?? [],
   };
   return statuses.map((status) => {
@@ -94,6 +96,7 @@ export function editTask(
     dueDate: values.dueDate || null,
     statusId: values.statusId,
     updatedAt: new Date().toISOString(),
+    completedAt: located.task.completedAt,
     propertyValues: values.propertyValues ?? located.task.propertyValues,
   };
 

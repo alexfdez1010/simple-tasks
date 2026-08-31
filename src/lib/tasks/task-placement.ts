@@ -1,4 +1,5 @@
 import type { Prisma, Status, Task } from '@/generated/prisma';
+import { applyTransitionAutomations } from '@/lib/automations/execution';
 import { clampTaskIndex, resequenceTasks } from '@/lib/tasks/ordering';
 import { notFound } from '@/lib/validation/errors';
 
@@ -34,7 +35,8 @@ export async function editTaskPlacement(
         ).map((item) => item.id);
   targetIds.splice(clampTaskIndex(index, targetIds.length), 0, task.id);
 
-  const updated = await transaction.task.update({
+  const movedToNewStatus = task.statusId !== target.id;
+  let updated = await transaction.task.update({
     where: { id: task.id },
     data: {
       ...edits,
@@ -45,6 +47,9 @@ export async function editTaskPlacement(
   if (task.statusId !== target.id)
     await resequenceTasks(transaction, sourceIds);
   await resequenceTasks(transaction, targetIds);
+  if (movedToNewStatus) {
+    updated = await applyTransitionAutomations(transaction, updated, target.id);
+  }
   return updated;
 }
 

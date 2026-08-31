@@ -44,6 +44,17 @@
   transform: translateY(-2px);
 }
 
+.task-card-title-trigger,
+.task-card-body-trigger {
+  cursor: pointer;
+}
+
+.task-card-title-trigger:focus-visible,
+.task-card-body-trigger:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 .task-card-header {
   padding: 0.75rem 0.75rem 0.625rem;
 }
@@ -136,6 +147,45 @@
   background: var(--surface-tertiary);
   padding: 0.1rem 0.3rem;
   font-family: var(--font-geist-mono), monospace;
+}
+
+.task-detail-status,
+.task-detail-meta,
+.task-detail-field,
+.task-detail-property {
+  border-radius: 0.65rem;
+  background: color-mix(in oklab, var(--foreground) 5%, transparent);
+  padding: 0.4rem 0.6rem;
+}
+
+.task-detail-status {
+  background: color-mix(in oklab, var(--status-color) 15%, var(--surface));
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.task-detail-field,
+.task-detail-property {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.task-detail-field span,
+.task-detail-property dt {
+  color: var(--muted);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.task-detail-field strong,
+.task-detail-property dd {
+  overflow-wrap: anywhere;
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 
 @media (prefers-reduced-motion: reduce) {

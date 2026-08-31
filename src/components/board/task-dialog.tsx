@@ -6,8 +6,10 @@ import { useState } from 'react';
 
 import { ConfirmationDialog } from '@/components/board/confirmation-dialog';
 import { EditIcon, PlusIcon } from '@/components/board/icons';
+import { TaskDetail } from '@/components/board/task-detail';
 import { TaskForm } from '@/components/board/task-form';
 import type {
+  BoardStatus,
   BoardTask,
   MutationResult,
   PropertyDefinition,
@@ -20,9 +22,20 @@ interface TaskDialogProps {
   task?: BoardTask;
   defaultStatusId?: string;
   createContext?: string;
-  trigger?: ReactElement;
+  trigger?: ReactElement | null;
   onSave: (values: TaskValues) => Promise<MutationResult>;
   onDelete?: () => Promise<MutationResult>;
+  status?: BoardStatus;
+  mode?: 'edit' | 'view';
+  state?: ModalState;
+}
+
+interface ModalState {
+  close: () => void;
+  isOpen: boolean;
+  open: () => void;
+  setOpen: (isOpen: boolean) => void;
+  toggle: () => void;
 }
 
 /** Converts a persisted task into editable HTML form values. */
@@ -53,16 +66,23 @@ export function TaskDialog({
   trigger,
   onSave,
   onDelete,
+  status,
+  mode = 'edit',
+  state,
 }: TaskDialogProps) {
   const { t } = useI18n();
-  const modalState = useOverlayState();
+  const localModalState = useOverlayState();
+  const modalState = state ?? localModalState;
   const [isPending, setIsPending] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [isEditing, setIsEditing] = useState(mode === 'edit');
   const formId = task
     ? `edit-task-${task.id}`
     : `create-task-${defaultStatusId ?? 'default'}`;
   const heading = task
-    ? t('task.edit')
+    ? isEditing
+      ? t('task.edit')
+      : task.title
     : createContext
       ? t('task.createIn', { status: createContext })
       : t('task.new');
@@ -89,7 +109,9 @@ export function TaskDialog({
 
   return (
     <Modal state={modalState}>
-      {trigger ?? (
+      {trigger !== undefined ? (
+        trigger
+      ) : (
         <Button
           className={task ? 'task-edit-button' : undefined}
           isIconOnly={Boolean(task)}
@@ -109,7 +131,12 @@ export function TaskDialog({
         </Button>
       )}
 
-      <Modal.Backdrop>
+      <Modal.Backdrop
+        onOpenChange={(isOpen) => {
+          modalState.setOpen(isOpen);
+          if (!isOpen) setIsEditing(mode === 'edit');
+        }}
+      >
         <Modal.Container
           className="board-modal-container"
           placement="auto"
@@ -121,14 +148,22 @@ export function TaskDialog({
               <Modal.Heading>{heading}</Modal.Heading>
             </Modal.Header>
             <Modal.Body>
-              <TaskForm
-                key={`${formId}-${task?.updatedAt ?? 'new'}`}
-                id={formId}
-                initialValues={getInitialValues(task, defaultStatusId)}
-                properties={properties}
-                onSave={handleSave}
-                onSaved={modalState.close}
-              />
+              {task && !isEditing ? (
+                <TaskDetail
+                  task={task}
+                  status={status}
+                  properties={properties}
+                />
+              ) : (
+                <TaskForm
+                  key={`${formId}-${task?.updatedAt ?? 'new'}`}
+                  id={formId}
+                  initialValues={getInitialValues(task, defaultStatusId)}
+                  properties={properties}
+                  onSave={handleSave}
+                  onSaved={modalState.close}
+                />
+              )}
               {deleteError ? (
                 <p className="text-sm text-danger" role="alert">
                   {deleteError}
@@ -136,7 +171,7 @@ export function TaskDialog({
               ) : null}
             </Modal.Body>
             <Modal.Footer className="justify-between">
-              {task ? (
+              {task && isEditing ? (
                 <ConfirmationDialog
                   body={t('task.deleteBody')}
                   confirmLabel={t('task.deleteTask')}
@@ -144,6 +179,10 @@ export function TaskDialog({
                   triggerLabel={t('task.delete')}
                   onConfirm={handleDelete}
                 />
+              ) : task ? (
+                <Button variant="secondary" onPress={() => setIsEditing(true)}>
+                  {t('common.edit')}
+                </Button>
               ) : (
                 <span />
               )}
@@ -151,9 +190,11 @@ export function TaskDialog({
                 <Button slot="close" variant="ghost">
                   {t('common.cancel')}
                 </Button>
-                <Button type="submit" form={formId} isPending={isPending}>
-                  {t('common.save')}
-                </Button>
+                {isEditing ? (
+                  <Button type="submit" form={formId} isPending={isPending}>
+                    {t('common.save')}
+                  </Button>
+                ) : null}
               </div>
             </Modal.Footer>
           </Modal.Dialog>

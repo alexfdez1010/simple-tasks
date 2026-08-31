@@ -1,4 +1,5 @@
 import { requireAuthenticated } from '@/lib/auth/session';
+import { automationService } from '@/lib/automations';
 import { propertyService } from '@/lib/properties';
 import { taskService } from '@/lib/tasks';
 import type { BoardSnapshot, BoardStatus } from '@/lib/tasks/types';
@@ -12,9 +13,10 @@ export async function getBoard(): Promise<BoardStatus[]> {
 /** Returns definitions and the authenticated board as one UI snapshot. */
 export async function getBoardSnapshot(): Promise<BoardSnapshot> {
   await requireAuthenticated();
-  const [statuses, properties] = await Promise.all([
+  const [statuses, properties, automations] = await Promise.all([
     taskService.listBoard(),
     propertyService.list(),
+    automationService.list(),
   ]);
-  return { statuses, properties };
+  return { statuses, properties, automations };
 }

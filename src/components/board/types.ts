@@ -3,8 +3,13 @@ import type {
   PropertyDefinition,
   TaskPropertyValueData,
 } from '@/lib/properties/types';
+import type {
+  AutomationActionType,
+  AutomationDefinition,
+} from '@/lib/automations/types';
 
 export type { PropertyDefinition, TaskPropertyValueData };
+export type { AutomationActionType, AutomationDefinition };
 
 /** Serializable workflow state consumed by the client-side board. */
 export interface BoardStatus {
@@ -25,6 +30,8 @@ export interface BoardTask {
   statusId: string;
   position: number;
   updatedAt: string;
+  createdAt?: string;
+  completedAt?: string | null;
   propertyValues: TaskPropertyValueData[];
 }
 
@@ -49,6 +56,15 @@ export interface StatusValues {
   name: string;
   color: string;
   isTerminal: boolean;
+}
+
+/** Form values for a status-transition automation. */
+export interface AutomationValues {
+  name: string;
+  triggerStatusId: string;
+  actionType: AutomationActionType;
+  propertyId: string | null;
+  propertyValue: TaskPropertyValueData['value'] | null;
 }
 
 /** Result returned by a UI mutation callback. */

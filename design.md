@@ -195,27 +195,30 @@ Component rules:
 
 ## 7. Decision log
 
-| Date       | Decision                                                         | Reason                                                                  | Owner    |
-| ---------- | ---------------------------------------------------------------- | ----------------------------------------------------------------------- | -------- |
-| 2026-08-29 | Keep a single shared-password session instead of user accounts   | Matches the requested private, simple board                             | Product  |
-| 2026-08-29 | Use horizontally scrollable columns on mobile                    | Preserves the spatial workflow and supports touch drag                  | Design   |
-| 2026-08-29 | Treat workflow colours as accents, not text colours              | User-selected colours cannot guarantee readable contrast                | Design   |
-| 2026-08-29 | Limit every terminal state to 20 visible tasks                   | Keeps completed work available without overwhelming the board           | Product  |
-| 2026-08-29 | Model custom properties as definitions plus typed task values    | Keeps the board extensible without adding permanent task fields         | Product  |
-| 2026-08-29 | Support text, number, date, select, and multi-select initially   | Covers useful metadata while preserving the deliberately small scope    | Product  |
-| 2026-08-29 | Remove decorative borders and the per-card state selector        | Makes the board lighter and keeps state changes spatial through drag    | Design   |
-| 2026-08-29 | Reduce card height and metadata density                          | More tasks remain scannable without turning cards into mini forms       | Design   |
-| 2026-08-29 | Add per-column creation and status-tinted card gradients         | Makes placement faster and workflow ownership visually memorable        | Design   |
-| 2026-08-29 | Replace native date, colour, number, and confirmation controls   | Keeps interaction styling and accessibility consistent through HeroUI   | Design   |
-| 2026-08-29 | Reveal and copy the MCP token only from the protected setup page | Makes agent setup easier without placing the secret in static output    | Security |
-| 2026-08-30 | Treat the board as a tactile workflow studio with recessed wells | Adds hierarchy and depth while keeping task content primary             | Design   |
-| 2026-08-30 | Show active/finished context and a restrained completion meter   | Makes board state scannable without introducing dashboard clutter       | Product  |
-| 2026-08-30 | Sort tasks by due date per status type                           | Makes upcoming and terminal work easy to scan                           | Product  |
-| 2026-08-30 | Keep settings mounted while refreshed snapshots reconcile        | Prevents successful mutations from unexpectedly dismissing the dialog   | Product  |
-| 2026-08-30 | Use the supplied green checkmark as the shared app and tab icon  | Preserves the intended identity with one artwork source                 | Design   |
-| 2026-08-30 | Make the mobile toolbar sticky and overlays bottom-aligned       | Keeps frequent controls reachable and forms comfortable on touch        | Design   |
-| 2026-08-30 | Standardise frequent mobile actions on 44 px touch targets       | Reduces accidental activation and exceeds WCAG 2.2 target minimum       | Design   |
-| 2026-08-30 | Default to English with Spanish selectable in Settings           | Keeps current behavior stable while adding a persistent language choice | Product  |
+| Date       | Decision                                                               | Reason                                                                                         | Owner       |
+| ---------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ----------- |
+| 2026-08-29 | Keep a single shared-password session instead of user accounts         | Matches the requested private, simple board                                                    | Product     |
+| 2026-08-29 | Use horizontally scrollable columns on mobile                          | Preserves the spatial workflow and supports touch drag                                         | Design      |
+| 2026-08-29 | Treat workflow colours as accents, not text colours                    | User-selected colours cannot guarantee readable contrast                                       | Design      |
+| 2026-08-29 | Limit every terminal state to 20 visible tasks                         | Keeps completed work available without overwhelming the board                                  | Product     |
+| 2026-08-29 | Model custom properties as definitions plus typed task values          | Keeps the board extensible without adding permanent task fields                                | Product     |
+| 2026-08-29 | Support text, number, date, select, and multi-select initially         | Covers useful metadata while preserving the deliberately small scope                           | Product     |
+| 2026-08-29 | Remove decorative borders and the per-card state selector              | Makes the board lighter and keeps state changes spatial through drag                           | Design      |
+| 2026-08-29 | Reduce card height and metadata density                                | More tasks remain scannable without turning cards into mini forms                              | Design      |
+| 2026-08-29 | Add per-column creation and status-tinted card gradients               | Makes placement faster and workflow ownership visually memorable                               | Design      |
+| 2026-08-29 | Replace native date, colour, number, and confirmation controls         | Keeps interaction styling and accessibility consistent through HeroUI                          | Design      |
+| 2026-08-29 | Reveal and copy the MCP token only from the protected setup page       | Makes agent setup easier without placing the secret in static output                           | Security    |
+| 2026-08-30 | Treat the board as a tactile workflow studio with recessed wells       | Adds hierarchy and depth while keeping task content primary                                    | Design      |
+| 2026-08-30 | Show active/finished context and a restrained completion meter         | Makes board state scannable without introducing dashboard clutter                              | Product     |
+| 2026-08-30 | Sort tasks by due date per status type                                 | Makes upcoming and terminal work easy to scan                                                  | Product     |
+| 2026-08-30 | Keep settings mounted while refreshed snapshots reconcile              | Prevents successful mutations from unexpectedly dismissing the dialog                          | Product     |
+| 2026-08-30 | Use the supplied green checkmark as the shared app and tab icon        | Preserves the intended identity with one artwork source                                        | Design      |
+| 2026-08-30 | Make the mobile toolbar sticky and overlays bottom-aligned             | Keeps frequent controls reachable and forms comfortable on touch                               | Design      |
+| 2026-08-30 | Standardise frequent mobile actions on 44 px touch targets             | Reduces accidental activation and exceeds WCAG 2.2 target minimum                              | Design      |
+| 2026-08-30 | Default to English with Spanish selectable in Settings                 | Keeps current behavior stable while adding a persistent language choice                        | Product     |
+| 2026-08-31 | Open task details from the card and keep editing as a secondary action | Makes Markdown, dates, status, and every property discoverable without crowding cards          | Product     |
+| 2026-08-31 | Model automations as status-transition rules with typed actions        | Keeps the first automation slice explicit, testable, and extensible for property actions       | Engineering |
+| 2026-08-31 | Ship completion-date and property-value actions                        | Guarantees the final-status completion date use case while making configured properties useful | Product     |
 
 ## 8. Review checklist
 
