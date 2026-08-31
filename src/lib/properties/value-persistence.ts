@@ -7,12 +7,10 @@ import type {
 import { conflict, notFound } from '@/lib/validation/errors';
 import { parsePropertyValue } from '@/lib/validation/properties';
 
-/** Validates and replaces or merges task property values inside a transaction. */
-export async function persistTaskPropertyValues(
+/** Validates task property values against their current definitions. */
+export async function normalizeTaskPropertyValues(
   transaction: Prisma.TransactionClient,
-  taskId: string,
   inputs: TaskPropertyValueInput[],
-  replaceExisting: boolean,
 ): Promise<TaskPropertyValueData[]> {
   const propertyIds = inputs.map((input) => input.propertyId);
   if (new Set(propertyIds).size !== propertyIds.length)
@@ -34,6 +32,17 @@ export async function persistTaskPropertyValues(
       ),
     };
   });
+  return normalized;
+}
+
+/** Validates and replaces or merges task property values inside a transaction. */
+export async function persistTaskPropertyValues(
+  transaction: Prisma.TransactionClient,
+  taskId: string,
+  inputs: TaskPropertyValueInput[],
+  replaceExisting: boolean,
+): Promise<TaskPropertyValueData[]> {
+  const normalized = await normalizeTaskPropertyValues(transaction, inputs);
   if (replaceExisting) {
     await transaction.taskPropertyValue.deleteMany({ where: { taskId } });
   }

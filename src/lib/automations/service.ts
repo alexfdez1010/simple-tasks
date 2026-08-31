@@ -7,7 +7,7 @@ import type {
 import { idSchema } from '@/lib/validation/common';
 import { automationSchema } from '@/lib/automations/validation';
 
-/** Application service for status-transition automation rules. */
+/** Application service for status-transition and scheduled automation rules. */
 export class AutomationService {
   /** Injects the persistence abstraction. */
   constructor(private readonly repository: AutomationRepository) {}
@@ -32,5 +32,10 @@ export class AutomationService {
   /** Deletes one validated automation. */
   delete(id: string): Promise<void> {
     return this.repository.delete(idSchema.parse(id));
+  }
+
+  /** Runs due one-shot rules before a board read. */
+  runDue(now?: Date): Promise<number> {
+    return this.repository.runDue(now);
   }
 }

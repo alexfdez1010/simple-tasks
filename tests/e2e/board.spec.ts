@@ -245,6 +245,60 @@ test.describe('desktop Kanban board', () => {
     await deleteTask(page, taskTitle);
   });
 
+  /** Proves a past scheduled rule catches up once and creates its template task. */
+  test('creates a parameterized scheduled task on the next board read', async ({
+    page,
+  }, testInfo) => {
+    const automationName = `E2E Scheduled ${process.pid}-${testInfo.repeatEachIndex}`;
+    const taskTitle = 'E2E Scheduled 2000-02-01';
+    await login(page);
+    await page.getByRole('button', { name: /^Settings/ }).click();
+    const settings = page.getByRole('dialog', { name: /^Settings/ });
+    await settings.getByRole('tab', { name: 'Automations' }).click();
+    await settings.getByRole('button', { name: 'Add automation' }).click();
+    await settings.getByLabel('Name').fill(automationName);
+    await settings.getByRole('button', { name: 'Start when' }).click();
+    await page
+      .getByRole('option', { exact: true, name: 'A date arrives' })
+      .click();
+    const scheduledDate = settings.getByRole('group', { name: 'Run on' });
+    await scheduledDate.getByRole('spinbutton').nth(0).fill('2');
+    await scheduledDate.getByRole('spinbutton').nth(1).fill('1');
+    await scheduledDate.getByRole('spinbutton').nth(2).fill('2000');
+    await settings
+      .getByLabel('Generated task title')
+      .fill('E2E Scheduled {{date}}');
+    const persistence = page.waitForResponse(
+      (response) =>
+        response.request().method() === 'POST' &&
+        new URL(response.url()).pathname === '/',
+    );
+    await settings.getByRole('button', { name: 'Create automation' }).click();
+    await persistence;
+    await expect(
+      settings.getByText(automationName, { exact: true }),
+    ).toBeVisible();
+    await settings.getByRole('button', { exact: true, name: 'Done' }).click();
+
+    await page.reload();
+    await expect(page.getByRole('article', { name: taskTitle })).toBeVisible();
+    await page.getByRole('button', { name: /^Settings/ }).click();
+    const cleanup = page.getByRole('dialog', { name: /^Settings/ });
+    await cleanup.getByRole('tab', { name: 'Automations' }).click();
+    const automationRow = cleanup
+      .getByRole('article')
+      .filter({ hasText: automationName });
+    await automationRow
+      .getByRole('button', { name: 'Delete', exact: true })
+      .click();
+    await page
+      .getByRole('alertdialog')
+      .getByRole('button', { name: 'Delete', exact: true })
+      .click();
+    await cleanup.getByRole('button', { exact: true, name: 'Done' }).click();
+    await deleteTask(page, taskTitle);
+  });
+
   /** Proves configurable terminal color reaches the rendered Kanban column. */
   test('configures a colored terminal status', async ({ page }, testInfo) => {
     const statusName = `E2E Archived ${process.pid}-${testInfo.repeatEachIndex}`;

@@ -6,10 +6,15 @@ import type {
 import type {
   AutomationActionType,
   AutomationDefinition,
+  AutomationTriggerType,
 } from '@/lib/automations/types';
 
 export type { PropertyDefinition, TaskPropertyValueData };
-export type { AutomationActionType, AutomationDefinition };
+export type {
+  AutomationActionType,
+  AutomationDefinition,
+  AutomationTriggerType,
+};
 
 /** Serializable workflow state consumed by the client-side board. */
 export interface BoardStatus {
@@ -58,13 +63,20 @@ export interface StatusValues {
   isTerminal: boolean;
 }
 
-/** Form values for a status-transition automation. */
+/** Form values for a status-transition or scheduled automation. */
 export interface AutomationValues {
   name: string;
-  triggerStatusId: string;
+  triggerType: AutomationTriggerType;
+  triggerStatusId: string | null;
+  scheduledAt: string | null;
   actionType: AutomationActionType;
   propertyId: string | null;
   propertyValue: TaskPropertyValueData['value'] | null;
+  taskTitleTemplate: string | null;
+  taskDescriptionTemplate: string | null;
+  taskStatusId: string | null;
+  taskDueDateOffsetDays: number | null;
+  taskPropertyValues: TaskPropertyValueData[];
 }
 
 /** Result returned by a UI mutation callback. */

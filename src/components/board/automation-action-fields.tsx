@@ -2,14 +2,17 @@
 
 import { Label, ListBox, Select } from '@heroui/react';
 
+import { AutomationScheduledFields } from '@/components/board/automation-scheduled-fields';
 import { TaskPropertyFields } from '@/components/board/task-property-fields';
 import type {
   AutomationValues,
+  BoardStatus,
   PropertyDefinition,
 } from '@/components/board/types';
 import { useI18n } from '@/lib/i18n/provider';
 
 interface AutomationActionFieldsProps {
+  statuses: BoardStatus[];
   properties: PropertyDefinition[];
   values: AutomationValues;
   onChange: (values: AutomationValues) => void;
@@ -17,6 +20,7 @@ interface AutomationActionFieldsProps {
 
 /** Renders the action selector and the matching typed property editor. */
 export function AutomationActionFields({
+  statuses,
   properties,
   values,
   onChange,
@@ -25,6 +29,17 @@ export function AutomationActionFields({
   const selectedProperty = properties.find(
     (property) => property.id === values.propertyId,
   );
+
+  if (values.triggerType === 'SCHEDULED') {
+    return (
+      <AutomationScheduledFields
+        properties={properties}
+        statuses={statuses}
+        values={values}
+        onChange={onChange}
+      />
+    );
+  }
 
   /** Changes action and removes stale fields from the other action type. */
   function changeAction(actionType: AutomationValues['actionType']) {

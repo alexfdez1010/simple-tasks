@@ -46,6 +46,7 @@ describe('automation transition execution', () => {
     await automationRepository.create({
       actionType: 'SET_COMPLETION_DATE_TODAY',
       name: `${PREFIX}completion`,
+      triggerType: 'STATUS_CHANGE',
       triggerStatusId: done.id,
     });
     const task = await db.task.create({
@@ -62,5 +63,52 @@ describe('automation transition execution', () => {
     await expect(
       db.task.findUnique({ where: { id: task.id } }),
     ).resolves.toMatchObject({ completedAt: null });
+  });
+});
+
+describe('scheduled automation execution', () => {
+  /** Connects to the test database before this suite starts. */
+  beforeAll(async () => db.$connect());
+
+  /** Isolates scheduled fixtures from other integration cases. */
+  beforeEach(cleanFixtures);
+
+  /** Disconnects after scheduled automation cleanup. */
+  afterAll(async () => {
+    await cleanFixtures();
+    await db.$disconnect();
+  });
+
+  /** Creates one parameterized task and remains idempotent on repeated reads. */
+  it('creates a date-templated task once after its scheduled date', async () => {
+    const target = await createStatus('scheduled-target', 110);
+    const automation = await automationRepository.create({
+      actionType: 'CREATE_TASK',
+      name: `${PREFIX}scheduled`,
+      triggerType: 'SCHEDULED',
+      scheduledAt: '2026-08-30T00:00:00.000Z',
+      taskStatusId: target.id,
+      taskTitleTemplate: `${PREFIX}review {{date}}`,
+      taskDescriptionTemplate: 'Generated {{datetime}}',
+      taskDueDateOffsetDays: 2,
+    });
+
+    await expect(
+      automationRepository.runDue(new Date('2026-08-31T00:00:00.000Z')),
+    ).resolves.toBe(1);
+    await expect(
+      automationRepository.runDue(new Date('2026-08-31T00:00:00.000Z')),
+    ).resolves.toBe(0);
+
+    await expect(
+      db.task.findFirst({ where: { title: `${PREFIX}review 2026-08-30` } }),
+    ).resolves.toMatchObject({
+      description: 'Generated 2026-08-30T00:00:00.000Z',
+      dueDate: new Date('2026-09-01T00:00:00.000Z'),
+      statusId: target.id,
+    });
+    await expect(
+      db.automation.findUnique({ where: { id: automation.id } }),
+    ).resolves.toMatchObject({ executedAt: expect.any(Date) });
   });
 });

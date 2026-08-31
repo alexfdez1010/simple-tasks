@@ -13,6 +13,16 @@ import {
   updateAutomationAction,
 } from '@/lib/automations/actions';
 
+/** Converts a UI calendar date into the UTC instant used by the API. */
+function toAutomationInput(values: AutomationValues): AutomationValues {
+  return {
+    ...values,
+    scheduledAt: values.scheduledAt
+      ? `${values.scheduledAt}T00:00:00.000Z`
+      : null,
+  };
+}
+
 interface AutomationMutationOptions {
   automations: AutomationDefinition[];
   setAutomations: Dispatch<SetStateAction<AutomationDefinition[]>>;
@@ -27,10 +37,14 @@ export function useAutomationMutations({
 }: AutomationMutationOptions) {
   /** Adds a temporary rule and reconciles it with the persisted result. */
   async function create(values: AutomationValues): Promise<MutationResult> {
+    const input = toAutomationInput(values);
     const snapshot = structuredClone(automations);
     const optimisticId = `optimistic-${crypto.randomUUID()}`;
-    setAutomations([...snapshot, { id: optimisticId, ...values }]);
-    const result = await createAutomationAction(values);
+    setAutomations([
+      ...snapshot,
+      { id: optimisticId, ...input, executedAt: null },
+    ]);
+    const result = await createAutomationAction(input);
     if (!result.success) setAutomations(snapshot);
     else {
       const saved = result.data as AutomationDefinition | undefined;
@@ -49,11 +63,12 @@ export function useAutomationMutations({
     id: string,
     values: AutomationValues,
   ): Promise<MutationResult> {
+    const input = toAutomationInput(values);
     const snapshot = structuredClone(automations);
     setAutomations(
-      snapshot.map((item) => (item.id === id ? { ...item, ...values } : item)),
+      snapshot.map((item) => (item.id === id ? { ...item, ...input } : item)),
     );
-    const result = await updateAutomationAction({ id, ...values });
+    const result = await updateAutomationAction({ id, ...input });
     if (!result.success) setAutomations(snapshot);
     else {
       const saved = result.data as AutomationDefinition | undefined;

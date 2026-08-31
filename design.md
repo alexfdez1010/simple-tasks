@@ -156,6 +156,9 @@ Component rules:
 - Mobile overlays: Task and settings modals dock to the bottom edge as rounded
   sheets, respect device safe areas, and keep their action footer visible while
   the body scrolls. Desktop overlays remain centred.
+- Temporal automations: Use a quiet “scheduled” rule form with one execution
+  date, a task template, a destination status, and optional typed properties.
+  Show the pending/executed state in the rule list; editing a rule re-arms it.
 
 ## 5. Accessibility and content
 
@@ -218,6 +221,8 @@ Component rules:
 | 2026-08-30 | Default to English with Spanish selectable in Settings                 | Keeps current behavior stable while adding a persistent language choice                        | Product     |
 | 2026-08-31 | Open task details from the card and keep editing as a secondary action | Makes Markdown, dates, status, and every property discoverable without crowding cards          | Product     |
 | 2026-08-31 | Model automations as status-transition rules with typed actions        | Keeps the first automation slice explicit, testable, and extensible for property actions       | Engineering |
+| 2026-08-31 | Evaluate one-shot temporal automations on authenticated reads          | Provides catch-up behavior without cron while keeping execution idempotent in one transaction  | Engineering |
+| 2026-08-31 | Use date-templated generated tasks with typed property values          | Makes scheduled work reusable without adding a general-purpose scripting language              | Product     |
 | 2026-08-31 | Ship completion-date and property-value actions                        | Guarantees the final-status completion date use case while making configured properties useful | Product     |
 
 ## 8. Review checklist

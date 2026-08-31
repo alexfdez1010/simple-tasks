@@ -27,12 +27,24 @@ interface AutomationSettingsProps {
 function emptyValues(statuses: BoardStatus[]): AutomationValues {
   return {
     name: '',
+    triggerType: 'STATUS_CHANGE',
     triggerStatusId:
       statuses.find((status) => status.isTerminal)?.id ?? statuses[0]?.id ?? '',
+    scheduledAt: null,
     actionType: 'SET_COMPLETION_DATE_TODAY',
     propertyId: null,
     propertyValue: null,
+    taskTitleTemplate: null,
+    taskDescriptionTemplate: null,
+    taskStatusId: statuses[0]?.id ?? null,
+    taskDueDateOffsetDays: 0,
+    taskPropertyValues: [],
   };
+}
+
+/** Converts an ISO timestamp into the calendar value used by the date picker. */
+function toCalendarDate(value: string | null): string | null {
+  return value?.slice(0, 10) ?? null;
 }
 
 /** Formats the configured property action without exposing JSON internals. */
@@ -94,7 +106,32 @@ export function AutomationSettings({
             const property = properties.find(
               (item) => item.id === automation.propertyId,
             );
-            const initialValues: AutomationValues = { ...automation };
+            const initialValues: AutomationValues = {
+              ...automation,
+              scheduledAt: toCalendarDate(automation.scheduledAt),
+            };
+            const taskStatus = statuses.find(
+              (item) => item.id === automation.taskStatusId,
+            );
+            const action =
+              automation.actionType === 'SET_COMPLETION_DATE_TODAY'
+                ? t('automation.actionCompletion')
+                : automation.actionType === 'SET_PROPERTY_VALUE'
+                  ? t('automation.actionProperty')
+                  : t('automation.actionCreateTask');
+            const rule =
+              automation.triggerType === 'SCHEDULED'
+                ? t('automation.scheduledRule', {
+                    date: toCalendarDate(automation.scheduledAt) ?? '',
+                    title: automation.taskTitleTemplate ?? '',
+                    status: taskStatus?.name ?? t('automation.unknownStatus'),
+                  })
+                : t('automation.rule', {
+                    status: status?.name ?? t('automation.unknownStatus'),
+                    action,
+                    property: property ? ` · ${property.name}` : '',
+                    value: formatActionValue(automation.propertyValue),
+                  });
             return editingId === automation.id ? (
               <div
                 className="rounded-2xl bg-surface-secondary p-4"
@@ -120,17 +157,16 @@ export function AutomationSettings({
                 />
                 <div className="min-w-0 flex-1">
                   <h3 className="font-medium">{automation.name}</h3>
-                  <p className="mt-1 text-sm leading-5 text-muted">
-                    {t('automation.rule', {
-                      status: status?.name ?? t('automation.unknownStatus'),
-                      action:
-                        automation.actionType === 'SET_COMPLETION_DATE_TODAY'
-                          ? t('automation.actionCompletion')
-                          : t('automation.actionProperty'),
-                      property: property ? ` · ${property.name}` : '',
-                      value: formatActionValue(automation.propertyValue),
-                    })}
-                  </p>
+                  <p className="mt-1 text-sm leading-5 text-muted">{rule}</p>
+                  {automation.triggerType === 'SCHEDULED' ? (
+                    <p className="mt-1 text-xs text-muted">
+                      {automation.executedAt
+                        ? t('automation.executedAt', {
+                            date: automation.executedAt.slice(0, 10),
+                          })
+                        : t('automation.pending')}
+                    </p>
+                  ) : null}
                 </div>
                 <div className="flex shrink-0 gap-1">
                   <Button

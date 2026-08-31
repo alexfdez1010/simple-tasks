@@ -142,26 +142,48 @@ export const es: Record<TranslationKey, string> = {
   'task.terminalAnnouncement': '{status} mantiene el orden por fecha límite.',
   'automation.title': 'Automatizaciones',
   'automation.description':
-    'Ejecuta una acción tipada cuando una tarea entra en un estado.',
+    'Ejecuta acciones tipadas al cambiar de estado o cuando llega una fecha.',
   'automation.empty': 'No hay automatizaciones configuradas.',
   'automation.add': 'Añadir automatización',
   'automation.create': 'Crear automatización',
   'automation.name': 'Nombre',
   'automation.namePlaceholder': 'Fecha al pasar a Finalizada',
   'automation.triggerStatus': 'Cuando el estado pase a',
+  'automation.triggerType': 'Iniciar cuando',
+  'automation.triggerStatusMode': 'Una tarea pase a un estado',
+  'automation.triggerScheduledMode': 'Llegue una fecha',
+  'automation.scheduledDate': 'Ejecutar el',
+  'automation.scheduledDateHint':
+    'Se ejecuta la primera vez que se abre el dashboard o se consulta la lista después de esta fecha.',
   'automation.action': 'Hacer esto',
   'automation.actionCompletion': 'Rellenar fecha de finalización con hoy',
   'automation.actionProperty': 'Establecer un valor de propiedad',
+  'automation.actionCreateTask': 'Crear una tarea desde una plantilla',
   'automation.property': 'Propiedad que establecer',
   'automation.completionHint':
     'La fecha de finalización de la tarea se rellenará con la fecha de hoy.',
   'automation.noProperties':
     'Crea primero una propiedad para usar esta acción.',
+  'automation.taskTitleTemplate': 'Título de la tarea generada',
+  'automation.taskTitlePlaceholder': 'Revisar el {{date}}',
+  'automation.taskDescriptionTemplate': 'Descripción de la tarea generada',
+  'automation.taskDescriptionPlaceholder': 'Admite Markdown y {{date}}.',
+  'automation.taskStatus': 'Crear tarea en',
+  'automation.taskDueDateOffset': 'Desplazamiento de fecha límite (días)',
+  'automation.templateHint':
+    'Usa {{date}} para la fecha programada o {{datetime}} para su instante UTC exacto. Con 0 la fecha límite es la programada.',
+  'automation.chooseScheduledDate': 'Elige la fecha en la que debe ejecutarse.',
+  'automation.completeTaskTemplate':
+    'Añade un título y un estado destino para la tarea generada.',
   'automation.enterName': 'Introduce un nombre para la automatización.',
   'automation.chooseProperty': 'Elige una propiedad y asígnale un valor.',
   'automation.saveFallback': 'No se pudo guardar la automatización.',
   'automation.rule':
     'Cuando el estado pase a {status}, {action}{property}{value}',
+  'automation.scheduledRule': 'El {date}, crear «{title}» en {status}.',
+  'automation.pending':
+    'Pendiente · se ejecutará en la próxima lectura del tablero o de tareas',
+  'automation.executedAt': 'Ejecutada el {date}',
   'automation.unknownStatus': 'un estado no disponible',
   'automation.deleteHeading': '¿Eliminar «{name}»?',
   'automation.deleteBody':

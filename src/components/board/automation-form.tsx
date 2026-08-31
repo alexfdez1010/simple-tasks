@@ -1,16 +1,10 @@
 'use client';
 
-import {
-  Button,
-  Input,
-  Label,
-  ListBox,
-  Select,
-  TextField,
-} from '@heroui/react';
+import { Button, Input, Label, TextField } from '@heroui/react';
 import { useState } from 'react';
 
 import { AutomationActionFields } from '@/components/board/automation-action-fields';
+import { AutomationTriggerFields } from '@/components/board/automation-trigger-fields';
 import type {
   AutomationValues,
   BoardStatus,
@@ -28,7 +22,7 @@ interface AutomationFormProps {
   onSave: (values: AutomationValues) => Promise<MutationResult>;
 }
 
-/** Edits one human-readable status transition and its typed action. */
+/** Edits one status-transition or scheduled automation and its typed action. */
 export function AutomationForm({
   statuses,
   properties,
@@ -46,6 +40,15 @@ export function AutomationForm({
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!values.name.trim()) return setError(t('automation.enterName'));
+    if (values.triggerType === 'SCHEDULED' && !values.scheduledAt) {
+      return setError(t('automation.chooseScheduledDate'));
+    }
+    if (
+      values.triggerType === 'SCHEDULED' &&
+      (!values.taskTitleTemplate?.trim() || !values.taskStatusId)
+    ) {
+      return setError(t('automation.completeTaskTemplate'));
+    }
     if (
       values.actionType === 'SET_PROPERTY_VALUE' &&
       (!values.propertyId || values.propertyValue === null)
@@ -70,36 +73,13 @@ export function AutomationForm({
         <Input maxLength={120} placeholder={t('automation.namePlaceholder')} />
       </TextField>
       <div className="grid gap-4 sm:grid-cols-2">
-        <Select
-          selectedKey={values.triggerStatusId}
-          onSelectionChange={(triggerStatusId) =>
-            setValues((current) => ({
-              ...current,
-              triggerStatusId: String(triggerStatusId),
-            }))
-          }
-        >
-          <Label>{t('automation.triggerStatus')}</Label>
-          <Select.Trigger>
-            <Select.Value />
-            <Select.Indicator />
-          </Select.Trigger>
-          <Select.Popover>
-            <ListBox>
-              {statuses.map((status) => (
-                <ListBox.Item
-                  key={status.id}
-                  id={status.id}
-                  textValue={status.name}
-                >
-                  {status.name}
-                  <ListBox.ItemIndicator />
-                </ListBox.Item>
-              ))}
-            </ListBox>
-          </Select.Popover>
-        </Select>
+        <AutomationTriggerFields
+          statuses={statuses}
+          values={values}
+          onChange={setValues}
+        />
         <AutomationActionFields
+          statuses={statuses}
           properties={properties}
           values={values}
           onChange={setValues}
