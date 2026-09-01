@@ -14,7 +14,8 @@ const ERROR_KEYS = {
   'Selection properties require options.': 'error.selectionRequiresOptions',
   'Status and position must be provided together.':
     'error.statusPositionTogether',
-  'Terminal statuses are ordered by due date.': 'error.taskTerminalOrder',
+  'Terminal statuses are ordered by completion date.':
+    'error.taskTerminalOrder',
   'The board must keep at least one status.': 'error.statusMinimum',
   'The date is invalid.': 'error.dateInvalid',
   'The new options would remove values that are in use.':

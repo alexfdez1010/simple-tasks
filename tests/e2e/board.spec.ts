@@ -209,10 +209,19 @@ test.describe('desktop Kanban board', () => {
           requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
         ),
     );
+    await expect(
+      page
+        .getByRole('article', { name: taskTitle })
+        .getByText('Completed', { exact: true }),
+    ).toHaveCount(0);
     await dragTask(page, taskTitle, 'Done');
 
     const card = page.getByRole('article', { name: taskTitle });
-    await card.locator('.task-card').click();
+    await expect(card.getByText('Completed', { exact: true })).toBeVisible();
+    await card
+      .getByRole('button', { name: `Open details for ${taskTitle}` })
+      .first()
+      .click();
     const detail = page.getByRole('dialog', { name: taskTitle });
     await expect(detail.getByText('Completed', { exact: true })).toBeVisible();
     await expect(detail.getByText('No value')).toHaveCount(1);
@@ -348,7 +357,9 @@ test.describe('desktop Kanban board', () => {
     const column = page.getByRole('region', { name: updatedStatusName });
     await expect(column).toBeVisible();
     await expect(column).toHaveCSS('--status-color', '#A855F7');
-    await expect(column.getByText('Latest 20 by due date')).toBeVisible();
+    await expect(
+      column.getByText('Latest 20 by completion date'),
+    ).toBeVisible();
 
     await page.getByRole('button', { name: /^Settings/ }).click();
     const reopened = page.getByRole('dialog', { name: /^Settings/ });

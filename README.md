@@ -93,7 +93,8 @@ task”. Editing an existing rule uses the action on its card, and deletion alwa
 requires confirmation.
 
 The built-in completion action fills `completedAt` with the current date when a
-task enters the selected state. The property action uses the selected
+task enters the selected state. Completion dates appear only on completed task
+cards and terminal columns show the 20 latest completions first. The property action uses the selected
 property's own type editor, so text, number, date, select, and multi-select
 values are validated before saving. Scheduled task templates can use `{{date}}`
 and `{{datetime}}` in their title and Markdown description, and set a due-date

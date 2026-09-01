@@ -29,7 +29,7 @@ export function registerTaskTools(server: McpServer): void {
     {
       title: 'List the Kanban board',
       description:
-        'Return ordered statuses and tasks. Non-terminal statuses sort by due date ascending; terminal statuses sort by due date descending and include only their 20 latest due dates.',
+        'Return ordered statuses and tasks. Non-terminal statuses sort by due date ascending; terminal statuses sort by completion date descending and include only their 20 latest completions.',
       inputSchema: {},
     },
     async () =>

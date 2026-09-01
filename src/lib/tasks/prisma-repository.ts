@@ -1,7 +1,7 @@
 import type { PrismaClient, Task } from '@/generated/prisma';
 import { runSerializable } from '@/lib/db/transaction';
 import { persistTaskPropertyValues } from '@/lib/properties/value-persistence';
-import { resequenceTasks } from '@/lib/tasks/ordering';
+import { resequenceTasks, taskListOrder } from '@/lib/tasks/ordering';
 import type { TaskRepository } from '@/lib/tasks/repository';
 import { serializeTaskWithProperties } from '@/lib/tasks/serialization';
 import {
@@ -24,7 +24,7 @@ export class PrismaTaskRepository implements TaskRepository {
   /** Injects the process-level Prisma client. */
   constructor(private readonly client: PrismaClient) {}
 
-  /** Lists tasks by due date, reversing the direction for terminal statuses. */
+  /** Lists active tasks by due date and terminal tasks by completion date. */
   async listBoard(): Promise<BoardStatus[]> {
     const statuses = await this.client.status.findMany({
       orderBy: [{ position: 'asc' }, { id: 'asc' }],
@@ -33,19 +33,7 @@ export class PrismaTaskRepository implements TaskRepository {
       statuses.map(async (status): Promise<BoardStatus> => {
         const rows = await this.client.task.findMany({
           where: { statusId: status.id },
-          orderBy: status.isTerminal
-            ? [
-                { dueDate: { sort: 'desc', nulls: 'last' } },
-                { completedAt: { sort: 'desc', nulls: 'last' } },
-                { updatedAt: 'desc' },
-                { id: 'asc' },
-              ]
-            : [
-                { dueDate: { sort: 'asc', nulls: 'last' } },
-                { position: 'asc' },
-                { createdAt: 'asc' },
-                { id: 'asc' },
-              ],
+          orderBy: taskListOrder(status.isTerminal),
           ...(status.isTerminal ? { take: 20 } : {}),
           include: { propertyValues: true },
         });
@@ -185,7 +173,7 @@ export class PrismaTaskRepository implements TaskRepository {
       });
       if (!status) throw notFound('The status');
       if (status.isTerminal)
-        throw conflict('Terminal statuses are ordered by due date.');
+        throw conflict('Terminal statuses are ordered by completion date.');
       const rows = await transaction.task.findMany({
         where: { statusId: input.statusId },
         select: { id: true },

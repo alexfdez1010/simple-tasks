@@ -69,10 +69,12 @@ export function TaskDetail({ task, status, properties }: TaskDetailProps) {
           <span>{t('task.dueDate')}</span>
           <strong>{date(task.dueDate)}</strong>
         </div>
-        <div className="task-detail-field">
-          <span>{t('task.completedAt')}</span>
-          <strong>{date(task.completedAt)}</strong>
-        </div>
+        {task.completedAt ? (
+          <div className="task-detail-field">
+            <span>{t('task.completedAt')}</span>
+            <strong>{date(task.completedAt)}</strong>
+          </div>
+        ) : null}
       </div>
       <section aria-labelledby="task-properties-heading">
         <h3

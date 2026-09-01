@@ -162,7 +162,9 @@ describe('useTaskMutations', () => {
     expect(actions.reorder).not.toHaveBeenCalled();
     expect(setStatuses).toHaveBeenCalledOnce();
     expect(setStatuses).toHaveBeenCalledWith(snapshot);
-    expect(announce).toHaveBeenCalledWith('Done stays ordered by due date.');
+    expect(announce).toHaveBeenCalledWith(
+      'Done stays ordered by completion date.',
+    );
     expect(refresh).not.toHaveBeenCalled();
   });
 
@@ -187,7 +189,7 @@ describe('useTaskMutations', () => {
     await mutations.persistDrag(task.id, terminalBoard, finalBoard);
 
     expect(announce).toHaveBeenCalledWith(
-      'Done mantiene el orden por fecha límite.',
+      'Done mantiene el orden por fecha de finalización.',
     );
   });
 

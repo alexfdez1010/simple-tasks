@@ -17,7 +17,7 @@ Use the MCP server at \`${serverUrl}\`. Discover exact input schemas with \`tool
 
 | Tool | Purpose |
 |---|---|
-| \`list_board\` | Read ordered statuses and tasks; tasks sort by due date and terminal statuses contain only 20 latest due dates. |
+| \`list_board\` | Read ordered statuses and tasks; active tasks sort by due date and terminal statuses contain only the 20 latest completions. |
 | \`get_task\` | Read one task and its current status. |
 | \`create_task\` | Create a task with optional Markdown, due date, and configured property values. |
 | \`update_task\` | Atomically edit fields, replace configured values, and optionally move a task. |
@@ -45,7 +45,7 @@ Use the MCP server at \`${serverUrl}\`. Discover exact input schemas with \`tool
 - In \`update_task\`, send \`statusId\` and \`index\` together; \`propertyValues\` replaces the complete value set.
 - Use \`set_task_property_value\` to change one configured value without clearing the others.
 - Reorder calls require every id in the affected collection exactly once.
-- Non-terminal statuses are ordered by due date ascending; terminal statuses are ordered by due date descending, so do not call \`reorder_tasks\` on terminal statuses.
+- Non-terminal statuses are ordered by due date ascending; terminal statuses are ordered by completion date descending, so do not call \`reorder_tasks\` on terminal statuses.
 - Reading the board or a task also runs any due one-shot temporal automations, so generated tasks appear in the returned data.
 `;
 }

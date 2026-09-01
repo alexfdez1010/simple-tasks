@@ -51,7 +51,7 @@ export const es: Record<TranslationKey, string> = {
   'status.invalidColor': 'Introduce un nombre y un color con formato #RRGGBB.',
   'status.terminal': 'Estado terminal',
   'status.terminalDescription':
-    'Muestra solo las 20 tareas con fechas límite más lejanas.',
+    'Muestra solo las 20 tareas finalizadas más recientemente.',
   'status.cancel': 'Cancelar',
   'status.save': 'Guardar',
   'status.saveFallback': 'No se pudo guardar el estado.',
@@ -63,7 +63,7 @@ export const es: Record<TranslationKey, string> = {
   'status.deleteFallback': 'No se pudo eliminar el estado.',
   'status.taskCount.one': '{count} tarea',
   'status.taskCount.other': '{count} tareas',
-  'status.latestTasks': 'Terminal · últimas {count} por fecha límite',
+  'status.latestTasks': 'Terminal · últimas {count} por fecha de finalización',
   'status.moveLeft': 'Mover {name} a la izquierda',
   'status.moveRight': 'Mover {name} a la derecha',
   'status.edit': 'Editar {name}',
@@ -133,14 +133,15 @@ export const es: Record<TranslationKey, string> = {
   'task.board': 'Tablero de tareas',
   'task.count.one': '{count} tarea',
   'task.count.other': '{count} tareas',
-  'task.latest': 'Últimas {count} por fecha límite',
+  'task.latest': 'Últimas {count} por fecha de finalización',
   'task.addTo': 'Añadir tarea a {status}',
   'task.add': 'Añadir',
   'task.list': 'Tareas de {status}',
   'task.empty': 'No hay tareas aquí',
   'task.emptyHint': 'Añade una tarea o mueve trabajo a esta etapa.',
   'task.movedAnnouncement': 'Tarea movida a {status}.',
-  'task.terminalAnnouncement': '{status} mantiene el orden por fecha límite.',
+  'task.terminalAnnouncement':
+    '{status} mantiene el orden por fecha de finalización.',
   'automation.title': 'Automatizaciones',
   'automation.description':
     'Ejecuta acciones tipadas al cambiar de estado o cuando llega una fecha.',
@@ -276,7 +277,7 @@ export const es: Record<TranslationKey, string> = {
     'Mueve o elimina las tareas antes de eliminar el estado.',
   'error.statusOrder': 'El orden debe incluir cada estado exactamente una vez.',
   'error.taskTerminalOrder':
-    'Los estados terminales se ordenan por fecha límite.',
+    'Los estados terminales se ordenan por fecha de finalización.',
   'error.taskOrder':
     'El orden debe incluir cada tarea del estado exactamente una vez.',
   'error.propertyTypeChange':

@@ -62,8 +62,8 @@ describe('PrismaTaskRepository', () => {
     await db.$disconnect();
   });
 
-  /** Proves due-date ordering and the per-terminal-column twenty-item limit. */
-  it('orders tasks by due date and returns only the 20 terminal tasks with latest due dates', async () => {
+  /** Proves active ordering and the per-terminal-column completion limit. */
+  it('orders active tasks by due date and returns the 20 latest completions', async () => {
     const active = await createStatus('active', 100);
     const terminal = await createStatus('terminal', 101, true);
     await createTask(
@@ -112,8 +112,8 @@ describe('PrismaTaskRepository', () => {
     );
   });
 
-  /** Proves terminal due dates take precedence over completion timestamps. */
-  it('orders terminal tasks by descending due date and leaves undated tasks last', async () => {
+  /** Proves completion timestamps take precedence over terminal due dates. */
+  it('orders terminal tasks by descending completion date', async () => {
     const terminal = await createStatus('dated-terminal', 100, true);
     await createTask(
       terminal.id,
@@ -135,15 +135,23 @@ describe('PrismaTaskRepository', () => {
       2,
       new Date('2026-08-04T12:00:00.000Z'),
     );
+    await createTask(
+      terminal.id,
+      'missing-completion',
+      3,
+      null,
+      new Date('2026-09-30T00:00:00.000Z'),
+    );
 
     const [fixtureStatus] = (await repository.listBoard()).filter((status) =>
       status.name.startsWith(FIXTURE_PREFIX),
     );
 
     expect(fixtureStatus?.tasks.map((task) => task.title)).toEqual([
-      'latest-deadline',
-      'earlier-deadline',
       'undated',
+      'earlier-deadline',
+      'latest-deadline',
+      'missing-completion',
     ]);
   });
 
@@ -274,7 +282,7 @@ describe('PrismaTaskRepository', () => {
       repository.reorder({ statusId: terminal.id, taskIds: [] }),
     ).rejects.toMatchObject({
       code: 'CONFLICT',
-      message: 'Terminal statuses are ordered by due date.',
+      message: 'Terminal statuses are ordered by completion date.',
     });
   });
 });

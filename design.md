@@ -128,16 +128,19 @@ Component rules:
 - Task transitions: Dragging is the only state-change control. The drag handle
   supports pointer, touch, and keyboard operation and announces the destination.
 - Task ordering: Non-terminal columns are ordered by due date ascending and
-  terminal columns by due date descending. Tasks without a due date come last.
-  A drag within one terminal column returns to the persisted order and explains
-  why; dragging out to another column remains available.
+  terminal columns by completion date descending. Tasks without the primary
+  ordering date come last. A drag within one terminal column returns to the
+  persisted order and explains why; dragging out to another column remains
+  available.
 - Task creation: Every workflow column exposes an Add action. It opens the shared
   task dialog with that column preselected; the state remains implicit and cannot
   be changed from the form.
 - Task cards: Keep title and edit affordance on the first row; use a narrow
   workflow-colour cap, clamp long descriptions with a visible fade rather than
   cutting content abruptly, render property values as a quiet wrapping metadata
-  line, and group dates in a compact footer chip.
+  line, and group dates in compact footer chips. Show the completion date only
+  when `completedAt` exists; active tasks must not reserve space or display an
+  empty completion field.
 - Board header: Use one floating utility bar with the product mark, total and
   active task context, a compact completion meter, and existing AI/settings/
   sign-out actions. Metrics are descriptive, never gamified. Do not add an
@@ -245,6 +248,7 @@ Component rules:
 | 2026-08-31 | Use date-templated generated tasks with typed property values            | Makes scheduled work reusable without adding a general-purpose scripting language              | Product     |
 | 2026-08-31 | Ship completion-date and property-value actions                          | Guarantees the final-status completion date use case while making configured properties useful | Product     |
 | 2026-08-31 | Move automation management to its own rule-workshop page                 | Gives rule scanning and editing enough space while keeping board settings focused              | Product     |
+| 2026-09-01 | Sort terminal work by completion date and reveal that date conditionally | Makes recent completions scannable without exposing empty metadata on active tasks             | Product     |
 | 2026-08-31 | Normalize trigger-specific and action-specific fields before persistence | Prevents hidden stale values from surviving mode changes or corrupting later edits             | Engineering |
 | 2026-08-31 | Use a rule rail beside a vertical “When → Then” clause builder           | Makes causality and selection clear on desktop while collapsing to a focused mobile flow       | Design      |
 

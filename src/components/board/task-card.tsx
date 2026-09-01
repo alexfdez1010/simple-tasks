@@ -135,16 +135,27 @@ export function TaskCard({
             </Card.Content>
           ) : null}
 
-          {task.dueDate ? (
+          {task.completedAt || task.dueDate ? (
             <Card.Footer className="task-card-footer ms-16 md:ms-12">
-              <p className="task-date-chip">
-                <CalendarIcon className="size-3" />
-                <time dateTime={task.dueDate}>
-                  {t('task.due', {
-                    date: dateFormatter.format(new Date(task.dueDate)),
-                  })}
-                </time>
-              </p>
+              {task.completedAt ? (
+                <p className="task-date-chip task-date-chip-completed">
+                  <CalendarIcon className="size-3" />
+                  <span>{t('task.completedAt')}</span>
+                  <time dateTime={task.completedAt}>
+                    {dateFormatter.format(new Date(task.completedAt))}
+                  </time>
+                </p>
+              ) : null}
+              {task.dueDate ? (
+                <p className="task-date-chip">
+                  <CalendarIcon className="size-3" />
+                  <time dateTime={task.dueDate}>
+                    {t('task.due', {
+                      date: dateFormatter.format(new Date(task.dueDate)),
+                    })}
+                  </time>
+                </p>
+              ) : null}
             </Card.Footer>
           ) : null}
         </div>
