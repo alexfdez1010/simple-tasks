@@ -1,4 +1,3 @@
-/** English is the default copy for every localisable application surface. */
 export const en = {
   'app.title': 'Tasks',
   'app.description': 'A simple, private board for organizing tasks.',
@@ -13,7 +12,6 @@ export const en = {
   'common.optional': 'Optional',
   'board.skipToTaskBoard': 'Skip to task board',
   'board.title': 'Tasks',
-  'board.automations': 'Automations',
   'board.ai': 'AI',
   'board.signOut': 'Sign out',
   'board.summary': 'Visible board summary',
@@ -25,13 +23,11 @@ export const en = {
   'board.visible.other': '{count} visible',
   'board.progress.one': '{percentage}% of {count} visible task finished',
   'board.progress.other': '{percentage}% of {count} visible tasks finished',
-  'settings.ariaLabel':
-    'Settings · Configure statuses, properties, and language',
+  'settings.ariaLabel': 'Settings · Statuses, properties, and language',
   'settings.title': 'Settings',
   'settings.sections': 'Settings sections',
   'settings.statuses': 'Statuses',
   'settings.properties': 'Properties',
-  'settings.automations': 'Automations',
   'settings.language': 'Language',
   'settings.languageDescription':
     'Choose the language used throughout the application.',
@@ -139,89 +135,6 @@ export const en = {
   'task.emptyHint': 'Add one or move work into this stage.',
   'task.movedAnnouncement': 'Task moved to {status}.',
   'task.terminalAnnouncement': '{status} stays ordered by completion date.',
-  'automation.title': 'Automations',
-  'automation.description':
-    'Run typed actions when a task changes status or when a date arrives.',
-  'automation.pageDescription':
-    'Build small rules that keep routine work moving without hiding what happens next.',
-  'automation.backToBoard': 'Back to board',
-  'automation.skipToRules': 'Skip to automation rules',
-  'automation.newRule': 'New rule',
-  'automation.summary': 'Automation summary',
-  'automation.ruleCount.one': 'rule',
-  'automation.ruleCount.other': 'rules',
-  'automation.pendingCount.one': 'scheduled task pending',
-  'automation.pendingCount.other': 'scheduled tasks pending',
-  'automation.ruleList': 'Automation rule list',
-  'automation.editor': 'Automation editor',
-  'automation.workflowRules': 'Workflow rules',
-  'automation.scheduledTasks': 'Scheduled tasks',
-  'automation.alwaysOn': 'Always on',
-  'automation.scheduled': 'Scheduled',
-  'automation.emptyTitle': 'No rules yet',
-  'automation.emptyDescription':
-    'Create a workflow rule or schedule a one-time task. Each rule stays visible and editable here.',
-  'automation.startFirst': 'Create the first rule',
-  'automation.guideKicker': 'Rule workshop',
-  'automation.guideTitle': 'Choose a rule, or make a new one',
-  'automation.guideDescription':
-    'Rules are intentionally small: one clear trigger and one predictable action.',
-  'automation.workflowGuide':
-    'React when a task enters a status, then set its completion date or a property value.',
-  'automation.scheduledGuide':
-    'Create one templated task the first time the board is read after a chosen date.',
-  'automation.editorNew': 'New rule',
-  'automation.editorEditing': 'Editing rule',
-  'automation.editorCreateTitle': 'Build an automation',
-  'automation.editorEditTitle': 'Refine this automation',
-  'automation.editorDescription':
-    'Give the rule a clear name, then define exactly when it starts and what it changes.',
-  'automation.when': 'When',
-  'automation.whenDescription': 'Choose the event that starts this rule.',
-  'automation.then': 'Then',
-  'automation.thenDescription': 'Choose the single action the rule performs.',
-  'automation.empty': 'No automations configured.',
-  'automation.add': 'Add automation',
-  'automation.create': 'Create automation',
-  'automation.name': 'Name',
-  'automation.namePlaceholder': 'Complete date on Done',
-  'automation.triggerStatus': 'When status becomes',
-  'automation.triggerType': 'Start when',
-  'automation.triggerStatusMode': 'A task enters a status',
-  'automation.triggerScheduledMode': 'A date arrives',
-  'automation.scheduledDate': 'Run on',
-  'automation.scheduledDateHint':
-    'Runs the first time the dashboard or task list is opened after this date.',
-  'automation.action': 'Do this',
-  'automation.actionCompletion': 'Set completion date to today',
-  'automation.actionProperty': 'Set a property value',
-  'automation.actionCreateTask': 'Create a task from a template',
-  'automation.property': 'Property to set',
-  'automation.completionHint':
-    'The task completion date is filled with today’s date.',
-  'automation.noProperties': 'Create a property first to use this action.',
-  'automation.taskTitleTemplate': 'Generated task title',
-  'automation.taskTitlePlaceholder': 'Review on {{date}}',
-  'automation.taskDescriptionTemplate': 'Generated task description',
-  'automation.taskDescriptionPlaceholder': 'Supports Markdown and {{date}}.',
-  'automation.taskStatus': 'Create task in',
-  'automation.taskDueDateOffset': 'Due date offset (days)',
-  'automation.templateHint':
-    'Use {{date}} for the scheduled date or {{datetime}} for its exact UTC timestamp. Offset 0 uses the scheduled date as due date.',
-  'automation.chooseScheduledDate': 'Choose the date when it should run.',
-  'automation.completeTaskTemplate':
-    'Add a title and destination status for the generated task.',
-  'automation.enterName': 'Enter an automation name.',
-  'automation.chooseTriggerStatus': 'Choose the status that starts this rule.',
-  'automation.chooseProperty': 'Choose a property and give it a value.',
-  'automation.saveFallback': 'The automation could not be saved.',
-  'automation.rule': 'When status becomes {status}, {action}{property}{value}',
-  'automation.scheduledRule': 'On {date}, create “{title}” in {status}.',
-  'automation.pending': 'Pending · runs on the next board or task read',
-  'automation.executedAt': 'Executed on {date}',
-  'automation.unknownStatus': 'an unavailable status',
-  'automation.deleteHeading': 'Delete “{name}”?',
-  'automation.deleteBody': 'This automation will stop running immediately.',
   'date.clear': 'Clear {label}',
   'date.choose': 'Choose {label}',
   'color.area': 'Color area',
@@ -284,5 +197,4 @@ export const en = {
   'error.duplicatePropertyValue': 'Each property may appear only once.',
 } as const;
 
-/** Every key available from the translation catalog. */
 export type TranslationKey = keyof typeof en;

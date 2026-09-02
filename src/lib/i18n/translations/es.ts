@@ -1,6 +1,5 @@
 import type { TranslationKey } from '@/lib/i18n/translations/en';
 
-/** Spanish translations for every localisable application surface. */
 export const es: Record<TranslationKey, string> = {
   'app.title': 'Tareas',
   'app.description': 'Un tablero sencillo y privado para organizar tareas.',
@@ -15,7 +14,6 @@ export const es: Record<TranslationKey, string> = {
   'common.optional': 'Opcional',
   'board.skipToTaskBoard': 'Saltar al tablero de tareas',
   'board.title': 'Tareas',
-  'board.automations': 'Automatizaciones',
   'board.ai': 'IA',
   'board.signOut': 'Cerrar sesión',
   'board.summary': 'Resumen del tablero visible',
@@ -26,17 +24,14 @@ export const es: Record<TranslationKey, string> = {
   'board.visible.one': '{count} visible',
   'board.visible.other': '{count} visibles',
   'board.progress.one': '{percentage}% de {count} tarea visible finalizada',
-  'board.progress.other':
-    '{percentage}% de {count} tareas visibles finalizadas',
+  'board.progress.other': '{percentage}% de {count} tareas terminadas',
   'settings.ariaLabel': 'Ajustes · Configurar estados, propiedades e idioma',
   'settings.title': 'Ajustes',
   'settings.sections': 'Secciones de ajustes',
   'settings.statuses': 'Estados',
   'settings.properties': 'Propiedades',
-  'settings.automations': 'Automatizaciones',
   'settings.language': 'Idioma',
-  'settings.languageDescription':
-    'Elige el idioma que se usará en toda la aplicación.',
+  'settings.languageDescription': 'Elige el idioma de la aplicación.',
   'settings.languageChangeError': 'No se pudo cambiar el idioma.',
   'settings.english': 'Inglés',
   'settings.spanish': 'Español',
@@ -50,16 +45,14 @@ export const es: Record<TranslationKey, string> = {
   'status.color': 'Color',
   'status.invalidColor': 'Introduce un nombre y un color con formato #RRGGBB.',
   'status.terminal': 'Estado terminal',
-  'status.terminalDescription':
-    'Muestra solo las 20 tareas finalizadas más recientemente.',
+  'status.terminalDescription': 'Muestra las 20 finalizaciones más recientes.',
   'status.cancel': 'Cancelar',
   'status.save': 'Guardar',
   'status.saveFallback': 'No se pudo guardar el estado.',
   'status.delete': 'Eliminar estado',
   'status.deleteAria': 'Eliminar estado {name}',
   'status.deleteHeading': '¿Eliminar «{name}»?',
-  'status.deleteBody':
-    'Debes mover o eliminar las tareas antes de quitar «{name}».',
+  'status.deleteBody': 'Vacía «{name}» antes de eliminarlo.',
   'status.deleteFallback': 'No se pudo eliminar el estado.',
   'status.taskCount.one': '{count} tarea',
   'status.taskCount.other': '{count} tareas',
@@ -142,93 +135,6 @@ export const es: Record<TranslationKey, string> = {
   'task.movedAnnouncement': 'Tarea movida a {status}.',
   'task.terminalAnnouncement':
     '{status} mantiene el orden por fecha de finalización.',
-  'automation.title': 'Automatizaciones',
-  'automation.description':
-    'Ejecuta acciones tipadas al cambiar de estado o cuando llega una fecha.',
-  'automation.pageDescription':
-    'Crea reglas pequeñas que mantienen el trabajo rutinario en marcha sin ocultar qué ocurrirá después.',
-  'automation.backToBoard': 'Volver al tablero',
-  'automation.skipToRules': 'Saltar a las reglas de automatización',
-  'automation.newRule': 'Nueva regla',
-  'automation.summary': 'Resumen de automatizaciones',
-  'automation.ruleCount.one': 'regla',
-  'automation.ruleCount.other': 'reglas',
-  'automation.pendingCount.one': 'tarea programada pendiente',
-  'automation.pendingCount.other': 'tareas programadas pendientes',
-  'automation.ruleList': 'Lista de reglas de automatización',
-  'automation.editor': 'Editor de automatizaciones',
-  'automation.workflowRules': 'Reglas de flujo',
-  'automation.scheduledTasks': 'Tareas programadas',
-  'automation.alwaysOn': 'Siempre activa',
-  'automation.scheduled': 'Programada',
-  'automation.emptyTitle': 'Aún no hay reglas',
-  'automation.emptyDescription':
-    'Crea una regla de flujo o programa una tarea única. Cada regla seguirá visible y editable aquí.',
-  'automation.startFirst': 'Crear la primera regla',
-  'automation.guideKicker': 'Taller de reglas',
-  'automation.guideTitle': 'Elige una regla o crea otra',
-  'automation.guideDescription':
-    'Las reglas son deliberadamente pequeñas: un activador claro y una acción predecible.',
-  'automation.workflowGuide':
-    'Reacciona cuando una tarea entra en un estado y rellena su fecha de finalización o una propiedad.',
-  'automation.scheduledGuide':
-    'Crea una tarea desde una plantilla la primera vez que se consulte el tablero después de una fecha.',
-  'automation.editorNew': 'Nueva regla',
-  'automation.editorEditing': 'Editando regla',
-  'automation.editorCreateTitle': 'Crear una automatización',
-  'automation.editorEditTitle': 'Ajustar esta automatización',
-  'automation.editorDescription':
-    'Da un nombre claro a la regla y define cuándo comienza y qué modifica.',
-  'automation.when': 'Cuando',
-  'automation.whenDescription': 'Elige el evento que inicia esta regla.',
-  'automation.then': 'Entonces',
-  'automation.thenDescription': 'Elige la única acción que ejecutará la regla.',
-  'automation.empty': 'No hay automatizaciones configuradas.',
-  'automation.add': 'Añadir automatización',
-  'automation.create': 'Crear automatización',
-  'automation.name': 'Nombre',
-  'automation.namePlaceholder': 'Fecha al pasar a Finalizada',
-  'automation.triggerStatus': 'Cuando el estado pase a',
-  'automation.triggerType': 'Iniciar cuando',
-  'automation.triggerStatusMode': 'Una tarea pase a un estado',
-  'automation.triggerScheduledMode': 'Llegue una fecha',
-  'automation.scheduledDate': 'Ejecutar el',
-  'automation.scheduledDateHint':
-    'Se ejecuta la primera vez que se abre el dashboard o se consulta la lista después de esta fecha.',
-  'automation.action': 'Hacer esto',
-  'automation.actionCompletion': 'Rellenar fecha de finalización con hoy',
-  'automation.actionProperty': 'Establecer un valor de propiedad',
-  'automation.actionCreateTask': 'Crear una tarea desde una plantilla',
-  'automation.property': 'Propiedad que establecer',
-  'automation.completionHint':
-    'La fecha de finalización de la tarea se rellenará con la fecha de hoy.',
-  'automation.noProperties':
-    'Crea primero una propiedad para usar esta acción.',
-  'automation.taskTitleTemplate': 'Título de la tarea generada',
-  'automation.taskTitlePlaceholder': 'Revisar el {{date}}',
-  'automation.taskDescriptionTemplate': 'Descripción de la tarea generada',
-  'automation.taskDescriptionPlaceholder': 'Admite Markdown y {{date}}.',
-  'automation.taskStatus': 'Crear tarea en',
-  'automation.taskDueDateOffset': 'Desplazamiento de fecha límite (días)',
-  'automation.templateHint':
-    'Usa {{date}} para la fecha programada o {{datetime}} para su instante UTC exacto. Con 0 la fecha límite es la programada.',
-  'automation.chooseScheduledDate': 'Elige la fecha en la que debe ejecutarse.',
-  'automation.completeTaskTemplate':
-    'Añade un título y un estado destino para la tarea generada.',
-  'automation.enterName': 'Introduce un nombre para la automatización.',
-  'automation.chooseTriggerStatus': 'Elige el estado que inicia esta regla.',
-  'automation.chooseProperty': 'Elige una propiedad y asígnale un valor.',
-  'automation.saveFallback': 'No se pudo guardar la automatización.',
-  'automation.rule':
-    'Cuando el estado pase a {status}, {action}{property}{value}',
-  'automation.scheduledRule': 'El {date}, crear «{title}» en {status}.',
-  'automation.pending':
-    'Pendiente · se ejecutará en la próxima lectura del tablero o de tareas',
-  'automation.executedAt': 'Ejecutada el {date}',
-  'automation.unknownStatus': 'un estado no disponible',
-  'automation.deleteHeading': '¿Eliminar «{name}»?',
-  'automation.deleteBody':
-    'Esta automatización dejará de ejecutarse inmediatamente.',
   'date.clear': 'Borrar {label}',
   'date.choose': 'Elegir {label}',
   'color.area': 'Área de color',
@@ -260,8 +166,7 @@ export const es: Record<TranslationKey, string> = {
   'error.sessionExpired': 'La sesión ha caducado.',
   'error.dateInvalid': 'La fecha no es válida.',
   'error.colorFormat': 'Usa un color hexadecimal de seis dígitos.',
-  'error.statusPositionTogether':
-    'El estado y la posición deben proporcionarse juntos.',
+  'error.statusPositionTogether': 'El estado y la posición deben ir juntos.',
   'error.optionsUnique': 'Las opciones deben ser únicas.',
   'error.selectionRequiresOptions':
     'Las propiedades de selección requieren opciones.',

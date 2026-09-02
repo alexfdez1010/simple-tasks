@@ -14,7 +14,6 @@ export async function executeBoardAction<T = void>(
   try {
     const data = await operation();
     revalidatePath('/');
-    revalidatePath('/automations');
     return data === undefined ? { success: true } : { success: true, data };
   } catch (error) {
     const language = await getCurrentLanguage();

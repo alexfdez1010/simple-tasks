@@ -92,12 +92,6 @@ export function BoardShell({
           <div className="board-actions">
             <Link
               className="board-action-link text-sm font-medium"
-              href="/automations"
-            >
-              {t('board.automations')}
-            </Link>
-            <Link
-              className="board-action-link text-sm font-medium"
               href="/skill"
             >
               {t('board.ai')}

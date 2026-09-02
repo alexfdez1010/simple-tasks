@@ -4,7 +4,6 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 
 import { runMcpTool } from '@/lib/mcp/shared';
-import { automationService } from '@/lib/automations';
 import {
   MAX_PROPERTY_OPTIONS,
   MAX_TASK_PROPERTIES,
@@ -32,11 +31,7 @@ export function registerTaskTools(server: McpServer): void {
         'Return ordered statuses and tasks. Non-terminal statuses sort by due date ascending; terminal statuses sort by completion date descending and include only their 20 latest completions.',
       inputSchema: {},
     },
-    async () =>
-      runMcpTool(async () => {
-        await automationService.runDue();
-        return taskService.listBoard();
-      }),
+    async () => runMcpTool(() => taskService.listBoard()),
   );
   server.registerTool(
     'get_task',
@@ -45,11 +40,7 @@ export function registerTaskTools(server: McpServer): void {
       description: 'Return one task and its status by task id.',
       inputSchema: { id },
     },
-    async ({ id: taskId }) =>
-      runMcpTool(async () => {
-        await automationService.runDue();
-        return taskService.getById(taskId);
-      }),
+    async ({ id: taskId }) => runMcpTool(() => taskService.getById(taskId)),
   );
   server.registerTool(
     'create_task',

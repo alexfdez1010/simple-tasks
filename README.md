@@ -14,12 +14,8 @@ through an authenticated MCP server for AI agents.
 - Clickable task inspector with rendered Markdown, lifecycle dates, ID, status,
   and every configured property, including empty values.
 - Configurable text, number, date, select, and multi-select task properties.
-- Status-transition automations with completion-date and typed property-value
-  actions.
-- One-shot temporal automations that catch up on dashboard/MCP reads and create
-  parameterized tasks with `{{date}}`, `{{datetime}}`, due-date offsets, and
-  typed properties.
-- Terminal states show only their 20 most recently completed tasks.
+- Moving a task into a terminal state fills its completion date automatically.
+- Terminal states show only their 20 most recently completed tasks, newest first.
 - Responsive horizontal board with column snapping on mobile.
 - Shared password authentication backed by a signed `HttpOnly` session.
 - English interface by default, with persistent Spanish selection in Settings.
@@ -85,22 +81,11 @@ and Spanish, including accessible labels and locale-aware dates and numbers.
 The selection is stored for one year in the `simple-tasks-language` `HttpOnly`
 cookie; absent or unsupported values safely fall back to English.
 
-Open **Automations** from the board toolbar to manage rules on the dedicated
-`/automations` page. Choose **New rule**, give it a name, then configure one
-**When** clause and one **Then** clause. Workflow rules take the form “when
-status becomes X, do Y”; scheduled rules take the form “on date, create a
-task”. Editing an existing rule uses the action on its card, and deletion always
-requires confirmation.
-
-The built-in completion action fills `completedAt` with the current date when a
-task enters the selected state. Completion dates appear only on completed task
-cards and terminal columns show the 20 latest completions first. The property action uses the selected
-property's own type editor, so text, number, date, select, and multi-select
-values are validated before saving. Scheduled task templates can use `{{date}}`
-and `{{datetime}}` in their title and Markdown description, and set a due-date
-offset and typed properties. They are one-shot: the first dashboard load or
-`list_board`/`get_task` MCP read after the scheduled date creates the task and
-marks the rule completed. Editing the rule re-arms it.
+Moving a task into any terminal state fills `completedAt` with the transition
+time automatically. Completion dates appear only on completed task cards, and
+terminal columns show the 20 latest completions first. Moving a task back to an
+active state clears the date; moving it between terminal states preserves the
+original completion time.
 
 ## MCP integration
 

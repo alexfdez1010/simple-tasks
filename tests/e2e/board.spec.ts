@@ -169,26 +169,12 @@ test.describe('desktop Kanban board', () => {
     await deleteTask(page, 'E2E Markdown edited');
   });
 
-  /** Proves a configured terminal transition fills the completion date. */
-  test('creates a completion-date automation and runs it on transition', async ({
+  /** Proves every terminal transition fills the completion date intrinsically. */
+  test('fills the completion date when a task enters a terminal state', async ({
     page,
   }, testInfo) => {
-    const automationName = `E2E Complete date ${process.pid}-${testInfo.repeatEachIndex}`;
-    const taskTitle = `E2E Automation ${process.pid}-${testInfo.repeatEachIndex}`;
+    const taskTitle = `E2E Completion ${process.pid}-${testInfo.repeatEachIndex}`;
     await login(page);
-    await page.getByRole('link', { name: 'Automations' }).click();
-    await page.getByRole('button', { name: 'New rule' }).first().click();
-    await page.getByLabel('Name').fill(automationName);
-    const creation = page.waitForResponse(
-      (response) =>
-        response.request().method() === 'POST' &&
-        new URL(response.url()).pathname === '/automations',
-    );
-    await page.getByRole('button', { name: 'Create automation' }).click();
-    await creation;
-    await expect(page.getByText(automationName, { exact: true })).toBeVisible();
-    await page.getByRole('link', { name: 'Back to board' }).click();
-
     await page.getByRole('button', { name: 'Add task to Blocked' }).click();
     const taskDialog = page.getByRole('dialog', {
       name: 'Create task in Blocked',
@@ -227,72 +213,6 @@ test.describe('desktop Kanban board', () => {
     await expect(detail.getByText('No value')).toHaveCount(1);
     await detail.getByRole('button', { name: 'Cancel' }).click();
 
-    await page.getByRole('link', { name: 'Automations' }).click();
-    const automationRow = page
-      .locator('.automation-rule-card')
-      .filter({ hasText: automationName });
-    await automationRow
-      .getByRole('button', { name: 'Delete', exact: true })
-      .click();
-    const confirmation = page.getByRole('alertdialog');
-    const deletion = page.waitForResponse(
-      (response) =>
-        response.request().method() === 'POST' &&
-        new URL(response.url()).pathname === '/automations',
-    );
-    await confirmation
-      .getByRole('button', { name: 'Delete', exact: true })
-      .click();
-    await deletion;
-    await page.getByRole('link', { name: 'Back to board' }).click();
-    await deleteTask(page, taskTitle);
-  });
-
-  /** Proves a past scheduled rule catches up once and creates its template task. */
-  test('creates a parameterized scheduled automation task on the next board read', async ({
-    page,
-  }, testInfo) => {
-    const automationName = `E2E Scheduled ${process.pid}-${testInfo.repeatEachIndex}`;
-    const taskTitle = 'E2E Scheduled 2000-02-01';
-    await login(page);
-    await page.getByRole('link', { name: 'Automations' }).click();
-    await page.getByRole('button', { name: 'New rule' }).first().click();
-    await page.getByLabel('Name').fill(automationName);
-    await page.getByRole('button', { name: 'Start when' }).click();
-    await page
-      .getByRole('option', { exact: true, name: 'A date arrives' })
-      .click();
-    const scheduledDate = page.getByRole('group', { name: 'Run on' });
-    await scheduledDate.getByRole('spinbutton').nth(0).fill('2');
-    await scheduledDate.getByRole('spinbutton').nth(1).fill('1');
-    await scheduledDate.getByRole('spinbutton').nth(2).fill('2000');
-    await page
-      .getByLabel('Generated task title')
-      .fill('E2E Scheduled {{date}}');
-    const persistence = page.waitForResponse(
-      (response) =>
-        response.request().method() === 'POST' &&
-        new URL(response.url()).pathname === '/automations',
-    );
-    await page.getByRole('button', { name: 'Create automation' }).click();
-    await persistence;
-    await expect(page.getByText(automationName, { exact: true })).toBeVisible();
-    await page.getByRole('link', { name: 'Back to board' }).click();
-
-    await page.reload();
-    await expect(page.getByRole('article', { name: taskTitle })).toBeVisible();
-    await page.getByRole('link', { name: 'Automations' }).click();
-    const automationRow = page
-      .locator('.automation-rule-card')
-      .filter({ hasText: automationName });
-    await automationRow
-      .getByRole('button', { name: 'Delete', exact: true })
-      .click();
-    await page
-      .getByRole('alertdialog')
-      .getByRole('button', { name: 'Delete', exact: true })
-      .click();
-    await page.getByRole('link', { name: 'Back to board' }).click();
     await deleteTask(page, taskTitle);
   });
 

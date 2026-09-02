@@ -5,14 +5,12 @@ generator client {
 }
 
 model Status {
-  id              String       @id @default(cuid())
-  name            String       @unique
-  color           String
-  position        Int
-  isTerminal      Boolean      @default(false)
-  tasks           Task[]
-  automations     Automation[] @relation("TriggerStatusAutomations")
-  taskAutomations Automation[] @relation("TaskTemplateStatusAutomations")
+  id         String  @id @default(cuid())
+  name       String  @unique
+  color      String
+  position   Int
+  isTerminal Boolean @default(false)
+  tasks      Task[]
 
   @@index([position])
 }
@@ -43,53 +41,14 @@ enum TaskPropertyType {
 }
 
 model TaskPropertyDefinition {
-  id          String              @id @default(cuid())
-  name        String              @unique
-  type        TaskPropertyType
-  position    Int
-  options     Json                @default("[]")
-  values      TaskPropertyValue[]
-  automations Automation[]
+  id       String              @id @default(cuid())
+  name     String              @unique
+  type     TaskPropertyType
+  position Int
+  options  Json                @default("[]")
+  values   TaskPropertyValue[]
 
   @@index([position])
-}
-
-enum AutomationActionType {
-  SET_COMPLETION_DATE_TODAY
-  SET_PROPERTY_VALUE
-  CREATE_TASK
-}
-
-enum AutomationTriggerType {
-  STATUS_CHANGE
-  SCHEDULED
-}
-
-model Automation {
-  id                      String                  @id @default(cuid())
-  name                    String
-  triggerType             AutomationTriggerType   @default(STATUS_CHANGE)
-  triggerStatusId         String?
-  scheduledAt             DateTime?
-  executedAt              DateTime?
-  actionType              AutomationActionType
-  propertyId              String?
-  propertyValue           Json?
-  taskTitleTemplate       String?
-  taskDescriptionTemplate String?
-  taskStatusId            String?
-  taskDueDateOffsetDays   Int?
-  taskPropertyValues      Json?
-  createdAt               DateTime                @default(now())
-  updatedAt               DateTime                @updatedAt
-  triggerStatus           Status?                 @relation("TriggerStatusAutomations", fields: [triggerStatusId], references: [id], onDelete: Cascade)
-  taskStatus              Status?                 @relation("TaskTemplateStatusAutomations", fields: [taskStatusId], references: [id], onDelete: Cascade)
-  property                TaskPropertyDefinition? @relation(fields: [propertyId], references: [id], onDelete: Cascade)
-
-  @@index([triggerStatusId])
-  @@index([taskStatusId])
-  @@index([triggerType, scheduledAt, executedAt])
-  @@index([propertyId])
 }
 
 model TaskPropertyValue {

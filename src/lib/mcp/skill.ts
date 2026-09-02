@@ -46,7 +46,7 @@ Use the MCP server at \`${serverUrl}\`. Discover exact input schemas with \`tool
 - Use \`set_task_property_value\` to change one configured value without clearing the others.
 - Reorder calls require every id in the affected collection exactly once.
 - Non-terminal statuses are ordered by due date ascending; terminal statuses are ordered by completion date descending, so do not call \`reorder_tasks\` on terminal statuses.
-- Reading the board or a task also runs any due one-shot temporal automations, so generated tasks appear in the returned data.
+- Moving a task into a terminal status fills its completion date automatically; moving it back to an active status clears the date.
 `;
 }
 
