@@ -4,6 +4,8 @@
 @import '../components/board/board.css';
 @import '../components/board/task-card.css';
 @import '../components/board/board-mobile.css';
+@import '../components/statistics/statistics.css';
+@import '../components/statistics/statistics-charts.css';
 
 :root {
   --background: oklch(0.975 0.008 80);
@@ -16,6 +18,13 @@
   --accent: oklch(0.54 0.11 155);
   --accent-foreground: oklch(0.99 0.004 80);
   --danger: oklch(0.55 0.19 28);
+  --chart-1: oklch(0.56 0.12 155);
+  --chart-2: oklch(0.62 0.12 70);
+  --chart-3: oklch(0.57 0.12 235);
+  --chart-4: oklch(0.61 0.13 25);
+  --chart-5: oklch(0.55 0.1 315);
+  --chart-grid: color-mix(in oklab, var(--foreground) 14%, transparent);
+  --chart-hover: color-mix(in oklab, var(--accent) 8%, transparent);
 }
 
 @theme inline {
@@ -45,6 +54,11 @@
     --accent: oklch(0.72 0.11 155);
     --accent-foreground: oklch(0.17 0.012 70);
     --danger: oklch(0.7 0.16 28);
+    --chart-1: oklch(0.74 0.11 155);
+    --chart-2: oklch(0.78 0.11 75);
+    --chart-3: oklch(0.74 0.1 235);
+    --chart-4: oklch(0.73 0.12 30);
+    --chart-5: oklch(0.72 0.1 315);
   }
 }
 

@@ -24,8 +24,8 @@
     "pre-commit": "bun run test && bun run lint-format",
     "test": "bun run test:unit && bun run test:integration && bun run test:e2e",
     "test:unit": "vitest run --dir tests/unit --passWithNoTests",
-    "test:integration": "scripts/with-test-database.sh bunx vitest run --dir tests/integration --disable-console-intercept --passWithNoTests",
-    "test:e2e": "scripts/with-test-database.sh sh -c 'bun run build && start-server-and-test \"bun run start\" http://localhost:3000 \"bunx playwright test\"'",
+    "test:integration": "scripts/with-test-database.sh bunx vitest run --dir tests/integration --disable-console-intercept --no-file-parallelism --passWithNoTests",
+    "test:e2e": "scripts/with-test-database.sh sh -c 'export NO_PROXY=localhost,127.0.0.1; bun run build && start-server-and-test \"bun run start\" http://localhost:3000 \"bunx playwright test\"'",
     "test:specific": "bunx playwright test -g",
     "database:dev": "bun run database && prisma migrate dev && bun run database:down",
     "database:deploy": "prisma migrate deploy && prisma db seed",
@@ -58,6 +58,7 @@
     "react-aria-components": "^1.20.0",
     "react-dom": "19.2.8",
     "react-markdown": "^10.1.0",
+    "recharts": "^3.10.1",
     "remark-gfm": "^4.0.1",
     "server-only": "0.0.1",
     "zod": "^3.25.76"

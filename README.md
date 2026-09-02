@@ -16,6 +16,8 @@ through an authenticated MCP server for AI agents.
 - Configurable text, number, date, select, and multi-select task properties.
 - Moving a task into a terminal state fills its completion date automatically.
 - Terminal states show only their 20 most recently completed tasks, newest first.
+- Dedicated Recharts statistics page with average resolution time and completed
+  task breakdowns for every select and multi-select custom property.
 - Responsive horizontal board with column snapping on mobile.
 - Shared password authentication backed by a signed `HttpOnly` session.
 - English interface by default, with persistent Spanish selection in Settings.
@@ -28,7 +30,8 @@ through an authenticated MCP server for AI agents.
 [Tailwind CSS 4](https://tailwindcss.com/docs),
 [Prisma](https://www.prisma.io/docs/orm), PostgreSQL,
 [dnd kit](https://dndkit.com/react/quickstart/),
-[react-markdown](https://github.com/remarkjs/react-markdown), Vitest, and
+[react-markdown](https://github.com/remarkjs/react-markdown),
+[Recharts](https://recharts.github.io/), Vitest, and
 Playwright.
 
 ## Local setup
@@ -86,6 +89,12 @@ time automatically. Completion dates appear only on completed task cards, and
 terminal columns show the 20 latest completions first. Moving a task back to an
 active state clears the date; moving it between terminal states preserves the
 original completion time.
+
+Open “Statistics” from the board toolbar to visit `/statistics`. The page uses
+the complete persisted completion history to calculate the mean elapsed time
+from creation to completion. It also creates one distribution for every custom
+select or multi-select property, including unassigned work. Multi-select totals
+can exceed 100% because one task may contribute to several options.
 
 ## MCP integration
 

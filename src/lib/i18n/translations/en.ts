@@ -13,6 +13,7 @@ export const en = {
   'board.skipToTaskBoard': 'Skip to task board',
   'board.title': 'Tasks',
   'board.ai': 'AI',
+  'board.statistics': 'Statistics',
   'board.signOut': 'Sign out',
   'board.summary': 'Visible board summary',
   'board.active.one': '{count} active',
@@ -196,5 +197,3 @@ export const en = {
   'error.storedValueInvalid': 'The stored property value is invalid.',
   'error.duplicatePropertyValue': 'Each property may appear only once.',
 } as const;
-
-export type TranslationKey = keyof typeof en;

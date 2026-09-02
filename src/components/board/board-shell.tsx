@@ -96,6 +96,12 @@ export function BoardShell({
             >
               {t('board.ai')}
             </Link>
+            <Link
+              className="board-action-link text-sm font-medium"
+              href="/statistics"
+            >
+              {t('board.statistics')}
+            </Link>
             <BoardSettings
               statuses={statuses}
               properties={properties}

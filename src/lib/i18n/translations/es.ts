@@ -1,6 +1,5 @@
-import type { TranslationKey } from '@/lib/i18n/translations/en';
-
-export const es: Record<TranslationKey, string> = {
+import type { en } from '@/lib/i18n/translations/en';
+export const es: Record<keyof typeof en, string> = {
   'app.title': 'Tareas',
   'app.description': 'Un tablero sencillo y privado para organizar tareas.',
   'common.cancel': 'Cancelar',
@@ -15,6 +14,7 @@ export const es: Record<TranslationKey, string> = {
   'board.skipToTaskBoard': 'Saltar al tablero de tareas',
   'board.title': 'Tareas',
   'board.ai': 'IA',
+  'board.statistics': 'Estadísticas',
   'board.signOut': 'Cerrar sesión',
   'board.summary': 'Resumen del tablero visible',
   'board.active.one': '{count} activa',
