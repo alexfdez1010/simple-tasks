@@ -6,6 +6,7 @@ const BASE_URL = process.env.PLAYWRIGHT_BASE_URL ?? 'http://localhost:3000';
 const MCP_TOKEN = process.env.MCP_TOKEN ?? 'dev-mcp-token';
 const MCP_URL = new URL('/api/mcp/mcp', BASE_URL);
 const EXPECTED_TOOLS = [
+  'create_statistic',
   'create_status',
   'create_task',
   'create_property',
@@ -13,18 +14,23 @@ const EXPECTED_TOOLS = [
   'delete_status',
   'delete_task',
   'delete_task_property_value',
+  'delete_statistic',
+  'get_statistics',
   'get_task',
   'list_board',
   'list_properties',
   'list_statuses',
+  'list_statistics',
   'move_task',
   'reorder_properties',
   'reorder_statuses',
   'reorder_tasks',
+  'reorder_statistics',
   'set_task_property_value',
   'update_property',
   'update_status',
   'update_task',
+  'update_statistic',
 ];
 
 /** Connects an official MCP client with the configured bearer credential. */
@@ -77,7 +83,7 @@ test.describe('remote MCP server', () => {
   });
 
   /** Proves authenticated discovery returns the complete stable tool catalog. */
-  test('lists every task, status, and property tool', async () => {
+  test('lists every task, status, property, and statistic tool', async () => {
     const { client, transport } = await connectMcp();
     try {
       const { tools } = await client.listTools();
@@ -329,6 +335,86 @@ test.describe('remote MCP server', () => {
         await client.callTool({
           name: 'delete_status',
           arguments: { id: terminalStatusId },
+        });
+      }
+      await transport.close();
+    }
+  });
+
+  /** Proves agents can create, calculate, update, reorder, and delete statistics. */
+  test('executes configurable statistic CRUD', async () => {
+    const { client, transport } = await connectMcp();
+    let statisticId: string | undefined;
+    try {
+      const initial = parseToolJson<Array<{ id: string }>>(
+        await client.callTool({ name: 'list_statistics', arguments: {} }),
+      );
+      const created = parseToolJson<{ id: string; name: string }>(
+        await client.callTool({
+          name: 'create_statistic',
+          arguments: {
+            dateBucket: null,
+            dateField: null,
+            datePropertyId: null,
+            groupBy: 'NONE',
+            groupPropertyId: null,
+            measure: 'COUNT',
+            measurePropertyId: null,
+            name: `E2E MCP Statistic ${process.pid}`,
+            scope: 'ALL',
+            statusIds: [],
+            visualization: 'KPI',
+          },
+        }),
+      );
+      statisticId = created.id;
+      const updated = parseToolJson<{ name: string; scope: string }>(
+        await client.callTool({
+          name: 'update_statistic',
+          arguments: {
+            id: created.id,
+            name: `E2E MCP Statistic Updated ${process.pid}`,
+            scope: 'COMPLETED',
+          },
+        }),
+      );
+      expect(updated.scope).toBe('COMPLETED');
+
+      const calculated = parseToolJson<{
+        statistics: Array<{
+          definition: { id: string };
+          result: { kind: string };
+        }>;
+      }>(await client.callTool({ name: 'get_statistics', arguments: {} }));
+      expect(calculated.statistics).toContainEqual(
+        expect.objectContaining({
+          definition: expect.objectContaining({ id: created.id }),
+          result: expect.objectContaining({ kind: 'KPI' }),
+        }),
+      );
+      const order = [...initial.map(({ id }) => id), created.id];
+      await client.callTool({
+        name: 'reorder_statistics',
+        arguments: { statisticIds: [...order].reverse() },
+      });
+      await client.callTool({
+        name: 'reorder_statistics',
+        arguments: { statisticIds: order },
+      });
+      expect(
+        parseToolJson<{ deleted: string }>(
+          await client.callTool({
+            name: 'delete_statistic',
+            arguments: { id: created.id },
+          }),
+        ),
+      ).toEqual({ deleted: created.id });
+      statisticId = undefined;
+    } finally {
+      if (statisticId) {
+        await client.callTool({
+          name: 'delete_statistic',
+          arguments: { id: statisticId },
         });
       }
       await transport.close();

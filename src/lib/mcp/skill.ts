@@ -8,7 +8,7 @@ export const MCP_CONFIG_FILENAME = 'simple-tasks.mcp.json';
 export function buildSkillMarkdown(serverUrl: string): string {
   return `---
 name: simple-tasks
-description: Manage the user's private Kanban board through its Simple Tasks MCP server. Use for tasks, workflow statuses, and configurable task properties.
+description: Manage the user's private Kanban board and configurable analytics through its Simple Tasks MCP server. Use for tasks, workflow statuses, task properties, and statistics.
 ---
 
 # Simple Tasks
@@ -36,10 +36,16 @@ Use the MCP server at \`${serverUrl}\`. Discover exact input schemas with \`tool
 | \`delete_property\` | Delete a definition and all of its values. |
 | \`set_task_property_value\` | Validate and set one configured task value. |
 | \`delete_task_property_value\` | Clear one configured value from a task. |
+| \`get_statistics\` | Calculate every configured statistic against the complete task history. |
+| \`list_statistics\` | Read ordered statistic widget definitions. |
+| \`create_statistic\` | Add a KPI, bar, donut, or line widget; name alone creates an all-task count KPI. |
+| \`update_statistic\` | Edit one statistic definition. |
+| \`reorder_statistics\` | Replace the complete statistic order. |
+| \`delete_statistic\` | Delete one statistic definition. |
 
 ## Rules
 
-- Ask for confirmation before \`delete_task\`, \`delete_status\`, or \`delete_property\`.
+- Ask for confirmation before \`delete_task\`, \`delete_status\`, \`delete_property\`, or \`delete_statistic\`.
 - Preserve Markdown exactly in task descriptions unless the user requests edits.
 - Send due dates as ISO 8601 strings.
 - In \`update_task\`, send \`statusId\` and \`index\` together; \`propertyValues\` replaces the complete value set.
@@ -47,6 +53,8 @@ Use the MCP server at \`${serverUrl}\`. Discover exact input schemas with \`tool
 - Reorder calls require every id in the affected collection exactly once.
 - Non-terminal statuses are ordered by due date ascending; terminal statuses are ordered by completion date descending, so do not call \`reorder_tasks\` on terminal statuses.
 - Moving a task into a terminal status fills its completion date automatically; moving it back to an active status clears the date.
+- Statistic numeric measures (SUM, AVERAGE, MINIMUM, MAXIMUM) require a NUMBER property. Line charts require a DATE dimension, which may use createdAt, updatedAt, dueDate, completedAt, or a custom DATE property.
+- Use statusIds to filter a statistic. An empty statusIds list means every status.
 `;
 }
 

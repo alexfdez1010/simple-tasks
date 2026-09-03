@@ -1,88 +1,114 @@
+import { StatisticGroupBy, StatisticScope } from '@/generated/prisma';
+import {
+  groupByDate,
+  groupByProperty,
+  groupByStatus,
+  type StatisticTaskGroup,
+} from '@/lib/statistics/dimensions';
+import { calculateMeasure } from '@/lib/statistics/measures';
 import type {
-  CompletedTaskRecord,
-  PropertyStatistic,
-  SelectablePropertyRecord,
+  StatisticDefinition,
+  StatisticTaskRecord,
+  StatisticWidgetResult,
   StatisticsSnapshot,
   StatisticsSource,
 } from '@/lib/statistics/types';
 
-/** Converts a count into a rounded share of all completed tasks. */
-function getPercentage(count: number, total: number): number {
-  return total === 0 ? 0 : Math.round((count / total) * 100);
+/** Filters source tasks through a widget's scope and optional status selection. */
+function filterTasks(
+  tasks: StatisticTaskRecord[],
+  definition: StatisticDefinition,
+): StatisticTaskRecord[] {
+  const statusFilter = new Set(definition.statusIds);
+  return tasks.filter((task) => {
+    if (statusFilter.size && !statusFilter.has(task.statusId)) return false;
+    if (definition.scope === StatisticScope.ACTIVE) return !task.completedAt;
+    if (definition.scope === StatisticScope.COMPLETED)
+      return Boolean(task.completedAt);
+    return true;
+  });
 }
 
-/** Returns the unique selected values stored for one property on one task. */
-function getSelections(
-  task: CompletedTaskRecord,
-  property: SelectablePropertyRecord,
-): string[] {
-  const stored = task.propertyValues.find(
-    (value) => value.propertyId === property.id,
-  )?.value;
-  if (property.type === 'SELECT') {
-    return typeof stored === 'string' ? [stored] : [];
+/** Resolves the configured chart dimension into task groups. */
+function getGroups(
+  tasks: StatisticTaskRecord[],
+  definition: StatisticDefinition,
+  source: StatisticsSource,
+): { groups: StatisticTaskGroup[]; multiValue: boolean } {
+  if (definition.groupBy === StatisticGroupBy.STATUS) {
+    const selected = definition.statusIds.length
+      ? source.statuses.filter((status) =>
+          definition.statusIds.includes(status.id),
+        )
+      : source.statuses;
+    return { groups: groupByStatus(tasks, selected), multiValue: false };
   }
-  return Array.isArray(stored) ? [...new Set(stored)] : [];
-}
-
-/** Builds one property distribution without depending on persistence details. */
-function buildPropertyStatistic(
-  property: SelectablePropertyRecord,
-  tasks: CompletedTaskRecord[],
-): PropertyStatistic {
-  const counts = new Map(property.options.map((option) => [option, 0]));
-  let assignedTaskCount = 0;
-  for (const task of tasks) {
-    const selections = getSelections(task, property);
-    if (selections.length > 0) assignedTaskCount += 1;
-    for (const selection of selections) {
-      counts.set(selection, (counts.get(selection) ?? 0) + 1);
-    }
+  if (definition.groupBy === StatisticGroupBy.DATE) {
+    return { groups: groupByDate(tasks, definition), multiValue: false };
   }
-  const values: PropertyStatistic['values'] = [...counts].map(
-    ([label, count]) => ({
-      count,
-      label,
-      percentage: getPercentage(count, tasks.length),
-    }),
+  const property = source.properties.find(
+    (candidate) => candidate.id === definition.groupPropertyId,
   );
-  const unassignedCount = tasks.length - assignedTaskCount;
-  if (unassignedCount > 0) {
-    values.push({
-      count: unassignedCount,
-      label: null,
-      percentage: getPercentage(unassignedCount, tasks.length),
-    });
-  }
+  if (!property) return { groups: [], multiValue: false };
   return {
-    assignedTaskCount,
-    name: property.name,
-    propertyId: property.id,
-    type: property.type,
-    values,
+    groups: groupByProperty(tasks, property),
+    multiValue: property.type === 'MULTI_SELECT',
   };
 }
 
-/** Calculates the mean elapsed time from task creation to completion. */
-function getAverageResolutionTime(tasks: CompletedTaskRecord[]): number | null {
-  if (tasks.length === 0) return null;
-  const total = tasks.reduce(
-    (sum, task) =>
-      sum + Math.max(0, task.completedAt.getTime() - task.createdAt.getTime()),
-    0,
-  );
-  return Math.round(total / tasks.length);
+/** Calculates one persisted widget from the complete source history. */
+function buildWidget(
+  definition: StatisticDefinition,
+  source: StatisticsSource,
+  now: Date,
+): StatisticWidgetResult {
+  const availableStatuses = new Set(source.statuses.map((status) => status.id));
+  const safeDefinition = {
+    ...definition,
+    statusIds: definition.statusIds.filter((id) => availableStatuses.has(id)),
+  };
+  const tasks = filterTasks(source.tasks, safeDefinition);
+  const calculation = calculateMeasure(tasks, safeDefinition, now);
+  if (safeDefinition.groupBy === StatisticGroupBy.NONE) {
+    return {
+      definition: safeDefinition,
+      result: { kind: 'KPI', ...calculation },
+    };
+  }
+  const { groups, multiValue } = getGroups(tasks, safeDefinition, source);
+  return {
+    definition: safeDefinition,
+    result: {
+      format: calculation.format,
+      kind: 'CHART',
+      multiValue,
+      values: groups.map((group) => {
+        const result = calculateMeasure(group.tasks, safeDefinition, now);
+        return {
+          color: group.color,
+          label: group.label,
+          percentage: tasks.length
+            ? (group.tasks.length / tasks.length) * 100
+            : 0,
+          taskCount: group.tasks.length,
+          value: result.value,
+        };
+      }),
+    },
+  };
 }
 
-/** Produces the complete serializable statistics projection. */
+/** Produces the complete serializable configurable statistics projection. */
 export function buildStatisticsSnapshot(
   source: StatisticsSource,
+  now = new Date(),
 ): StatisticsSnapshot {
   return {
-    averageResolutionTimeMs: getAverageResolutionTime(source.completedTasks),
-    completedTaskCount: source.completedTasks.length,
-    properties: source.properties.map((property) =>
-      buildPropertyStatistic(property, source.completedTasks),
+    properties: source.properties,
+    statistics: source.statistics.map((definition) =>
+      buildWidget(definition, source, now),
     ),
+    statuses: source.statuses,
+    taskCount: source.tasks.length,
   };
 }

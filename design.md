@@ -101,6 +101,7 @@ large text, component boundaries, and focus indicators.
 | Feedback          | `Alert`, inline field error                        | success, danger                   | Specific, short, actionable                  |
 | Statistics metric | `Card` compound API                                | secondary, tertiary               | One primary value, unit, and concise context |
 | Statistics chart  | `Card` compound API + Recharts                     | secondary                         | Chart plus an equivalent textual breakdown   |
+| Metric library    | `Modal`, `Button`, `Select`, `TextField`           | primary, secondary, ghost         | Add or edit one focused statistic at a time  |
 
 Component rules:
 
@@ -151,12 +152,21 @@ Component rules:
   the board toolbar and a matching Back to board action on the statistics page.
   The current destination is conveyed by the page heading rather than a
   decorative active-state treatment.
-- Statistics page: Use an editorial analytics composition with a large mean
-  resolution-time figure, a concise completed-task sample size, and one
-  horizontal bar chart for every custom SELECT or MULTI_SELECT property. Charts
-  use Recharts inside HeroUI compound cards and always include exact counts and
-  percentages in an adjacent textual list so meaning never depends on colour,
-  hover, or pointer precision.
+- Statistics page: Treat analytics as a configurable editorial workbench. The
+  header explains the current widget count and exposes one clear “Add
+  statistic” action. A compact starter set is created only when no widgets have
+  been configured; afterwards the user owns the canvas. Cards may show scalar
+  KPIs, categorical breakdowns, or date timelines. Every chart keeps an exact
+  textual equivalent so meaning never depends on colour, hover, or pointer
+  precision. Edit, move, and delete controls stay visually quiet until the card
+  is focused or hovered, while remaining keyboard reachable.
+- Statistics configuration: The editor reveals only fields relevant to the
+  selected visualization and measure. System dates (created, updated, deadline,
+  completed) and DATE properties share one date-dimension control. Any custom
+  property can be selected: text/select values form categories, multi-select
+  values may contribute to several categories, number properties support
+  arithmetic aggregations, and date properties support time buckets. Invalid
+  combinations are rejected by the shared service used by UI and MCP.
 - Brand icon: Use the supplied green-and-ivory checkmark artwork as the single
   source for both the in-product mark and browser app icon. Do not redraw or
   substitute it with a different workflow symbol.
@@ -207,41 +217,47 @@ Component rules:
   long columns, and its outer spacing includes display-cutout safe areas.
 - Data-density strategy: Active states show all tasks. Terminal states show only
   their 20 latest completed tasks, with the limit explained in the column.
-- Statistics-density strategy: Analytics always use every persisted completed
-  task, not the board's 20-item terminal preview. Property sections form a
-  single column on small screens and a two-column grid when space allows; chart
-  labels truncate visually while retaining full accessible names.
+- Statistics-density strategy: Analytics always use the complete persisted task
+  history, not the board's 20-item terminal preview. The widget canvas forms one
+  column on small screens and a twelve-column masonry-like grid on larger
+  screens: KPI cards use four columns and charts six, expanding to full width
+  when their labels need it. Configuration uses a bottom sheet on mobile and a
+  centred modal on desktop. Long category lists show the most relevant values
+  plus an explicit remainder, while retaining exact accessible labels.
 - Property-density strategy: Task cards show non-empty values in a compact
   two-column metadata list. Multi-select values wrap as quiet chips. Property
   settings and task forms use one column on mobile and two where space permits.
 
 ## 7. Decision log
 
-| Date       | Decision                                                                 | Reason                                                                                                 | Owner    |
-| ---------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | -------- |
-| 2026-08-29 | Keep a single shared-password session instead of user accounts           | Matches the requested private, simple board                                                            | Product  |
-| 2026-08-29 | Use horizontally scrollable columns on mobile                            | Preserves the spatial workflow and supports touch drag                                                 | Design   |
-| 2026-08-29 | Treat workflow colours as accents, not text colours                      | User-selected colours cannot guarantee readable contrast                                               | Design   |
-| 2026-08-29 | Limit every terminal state to 20 visible tasks                           | Keeps completed work available without overwhelming the board                                          | Product  |
-| 2026-08-29 | Model custom properties as definitions plus typed task values            | Keeps the board extensible without adding permanent task fields                                        | Product  |
-| 2026-08-29 | Support text, number, date, select, and multi-select initially           | Covers useful metadata while preserving the deliberately small scope                                   | Product  |
-| 2026-08-29 | Remove decorative borders and the per-card state selector                | Makes the board lighter and keeps state changes spatial through drag                                   | Design   |
-| 2026-08-29 | Reduce card height and metadata density                                  | More tasks remain scannable without turning cards into mini forms                                      | Design   |
-| 2026-08-29 | Add per-column creation and status-tinted card gradients                 | Makes placement faster and workflow ownership visually memorable                                       | Design   |
-| 2026-08-29 | Replace native date, colour, number, and confirmation controls           | Keeps interaction styling and accessibility consistent through HeroUI                                  | Design   |
-| 2026-08-29 | Reveal and copy the MCP token only from the protected setup page         | Makes agent setup easier without placing the secret in static output                                   | Security |
-| 2026-08-30 | Treat the board as a tactile workflow studio with recessed wells         | Adds hierarchy and depth while keeping task content primary                                            | Design   |
-| 2026-08-30 | Show active/finished context and a restrained completion meter           | Makes board state scannable without introducing dashboard clutter                                      | Product  |
-| 2026-08-30 | Sort tasks by due date per status type                                   | Makes upcoming and terminal work easy to scan                                                          | Product  |
-| 2026-08-30 | Keep settings mounted while refreshed snapshots reconcile                | Prevents successful mutations from unexpectedly dismissing the dialog                                  | Product  |
-| 2026-08-30 | Use the supplied green checkmark as the shared app and tab icon          | Preserves the intended identity with one artwork source                                                | Design   |
-| 2026-08-30 | Make the mobile toolbar sticky and overlays bottom-aligned               | Keeps frequent controls reachable and forms comfortable on touch                                       | Design   |
-| 2026-08-30 | Standardise frequent mobile actions on 44 px touch targets               | Reduces accidental activation and exceeds WCAG 2.2 target minimum                                      | Design   |
-| 2026-08-30 | Default to English with Spanish selectable in Settings                   | Keeps current behavior stable while adding a persistent language choice                                | Product  |
-| 2026-08-31 | Open task details from the card and keep editing as a secondary action   | Makes Markdown, dates, status, and every property discoverable without crowding cards                  | Product  |
-| 2026-09-01 | Sort terminal work by completion date and reveal that date conditionally | Makes recent completions scannable without exposing empty metadata on active tasks                     | Product  |
-| 2026-09-02 | Make terminal completion an invariant and remove configurable automation | Keeps core task completion predictable while returning the product to its intentionally small scope    | Product  |
-| 2026-09-02 | Add a dedicated editorial statistics page backed by all completed tasks  | Separates analysis from daily task flow while making custom select properties automatically reportable | Product  |
+| Date       | Decision                                                                              | Reason                                                                                                 | Owner        |
+| ---------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------ |
+| 2026-08-29 | Keep a single shared-password session instead of user accounts                        | Matches the requested private, simple board                                                            | Product      |
+| 2026-08-29 | Use horizontally scrollable columns on mobile                                         | Preserves the spatial workflow and supports touch drag                                                 | Design       |
+| 2026-08-29 | Treat workflow colours as accents, not text colours                                   | User-selected colours cannot guarantee readable contrast                                               | Design       |
+| 2026-08-29 | Limit every terminal state to 20 visible tasks                                        | Keeps completed work available without overwhelming the board                                          | Product      |
+| 2026-08-29 | Model custom properties as definitions plus typed task values                         | Keeps the board extensible without adding permanent task fields                                        | Product      |
+| 2026-08-29 | Support text, number, date, select, and multi-select initially                        | Covers useful metadata while preserving the deliberately small scope                                   | Product      |
+| 2026-08-29 | Remove decorative borders and the per-card state selector                             | Makes the board lighter and keeps state changes spatial through drag                                   | Design       |
+| 2026-08-29 | Reduce card height and metadata density                                               | More tasks remain scannable without turning cards into mini forms                                      | Design       |
+| 2026-08-29 | Add per-column creation and status-tinted card gradients                              | Makes placement faster and workflow ownership visually memorable                                       | Design       |
+| 2026-08-29 | Replace native date, colour, number, and confirmation controls                        | Keeps interaction styling and accessibility consistent through HeroUI                                  | Design       |
+| 2026-08-29 | Reveal and copy the MCP token only from the protected setup page                      | Makes agent setup easier without placing the secret in static output                                   | Security     |
+| 2026-08-30 | Treat the board as a tactile workflow studio with recessed wells                      | Adds hierarchy and depth while keeping task content primary                                            | Design       |
+| 2026-08-30 | Show active/finished context and a restrained completion meter                        | Makes board state scannable without introducing dashboard clutter                                      | Product      |
+| 2026-08-30 | Sort tasks by due date per status type                                                | Makes upcoming and terminal work easy to scan                                                          | Product      |
+| 2026-08-30 | Keep settings mounted while refreshed snapshots reconcile                             | Prevents successful mutations from unexpectedly dismissing the dialog                                  | Product      |
+| 2026-08-30 | Use the supplied green checkmark as the shared app and tab icon                       | Preserves the intended identity with one artwork source                                                | Design       |
+| 2026-08-30 | Make the mobile toolbar sticky and overlays bottom-aligned                            | Keeps frequent controls reachable and forms comfortable on touch                                       | Design       |
+| 2026-08-30 | Standardise frequent mobile actions on 44 px touch targets                            | Reduces accidental activation and exceeds WCAG 2.2 target minimum                                      | Design       |
+| 2026-08-30 | Default to English with Spanish selectable in Settings                                | Keeps current behavior stable while adding a persistent language choice                                | Product      |
+| 2026-08-31 | Open task details from the card and keep editing as a secondary action                | Makes Markdown, dates, status, and every property discoverable without crowding cards                  | Product      |
+| 2026-09-01 | Sort terminal work by completion date and reveal that date conditionally              | Makes recent completions scannable without exposing empty metadata on active tasks                     | Product      |
+| 2026-09-02 | Make terminal completion an invariant and remove configurable automation              | Keeps core task completion predictable while returning the product to its intentionally small scope    | Product      |
+| 2026-09-02 | Add a dedicated editorial statistics page backed by all completed tasks               | Separates analysis from daily task flow while making custom select properties automatically reportable | Product      |
+| 2026-09-03 | Make the statistics canvas user-configurable and persist widget definitions           | Supports focused views without hard-coding one dashboard for every workflow                            | Product      |
+| 2026-09-03 | Share statistics validation and CRUD between the web UI and MCP                       | Keeps agent-created analytics interchangeable with user-created analytics                              | Architecture |
+| 2026-09-03 | Support system/custom dates, property dimensions, numeric measures, and state filters | Covers delivery pace, workload mix, deadlines, and custom workflow questions with one composable model | Product      |
 
 ## 8. Review checklist
 

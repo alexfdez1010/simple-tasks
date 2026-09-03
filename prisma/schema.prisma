@@ -41,12 +41,15 @@ enum TaskPropertyType {
 }
 
 model TaskPropertyDefinition {
-  id       String              @id @default(cuid())
-  name     String              @unique
-  type     TaskPropertyType
-  position Int
-  options  Json                @default("[]")
-  values   TaskPropertyValue[]
+  id                String              @id @default(cuid())
+  name              String              @unique
+  type              TaskPropertyType
+  position          Int
+  options           Json                @default("[]")
+  values            TaskPropertyValue[]
+  measureStatistics StatisticWidget[]   @relation("StatisticMeasureProperty")
+  groupStatistics   StatisticWidget[]   @relation("StatisticGroupProperty")
+  dateStatistics    StatisticWidget[]   @relation("StatisticDateProperty")
 
   @@index([position])
 }
@@ -60,6 +63,80 @@ model TaskPropertyValue {
 
   @@id([taskId, propertyId])
   @@index([propertyId])
+}
+
+enum StatisticVisualization {
+  KPI
+  BAR
+  DONUT
+  LINE
+}
+
+enum StatisticMeasure {
+  COUNT
+  SUM
+  AVERAGE
+  MINIMUM
+  MAXIMUM
+  COMPLETION_RATE
+  AVERAGE_RESOLUTION_TIME
+  OVERDUE_COUNT
+  ON_TIME_RATE
+}
+
+enum StatisticScope {
+  ALL
+  ACTIVE
+  COMPLETED
+}
+
+enum StatisticGroupBy {
+  NONE
+  STATUS
+  PROPERTY
+  DATE
+}
+
+enum StatisticDateField {
+  CREATED_AT
+  UPDATED_AT
+  DUE_DATE
+  COMPLETED_AT
+  PROPERTY
+}
+
+enum StatisticDateBucket {
+  DAY
+  WEEK
+  MONTH
+  QUARTER
+  YEAR
+}
+
+model StatisticWidget {
+  id                String                  @id @default(cuid())
+  name              String
+  visualization     StatisticVisualization
+  measure           StatisticMeasure
+  scope             StatisticScope          @default(ALL)
+  groupBy           StatisticGroupBy        @default(NONE)
+  measurePropertyId String?
+  groupPropertyId   String?
+  dateField         StatisticDateField?
+  datePropertyId    String?
+  dateBucket        StatisticDateBucket?
+  statusIds         Json                    @default("[]")
+  position          Int
+  createdAt         DateTime                @default(now())
+  updatedAt         DateTime                @updatedAt
+  measureProperty   TaskPropertyDefinition? @relation("StatisticMeasureProperty", fields: [measurePropertyId], references: [id], onDelete: Cascade)
+  groupProperty     TaskPropertyDefinition? @relation("StatisticGroupProperty", fields: [groupPropertyId], references: [id], onDelete: Cascade)
+  dateProperty      TaskPropertyDefinition? @relation("StatisticDateProperty", fields: [datePropertyId], references: [id], onDelete: Cascade)
+
+  @@index([position])
+  @@index([measurePropertyId])
+  @@index([groupPropertyId])
+  @@index([datePropertyId])
 }
 
 datasource db {

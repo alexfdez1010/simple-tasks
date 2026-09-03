@@ -5,7 +5,9 @@
 @import '../components/board/task-card.css';
 @import '../components/board/board-mobile.css';
 @import '../components/statistics/statistics.css';
+@import '../components/statistics/statistics-header.css';
 @import '../components/statistics/statistics-charts.css';
+@import '../components/statistics/statistics-form.css';
 
 :root {
   --background: oklch(0.975 0.008 80);

@@ -16,8 +16,8 @@ through an authenticated MCP server for AI agents.
 - Configurable text, number, date, select, and multi-select task properties.
 - Moving a task into a terminal state fills its completion date automatically.
 - Terminal states show only their 20 most recently completed tasks, newest first.
-- Dedicated Recharts statistics page with average resolution time and completed
-  task breakdowns for every select and multi-select custom property.
+- Configurable Recharts statistics canvas with KPIs, bar and donut breakdowns,
+  timelines, state filters, and every typed custom property.
 - Responsive horizontal board with column snapping on mobile.
 - Shared password authentication backed by a signed `HttpOnly` session.
 - English interface by default, with persistent Spanish selection in Settings.
@@ -90,11 +90,22 @@ terminal columns show the 20 latest completions first. Moving a task back to an
 active state clears the date; moving it between terminal states preserves the
 original completion time.
 
-Open “Statistics” from the board toolbar to visit `/statistics`. The page uses
-the complete persisted completion history to calculate the mean elapsed time
-from creation to completion. It also creates one distribution for every custom
-select or multi-select property, including unassigned work. Multi-select totals
-can exceed 100% because one task may contribute to several options.
+Open “Statistics” from the board toolbar to visit `/statistics`. The initial
+canvas includes completed work, average resolution time, overdue work, workload
+by state, and a completion trend. Choose “Add statistic” to create or edit:
+
+- a KPI, bar chart, donut chart, or timeline;
+- task count, overdue count, completion/on-time rate, average resolution time,
+  or SUM/AVERAGE/MINIMUM/MAXIMUM of a NUMBER property;
+- all, active, or completed tasks, optionally filtered to selected states;
+- a status or custom-property breakdown; or
+- a timeline based on creation, update, deadline, completion, or a custom DATE
+  property, grouped by day, week, month, quarter, or year.
+
+Move controls change the persisted canvas order. Deleting a statistic never
+deletes task data. Multi-select totals can exceed 100% because one task may
+contribute to several categories. Every chart includes exact text values for
+keyboard and screen-reader access.
 
 ## MCP integration
 
@@ -135,6 +146,20 @@ as the server's `MCP_TOKEN`. The MCP catalog includes:
 | `delete_property`            | Delete a confirmed property and its values        |
 | `set_task_property_value`    | Validate and set one typed task value             |
 | `delete_task_property_value` | Clear one configured value from a task            |
+| `get_statistics`             | Calculate every configured statistic              |
+| `list_statistics`            | Read ordered statistic definitions                |
+| `create_statistic`           | Add a KPI, bar, donut, or line statistic          |
+| `update_statistic`           | Partially update a statistic                      |
+| `reorder_statistics`         | Replace the complete statistic order              |
+| `delete_statistic`           | Delete a confirmed statistic definition           |
+
+Statistic create calls accept `name`, `visualization`, `measure`, `scope`,
+`groupBy`, `statusIds`, and nullable property/date fields. For example, a
+monthly completion timeline uses `LINE`, `COUNT`, `COMPLETED`, `DATE`,
+`COMPLETED_AT`, and `MONTH`. A numeric average uses `KPI`, `AVERAGE`, and the id
+of a NUMBER property in `measurePropertyId`. Update calls require `id` and only
+the fields being changed; reorder calls require every current statistic id
+exactly once.
 
 The web application and MCP tools use the same application services, so their
 validation, ordering, transactions, and invariants are identical.

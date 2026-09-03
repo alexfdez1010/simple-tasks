@@ -1,7 +1,5 @@
 import type { Language } from '@/lib/i18n/config';
 
-import { getStatisticsCopy } from '@/components/statistics/copy';
-
 const MINUTE = 60_000;
 const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
@@ -12,17 +10,20 @@ export function formatResolutionDuration(
   language: Language,
 ): string {
   if (milliseconds === null) {
-    return getStatisticsCopy(language, 'notAvailable');
+    return language === 'es' ? 'No disponible' : 'Not available';
   }
   const locale = language === 'es' ? 'es-ES' : 'en-US';
   const formatter = new Intl.NumberFormat(locale, { maximumFractionDigits: 1 });
-  const [value, key] =
+  const [value, unit] =
     milliseconds >= 2 * DAY
-      ? [milliseconds / DAY, 'days' as const]
+      ? [milliseconds / DAY, 'day' as const]
       : milliseconds >= HOUR
-        ? [milliseconds / HOUR, 'hours' as const]
-        : [milliseconds / MINUTE, 'minutes' as const];
-  return getStatisticsCopy(language, key, {
-    count: formatter.format(Math.max(0, value)),
-  });
+        ? [milliseconds / HOUR, 'hour' as const]
+        : [milliseconds / MINUTE, 'minute' as const];
+  const normalized = Math.max(0, value);
+  const labels =
+    language === 'es'
+      ? { day: 'día', hour: 'hora', minute: 'minuto' }
+      : { day: 'day', hour: 'hour', minute: 'minute' };
+  return `${formatter.format(normalized)} ${labels[unit]}${normalized === 1 ? '' : 's'}`;
 }

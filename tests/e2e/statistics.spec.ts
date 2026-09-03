@@ -20,7 +20,9 @@ test.describe('statistics', () => {
     await expect(
       page.getByRole('heading', { level: 1, name: 'Statistics' }),
     ).toBeVisible();
-    await expect(page.getByText('Average resolution time')).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Average resolution time' }),
+    ).toBeVisible();
     await expect(
       page.getByText('Completed tasks', { exact: true }),
     ).toBeVisible();
@@ -30,5 +32,30 @@ test.describe('statistics', () => {
     await expect(
       page.getByRole('heading', { level: 1, name: 'Tasks' }),
     ).toBeVisible();
+  });
+
+  /** Proves a user can add, rename, and remove a statistic from the canvas. */
+  test('manages a configurable statistic', async ({ page }) => {
+    await login(page);
+    await page.getByRole('link', { name: 'Statistics' }).click();
+    const name = `E2E task count ${process.pid}`;
+    const renamed = `${name} updated`;
+
+    await page.getByRole('button', { name: 'Add statistic' }).click();
+    const createDialog = page.getByRole('dialog', { name: 'Create statistic' });
+    await createDialog.getByLabel('Name').fill(name);
+    await createDialog.getByRole('button', { name: 'Add to canvas' }).click();
+    await expect(page.getByRole('heading', { name })).toBeVisible();
+
+    await page.getByRole('button', { name: `Edit: ${name}` }).click();
+    const editDialog = page.getByRole('dialog', { name: 'Edit statistic' });
+    await editDialog.getByLabel('Name').fill(renamed);
+    await editDialog.getByRole('button', { name: 'Save changes' }).click();
+    await expect(page.getByRole('heading', { name: renamed })).toBeVisible();
+
+    await page.getByRole('button', { name: `Delete: ${renamed}` }).click();
+    const deleteDialog = page.getByRole('dialog', { name: 'Delete statistic' });
+    await deleteDialog.getByRole('button', { name: 'Delete' }).click();
+    await expect(page.getByRole('heading', { name: renamed })).toHaveCount(0);
   });
 });

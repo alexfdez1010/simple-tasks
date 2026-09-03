@@ -10,15 +10,15 @@
   inset: 0;
   background-image:
     radial-gradient(
-      circle at 14% 4%,
-      color-mix(in oklab, var(--accent) 12%, transparent),
+      circle at 12% 2%,
+      color-mix(in oklab, var(--accent) 14%, transparent),
       transparent 30rem
     ),
     linear-gradient(
-      115deg,
-      transparent 0 56%,
-      color-mix(in oklab, var(--foreground) 3%, transparent) 56% 56.15%,
-      transparent 56.15%
+      112deg,
+      transparent 0 61%,
+      color-mix(in oklab, var(--foreground) 3%, transparent) 61% 61.12%,
+      transparent 61.12%
     ),
     radial-gradient(
       circle at 1px 1px,
@@ -30,167 +30,117 @@
     auto,
     24px 24px;
   content: '';
-  opacity: 0.8;
   pointer-events: none;
 }
 
-.statistics-header-wrap {
-  padding: 1rem 1rem 0;
-}
-
-.statistics-header,
 .statistics-main {
-  width: min(100%, 86rem);
+  width: min(100%, 92rem);
   margin-inline: auto;
 }
 
-.statistics-header {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  border-bottom: 1px solid var(--divider);
-  padding: 0.5rem 0 1.25rem;
-}
-
-.statistics-heading-group {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 0.875rem;
-}
-
-.statistics-mark {
-  width: 3rem;
-  height: 3rem;
-  flex: none;
-  filter: drop-shadow(
-    0 6px 12px color-mix(in oklab, var(--foreground) 14%, transparent)
-  );
-}
-
-.statistics-heading-group h1 {
-  font-size: clamp(1.75rem, 5vw, 3.5rem);
-  font-weight: 650;
-  letter-spacing: -0.055em;
-  line-height: 0.95;
-}
-
-.statistics-heading-group p {
-  max-width: 42rem;
-  margin-top: 0.5rem;
-  color: var(--muted);
-  font-size: 0.875rem;
-}
-
-.statistics-back-link {
-  min-height: 2.75rem;
-  align-self: flex-start;
-  gap: 0.5rem;
-  padding-inline: 0.75rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-
 .statistics-main {
-  padding: 1.25rem 1rem 3rem;
+  padding: 1.25rem 1rem 4rem;
 }
 
-.statistics-metrics {
+.statistics-canvas {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.statistics-widget,
+.statistics-empty {
+  border: 1px solid color-mix(in oklab, var(--divider) 74%, transparent);
+  background: color-mix(in oklab, var(--surface) 91%, transparent);
+  box-shadow:
+    0 1px 0 color-mix(in oklab, white 62%, transparent) inset,
+    0 18px 48px color-mix(in oklab, var(--foreground) 7%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+.statistics-widget-kpi {
+  min-height: 15rem;
+  background: color-mix(in oklab, var(--accent) 8%, var(--surface));
+}
+
+.statistics-widget-header {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
   gap: 0.75rem;
 }
 
-.statistics-metric-card,
-.statistics-property-card,
-.statistics-empty {
-  border: 1px solid color-mix(in oklab, var(--divider) 72%, transparent);
-  background: color-mix(in oklab, var(--surface) 90%, transparent);
-  box-shadow:
-    0 1px 0 color-mix(in oklab, white 65%, transparent) inset,
-    0 16px 40px color-mix(in oklab, var(--foreground) 6%, transparent);
-  backdrop-filter: blur(14px);
+.statistics-widget-header h3 {
+  overflow-wrap: anywhere;
 }
 
-.statistics-metric-card:nth-child(1) {
-  grid-column: span 1;
-  background: color-mix(in oklab, var(--accent) 9%, var(--surface));
+.statistics-widget-actions {
+  display: flex;
+  flex: none;
+  margin: -0.25rem -0.25rem 0 0;
+}
+
+.statistics-widget-actions button {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+}
+
+.statistics-widget-content {
+  gap: 1rem;
 }
 
 .statistics-metric-value {
-  font-size: clamp(2.25rem, 8vw, 4.5rem);
-  font-weight: 650;
-  letter-spacing: -0.065em;
-  line-height: 0.95;
+  margin-top: auto;
+  font-size: clamp(2.75rem, 9vw, 5rem);
+  font-weight: 680;
+  letter-spacing: -0.07em;
+  line-height: 0.9;
 }
 
 .statistics-metric-description {
-  max-width: 34rem;
   margin-top: 1rem;
   color: var(--muted);
-  font-size: 0.8125rem;
-  line-height: 1.55;
+  font-size: 0.75rem;
 }
 
-.statistics-breakdowns {
-  margin-top: 2.5rem;
-}
-
-.statistics-section-heading {
-  display: grid;
-  gap: 0.4rem;
-  margin-bottom: 1rem;
-}
-
-.statistics-section-heading h2 {
-  font-size: clamp(1.35rem, 3vw, 2rem);
-  font-weight: 650;
-  letter-spacing: -0.04em;
-}
-
-.statistics-section-heading p {
-  max-width: 46rem;
-  color: var(--muted);
-  font-size: 0.875rem;
+.statistics-metric-value-empty {
+  max-width: 12ch;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  overflow-wrap: anywhere;
 }
 
 .statistics-empty {
-  margin-top: 1rem;
+  max-width: 38rem;
+  margin-inline: auto;
 }
 
-@media (min-width: 640px) {
-  .statistics-header {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .statistics-back-link {
-    align-self: center;
-  }
-
-  .statistics-metrics {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .statistics-metric-card:first-child {
-    grid-column: 1 / -1;
-  }
+.statistics-error {
+  margin-bottom: 1rem;
+  border-left: 3px solid var(--danger);
+  background: color-mix(in oklab, var(--danger) 8%, var(--surface));
+  padding: 0.75rem 1rem;
+  color: var(--danger);
+  font-size: 0.875rem;
 }
 
-@media (min-width: 1024px) {
-  .statistics-header-wrap {
-    padding-inline: 1.5rem;
-  }
-
+@media (min-width: 900px) {
   .statistics-main {
-    padding: 2rem 1.5rem 4rem;
+    padding: 2rem 1.5rem 5rem;
   }
-
-  .statistics-metrics {
-    grid-template-columns: 1.5fr 1fr 1fr;
+  .statistics-canvas {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
   }
+  .statistics-widget-kpi {
+    grid-column: span 4;
+  }
+  .statistics-widget-chart {
+    grid-column: span 6;
+  }
+}
 
-  .statistics-metric-card:first-child {
-    grid-column: auto;
+@media (forced-colors: active) {
+  .statistics-app::before {
+    display: none;
   }
 }

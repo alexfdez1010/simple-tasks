@@ -1,106 +1,107 @@
-import { TaskPropertyType } from '@/generated/prisma';
+import {
+  StatisticGroupBy,
+  StatisticMeasure,
+  StatisticScope,
+  StatisticVisualization,
+  TaskPropertyType,
+} from '@/generated/prisma';
 import { db } from '@/lib/db/client';
 import { PrismaStatisticsRepository } from '@/lib/statistics/prisma-repository';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
-const FIXTURE_PREFIX = 'test:statistics:';
+const PREFIX = 'test:statistics:';
 const repository = new PrismaStatisticsRepository(db);
 
 /** Removes only records owned by this integration suite. */
 async function cleanFixtures(): Promise<void> {
+  await db.statisticWidget.deleteMany({
+    where: { name: { startsWith: PREFIX } },
+  });
   await db.taskPropertyDefinition.deleteMany({
-    where: { name: { startsWith: FIXTURE_PREFIX } },
+    where: { name: { startsWith: PREFIX } },
   });
-  await db.task.deleteMany({
-    where: { title: { startsWith: FIXTURE_PREFIX } },
-  });
-  await db.status.deleteMany({
-    where: { name: { startsWith: FIXTURE_PREFIX } },
-  });
+  await db.task.deleteMany({ where: { title: { startsWith: PREFIX } } });
+  await db.status.deleteMany({ where: { name: { startsWith: PREFIX } } });
 }
 
 describe('PrismaStatisticsRepository', () => {
   /** Opens the dedicated PostgreSQL test database once. */
-  beforeAll(async () => {
-    await db.$connect();
-  });
-
+  beforeAll(async () => db.$connect());
   /** Starts every case without statistics-owned records. */
-  beforeEach(async () => {
-    await cleanFixtures();
-  });
-
+  beforeEach(cleanFixtures);
   /** Removes fixtures and releases the database connection. */
   afterAll(async () => {
     await cleanFixtures();
     await db.$disconnect();
   });
 
-  /** Proves the source is uncapped and excludes non-selectable properties. */
-  it('loads every completion with selectable property values', async () => {
+  /** Proves the source includes uncapped tasks, all property types, and widgets. */
+  it('loads the complete configurable analytics source', async () => {
     const status = await db.status.create({
       data: {
         color: '#22C55E',
         isTerminal: true,
-        name: `${FIXTURE_PREFIX}done`,
+        name: `${PREFIX}done`,
         position: 900,
       },
     });
-    const selectable = await db.taskPropertyDefinition.create({
+    const property = await db.taskPropertyDefinition.create({
       data: {
-        name: `${FIXTURE_PREFIX}responsible`,
-        options: ['Codex', 'Alejandro'],
+        name: `${PREFIX}points`,
         position: 900,
-        type: TaskPropertyType.SELECT,
+        type: TaskPropertyType.NUMBER,
       },
     });
     await db.taskPropertyDefinition.create({
       data: {
-        name: `${FIXTURE_PREFIX}notes`,
+        name: `${PREFIX}notes`,
         position: 901,
         type: TaskPropertyType.TEXT,
       },
     });
-    const origin = Date.parse('2040-01-01T00:00:00.000Z');
     const tasks = await Promise.all(
       Array.from({ length: 22 }, (_, index) =>
         db.task.create({
           data: {
-            completedAt: new Date(origin + index * 60_000),
-            createdAt: new Date(origin - 3_600_000),
+            completedAt: new Date(
+              `2040-01-01T00:${String(index).padStart(2, '0')}:00.000Z`,
+            ),
             position: index,
             statusId: status.id,
-            title: `${FIXTURE_PREFIX}${index}`,
+            title: `${PREFIX}${index}`,
           },
         }),
       ),
     );
     await db.taskPropertyValue.create({
-      data: {
-        propertyId: selectable.id,
-        taskId: tasks[0]!.id,
-        value: 'Codex',
-      },
+      data: { propertyId: property.id, taskId: tasks[0]!.id, value: 8 },
+    });
+    const created = await repository.create({
+      dateBucket: null,
+      dateField: null,
+      datePropertyId: null,
+      groupBy: StatisticGroupBy.NONE,
+      groupPropertyId: null,
+      measure: StatisticMeasure.AVERAGE,
+      measurePropertyId: property.id,
+      name: `${PREFIX}velocity`,
+      scope: StatisticScope.ALL,
+      statusIds: [status.id],
+      visualization: StatisticVisualization.KPI,
     });
 
     const source = await repository.loadSource();
-    const fixtureTasks = source.completedTasks.filter(
-      (task) => task.createdAt.getTime() === origin - 3_600_000,
+    expect(
+      source.tasks.filter((task) => task.statusId === status.id),
+    ).toHaveLength(22);
+    expect(
+      source.properties.filter((item) => item.name.startsWith(PREFIX)),
+    ).toHaveLength(2);
+    expect(source.statistics).toContainEqual(
+      expect.objectContaining({ id: created.id }),
     );
-    const fixtureProperties = source.properties.filter((property) =>
-      property.name.startsWith(FIXTURE_PREFIX),
-    );
-
-    expect(fixtureTasks).toHaveLength(22);
-    expect(fixtureTasks[0]?.propertyValues).toEqual([
-      { propertyId: selectable.id, value: 'Codex' },
-    ]);
-    expect(fixtureProperties).toEqual([
-      expect.objectContaining({
-        id: selectable.id,
-        options: ['Codex', 'Alejandro'],
-        type: TaskPropertyType.SELECT,
-      }),
-    ]);
+    expect(
+      source.tasks.find((task) => task.id === tasks[0]!.id)?.propertyValues,
+    ).toEqual([{ propertyId: property.id, value: 8 }]);
   });
 });

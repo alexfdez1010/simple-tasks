@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { registerSimpleTaskTools } from '@/lib/mcp/tools';
 
 const EXPECTED_TOOLS = [
+  'create_statistic',
   'create_status',
   'create_task',
   'create_property',
@@ -12,18 +13,23 @@ const EXPECTED_TOOLS = [
   'delete_status',
   'delete_task',
   'delete_task_property_value',
+  'delete_statistic',
+  'get_statistics',
   'get_task',
   'list_board',
   'list_properties',
   'list_statuses',
+  'list_statistics',
   'move_task',
   'reorder_properties',
   'reorder_statuses',
   'reorder_tasks',
+  'reorder_statistics',
   'set_task_property_value',
   'update_property',
   'update_status',
   'update_task',
+  'update_statistic',
 ];
 
 describe('MCP tool catalog', () => {
@@ -56,6 +62,7 @@ describe('MCP tool catalog', () => {
     expect(descriptions.delete_task).toMatch(/confirm/i);
     expect(descriptions.delete_status).toMatch(/confirm/i);
     expect(descriptions.delete_property).toMatch(/confirm/i);
+    expect(descriptions.delete_statistic).toMatch(/confirm/i);
   });
 
   /** Proves MCP exposes atomic task movement fields with bounded input validation. */
@@ -75,5 +82,24 @@ describe('MCP tool catalog', () => {
     expect(
       schema.safeParse({ id: 'task-1', index: -1, statusId: 'done' }).success,
     ).toBe(false);
+  });
+
+  /** Proves an agent can add a useful default KPI by sending only its name. */
+  it('defaults a minimal create_statistic request', () => {
+    const registerTool = vi.fn();
+    const server = { registerTool } as unknown as McpServer;
+    registerSimpleTaskTools(server);
+    const definition = registerTool.mock.calls.find(
+      ([name]) => name === 'create_statistic',
+    )?.[1] as { inputSchema: z.ZodRawShape };
+    const result = z.object(definition.inputSchema).parse({ name: 'All work' });
+
+    expect(result).toMatchObject({
+      groupBy: 'NONE',
+      measure: 'COUNT',
+      scope: 'ALL',
+      statusIds: [],
+      visualization: 'KPI',
+    });
   });
 });

@@ -1,0 +1,35 @@
+.statistics-form {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.statistics-form-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.statistics-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  border-top: 1px solid var(--divider);
+  padding-top: 1rem;
+}
+
+@media (min-width: 640px) {
+  .statistics-form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 639px) {
+  .statistics-modal-container {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .statistics-modal-container [role='dialog'] {
+    max-height: calc(100dvh - 1rem);
+    border-radius: 1.25rem 1.25rem 0 0;
+  }
+}
