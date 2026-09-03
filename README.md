@@ -1,197 +1,213 @@
-# Tasks
+# Simple Tasks
 
-A private, configurable Kanban task manager for one person or a small trusted
-team. The web application uses one shared password and exposes the same board
-through an authenticated MCP server for AI agents.
+> A beautifully simple, deeply customizable task board that you can run
+> yourself — and hand over to AI whenever you want.
 
-## Features
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Falexfdez1010%2Fsimple-tasks&project-name=simple-tasks&repository-name=simple-tasks&env=PASSWORD,AUTH_SECRET,MCP_TOKEN&envDescription=Choose%20a%20shared%20login%20password%20and%20two%20independent%20random%20secrets.%20Keep%20all%20three%20private.&envLink=https%3A%2F%2Fgithub.com%2Falexfdez1010%2Fsimple-tasks%23environment-variables&stores=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22neon%22%2C%22productSlug%22%3A%22neon%22%2C%22protocol%22%3A%22storage%22%2C%22allowConnectExistingProduct%22%3Atrue%7D%5D)
 
-- Configurable workflow states with custom names, colors, order, and terminal
-  behavior.
-- Default states: Blocked, To do, In progress, and Done.
-- Compact drag-only Kanban interactions with pointer, touch, and keyboard input.
-- Tasks with a title, optional Markdown description, and optional due date.
-- Clickable task inspector with rendered Markdown, lifecycle dates, ID, status,
-  and every configured property, including empty values.
-- Configurable text, number, date, select, and multi-select task properties.
-- Moving a task into a terminal state fills its completion date automatically.
-- Terminal states show only their 20 most recently completed tasks, newest first.
-- Configurable Recharts statistics canvas with KPIs, bar and donut breakdowns,
-  timelines, state filters, and every typed custom property.
-- Responsive horizontal board with column snapping on mobile.
-- Shared password authentication backed by a signed `HttpOnly` session.
-- English interface by default, with persistent Spanish selection in Settings.
-- Independently authenticated Streamable HTTP MCP endpoint.
+Simple Tasks gives one person or a small trusted team a calm Kanban workspace
+without turning task management into another project. Start with four useful
+states, then shape the board around the way you actually work.
 
-## Stack
+Create any workflow states. Add typed properties. Build the exact statistics
+you care about. Use everything from the responsive web interface, or delegate
+the same operations to an AI agent through the built-in MCP server.
 
-[Next.js 16](https://nextjs.org/docs), [React 19](https://react.dev/),
-[HeroUI v3](https://heroui.com/en/docs/react/components),
-[Tailwind CSS 4](https://tailwindcss.com/docs),
-[Prisma](https://www.prisma.io/docs/orm), PostgreSQL,
-[dnd kit](https://dndkit.com/react/quickstart/),
-[react-markdown](https://github.com/remarkjs/react-markdown),
-[Recharts](https://recharts.github.io/), Vitest, and
-Playwright.
+Your deployment, database, credentials, and task data stay under your control.
 
-## Local setup
+## ✨ Why Simple Tasks
 
-Requirements: Bun 1.x, Node.js 22.22 or newer within the Node 22 LTS line, and
-Docker with Compose. Production deployments intentionally pin Node 22 because
-the webpack build is validated against that runtime.
+|                          |                                                                                      |
+| ------------------------ | ------------------------------------------------------------------------------------ |
+| **Simple by default**    | Open the board, add a task, and move it. No workspace ceremony or feature maze.      |
+| **Yours to shape**       | Create any states, colors, terminal stages, and typed custom properties you need.    |
+| **Useful analytics**     | Compose KPIs, breakdowns, and timelines instead of accepting a fixed dashboard.      |
+| **Built for AI**         | A complete MCP API lets an agent manage tasks, workflow, properties, and statistics. |
+| **Private by design**    | One protected deployment for you or a small trusted team, backed by your Postgres.   |
+| **Great on every input** | Drag with a pointer, touch, or keyboard on a responsive desktop and mobile board.    |
 
-1. Install dependencies with `bun install`.
-2. Copy `.env.example` to `.env`.
-3. Replace every example secret with a long, random value.
-4. Run `bun run dev`.
-5. Open [http://localhost:3000](http://localhost:3000).
+## 🧭 A board that adapts to you
 
-Development PostgreSQL runs in Docker. Migrations and the seed are idempotent;
-apply them to an existing deployment with `bun run database:deploy`.
+- Create, rename, color, reorder, and remove workflow states.
+- Mark any state as terminal. Entering it automatically records completion time.
+- Add `TEXT`, `NUMBER`, `DATE`, `SELECT`, and `MULTI_SELECT` properties.
+- Write task descriptions in Markdown and inspect every field in one focused view.
+- Reorder and move tasks with accessible pointer, touch, and keyboard drag controls.
+- Keep active work ordered by deadline and finished work ordered by completion date.
+- Switch the complete interface between English and Spanish.
+
+The default workflow — **Blocked**, **To do**, **In progress**, and **Done** — is
+ready immediately, but none of those labels has to define your process.
+
+## 📊 Statistics that answer your questions
+
+The statistics canvas is configurable, persistent, and calculated from the
+complete task history. Add only the signals that matter to you:
+
+- **Views:** KPI, bar chart, donut chart, or timeline.
+- **Measures:** task count, overdue work, completion rate, on-time rate, average
+  resolution time, and sum/average/minimum/maximum of any numeric property.
+- **Dimensions:** workflow state, any compatible custom property, or a system or
+  custom date.
+- **Date sources:** creation, last update, deadline, completion, or any `DATE`
+  property.
+- **Relative periods:** today, last 7/30/90 days, this
+  week/month/quarter/year, next 7/30 days, or all time.
+- **Filters:** all, active, or completed work, narrowed to any set of states.
+
+Every period moves with the calendar, so a “Last 30 days” card stays useful
+without being edited. Every chart also has an exact text equivalent for keyboard
+and screen-reader users.
+
+## 🤖 Delegate the busywork through MCP
+
+Simple Tasks exposes the board as an authenticated
+[Model Context Protocol](https://modelcontextprotocol.io/) server. An AI agent
+can capture work, update properties, move tasks, maintain your workflow, and
+create or refine statistics without receiving database access.
+
+After deployment, sign in and open `/skill`. The setup page lets you:
+
+1. download a ready-to-use `SKILL.md`;
+2. download the MCP client configuration;
+3. reveal and copy the MCP token only when you choose to.
+
+The Streamable HTTP endpoint is `/api/mcp/mcp` and requires
+`Authorization: Bearer <MCP_TOKEN>`. The generated client configuration reads
+that value from `SIMPLE_TASKS_MCP_TOKEN`, so the credential is not written into
+the downloaded file.
+
+### MCP capabilities
+
+| Area            | Read tools                          | Mutation tools                                                                   |
+| --------------- | ----------------------------------- | -------------------------------------------------------------------------------- |
+| Tasks           | `list_board`, `get_task`            | `create_task`, `update_task`, `move_task`, `reorder_tasks`, `delete_task`        |
+| Workflow        | `list_statuses`                     | `create_status`, `update_status`, `reorder_statuses`, `delete_status`            |
+| Properties      | `list_properties`                   | `create_property`, `update_property`, `reorder_properties`, `delete_property`    |
+| Property values | —                                   | `set_task_property_value`, `delete_task_property_value`                          |
+| Statistics      | `get_statistics`, `list_statistics` | `create_statistic`, `update_statistic`, `reorder_statistics`, `delete_statistic` |
+
+For example, an agent can create a rolling completion KPI with
+`create_statistic`:
+
+```json
+{
+  "name": "Completed in the last 30 days",
+  "visualization": "KPI",
+  "measure": "COUNT",
+  "scope": "COMPLETED",
+  "groupBy": "NONE",
+  "dateRange": "LAST_30_DAYS",
+  "dateField": "COMPLETED_AT"
+}
+```
+
+Use `tools/list` for the complete schemas. Numeric measures require a `NUMBER`
+property. A line chart requires a date dimension and time bucket. Reorder calls
+replace the complete order, and destructive tools tell agents to ask for user
+confirmation first. The web UI and MCP use the same application services, so
+validation and behavior stay consistent.
+
+## 🚀 Deploy your private instance
+
+The Deploy Button follows Vercel's official project-creation flow: it clones
+this repository into your Git provider, provisions a Neon Postgres database,
+and asks for the three private values the application needs.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Falexfdez1010%2Fsimple-tasks&project-name=simple-tasks&repository-name=simple-tasks&env=PASSWORD,AUTH_SECRET,MCP_TOKEN&envDescription=Choose%20a%20shared%20login%20password%20and%20two%20independent%20random%20secrets.%20Keep%20all%20three%20private.&envLink=https%3A%2F%2Fgithub.com%2Falexfdez1010%2Fsimple-tasks%23environment-variables&stores=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22neon%22%2C%22productSlug%22%3A%22neon%22%2C%22protocol%22%3A%22storage%22%2C%22allowConnectExistingProduct%22%3Atrue%7D%5D)
+
+1. Click **Deploy with Vercel** and choose your Git account.
+2. Create a new Neon database or connect an existing Neon product.
+3. Enter `PASSWORD`, `AUTH_SECRET`, and `MCP_TOKEN` with independent values.
+4. Deploy. The build applies migrations and creates the starter workflow.
+
+Neon injects `DATABASE_URL` automatically. Vercel never receives secret values
+through the button URL; it asks you for them inside the deployment flow. See the
+[Vercel Deploy Button documentation](https://vercel.com/docs/deploy-button) and
+[Postgres on Vercel](https://vercel.com/docs/postgres) for details.
 
 ### Environment variables
 
-| Variable       | Purpose                                              |
-| -------------- | ---------------------------------------------------- |
-| `DATABASE_URL` | PostgreSQL connection used by Prisma                 |
-| `PASSWORD`     | Shared web application password                      |
-| `AUTH_SECRET`  | Independent secret used to sign application sessions |
-| `MCP_TOKEN`    | Independent bearer token for the MCP endpoint        |
+| Variable       | Purpose                                                      |
+| -------------- | ------------------------------------------------------------ |
+| `DATABASE_URL` | PostgreSQL connection string; supplied automatically by Neon |
+| `PASSWORD`     | Shared sign-in password for the web application              |
+| `AUTH_SECRET`  | Independent random secret used to sign `HttpOnly` sessions   |
+| `MCP_TOKEN`    | Independent bearer token protecting the MCP endpoint         |
 
-Do not reuse `PASSWORD`, `AUTH_SECRET`, or `MCP_TOKEN`. Serve production only
-over HTTPS.
+Use a strong passphrase for `PASSWORD`. Generate each of the other secrets
+separately, for example with `openssl rand -base64 32`. Do not reuse values.
+Production should always run over HTTPS.
 
-## Using the board
+If you bring another PostgreSQL provider, omit the Neon store and set
+`DATABASE_URL` yourself. It must be reachable during the Vercel build because
+Prisma migrations run before Next.js compiles.
 
-Sign in and choose “New task” to create work in the first non-terminal state.
-Drag the task handle to reorder a task or move it between columns. Drag works
-with a pointer, touch input, and the keyboard; there is no separate state-change
-control. Select a task's edit action to change its content.
+## 🛠 Run locally
 
-Descriptions are stored as Markdown. Rendering rejects raw HTML and remote
-images. Click a task card's title or content to inspect its complete record;
-choose Edit inside the inspector to modify it. Open “Settings” to add, rename,
-color, reorder, or mark workflow states as terminal. A state can be deleted only
-when it is empty.
+Requirements: [Bun](https://bun.sh/) 1.x, Node.js 22.22 or newer within the Node
+22 LTS line, and Docker with Compose.
 
-Settings also manages ordered task properties. Select and multi-select
-properties have their own option lists. Empty values stay off task cards to keep
-the board compact. A property type cannot change, and an option cannot be
-removed, while stored task values depend on it.
+```bash
+git clone https://github.com/alexfdez1010/simple-tasks.git
+cd simple-tasks
+bun install
+cp .env.example .env
+bun run dev
+```
 
-The Language section in Settings switches the full interface between English
-and Spanish, including accessible labels and locale-aware dates and numbers.
-The selection is stored for one year in the `simple-tasks-language` `HttpOnly`
-cookie; absent or unsupported values safely fall back to English.
+Replace every example credential in `.env`, then open
+[http://localhost:3000](http://localhost:3000). Local PostgreSQL runs in Docker;
+migrations and starter data are applied automatically.
 
-Moving a task into any terminal state fills `completedAt` with the transition
-time automatically. Completion dates appear only on completed task cards, and
-terminal columns show the 20 latest completions first. Moving a task back to an
-active state clears the date; moving it between terminal states preserves the
-original completion time.
+Useful database commands:
 
-Open “Statistics” from the board toolbar to visit `/statistics`. The initial
-canvas includes completed work, average resolution time, overdue work, workload
-by state, and a completion trend. Choose “Add statistic” to create or edit:
+```bash
+bun run database
+bun run database:deploy
+bun run database:studio
+bun run database:down
+```
 
-- a KPI, bar chart, donut chart, or timeline;
-- task count, overdue count, completion/on-time rate, average resolution time,
-  or SUM/AVERAGE/MINIMUM/MAXIMUM of a NUMBER property;
-- all, active, or completed tasks, optionally filtered to selected states;
-- a status or custom-property breakdown; or
-- a timeline based on creation, update, deadline, completion, or a custom DATE
-  property, grouped by day, week, month, quarter, or year.
+## 🧱 Technology
 
-Move controls change the persisted canvas order. Deleting a statistic never
-deletes task data. Multi-select totals can exceed 100% because one task may
-contribute to several categories. Every chart includes exact text values for
-keyboard and screen-reader access.
+- [Next.js 16](https://nextjs.org/docs) and [React 19](https://react.dev/)
+- [HeroUI v3](https://heroui.com/en/docs/react/components) and
+  [Tailwind CSS 4](https://tailwindcss.com/docs)
+- [Prisma](https://www.prisma.io/docs/orm) and PostgreSQL
+- [dnd kit](https://dndkit.com/react/quickstart/) for accessible drag and drop
+- [Recharts](https://recharts.github.io/) for the statistics canvas
+- [MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk)
+- Vitest and Playwright
 
-## MCP integration
+## ✅ Quality gates
 
-The Streamable HTTP transport is available at `/api/mcp/mcp`. Every request
-requires `Authorization: Bearer <MCP_TOKEN>`.
+```bash
+bun run test:unit
+bun run test:integration
+bun run test:e2e
+bun run lint-format
+bun run heroui:doctor
+bun run build
+```
 
-After signing in, open `/skill` to download:
+The E2E suite exercises authentication, desktop and mobile interactions,
+properties, statistics, and the live MCP endpoint against an isolated
+PostgreSQL database. Visual tokens, responsive rules, and accessibility choices
+are documented in [`design.md`](./design.md).
 
-- `SKILL.md`, containing usage instructions and safety rules for an agent.
-- `simple-tasks.mcp.json`, containing the server URL and a reference to the
-  local `SIMPLE_TASKS_MCP_TOKEN` variable.
+Production uses Next.js' documented Webpack fallback because Prisma's generated
+local client currently triggers an overly broad Turbopack filesystem trace.
+Development retains the default Turbopack server.
 
-The same protected page shows the server token masked by default, with explicit
-reveal and copy actions. Use it to populate `SIMPLE_TASKS_MCP_TOKEN` without
-placing the credential in the downloaded files.
+## Security model
 
-Set `SIMPLE_TASKS_MCP_TOKEN` in the MCP client's environment to the same value
-as the server's `MCP_TOKEN`. The MCP catalog includes:
+Simple Tasks is intentionally designed for one person or a small trusted team,
+not public multi-tenant signup. The web session is signed and stored in an
+`HttpOnly` cookie. MCP uses a separate bearer token. Raw HTML and remote images
+are rejected in rendered task Markdown.
 
-| Tool                         | Typical use                                       |
-| ---------------------------- | ------------------------------------------------- |
-| `list_board`                 | Read ordered states and tasks                     |
-| `get_task`                   | Read one task by `id`                             |
-| `create_task`                | Create a task and optional typed property values  |
-| `update_task`                | Atomically edit, move, or replace property values |
-| `move_task`                  | Move by task, target state, and zero-based index  |
-| `reorder_tasks`              | Replace the complete order of an active column    |
-| `delete_task`                | Delete a user-confirmed task                      |
-| `list_statuses`              | Read the configured workflow                      |
-| `create_status`              | Create a state with color and terminal behavior   |
-| `update_status`              | Edit an existing state                            |
-| `reorder_statuses`           | Replace the complete state order                  |
-| `delete_status`              | Delete a confirmed empty state                    |
-| `list_properties`            | Read ordered property definitions                 |
-| `create_property`            | Create a typed property and its options           |
-| `update_property`            | Edit without invalidating stored values           |
-| `reorder_properties`         | Replace the complete property order               |
-| `delete_property`            | Delete a confirmed property and its values        |
-| `set_task_property_value`    | Validate and set one typed task value             |
-| `delete_task_property_value` | Clear one configured value from a task            |
-| `get_statistics`             | Calculate every configured statistic              |
-| `list_statistics`            | Read ordered statistic definitions                |
-| `create_statistic`           | Add a KPI, bar, donut, or line statistic          |
-| `update_statistic`           | Partially update a statistic                      |
-| `reorder_statistics`         | Replace the complete statistic order              |
-| `delete_statistic`           | Delete a confirmed statistic definition           |
-
-Statistic create calls accept `name`, `visualization`, `measure`, `scope`,
-`groupBy`, `statusIds`, `dateRange`, and nullable property/date fields. Relative
-periods include `TODAY`, trailing 7/30/90 days, the current
-week/month/quarter/year, and the next 7/30 days; every bounded period uses
-`dateField` (or a custom DATE property) and is recalculated on each request. A
-monthly completion timeline uses `LINE`, `COUNT`, `COMPLETED`, `DATE`,
-`COMPLETED_AT`, and `MONTH`. A numeric average uses `KPI`, `AVERAGE`, and the id
-of a NUMBER property in `measurePropertyId`. Update calls require `id` and only
-the fields being changed; reorder calls require every current statistic id
-exactly once.
-
-The web application and MCP tools use the same application services, so their
-validation, ordering, transactions, and invariants are identical.
-
-## Quality commands
-
-- `bun run lint-format`: mandatory ESLint, Prisma formatting, and Prettier gate.
-- `bun run test:unit`: isolated logic and validation tests.
-- `bun run test:integration`: repositories and services against PostgreSQL.
-- `bun run test:e2e`: authentication, responsive board, drag, and MCP tests.
-- `bun run build`: migrations, seed, and the production Next.js build.
-- `bun run heroui:doctor`: validates the HeroUI v3 setup.
-
-The visual language and responsive decisions are documented in
-[`design.md`](./design.md).
-
-Production builds use Next.js' documented Webpack fallback because Prisma's
-generated local client triggers a known Turbopack dynamic-filesystem trace that
-would otherwise include unrelated project files. Development retains the
-default Turbopack server.
-
-## Deployment
-
-Deploy as a Node.js Next.js application with persistent PostgreSQL. Configure
-the four environment variables above, run `bun run database:deploy` during the
-migration phase, and start the application with `bun run start`. Keep the MCP
-endpoint behind HTTPS and its bearer token.
-
-Official references: [Next.js authentication](https://nextjs.org/docs/app/guides/authentication),
-[cookies](https://nextjs.org/docs/app/api-reference/functions/cookies),
-[Prisma transactions](https://www.prisma.io/docs/orm/prisma-client/queries/transactions),
-and the [MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk/blob/main/docs/server.md).
+Tasks live in the PostgreSQL database connected to your own deployment. As with
+any self-managed application, keep dependencies updated, protect the Vercel and
+database accounts, rotate exposed credentials, and review your providers'
+privacy and backup settings.
