@@ -1,9 +1,11 @@
 import type {
+  StatisticColor,
   StatisticDateBucket,
   StatisticDateField,
   StatisticDateRange,
   StatisticGroupBy,
   StatisticMeasure,
+  StatisticSize,
   StatisticScope,
   StatisticVisualization,
   TaskPropertyType,
@@ -35,6 +37,7 @@ export interface StatisticStatusRecord {
 
 /** A persisted, transport-safe statistic definition. */
 export interface StatisticDefinition {
+  color: StatisticColor;
   dateBucket: StatisticDateBucket | null;
   dateField: StatisticDateField | null;
   datePropertyId: string | null;
@@ -47,6 +50,7 @@ export interface StatisticDefinition {
   name: string;
   position: number;
   scope: StatisticScope;
+  size: StatisticSize;
   statusIds: string[];
   visualization: StatisticVisualization;
 }

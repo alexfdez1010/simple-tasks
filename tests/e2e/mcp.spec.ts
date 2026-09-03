@@ -349,10 +349,16 @@ test.describe('remote MCP server', () => {
       const initial = parseToolJson<Array<{ id: string }>>(
         await client.callTool({ name: 'list_statistics', arguments: {} }),
       );
-      const created = parseToolJson<{ id: string; name: string }>(
+      const created = parseToolJson<{
+        color: string;
+        id: string;
+        name: string;
+        size: string;
+      }>(
         await client.callTool({
           name: 'create_statistic',
           arguments: {
+            color: 'OCEAN',
             dateBucket: null,
             dateField: null,
             datePropertyId: null,
@@ -363,32 +369,40 @@ test.describe('remote MCP server', () => {
             measurePropertyId: null,
             name: `E2E MCP Statistic ${process.pid}`,
             scope: 'ALL',
+            size: 'SQUARE',
             statusIds: [],
             visualization: 'KPI',
           },
         }),
       );
       statisticId = created.id;
+      expect(created).toMatchObject({ color: 'OCEAN', size: 'SQUARE' });
       const updated = parseToolJson<{
+        color: string;
         dateField: string;
         dateRange: string;
         name: string;
         scope: string;
+        size: string;
       }>(
         await client.callTool({
           name: 'update_statistic',
           arguments: {
+            color: 'CORAL',
             id: created.id,
             dateField: 'COMPLETED_AT',
             dateRange: 'LAST_30_DAYS',
             name: `E2E MCP Statistic Updated ${process.pid}`,
             scope: 'COMPLETED',
+            size: 'WIDE',
           },
         }),
       );
       expect(updated.scope).toBe('COMPLETED');
       expect(updated.dateRange).toBe('LAST_30_DAYS');
       expect(updated.dateField).toBe('COMPLETED_AT');
+      expect(updated.color).toBe('CORAL');
+      expect(updated.size).toBe('WIDE');
 
       const calculated = parseToolJson<{
         statistics: Array<{

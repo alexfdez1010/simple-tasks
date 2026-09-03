@@ -23,6 +23,12 @@ test.describe('mobile configurable statistics', () => {
     const dialog = page.getByRole('dialog', { name: 'Create statistic' });
     await expect(dialog).toBeInViewport();
     await expect(dialog.getByLabel('Name')).toBeVisible();
+    await expect(dialog.getByText('Color palette')).toBeVisible();
+    await expect(dialog.getByText('Card format')).toBeVisible();
+    await expect(dialog.getByRole('radio', { name: 'Forest' })).toBeVisible();
+    await expect(
+      dialog.getByRole('radio', { name: 'Full width' }),
+    ).toBeVisible();
     await expect(dialog.getByRole('button', { name: /Period/ })).toBeVisible();
     await expect(
       dialog.getByText('Leave empty to include every status.'),

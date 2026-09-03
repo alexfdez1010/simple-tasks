@@ -51,6 +51,13 @@ Workflow colours are user-configurable hex values. They are rendered as rails,
 dots, and restrained card-to-surface gradients, never as body-text colour. Text
 therefore retains WCAG contrast independently of the chosen workflow colour.
 
+Statistic colours are chosen from six curated semantic palettes: forest, ocean,
+iris, amber, coral, and graphite. Each palette defines a card accent plus five
+coordinated chart tones in light and dark modes. The selected colour is used for
+the top rail, low-contrast surface wash, KPI emphasis, and data marks; labels and
+controls continue to use foreground tokens so palette choice cannot reduce text
+contrast. Colour controls always pair a visible swatch with a localized name.
+
 Contrast requirements: WCAG 2.2 AA, at least 4.5:1 for normal text and 3:1 for
 large text, component boundaries, and focus indicators.
 
@@ -102,6 +109,7 @@ large text, component boundaries, and focus indicators.
 | Statistics metric | `Card` compound API                                | secondary, tertiary               | One primary value, unit, and concise context |
 | Statistics chart  | `Card` compound API + Recharts                     | secondary                         | Chart plus an equivalent textual breakdown   |
 | Metric library    | `Modal`, `Button`, `Select`, `TextField`           | primary, secondary, ghost         | Add or edit one focused statistic at a time  |
+| Metric appearance | `RadioGroup`, `Radio`                              | secondary                         | Named colour swatches and shape previews     |
 
 Component rules:
 
@@ -173,6 +181,12 @@ Component rules:
   request time from the selected system date or DATE property; fixed dates are
   never persisted. Cards name every active period in their description so the
   visible value always carries its time context.
+- Statistics appearance: Every widget persists one curated colour palette and
+  one layout size. Automatic keeps the established KPI/chart proportions;
+  compact is a small tile, square is a balanced 1:1 tile, wide is a
+  landscape card, and full spans the canvas. On narrow screens every size uses
+  the available width. Appearance is part of the shared UI/MCP definition and
+  never changes the calculated result.
 - Brand icon: Use the supplied green-and-ivory checkmark artwork as the single
   source for both the in-product mark and browser app icon. Do not redraw or
   substitute it with a different workflow symbol.
@@ -230,6 +244,11 @@ Component rules:
   when their labels need it. Configuration uses a bottom sheet on mobile and a
   centred modal on desktop. Long category lists show the most relevant values
   plus an explicit remainder, while retaining exact accessible labels.
+  User-selected sizes map to a twelve-column canvas at desktop widths: compact
+  spans three columns, square four, wide six, and full twelve. Automatic spans
+  four columns for KPIs and six for charts. Square is a minimum proportion rather
+  than a clipping boundary, so long localized labels and textual chart legends
+  may expand the card vertically without hiding information.
 - Property-density strategy: Task cards show non-empty values in a compact
   two-column metadata list. Multi-select values wrap as quiet chips. Property
   settings and task forms use one column on mobile and two where space permits.
@@ -265,6 +284,7 @@ Component rules:
 | 2026-09-03 | Share statistics validation and CRUD between the web UI and MCP                       | Keeps agent-created analytics interchangeable with user-created analytics                              | Architecture |
 | 2026-09-03 | Support system/custom dates, property dimensions, numeric measures, and state filters | Covers delivery pace, workload mix, deadlines, and custom workflow questions with one composable model | Product      |
 | 2026-09-03 | Filter every statistic through request-relative calendar periods                      | Keeps recurring dashboards current without requiring users or MCP clients to edit fixed dates          | Product      |
+| 2026-09-03 | Add curated statistic palettes and responsive card formats to the shared UI/MCP model | Makes the canvas personal and scannable while preserving contrast, compatibility, and agent parity     | Design       |
 
 ## 8. Review checklist
 

@@ -95,12 +95,34 @@ describe('MCP tool catalog', () => {
     const result = z.object(definition.inputSchema).parse({ name: 'All work' });
 
     expect(result).toMatchObject({
+      color: 'FOREST',
       dateRange: 'ALL_TIME',
       groupBy: 'NONE',
       measure: 'COUNT',
       scope: 'ALL',
+      size: 'AUTO',
       statusIds: [],
       visualization: 'KPI',
     });
+  });
+
+  /** Proves agents can configure the same appearance fields as the web editor. */
+  it('accepts statistic color and size updates', () => {
+    const registerTool = vi.fn();
+    const server = { registerTool } as unknown as McpServer;
+    registerSimpleTaskTools(server);
+    const definition = registerTool.mock.calls.find(
+      ([name]) => name === 'update_statistic',
+    )?.[1] as { inputSchema: z.ZodRawShape };
+    const schema = z.object(definition.inputSchema);
+
+    expect(
+      schema.safeParse({ id: 'statistic-1', color: 'CORAL', size: 'FULL' })
+        .success,
+    ).toBe(true);
+    expect(
+      schema.safeParse({ id: 'statistic-1', color: '#ff0000', size: 'HUGE' })
+        .success,
+    ).toBe(false);
   });
 });

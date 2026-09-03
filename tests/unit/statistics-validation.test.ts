@@ -1,9 +1,11 @@
 import {
+  StatisticColor,
   StatisticDateBucket,
   StatisticDateField,
   StatisticDateRange,
   StatisticGroupBy,
   StatisticMeasure,
+  StatisticSize,
   StatisticScope,
   StatisticVisualization,
   TaskPropertyType,
@@ -43,6 +45,7 @@ function input(
   overrides: Partial<CreateStatisticInput> = {},
 ): CreateStatisticInput {
   return {
+    color: StatisticColor.FOREST,
     dateBucket: null,
     dateField: null,
     datePropertyId: null,
@@ -53,6 +56,7 @@ function input(
     measurePropertyId: null,
     name: 'Tasks',
     scope: StatisticScope.ALL,
+    size: StatisticSize.AUTO,
     statusIds: [],
     visualization: StatisticVisualization.KPI,
     ...overrides,

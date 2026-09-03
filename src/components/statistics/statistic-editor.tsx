@@ -27,6 +27,7 @@ interface StatisticEditorProps {
 /** Removes persistence-only fields from an editable statistic definition. */
 function toDraft(definition: StatisticDefinition): CreateStatisticInput {
   return {
+    color: definition.color,
     dateBucket: definition.dateBucket,
     dateField: definition.dateField,
     datePropertyId: definition.datePropertyId,
@@ -37,6 +38,7 @@ function toDraft(definition: StatisticDefinition): CreateStatisticInput {
     measurePropertyId: definition.measurePropertyId,
     name: definition.name,
     scope: definition.scope,
+    size: definition.size,
     statusIds: definition.statusIds,
     visualization: definition.visualization,
   };

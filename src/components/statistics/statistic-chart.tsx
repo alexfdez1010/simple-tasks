@@ -17,6 +17,7 @@ import {
 import { getStatisticsCopy } from '@/components/statistics/copy';
 import { StatisticsTooltip } from '@/components/statistics/property-statistic-card';
 import { StatisticChartLegend } from '@/components/statistics/statistic-chart-legend';
+import { getStatisticChartHeight } from '@/components/statistics/statistic-chart-layout';
 import {
   formatSeriesLabel,
   formatStatisticValue,
@@ -28,11 +29,11 @@ import type {
 } from '@/lib/statistics/types';
 
 const CHART_COLORS = [
-  'var(--chart-1)',
-  'var(--chart-2)',
-  'var(--chart-3)',
-  'var(--chart-4)',
-  'var(--chart-5)',
+  'var(--statistic-chart-1)',
+  'var(--statistic-chart-2)',
+  'var(--statistic-chart-3)',
+  'var(--statistic-chart-4)',
+  'var(--statistic-chart-5)',
 ] as const;
 
 interface StatisticChartProps {
@@ -57,8 +58,7 @@ export function StatisticChart({
   const tooltip = (
     <StatisticsTooltip locale={locale} formatValue={formatValue} />
   );
-  const height =
-    definition.visualization === 'BAR' ? Math.max(210, data.length * 46) : 260;
+  const height = getStatisticChartHeight(definition, data.length);
   const hasData = data.some((entry) => entry.taskCount > 0);
 
   if (!hasData) {
@@ -94,13 +94,16 @@ export function StatisticChart({
               tickLine={false}
               width={42}
             />
-            <Tooltip content={tooltip} cursor={{ stroke: 'var(--chart-1)' }} />
+            <Tooltip
+              content={tooltip}
+              cursor={{ stroke: 'var(--statistic-chart-1)' }}
+            />
             <Line
               activeDot={{ r: 5 }}
               dataKey="plottedValue"
               dot={{ r: 3 }}
               isAnimationActive={false}
-              stroke="var(--chart-1)"
+              stroke="var(--statistic-chart-1)"
               strokeWidth={3}
               type="monotone"
             />

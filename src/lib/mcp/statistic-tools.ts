@@ -4,11 +4,13 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 
 import {
+  StatisticColor,
   StatisticDateBucket,
   StatisticDateField,
   StatisticDateRange,
   StatisticGroupBy,
   StatisticMeasure,
+  StatisticSize,
   StatisticScope,
   StatisticVisualization,
 } from '@/generated/prisma';
@@ -19,6 +21,7 @@ import { idSchema } from '@/lib/validation/common';
 
 const nullableId = idSchema.nullable();
 const fields = {
+  color: z.nativeEnum(StatisticColor),
   dateBucket: z.nativeEnum(StatisticDateBucket).nullable(),
   dateField: z.nativeEnum(StatisticDateField).nullable(),
   datePropertyId: nullableId,
@@ -29,11 +32,13 @@ const fields = {
   measurePropertyId: nullableId,
   name: z.string().trim().min(1).max(100),
   scope: z.nativeEnum(StatisticScope),
+  size: z.nativeEnum(StatisticSize),
   statusIds: z.array(idSchema).max(50),
   visualization: z.nativeEnum(StatisticVisualization),
 };
 const createFields = {
   ...fields,
+  color: fields.color.default(StatisticColor.FOREST),
   dateBucket: fields.dateBucket.default(null),
   dateField: fields.dateField.default(null),
   datePropertyId: fields.datePropertyId.default(null),
@@ -43,6 +48,7 @@ const createFields = {
   measure: fields.measure.default(StatisticMeasure.COUNT),
   measurePropertyId: fields.measurePropertyId.default(null),
   scope: fields.scope.default(StatisticScope.ALL),
+  size: fields.size.default(StatisticSize.AUTO),
   statusIds: fields.statusIds.default([]),
   visualization: fields.visualization.default(StatisticVisualization.KPI),
 };
@@ -75,7 +81,7 @@ export function registerStatisticTools(server: McpServer): void {
     {
       title: 'Create a statistic',
       description:
-        'Add a KPI, bar, donut, or line widget. Sending only name creates an all-task count KPI. Relative date ranges require dateField; numeric measures require a NUMBER property; lines require a date dimension.',
+        'Add a KPI, bar, donut, or line widget. Sending only name creates an all-task count KPI with FOREST color and AUTO size. Colors: FOREST, OCEAN, IRIS, AMBER, CORAL, GRAPHITE. Sizes: AUTO, COMPACT, SQUARE, WIDE, FULL. Relative date ranges require dateField; numeric measures require a NUMBER property; lines require a date dimension.',
       inputSchema: createFields,
     },
     async (input) => runMcpTool(() => statisticsService.create(input)),
@@ -88,6 +94,7 @@ export function registerStatisticTools(server: McpServer): void {
         'Edit selected fields of a statistic while preserving omitted fields.',
       inputSchema: {
         id: idSchema,
+        color: fields.color.optional(),
         dateBucket: fields.dateBucket.optional(),
         dateField: fields.dateField.optional(),
         datePropertyId: fields.datePropertyId.optional(),
@@ -98,6 +105,7 @@ export function registerStatisticTools(server: McpServer): void {
         measurePropertyId: fields.measurePropertyId.optional(),
         name: fields.name.optional(),
         scope: fields.scope.optional(),
+        size: fields.size.optional(),
         statusIds: fields.statusIds.optional(),
         visualization: fields.visualization.optional(),
       },

@@ -1,9 +1,11 @@
 import {
+  StatisticColor,
   StatisticDateBucket,
   StatisticDateField,
   StatisticDateRange,
   StatisticGroupBy,
   StatisticMeasure,
+  StatisticSize,
   StatisticScope,
   StatisticVisualization,
   TaskPropertyType,
@@ -58,6 +60,7 @@ function statistic(
   overrides: Partial<StatisticDefinition>,
 ): StatisticDefinition {
   return {
+    color: StatisticColor.FOREST,
     dateBucket: null,
     dateField: null,
     datePropertyId: null,
@@ -70,6 +73,7 @@ function statistic(
     name: id,
     position: 0,
     scope: StatisticScope.ALL,
+    size: StatisticSize.AUTO,
     statusIds: [],
     visualization: StatisticVisualization.KPI,
     ...overrides,

@@ -1,6 +1,8 @@
+import { statisticsAppearanceCopy } from '@/components/statistics/appearance-copy';
 import type { Language } from '@/lib/i18n/config';
 
 const en = {
+  ...statisticsAppearanceCopy.en,
   actions: 'Statistic actions',
   addFirst: 'Add your first statistic',
   addStatistic: 'Add statistic',
@@ -84,6 +86,7 @@ const en = {
 type StatisticsCopyKey = keyof typeof en;
 
 const es: Record<StatisticsCopyKey, string> = {
+  ...statisticsAppearanceCopy.es,
   actions: 'Acciones de la estadística',
   addFirst: 'Añade tu primera estadística',
   addStatistic: 'Añadir estadística',

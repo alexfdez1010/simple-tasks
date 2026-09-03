@@ -1,7 +1,9 @@
 import {
+  StatisticColor,
   StatisticGroupBy,
   StatisticDateRange,
   StatisticMeasure,
+  StatisticSize,
   StatisticScope,
   StatisticVisualization,
   TaskPropertyType,
@@ -78,6 +80,7 @@ describe('PrismaStatisticsRepository', () => {
       data: { propertyId: property.id, taskId: tasks[0]!.id, value: 8 },
     });
     const created = await repository.create({
+      color: StatisticColor.OCEAN,
       dateBucket: null,
       dateField: null,
       datePropertyId: null,
@@ -88,6 +91,7 @@ describe('PrismaStatisticsRepository', () => {
       measurePropertyId: property.id,
       name: `${PREFIX}velocity`,
       scope: StatisticScope.ALL,
+      size: StatisticSize.WIDE,
       statusIds: [status.id],
       visualization: StatisticVisualization.KPI,
     });
@@ -100,7 +104,11 @@ describe('PrismaStatisticsRepository', () => {
       source.properties.filter((item) => item.name.startsWith(PREFIX)),
     ).toHaveLength(2);
     expect(source.statistics).toContainEqual(
-      expect.objectContaining({ id: created.id }),
+      expect.objectContaining({
+        color: StatisticColor.OCEAN,
+        id: created.id,
+        size: StatisticSize.WIDE,
+      }),
     );
     expect(
       source.tasks.find((task) => task.id === tasks[0]!.id)?.propertyValues,

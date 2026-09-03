@@ -72,6 +72,23 @@ enum StatisticVisualization {
   LINE
 }
 
+enum StatisticColor {
+  FOREST
+  OCEAN
+  IRIS
+  AMBER
+  CORAL
+  GRAPHITE
+}
+
+enum StatisticSize {
+  AUTO
+  COMPACT
+  SQUARE
+  WIDE
+  FULL
+}
+
 enum StatisticMeasure {
   COUNT
   SUM
@@ -130,6 +147,8 @@ enum StatisticDateRange {
 model StatisticWidget {
   id                String                  @id @default(cuid())
   name              String
+  color             StatisticColor          @default(FOREST)
+  size              StatisticSize           @default(AUTO)
   visualization     StatisticVisualization
   measure           StatisticMeasure
   scope             StatisticScope          @default(ALL)

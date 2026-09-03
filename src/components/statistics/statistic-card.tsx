@@ -36,6 +36,8 @@ export function StatisticCard({
   return (
     <Card
       className={`statistics-widget ${result.kind === 'KPI' ? 'statistics-widget-kpi' : 'statistics-widget-chart'}`}
+      data-color={definition.color}
+      data-size={definition.size}
       variant={result.kind === 'KPI' ? 'tertiary' : 'secondary'}
     >
       <Card.Header className="statistics-widget-header">

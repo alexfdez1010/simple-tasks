@@ -1,9 +1,11 @@
 import {
+  StatisticColor,
   StatisticDateBucket,
   StatisticDateField,
   StatisticDateRange,
   StatisticGroupBy,
   StatisticMeasure,
+  StatisticSize,
   StatisticScope,
   StatisticVisualization,
   TaskPropertyType,
@@ -29,6 +31,7 @@ const numericMeasures = new Set<StatisticMeasure>([
 ]);
 
 export const createStatisticSchema = z.object({
+  color: z.nativeEnum(StatisticColor),
   dateBucket: z.nativeEnum(StatisticDateBucket).nullable(),
   dateField: z.nativeEnum(StatisticDateField).nullable(),
   datePropertyId: nullableId,
@@ -39,6 +42,7 @@ export const createStatisticSchema = z.object({
   measurePropertyId: nullableId,
   name: z.string().trim().min(1).max(100),
   scope: z.nativeEnum(StatisticScope),
+  size: z.nativeEnum(StatisticSize),
   statusIds: z.array(idSchema).max(50),
   visualization: z.nativeEnum(StatisticVisualization),
 });
@@ -153,6 +157,7 @@ export function mergeStatisticUpdate(
   update: UpdateStatisticInput,
 ): CreateStatisticInput {
   const persisted: CreateStatisticInput = {
+    color: current.color,
     dateBucket: current.dateBucket,
     dateField: current.dateField,
     datePropertyId: current.datePropertyId,
@@ -163,6 +168,7 @@ export function mergeStatisticUpdate(
     measurePropertyId: current.measurePropertyId,
     name: current.name,
     scope: current.scope,
+    size: current.size,
     statusIds: current.statusIds,
     visualization: current.visualization,
   };

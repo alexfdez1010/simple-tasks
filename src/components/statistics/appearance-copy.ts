@@ -1,0 +1,33 @@
+/** Localized labels for the configurable statistic appearance catalog. */
+export const statisticsAppearanceCopy = {
+  en: {
+    color: 'Color palette',
+    colorAmber: 'Amber',
+    colorCoral: 'Coral',
+    colorForest: 'Forest',
+    colorGraphite: 'Graphite',
+    colorIris: 'Iris',
+    colorOcean: 'Ocean',
+    size: 'Card format',
+    sizeAuto: 'Automatic',
+    sizeCompact: 'Compact',
+    sizeFull: 'Full width',
+    sizeSquare: 'Square',
+    sizeWide: 'Wide',
+  },
+  es: {
+    color: 'Paleta de color',
+    colorAmber: 'Ámbar',
+    colorCoral: 'Coral',
+    colorForest: 'Bosque',
+    colorGraphite: 'Grafito',
+    colorIris: 'Iris',
+    colorOcean: 'Océano',
+    size: 'Formato de tarjeta',
+    sizeAuto: 'Automático',
+    sizeCompact: 'Compacto',
+    sizeFull: 'Ancho completo',
+    sizeSquare: 'Cuadrado',
+    sizeWide: 'Ancho',
+  },
+} as const;

@@ -3,6 +3,7 @@
 import { Button, Input, Label, TextField } from '@heroui/react';
 import { useState } from 'react';
 
+import { StatisticAppearanceFields } from '@/components/statistics/statistic-appearance-fields';
 import { StatisticConfigurationFields } from '@/components/statistics/statistic-configuration-fields';
 import { getStatisticsCopy } from '@/components/statistics/copy';
 import { NUMERIC_MEASURES } from '@/components/statistics/statistic-options';
@@ -91,6 +92,7 @@ export function StatisticForm({
         values={values}
         onChange={setValues}
       />
+      <StatisticAppearanceFields values={values} onChange={setValues} />
       <StatisticStatusFilter
         statuses={statuses}
         value={values.statusIds}

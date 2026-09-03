@@ -45,6 +45,8 @@ The statistics canvas is configurable, persistent, and calculated from the
 complete task history. Add only the signals that matter to you:
 
 - **Views:** KPI, bar chart, donut chart, or timeline.
+- **Appearance:** six curated color palettes and automatic, compact, square,
+  wide, or full-width card formats.
 - **Measures:** task count, overdue work, completion rate, on-time rate, average
   resolution time, and sum/average/minimum/maximum of any numeric property.
 - **Dimensions:** workflow state, any compatible custom property, or a system or
@@ -93,6 +95,8 @@ For example, an agent can create a rolling completion KPI with
 ```json
 {
   "name": "Completed in the last 30 days",
+  "color": "OCEAN",
+  "size": "WIDE",
   "visualization": "KPI",
   "measure": "COUNT",
   "scope": "COMPLETED",
@@ -106,7 +110,9 @@ Use `tools/list` for the complete schemas. Numeric measures require a `NUMBER`
 property. A line chart requires a date dimension and time bucket. Reorder calls
 replace the complete order, and destructive tools tell agents to ask for user
 confirmation first. The web UI and MCP use the same application services, so
-validation and behavior stay consistent.
+validation and behavior stay consistent. `create_statistic` and
+`update_statistic` accept `color` (`FOREST`, `OCEAN`, `IRIS`, `AMBER`, `CORAL`,
+or `GRAPHITE`) and `size` (`AUTO`, `COMPACT`, `SQUARE`, `WIDE`, or `FULL`).
 
 ## 🚀 Deploy your private instance
 

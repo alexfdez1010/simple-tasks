@@ -8,6 +8,8 @@
 @import '../components/statistics/statistics-header.css';
 @import '../components/statistics/statistics-charts.css';
 @import '../components/statistics/statistics-form.css';
+@import '../components/statistics/statistics-appearance.css';
+@import '../components/statistics/statistics-widget-themes.css';
 
 :root {
   --background: oklch(0.975 0.008 80);

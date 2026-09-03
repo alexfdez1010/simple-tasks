@@ -1,9 +1,11 @@
 import {
+  StatisticColor,
   StatisticDateBucket,
   StatisticDateField,
   StatisticDateRange,
   StatisticGroupBy,
   StatisticMeasure,
+  StatisticSize,
   StatisticScope,
   StatisticVisualization,
 } from '@/generated/prisma';
@@ -22,6 +24,23 @@ export const VISUALIZATIONS: StatisticOption<StatisticVisualization>[] = [
   { id: StatisticVisualization.BAR, labelKey: 'visualizationBar' },
   { id: StatisticVisualization.DONUT, labelKey: 'visualizationDonut' },
   { id: StatisticVisualization.LINE, labelKey: 'visualizationLine' },
+];
+
+export const COLORS: StatisticOption<StatisticColor>[] = [
+  { id: StatisticColor.FOREST, labelKey: 'colorForest' },
+  { id: StatisticColor.OCEAN, labelKey: 'colorOcean' },
+  { id: StatisticColor.IRIS, labelKey: 'colorIris' },
+  { id: StatisticColor.AMBER, labelKey: 'colorAmber' },
+  { id: StatisticColor.CORAL, labelKey: 'colorCoral' },
+  { id: StatisticColor.GRAPHITE, labelKey: 'colorGraphite' },
+];
+
+export const SIZES: StatisticOption<StatisticSize>[] = [
+  { id: StatisticSize.AUTO, labelKey: 'sizeAuto' },
+  { id: StatisticSize.COMPACT, labelKey: 'sizeCompact' },
+  { id: StatisticSize.SQUARE, labelKey: 'sizeSquare' },
+  { id: StatisticSize.WIDE, labelKey: 'sizeWide' },
+  { id: StatisticSize.FULL, labelKey: 'sizeFull' },
 ];
 
 export const MEASURES: StatisticOption<StatisticMeasure>[] = [
@@ -88,6 +107,7 @@ export function localizeStatisticOptions(
 /** Creates a complete, valid draft for a new KPI statistic. */
 export function createDefaultStatistic(name: string): CreateStatisticInput {
   return {
+    color: StatisticColor.FOREST,
     dateBucket: null,
     dateField: null,
     datePropertyId: null,
@@ -98,6 +118,7 @@ export function createDefaultStatistic(name: string): CreateStatisticInput {
     measurePropertyId: null,
     name,
     scope: StatisticScope.ALL,
+    size: StatisticSize.AUTO,
     statusIds: [],
     visualization: StatisticVisualization.KPI,
   };

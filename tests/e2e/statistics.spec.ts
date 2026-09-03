@@ -44,6 +44,8 @@ test.describe('statistics', () => {
     await page.getByRole('button', { name: 'Add statistic' }).click();
     const createDialog = page.getByRole('dialog', { name: 'Create statistic' });
     await createDialog.getByLabel('Name').fill(name);
+    await createDialog.getByText('Ocean', { exact: true }).click();
+    await createDialog.getByText('Square', { exact: true }).click();
     await createDialog.getByRole('button', { name: /Period/ }).click();
     await page
       .getByRole('option', { exact: true, name: 'Last 30 days' })
@@ -53,6 +55,11 @@ test.describe('statistics', () => {
     ).toBeVisible();
     await createDialog.getByRole('button', { name: 'Add to canvas' }).click();
     await expect(page.getByRole('heading', { name })).toBeVisible();
+    const widget = page.locator('.statistics-widget').filter({
+      has: page.getByRole('heading', { name }),
+    });
+    await expect(widget).toHaveAttribute('data-color', 'OCEAN');
+    await expect(widget).toHaveAttribute('data-size', 'SQUARE');
     await expect(
       page.getByText('Task count · All tasks · Last 30 days', { exact: true }),
     ).toBeVisible();
@@ -60,8 +67,15 @@ test.describe('statistics', () => {
     await page.getByRole('button', { name: `Edit: ${name}` }).click();
     const editDialog = page.getByRole('dialog', { name: 'Edit statistic' });
     await editDialog.getByLabel('Name').fill(renamed);
+    await editDialog.getByText('Coral', { exact: true }).click();
+    await editDialog.getByText('Wide', { exact: true }).click();
     await editDialog.getByRole('button', { name: 'Save changes' }).click();
     await expect(page.getByRole('heading', { name: renamed })).toBeVisible();
+    const renamedWidget = page.locator('.statistics-widget').filter({
+      has: page.getByRole('heading', { name: renamed }),
+    });
+    await expect(renamedWidget).toHaveAttribute('data-color', 'CORAL');
+    await expect(renamedWidget).toHaveAttribute('data-size', 'WIDE');
 
     await page.getByRole('button', { name: `Delete: ${renamed}` }).click();
     const deleteDialog = page.getByRole('dialog', { name: 'Delete statistic' });

@@ -38,8 +38,8 @@ Use the MCP server at \`${serverUrl}\`. Discover exact input schemas with \`tool
 | \`delete_task_property_value\` | Clear one configured value from a task. |
 | \`get_statistics\` | Calculate every configured statistic against the complete task history. |
 | \`list_statistics\` | Read ordered statistic widget definitions. |
-| \`create_statistic\` | Add a KPI, bar, donut, or line widget; name alone creates an all-task count KPI. |
-| \`update_statistic\` | Edit one statistic definition. |
+| \`create_statistic\` | Add a styled KPI, bar, donut, or line widget; name alone creates an all-task count KPI. |
+| \`update_statistic\` | Edit one statistic definition, including its colour and size. |
 | \`reorder_statistics\` | Replace the complete statistic order. |
 | \`delete_statistic\` | Delete one statistic definition. |
 
@@ -56,6 +56,7 @@ Use the MCP server at \`${serverUrl}\`. Discover exact input schemas with \`tool
 - Statistic numeric measures (SUM, AVERAGE, MINIMUM, MAXIMUM) require a NUMBER property. Line charts require a DATE dimension, which may use CREATED_AT, UPDATED_AT, DUE_DATE, COMPLETED_AT, or a custom DATE property.
 - Set dateRange to ALL_TIME, TODAY, LAST_7_DAYS, LAST_30_DAYS, LAST_90_DAYS, THIS_WEEK, THIS_MONTH, THIS_QUARTER, THIS_YEAR, NEXT_7_DAYS, or NEXT_30_DAYS. Every non-ALL_TIME range requires dateField and is recalculated when statistics are requested; use datePropertyId when dateField is PROPERTY.
 - Use statusIds to filter a statistic. An empty statusIds list means every status.
+- Set color to FOREST, OCEAN, IRIS, AMBER, CORAL, or GRAPHITE. Set size to AUTO, COMPACT, SQUARE, WIDE, or FULL. Both fields can be changed later with \`update_statistic\`.
 `;
 }
 
