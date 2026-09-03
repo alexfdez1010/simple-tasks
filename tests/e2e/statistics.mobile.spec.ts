@@ -23,6 +23,7 @@ test.describe('mobile configurable statistics', () => {
     const dialog = page.getByRole('dialog', { name: 'Create statistic' });
     await expect(dialog).toBeInViewport();
     await expect(dialog.getByLabel('Name')).toBeVisible();
+    await expect(dialog.getByRole('button', { name: /Period/ })).toBeVisible();
     await expect(
       dialog.getByText('Leave empty to include every status.'),
     ).toBeVisible();

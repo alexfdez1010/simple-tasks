@@ -1,6 +1,7 @@
 import {
   StatisticDateBucket,
   StatisticDateField,
+  StatisticDateRange,
   StatisticGroupBy,
   StatisticMeasure,
   StatisticScope,
@@ -60,6 +61,7 @@ function statistic(
     dateBucket: null,
     dateField: null,
     datePropertyId: null,
+    dateRange: StatisticDateRange.ALL_TIME,
     groupBy: StatisticGroupBy.NONE,
     groupPropertyId: null,
     id,
@@ -185,6 +187,65 @@ describe('buildStatisticsSnapshot', () => {
     });
     const result = buildStatisticsSnapshot(source([definition]), NOW)
       .statistics[0]!.result;
+    expect(result).toMatchObject({ kind: 'KPI', sampleSize: 1, value: 1 });
+  });
+
+  /** Proves trailing periods include the current UTC day and exclude older work. */
+  it('filters any KPI through a relative system-date period', () => {
+    const data = source([
+      statistic('recent', {
+        dateField: StatisticDateField.CREATED_AT,
+        dateRange: StatisticDateRange.LAST_7_DAYS,
+      }),
+    ]);
+    data.tasks.push({
+      completedAt: null,
+      createdAt: new Date('2026-08-20T12:00:00.000Z'),
+      dueDate: null,
+      id: 'old',
+      propertyValues: [],
+      statusId: 'todo',
+      updatedAt: new Date('2026-08-20T12:00:00.000Z'),
+    });
+
+    expect(
+      buildStatisticsSnapshot(data, NOW).statistics[0]?.result,
+    ).toMatchObject({ kind: 'KPI', sampleSize: 2, value: 2 });
+  });
+
+  /** Proves future periods and missing dates work for deadlines. */
+  it('filters upcoming deadlines with an exclusive period boundary', () => {
+    const data = source([
+      statistic('upcoming', {
+        dateField: StatisticDateField.DUE_DATE,
+        dateRange: StatisticDateRange.NEXT_7_DAYS,
+      }),
+    ]);
+    data.tasks.push({
+      completedAt: null,
+      createdAt: NOW,
+      dueDate: new Date('2026-09-10T00:00:00.000Z'),
+      id: 'boundary',
+      propertyValues: [],
+      statusId: 'todo',
+      updatedAt: NOW,
+    });
+
+    expect(
+      buildStatisticsSnapshot(data, NOW).statistics[0]?.result,
+    ).toMatchObject({ kind: 'KPI', sampleSize: 1, value: 1 });
+  });
+
+  /** Proves a custom DATE property can drive a relative period. */
+  it('filters by a custom date property', () => {
+    const definition = statistic('release-window', {
+      dateField: StatisticDateField.PROPERTY,
+      datePropertyId: 'release',
+      dateRange: StatisticDateRange.THIS_MONTH,
+    });
+    const result = buildStatisticsSnapshot(source([definition]), NOW)
+      .statistics[0]?.result;
+
     expect(result).toMatchObject({ kind: 'KPI', sampleSize: 1, value: 1 });
   });
 });

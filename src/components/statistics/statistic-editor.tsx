@@ -30,6 +30,7 @@ function toDraft(definition: StatisticDefinition): CreateStatisticInput {
     dateBucket: definition.dateBucket,
     dateField: definition.dateField,
     datePropertyId: definition.datePropertyId,
+    dateRange: definition.dateRange,
     groupBy: definition.groupBy,
     groupPropertyId: definition.groupPropertyId,
     measure: definition.measure,

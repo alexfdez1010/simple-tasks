@@ -53,7 +53,8 @@ Use the MCP server at \`${serverUrl}\`. Discover exact input schemas with \`tool
 - Reorder calls require every id in the affected collection exactly once.
 - Non-terminal statuses are ordered by due date ascending; terminal statuses are ordered by completion date descending, so do not call \`reorder_tasks\` on terminal statuses.
 - Moving a task into a terminal status fills its completion date automatically; moving it back to an active status clears the date.
-- Statistic numeric measures (SUM, AVERAGE, MINIMUM, MAXIMUM) require a NUMBER property. Line charts require a DATE dimension, which may use createdAt, updatedAt, dueDate, completedAt, or a custom DATE property.
+- Statistic numeric measures (SUM, AVERAGE, MINIMUM, MAXIMUM) require a NUMBER property. Line charts require a DATE dimension, which may use CREATED_AT, UPDATED_AT, DUE_DATE, COMPLETED_AT, or a custom DATE property.
+- Set dateRange to ALL_TIME, TODAY, LAST_7_DAYS, LAST_30_DAYS, LAST_90_DAYS, THIS_WEEK, THIS_MONTH, THIS_QUARTER, THIS_YEAR, NEXT_7_DAYS, or NEXT_30_DAYS. Every non-ALL_TIME range requires dateField and is recalculated when statistics are requested; use datePropertyId when dateField is PROPERTY.
 - Use statusIds to filter a statistic. An empty statusIds list means every status.
 `;
 }

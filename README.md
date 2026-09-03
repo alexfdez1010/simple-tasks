@@ -154,7 +154,10 @@ as the server's `MCP_TOKEN`. The MCP catalog includes:
 | `delete_statistic`           | Delete a confirmed statistic definition           |
 
 Statistic create calls accept `name`, `visualization`, `measure`, `scope`,
-`groupBy`, `statusIds`, and nullable property/date fields. For example, a
+`groupBy`, `statusIds`, `dateRange`, and nullable property/date fields. Relative
+periods include `TODAY`, trailing 7/30/90 days, the current
+week/month/quarter/year, and the next 7/30 days; every bounded period uses
+`dateField` (or a custom DATE property) and is recalculated on each request. A
 monthly completion timeline uses `LINE`, `COUNT`, `COMPLETED`, `DATE`,
 `COMPLETED_AT`, and `MONTH`. A numeric average uses `KPI`, `AVERAGE`, and the id
 of a NUMBER property in `measurePropertyId`. Update calls require `id` and only

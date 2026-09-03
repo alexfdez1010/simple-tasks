@@ -1,8 +1,13 @@
 import type { StatisticsCopyKey } from '@/components/statistics/copy';
 import { getStatisticsCopy } from '@/components/statistics/copy';
+import { getDateRangeLabel } from '@/components/statistics/date-range-copy';
 import { formatResolutionDuration } from '@/components/statistics/duration';
 import { MEASURES, SCOPES } from '@/components/statistics/statistic-options';
-import { StatisticDateBucket, StatisticGroupBy } from '@/generated/prisma';
+import {
+  StatisticDateBucket,
+  StatisticDateRange,
+  StatisticGroupBy,
+} from '@/generated/prisma';
 import type { Language } from '@/lib/i18n/config';
 import type {
   StatisticDefinition,
@@ -70,5 +75,9 @@ export function getStatisticDescription(
 ): string {
   const measure = getOptionLabel(language, definition.measure, MEASURES);
   const scope = getOptionLabel(language, definition.scope, SCOPES);
-  return `${measure} · ${scope}`;
+  const parts = [measure, scope];
+  if (definition.dateRange !== StatisticDateRange.ALL_TIME) {
+    parts.push(getDateRangeLabel(language, definition.dateRange));
+  }
+  return parts.join(' · ');
 }

@@ -6,6 +6,7 @@ import { z } from 'zod';
 import {
   StatisticDateBucket,
   StatisticDateField,
+  StatisticDateRange,
   StatisticGroupBy,
   StatisticMeasure,
   StatisticScope,
@@ -21,6 +22,7 @@ const fields = {
   dateBucket: z.nativeEnum(StatisticDateBucket).nullable(),
   dateField: z.nativeEnum(StatisticDateField).nullable(),
   datePropertyId: nullableId,
+  dateRange: z.nativeEnum(StatisticDateRange),
   groupBy: z.nativeEnum(StatisticGroupBy),
   groupPropertyId: nullableId,
   measure: z.nativeEnum(StatisticMeasure),
@@ -35,6 +37,7 @@ const createFields = {
   dateBucket: fields.dateBucket.default(null),
   dateField: fields.dateField.default(null),
   datePropertyId: fields.datePropertyId.default(null),
+  dateRange: fields.dateRange.default(StatisticDateRange.ALL_TIME),
   groupBy: fields.groupBy.default(StatisticGroupBy.NONE),
   groupPropertyId: fields.groupPropertyId.default(null),
   measure: fields.measure.default(StatisticMeasure.COUNT),
@@ -72,7 +75,7 @@ export function registerStatisticTools(server: McpServer): void {
     {
       title: 'Create a statistic',
       description:
-        'Add a KPI, bar, donut, or line widget. Sending only name creates an all-task count KPI. Numeric measures require a NUMBER property; lines require a date dimension.',
+        'Add a KPI, bar, donut, or line widget. Sending only name creates an all-task count KPI. Relative date ranges require dateField; numeric measures require a NUMBER property; lines require a date dimension.',
       inputSchema: createFields,
     },
     async (input) => runMcpTool(() => statisticsService.create(input)),
@@ -88,6 +91,7 @@ export function registerStatisticTools(server: McpServer): void {
         dateBucket: fields.dateBucket.optional(),
         dateField: fields.dateField.optional(),
         datePropertyId: fields.datePropertyId.optional(),
+        dateRange: fields.dateRange.optional(),
         groupBy: fields.groupBy.optional(),
         groupPropertyId: fields.groupPropertyId.optional(),
         measure: fields.measure.optional(),

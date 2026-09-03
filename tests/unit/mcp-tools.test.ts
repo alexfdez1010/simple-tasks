@@ -95,6 +95,7 @@ describe('MCP tool catalog', () => {
     const result = z.object(definition.inputSchema).parse({ name: 'All work' });
 
     expect(result).toMatchObject({
+      dateRange: 'ALL_TIME',
       groupBy: 'NONE',
       measure: 'COUNT',
       scope: 'ALL',

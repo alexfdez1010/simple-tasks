@@ -167,6 +167,12 @@ Component rules:
   values may contribute to several categories, number properties support
   arithmetic aggregations, and date properties support time buckets. Invalid
   combinations are rejected by the shared service used by UI and MCP.
+- Statistics periods: Every widget may filter its source data with a relative
+  calendar period such as today, the last 7/30/90 days, the current
+  week/month/quarter/year, or the next 7/30 days. Periods are recalculated at
+  request time from the selected system date or DATE property; fixed dates are
+  never persisted. Cards name every active period in their description so the
+  visible value always carries its time context.
 - Brand icon: Use the supplied green-and-ivory checkmark artwork as the single
   source for both the in-product mark and browser app icon. Do not redraw or
   substitute it with a different workflow symbol.
@@ -258,6 +264,7 @@ Component rules:
 | 2026-09-03 | Make the statistics canvas user-configurable and persist widget definitions           | Supports focused views without hard-coding one dashboard for every workflow                            | Product      |
 | 2026-09-03 | Share statistics validation and CRUD between the web UI and MCP                       | Keeps agent-created analytics interchangeable with user-created analytics                              | Architecture |
 | 2026-09-03 | Support system/custom dates, property dimensions, numeric measures, and state filters | Covers delivery pace, workload mix, deadlines, and custom workflow questions with one composable model | Product      |
+| 2026-09-03 | Filter every statistic through request-relative calendar periods                      | Keeps recurring dashboards current without requiring users or MCP clients to edit fixed dates          | Product      |
 
 ## 8. Review checklist
 

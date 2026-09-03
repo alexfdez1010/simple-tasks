@@ -1,6 +1,7 @@
 import type {
   StatisticDateBucket,
   StatisticDateField,
+  StatisticDateRange,
   StatisticGroupBy,
   StatisticMeasure,
   StatisticScope,
@@ -37,6 +38,7 @@ export interface StatisticDefinition {
   dateBucket: StatisticDateBucket | null;
   dateField: StatisticDateField | null;
   datePropertyId: string | null;
+  dateRange: StatisticDateRange;
   groupBy: StatisticGroupBy;
   groupPropertyId: string | null;
   id: string;

@@ -1,6 +1,7 @@
 import {
   StatisticDateBucket,
   StatisticDateField,
+  StatisticDateRange,
   StatisticGroupBy,
   StatisticMeasure,
   StatisticScope,
@@ -45,6 +46,7 @@ function input(
     dateBucket: null,
     dateField: null,
     datePropertyId: null,
+    dateRange: StatisticDateRange.ALL_TIME,
     groupBy: StatisticGroupBy.NONE,
     groupPropertyId: null,
     measure: StatisticMeasure.COUNT,
@@ -119,6 +121,34 @@ describe('normalizeStatisticDefinition', () => {
         statuses,
       ),
     ).toMatchObject({ datePropertyId: 'release' });
+  });
+
+  /** Proves relative periods retain their date source outside a timeline. */
+  it('accepts a relative period on a KPI', () => {
+    expect(
+      normalizeStatisticDefinition(
+        input({
+          dateField: StatisticDateField.CREATED_AT,
+          dateRange: StatisticDateRange.LAST_30_DAYS,
+        }),
+        properties,
+        statuses,
+      ),
+    ).toMatchObject({
+      dateField: StatisticDateField.CREATED_AT,
+      dateRange: StatisticDateRange.LAST_30_DAYS,
+    });
+  });
+
+  /** Proves every bounded period has an explicit date source. */
+  it('rejects a relative period without a date field', () => {
+    expect(() =>
+      normalizeStatisticDefinition(
+        input({ dateRange: StatisticDateRange.LAST_7_DAYS }),
+        properties,
+        statuses,
+      ),
+    ).toThrow(/date field/i);
   });
 
   /** Proves a state filter cannot silently reference an unknown workflow state. */

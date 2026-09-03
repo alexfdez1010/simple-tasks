@@ -5,6 +5,7 @@ import {
   groupByStatus,
   type StatisticTaskGroup,
 } from '@/lib/statistics/dimensions';
+import { isTaskInStatisticDateRange } from '@/lib/statistics/dates';
 import { calculateMeasure } from '@/lib/statistics/measures';
 import type {
   StatisticDefinition,
@@ -18,14 +19,16 @@ import type {
 function filterTasks(
   tasks: StatisticTaskRecord[],
   definition: StatisticDefinition,
+  now: Date,
 ): StatisticTaskRecord[] {
   const statusFilter = new Set(definition.statusIds);
   return tasks.filter((task) => {
     if (statusFilter.size && !statusFilter.has(task.statusId)) return false;
-    if (definition.scope === StatisticScope.ACTIVE) return !task.completedAt;
-    if (definition.scope === StatisticScope.COMPLETED)
-      return Boolean(task.completedAt);
-    return true;
+    if (definition.scope === StatisticScope.ACTIVE && task.completedAt)
+      return false;
+    if (definition.scope === StatisticScope.COMPLETED && !task.completedAt)
+      return false;
+    return isTaskInStatisticDateRange(task, definition, now);
   });
 }
 
@@ -67,7 +70,7 @@ function buildWidget(
     ...definition,
     statusIds: definition.statusIds.filter((id) => availableStatuses.has(id)),
   };
-  const tasks = filterTasks(source.tasks, safeDefinition);
+  const tasks = filterTasks(source.tasks, safeDefinition, now);
   const calculation = calculateMeasure(tasks, safeDefinition, now);
   if (safeDefinition.groupBy === StatisticGroupBy.NONE) {
     return {

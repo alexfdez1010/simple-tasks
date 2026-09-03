@@ -1,6 +1,7 @@
 import {
   StatisticDateBucket,
   StatisticDateField,
+  StatisticDateRange,
   StatisticGroupBy,
   StatisticMeasure,
   StatisticScope,
@@ -31,6 +32,7 @@ export const createStatisticSchema = z.object({
   dateBucket: z.nativeEnum(StatisticDateBucket).nullable(),
   dateField: z.nativeEnum(StatisticDateField).nullable(),
   datePropertyId: nullableId,
+  dateRange: z.nativeEnum(StatisticDateRange),
   groupBy: z.nativeEnum(StatisticGroupBy),
   groupPropertyId: nullableId,
   measure: z.nativeEnum(StatisticMeasure),
@@ -108,9 +110,15 @@ export function normalizeStatisticDefinition(
     }
   }
 
-  const dateField = groupBy === 'DATE' ? input.dateField : null;
+  const usesDate =
+    groupBy === StatisticGroupBy.DATE ||
+    input.dateRange !== StatisticDateRange.ALL_TIME;
+  const dateField = usesDate ? input.dateField : null;
   const dateBucket = groupBy === 'DATE' ? input.dateBucket : null;
-  if (groupBy === 'DATE' && (!dateField || !dateBucket)) {
+  if (usesDate && !dateField) {
+    throw conflict('Date periods require a date field.');
+  }
+  if (groupBy === 'DATE' && !dateBucket) {
     throw conflict('Date dimensions require a field and time bucket.');
   }
   const datePropertyId = dateField === 'PROPERTY' ? input.datePropertyId : null;
@@ -148,6 +156,7 @@ export function mergeStatisticUpdate(
     dateBucket: current.dateBucket,
     dateField: current.dateField,
     datePropertyId: current.datePropertyId,
+    dateRange: current.dateRange,
     groupBy: current.groupBy,
     groupPropertyId: current.groupPropertyId,
     measure: current.measure,

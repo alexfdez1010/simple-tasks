@@ -1,8 +1,8 @@
+import { TaskPropertyType } from '@/generated/prisma';
 import {
-  StatisticDateBucket,
-  StatisticDateField,
-  TaskPropertyType,
-} from '@/generated/prisma';
+  getStatisticDateBucket,
+  getStatisticTaskDate,
+} from '@/lib/statistics/dates';
 import { MAX_STATISTIC_CATEGORIES } from '@/lib/statistics/limits';
 import type {
   StatisticDefinition,
@@ -95,46 +95,6 @@ export function groupByProperty(
   );
 }
 
-/** Resolves one system or custom date dimension for a task. */
-function getTaskDate(
-  task: StatisticTaskRecord,
-  definition: StatisticDefinition,
-): Date | null {
-  if (definition.dateField === StatisticDateField.CREATED_AT)
-    return task.createdAt;
-  if (definition.dateField === StatisticDateField.UPDATED_AT)
-    return task.updatedAt;
-  if (definition.dateField === StatisticDateField.DUE_DATE) return task.dueDate;
-  if (definition.dateField === StatisticDateField.COMPLETED_AT)
-    return task.completedAt;
-  if (
-    definition.dateField !== StatisticDateField.PROPERTY ||
-    !definition.datePropertyId
-  ) {
-    return null;
-  }
-  const value = getPropertyValue(task, definition.datePropertyId);
-  if (typeof value !== 'string') return null;
-  const date = new Date(`${value}T00:00:00.000Z`);
-  return Number.isNaN(date.getTime()) ? null : date;
-}
-
-/** Converts a date to a sortable ISO-like bucket key. */
-function getDateBucket(date: Date, bucket: StatisticDateBucket): string {
-  const year = date.getUTCFullYear();
-  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-  if (bucket === StatisticDateBucket.YEAR) return String(year);
-  if (bucket === StatisticDateBucket.QUARTER) {
-    return `${year}-Q${Math.floor(date.getUTCMonth() / 3) + 1}`;
-  }
-  if (bucket === StatisticDateBucket.MONTH) return `${year}-${month}`;
-  const day = new Date(Date.UTC(year, date.getUTCMonth(), date.getUTCDate()));
-  if (bucket === StatisticDateBucket.WEEK) {
-    day.setUTCDate(day.getUTCDate() - ((day.getUTCDay() + 6) % 7));
-  }
-  return day.toISOString().slice(0, 10);
-}
-
 /** Groups tasks chronologically through a configured date dimension. */
 export function groupByDate(
   tasks: StatisticTaskRecord[],
@@ -142,9 +102,13 @@ export function groupByDate(
 ): StatisticTaskGroup[] {
   const groups = new Map<string, StatisticTaskRecord[]>();
   for (const task of tasks) {
-    const date = getTaskDate(task, definition);
+    const date = getStatisticTaskDate(task, definition);
     if (!date || !definition.dateBucket) continue;
-    addToGroup(groups, getDateBucket(date, definition.dateBucket), task);
+    addToGroup(
+      groups,
+      getStatisticDateBucket(date, definition.dateBucket),
+      task,
+    );
   }
   return [...groups]
     .sort(([left], [right]) => left.localeCompare(right))

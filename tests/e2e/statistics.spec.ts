@@ -44,8 +44,18 @@ test.describe('statistics', () => {
     await page.getByRole('button', { name: 'Add statistic' }).click();
     const createDialog = page.getByRole('dialog', { name: 'Create statistic' });
     await createDialog.getByLabel('Name').fill(name);
+    await createDialog.getByRole('button', { name: /Period/ }).click();
+    await page
+      .getByRole('option', { exact: true, name: 'Last 30 days' })
+      .click();
+    await expect(
+      createDialog.getByRole('button', { name: /Date field/ }),
+    ).toBeVisible();
     await createDialog.getByRole('button', { name: 'Add to canvas' }).click();
     await expect(page.getByRole('heading', { name })).toBeVisible();
+    await expect(
+      page.getByText('Task count · All tasks · Last 30 days', { exact: true }),
+    ).toBeVisible();
 
     await page.getByRole('button', { name: `Edit: ${name}` }).click();
     const editDialog = page.getByRole('dialog', { name: 'Edit statistic' });

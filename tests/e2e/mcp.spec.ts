@@ -356,6 +356,7 @@ test.describe('remote MCP server', () => {
             dateBucket: null,
             dateField: null,
             datePropertyId: null,
+            dateRange: 'ALL_TIME',
             groupBy: 'NONE',
             groupPropertyId: null,
             measure: 'COUNT',
@@ -368,17 +369,26 @@ test.describe('remote MCP server', () => {
         }),
       );
       statisticId = created.id;
-      const updated = parseToolJson<{ name: string; scope: string }>(
+      const updated = parseToolJson<{
+        dateField: string;
+        dateRange: string;
+        name: string;
+        scope: string;
+      }>(
         await client.callTool({
           name: 'update_statistic',
           arguments: {
             id: created.id,
+            dateField: 'COMPLETED_AT',
+            dateRange: 'LAST_30_DAYS',
             name: `E2E MCP Statistic Updated ${process.pid}`,
             scope: 'COMPLETED',
           },
         }),
       );
       expect(updated.scope).toBe('COMPLETED');
+      expect(updated.dateRange).toBe('LAST_30_DAYS');
+      expect(updated.dateField).toBe('COMPLETED_AT');
 
       const calculated = parseToolJson<{
         statistics: Array<{

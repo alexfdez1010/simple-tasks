@@ -1,6 +1,7 @@
 import {
   StatisticDateBucket,
   StatisticDateField,
+  StatisticDateRange,
   StatisticGroupBy,
   StatisticMeasure,
   StatisticScope,
@@ -90,6 +91,7 @@ export function createDefaultStatistic(name: string): CreateStatisticInput {
     dateBucket: null,
     dateField: null,
     datePropertyId: null,
+    dateRange: StatisticDateRange.ALL_TIME,
     groupBy: StatisticGroupBy.NONE,
     groupPropertyId: null,
     measure: StatisticMeasure.COUNT,

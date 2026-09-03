@@ -1,5 +1,6 @@
 import {
   StatisticGroupBy,
+  StatisticDateRange,
   StatisticMeasure,
   StatisticScope,
   StatisticVisualization,
@@ -80,6 +81,7 @@ describe('PrismaStatisticsRepository', () => {
       dateBucket: null,
       dateField: null,
       datePropertyId: null,
+      dateRange: StatisticDateRange.ALL_TIME,
       groupBy: StatisticGroupBy.NONE,
       groupPropertyId: null,
       measure: StatisticMeasure.AVERAGE,

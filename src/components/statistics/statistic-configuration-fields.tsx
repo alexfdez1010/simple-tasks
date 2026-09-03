@@ -1,6 +1,10 @@
 'use client';
 
 import { getStatisticsCopy } from '@/components/statistics/copy';
+import {
+  withStatisticGroup,
+  withStatisticVisualization,
+} from '@/components/statistics/statistic-draft';
 import { StatisticDateFields } from '@/components/statistics/statistic-date-fields';
 import {
   GROUPS,
@@ -12,8 +16,6 @@ import {
 } from '@/components/statistics/statistic-options';
 import { StatisticSelect } from '@/components/statistics/statistic-select';
 import {
-  StatisticDateBucket,
-  StatisticDateField,
   StatisticGroupBy,
   StatisticMeasure,
   StatisticScope,
@@ -40,60 +42,6 @@ function getGroupOptions(visualization: StatisticVisualization) {
   return GROUPS;
 }
 
-/** Repairs dependent dimension fields after a visualization change. */
-function withVisualization(
-  values: CreateStatisticInput,
-  visualization: StatisticVisualization,
-): CreateStatisticInput {
-  const groupBy =
-    visualization === StatisticVisualization.KPI
-      ? StatisticGroupBy.NONE
-      : visualization === StatisticVisualization.LINE
-        ? StatisticGroupBy.DATE
-        : values.groupBy === StatisticGroupBy.NONE ||
-            (visualization === StatisticVisualization.DONUT &&
-              values.groupBy === StatisticGroupBy.DATE)
-          ? StatisticGroupBy.STATUS
-          : values.groupBy;
-  return {
-    ...values,
-    dateBucket:
-      groupBy === StatisticGroupBy.DATE
-        ? (values.dateBucket ?? StatisticDateBucket.MONTH)
-        : null,
-    dateField:
-      groupBy === StatisticGroupBy.DATE
-        ? (values.dateField ?? StatisticDateField.COMPLETED_AT)
-        : null,
-    groupBy,
-    visualization,
-  };
-}
-
-/** Repairs dependent fields after changing a chart dimension. */
-function withGroup(
-  values: CreateStatisticInput,
-  groupBy: StatisticGroupBy,
-  properties: PropertyDefinition[],
-): CreateStatisticInput {
-  return {
-    ...values,
-    dateBucket:
-      groupBy === StatisticGroupBy.DATE
-        ? (values.dateBucket ?? StatisticDateBucket.MONTH)
-        : null,
-    dateField:
-      groupBy === StatisticGroupBy.DATE
-        ? (values.dateField ?? StatisticDateField.COMPLETED_AT)
-        : null,
-    groupBy,
-    groupPropertyId:
-      groupBy === StatisticGroupBy.PROPERTY
-        ? (values.groupPropertyId ?? properties[0]?.id ?? null)
-        : null,
-  };
-}
-
 /** Renders measure, scope, grouping, and dependent property/date selectors. */
 export function StatisticConfigurationFields({
   properties,
@@ -111,7 +59,9 @@ export function StatisticConfigurationFields({
         options={localizeStatisticOptions(language, VISUALIZATIONS)}
         value={values.visualization}
         onChange={(value) =>
-          onChange(withVisualization(values, value as StatisticVisualization))
+          onChange(
+            withStatisticVisualization(values, value as StatisticVisualization),
+          )
         }
       />
       <StatisticSelect
@@ -147,7 +97,11 @@ export function StatisticConfigurationFields({
           value={values.groupBy}
           onChange={(group) =>
             onChange(
-              withGroup(values, group as StatisticGroupBy, groupProperties),
+              withStatisticGroup(
+                values,
+                group as StatisticGroupBy,
+                groupProperties,
+              ),
             )
           }
         />
