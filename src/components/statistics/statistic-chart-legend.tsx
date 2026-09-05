@@ -17,7 +17,7 @@ interface DisplaySeriesValue extends StatisticSeriesValue {
 
 interface StatisticChartLegendProps {
   data: DisplaySeriesValue[];
-  definition: StatisticDefinition;
+  definition: Pick<StatisticDefinition, 'name'>;
   result: StatisticChartResult;
 }
 
@@ -55,7 +55,15 @@ export function StatisticChartLegend({
                 language,
               )}
             </strong>
-            <span>
+            <span className="statistics-legend-share">
+              <span className="statistics-share-track" aria-hidden="true">
+                <span
+                  style={{
+                    width: `${Math.min(100, Math.max(0, entry.percentage))}%`,
+                    background: entry.color,
+                  }}
+                />
+              </span>
               {getStatisticsCopy(language, 'filteredShare', {
                 percentage: percentage.format(entry.percentage),
               })}

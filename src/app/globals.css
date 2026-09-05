@@ -10,6 +10,7 @@
 @import '../components/statistics/statistics-form.css';
 @import '../components/statistics/statistics-appearance.css';
 @import '../components/statistics/statistics-widget-themes.css';
+@import './glass.css';
 
 :root {
   --background: oklch(0.975 0.008 80);
@@ -22,6 +23,9 @@
   --accent: oklch(0.54 0.11 155);
   --accent-foreground: oklch(0.99 0.004 80);
   --danger: oklch(0.55 0.19 28);
+  --default: var(--surface-secondary);
+  --default-foreground: var(--foreground);
+  --link: var(--foreground);
   --chart-1: oklch(0.56 0.12 155);
   --chart-2: oklch(0.62 0.12 70);
   --chart-3: oklch(0.57 0.12 235);

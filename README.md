@@ -45,7 +45,9 @@ The statistics canvas is configurable, persistent, and calculated from the
 complete task history. Add only the signals that matter to you:
 
 - **Views:** KPI, bar chart, donut chart, or timeline.
-- **Appearance:** six curated color palettes and automatic, compact, square,
+- **Focus view:** hide editing controls while reading the canvas; toggle again
+  to restore them. This view does not change saved statistics.
+- **Appearance:** frosted glass surfaces, six curated color palettes, and automatic, compact, square,
   wide, or full-width card formats.
 - **Measures:** task count, overdue work, completion rate, on-time rate, average
   resolution time, and sum/average/minimum/maximum of any numeric property.
@@ -59,7 +61,10 @@ complete task history. Add only the signals that matter to you:
 
 Every period moves with the calendar, so a “Last 30 days” card stays useful
 without being edited. Every chart also has an exact text equivalent for keyboard
-and screen-reader users.
+and screen-reader users. Category legends include proportion bars for the share
+of filtered tasks; these remain task shares when plotting numeric properties.
+Donut legends sit beside the chart when the card has room, and timelines use a
+light area fill with straight segments between observed buckets.
 
 ## 🤖 Delegate the busywork through MCP
 

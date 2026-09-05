@@ -4,35 +4,6 @@
   overflow-x: clip;
 }
 
-.statistics-app::before {
-  position: fixed;
-  z-index: -1;
-  inset: 0;
-  background-image:
-    radial-gradient(
-      circle at 12% 2%,
-      color-mix(in oklab, var(--accent) 14%, transparent),
-      transparent 30rem
-    ),
-    linear-gradient(
-      112deg,
-      transparent 0 61%,
-      color-mix(in oklab, var(--foreground) 3%, transparent) 61% 61.12%,
-      transparent 61.12%
-    ),
-    radial-gradient(
-      circle at 1px 1px,
-      color-mix(in oklab, var(--foreground) 5%, transparent) 1px,
-      transparent 0
-    );
-  background-size:
-    auto,
-    auto,
-    24px 24px;
-  content: '';
-  pointer-events: none;
-}
-
 .statistics-main {
   width: min(100%, 92rem);
   margin-inline: auto;
@@ -45,51 +16,48 @@
 .statistics-canvas {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 1rem;
-}
-
-.statistics-widget,
-.statistics-empty {
-  border: 1px solid color-mix(in oklab, var(--divider) 74%, transparent);
-  background: color-mix(in oklab, var(--surface) 91%, transparent);
-  box-shadow:
-    0 1px 0 color-mix(in oklab, white 62%, transparent) inset,
-    0 18px 48px color-mix(in oklab, var(--foreground) 7%, transparent);
-  backdrop-filter: blur(16px);
+  gap: 1.25rem;
 }
 
 .statistics-widget {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  background: color-mix(in oklab, var(--statistic-accent) 8%, var(--surface));
+  @apply relative isolate min-w-0 rounded-3xl p-6;
+  container-type: inline-size;
 }
 
-.statistics-widget::before {
-  position: absolute;
-  z-index: 1;
-  inset: 0 0 auto;
-  height: 0.25rem;
-  background: linear-gradient(
-    90deg,
-    var(--statistic-chart-1),
-    var(--statistic-chart-3)
-  );
+.statistics-widget-header h3::before {
+  display: inline-block;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin: 0 0.5rem 0.15rem 0;
+  border-radius: 50%;
+  background: var(--statistic-accent);
   content: '';
 }
 
-.statistics-widget::after {
-  position: absolute;
-  z-index: -1;
-  top: -5rem;
-  right: -4rem;
-  width: 12rem;
-  height: 12rem;
-  border-radius: 999px;
-  background: color-mix(in oklab, var(--statistic-accent) 14%, transparent);
-  content: '';
-  filter: blur(2.5rem);
-  pointer-events: none;
+.statistics-widget-header > div:first-child {
+  @apply flex flex-col gap-2;
+}
+
+.statistics-widget-header h3 {
+  @apply text-base font-semibold tracking-tight;
+}
+
+.statistics-widget-header [data-slot='card-description'] {
+  @apply text-xs leading-relaxed;
+}
+
+.statistics-widget-content {
+  @apply pt-4;
+}
+
+.statistics-widget-actions {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 5rem;
+}
+
+[data-focus='true'] .statistics-widget-actions {
+  display: none;
 }
 
 .statistics-widget-kpi {
@@ -120,16 +88,17 @@
 }
 
 .statistics-widget-content {
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .statistics-metric-value {
   margin-top: auto;
   font-size: clamp(2.75rem, 9vw, 5rem);
-  font-weight: 680;
+  font-weight: 550;
+  font-variant-numeric: tabular-nums;
   letter-spacing: -0.07em;
   line-height: 0.9;
-  color: var(--statistic-accent);
+  color: var(--foreground);
 }
 
 .statistics-metric-description {
@@ -175,7 +144,7 @@
 
 @media (hover: hover) {
   .statistics-widget-actions {
-    opacity: 0.28;
+    opacity: 0.65;
     transition: opacity 120ms ease;
   }
 

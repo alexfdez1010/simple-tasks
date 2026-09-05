@@ -1,12 +1,11 @@
 'use client';
 
-import { Button, Card, Link } from '@heroui/react';
-import Image from 'next/image';
+import { Button, Card } from '@heroui/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import appIcon from '@/app/icon.png';
 import { getStatisticsCopy } from '@/components/statistics/copy';
+import { StatisticsHeader } from '@/components/statistics/statistics-header';
 import { StatisticCard } from '@/components/statistics/statistic-card';
 import { StatisticDeleteDialog } from '@/components/statistics/statistic-delete-dialog';
 import { StatisticEditor } from '@/components/statistics/statistic-editor';
@@ -34,8 +33,9 @@ type EditorState =
 export function StatisticsDashboard({
   snapshot,
 }: StatisticsDashboardProps): React.JSX.Element {
-  const { language, locale } = useI18n();
+  const { language } = useI18n();
   const router = useRouter();
+  const [isFocused, setIsFocused] = useState(false);
   const [editor, setEditor] = useState<EditorState>(null);
   const [deleting, setDeleting] = useState<StatisticDefinition | null>(null);
   const [pendingId, setPendingId] = useState<string | null>(null);
@@ -96,43 +96,18 @@ export function StatisticsDashboard({
       <a className="skip-link" href="#statistics-content">
         {getStatisticsCopy(language, 'skipToStatistics')}
       </a>
-      <header className="statistics-header-wrap">
-        <div className="statistics-header">
-          <div className="statistics-heading-group">
-            <Image
-              alt=""
-              aria-hidden="true"
-              className="statistics-mark"
-              priority
-              sizes="48px"
-              src={appIcon}
-            />
-            <div>
-              <h1>{getStatisticsCopy(language, 'heading')}</h1>
-              <p>{getStatisticsCopy(language, 'subtitle')}</p>
-              <span className="statistics-count">
-                {getStatisticsCopy(language, 'widgetsConfigured', {
-                  count: new Intl.NumberFormat(locale).format(
-                    definitions.length,
-                  ),
-                })}
-              </span>
-            </div>
-          </div>
-          <div className="statistics-header-actions">
-            <Link className="statistics-back-link" href="/">
-              <span aria-hidden="true">←</span>
-              {getStatisticsCopy(language, 'backToBoard')}
-            </Link>
-            <Button onPress={() => setEditor({ mode: 'create' })}>
-              <span aria-hidden="true">＋</span>
-              {getStatisticsCopy(language, 'addStatistic')}
-            </Button>
-          </div>
-        </div>
-      </header>
+      <StatisticsHeader
+        widgetCount={definitions.length}
+        isFocused={isFocused}
+        onCreate={() => setEditor({ mode: 'create' })}
+        onToggleFocus={() => setIsFocused((value) => !value)}
+      />
 
-      <main id="statistics-content" className="statistics-main">
+      <main
+        id="statistics-content"
+        className="statistics-main"
+        data-focus={isFocused}
+      >
         {error ? (
           <p className="statistics-error" role="alert">
             {error}

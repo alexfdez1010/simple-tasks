@@ -37,3 +37,35 @@ test.describe('mobile configurable statistics', () => {
     await expect(dialog).toBeHidden();
   });
 });
+
+/** Proves glass panels fit narrow screens and focus can be reversed by touch. */
+test('keeps statistics and focus controls within a narrow viewport', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 740 });
+  await openStatistics(page);
+  const focus = page.getByRole('button', { name: 'Focus view' });
+  await focus.tap();
+  await expect(focus).toHaveAttribute('aria-pressed', 'true');
+  await expect(
+    page.getByRole('button', { name: 'Edit: Completed tasks', exact: true }),
+  ).toBeHidden();
+  await focus.tap();
+  await expect(
+    page.getByRole('button', { name: 'Edit: Completed tasks', exact: true }),
+  ).toBeVisible();
+  const panels = await page
+    .locator('.statistics-widget, .statistics-header')
+    .evaluateAll((elements) =>
+      elements.map((element) => ({
+        left: element.getBoundingClientRect().left,
+        right: element.getBoundingClientRect().right,
+        overflow: element.scrollWidth > element.clientWidth,
+      })),
+    );
+  for (const panel of panels) {
+    expect(panel.left).toBeGreaterThanOrEqual(0);
+    expect(panel.right).toBeLessThanOrEqual(320);
+    expect(panel.overflow).toBe(false);
+  }
+});

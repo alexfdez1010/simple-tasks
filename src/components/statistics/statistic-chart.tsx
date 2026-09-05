@@ -5,8 +5,8 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
-  Line,
-  LineChart,
+  Area,
+  AreaChart,
   Pie,
   PieChart,
   Tooltip,
@@ -70,10 +70,13 @@ export function StatisticChart({
   }
 
   return (
-    <>
+    <div
+      className="statistics-chart-layout"
+      data-visualization={definition.visualization}
+    >
       <div className="statistics-chart" style={{ height }}>
         {definition.visualization === 'LINE' ? (
-          <LineChart
+          <AreaChart
             accessibilityLayer
             data={data}
             margin={{ bottom: 8, left: 0, right: 12, top: 12 }}
@@ -81,7 +84,11 @@ export function StatisticChart({
             style={{ height: '100%', width: '100%' }}
             title={definition.name}
           >
-            <CartesianGrid stroke="var(--chart-grid)" strokeDasharray="3 5" />
+            <CartesianGrid
+              vertical={false}
+              stroke="var(--chart-grid)"
+              strokeDasharray="3 5"
+            />
             <XAxis
               axisLine={false}
               dataKey="displayLabel"
@@ -98,16 +105,18 @@ export function StatisticChart({
               content={tooltip}
               cursor={{ stroke: 'var(--statistic-chart-1)' }}
             />
-            <Line
+            <Area
+              fill="var(--statistic-chart-1)"
+              fillOpacity={0.08}
               activeDot={{ r: 5 }}
               dataKey="plottedValue"
-              dot={{ r: 3 }}
+              dot={data.length === 1 ? { r: 3 } : false}
               isAnimationActive={false}
               stroke="var(--statistic-chart-1)"
-              strokeWidth={3}
-              type="monotone"
+              strokeWidth={2}
+              type="linear"
             />
-          </LineChart>
+          </AreaChart>
         ) : definition.visualization === 'DONUT' ? (
           <PieChart
             accessibilityLayer
@@ -119,11 +128,12 @@ export function StatisticChart({
             <Pie
               data={data}
               dataKey="plottedValue"
-              innerRadius="58%"
+              innerRadius="72%"
               isAnimationActive={false}
               nameKey="displayLabel"
               outerRadius="88%"
-              paddingAngle={2}
+              paddingAngle={3}
+              stroke="none"
             >
               {data.map((entry) => (
                 <Cell fill={entry.color} key={entry.displayLabel} />
@@ -180,6 +190,6 @@ export function StatisticChart({
         definition={definition}
         result={result}
       />
-    </>
+    </div>
   );
 }

@@ -4,6 +4,7 @@ import type { Language } from '@/lib/i18n/config';
 const en = {
   ...statisticsAppearanceCopy.en,
   actions: 'Statistic actions',
+  focusView: 'Focus view',
   addFirst: 'Add your first statistic',
   addStatistic: 'Add statistic',
   allStatuses: 'All statuses',
@@ -71,8 +72,7 @@ const en = {
   skipToStatistics: 'Skip to statistics',
   statusFilter: 'Statuses',
   statusFilterDescription: 'Leave empty to include every status.',
-  subtitle:
-    'Compose the exact signals you need from every task, state, property, and date.',
+  subtitle: 'A clear view of your work, from progress to patterns.',
   tasks: 'tasks',
   unassigned: 'Unassigned',
   visualization: 'Visualization',
@@ -88,6 +88,7 @@ type StatisticsCopyKey = keyof typeof en;
 const es: Record<StatisticsCopyKey, string> = {
   ...statisticsAppearanceCopy.es,
   actions: 'Acciones de la estadística',
+  focusView: 'Vista de enfoque',
   addFirst: 'Añade tu primera estadística',
   addStatistic: 'Añadir estadística',
   allStatuses: 'Todos los estados',
@@ -154,8 +155,7 @@ const es: Record<StatisticsCopyKey, string> = {
   skipToStatistics: 'Saltar a las estadísticas',
   statusFilter: 'Estados',
   statusFilterDescription: 'Déjalo vacío para incluir todos los estados.',
-  subtitle:
-    'Compón las señales que necesitas con cada tarea, estado, propiedad y fecha.',
+  subtitle: 'Una vista clara de tu trabajo, del progreso a los patrones.',
   tasks: 'tareas',
   unassigned: 'Sin asignar',
   visualization: 'Visualización',

@@ -8,8 +8,8 @@
   margin-inline: auto;
   flex-direction: column;
   gap: 1.25rem;
-  border-bottom: 1px solid var(--divider);
-  padding: 0.5rem 0 1.5rem;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
 }
 
 .statistics-heading-group {
@@ -29,10 +29,10 @@
 }
 
 .statistics-heading-group h1 {
-  font-size: clamp(2rem, 6vw, 4.75rem);
-  font-weight: 680;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 600;
   letter-spacing: -0.065em;
-  line-height: 0.9;
+  line-height: 1.05;
 }
 
 .statistics-heading-group p {
@@ -49,7 +49,7 @@
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.6875rem;
   letter-spacing: 0.05em;
-  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
 }
 
 .statistics-header-actions {
@@ -83,4 +83,13 @@
   .statistics-header-wrap {
     padding-inline: 1.5rem;
   }
+}
+
+.statistics-header-actions button[aria-pressed] {
+  color: var(--foreground);
+}
+
+.statistics-header-actions button[aria-pressed='true'] {
+  background: var(--accent);
+  color: var(--accent-foreground);
 }

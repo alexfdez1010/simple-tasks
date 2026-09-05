@@ -83,3 +83,31 @@ test.describe('statistics', () => {
     await expect(page.getByRole('heading', { name: renamed })).toHaveCount(0);
   });
 });
+
+/** Proves focus mode preserves values and restores keyboard-accessible editing. */
+test('focus view hides editing controls without changing statistics', async ({
+  page,
+}) => {
+  await login(page);
+  await page.getByRole('link', { name: 'Statistics' }).click();
+  const edit = page.getByRole('button', {
+    name: 'Edit: Completed tasks',
+    exact: true,
+  });
+  const focus = page.getByRole('button', { name: 'Focus view' });
+  const values = await page
+    .locator('.statistics-metric-value')
+    .allTextContents();
+  await expect(edit).toBeVisible();
+  await focus.focus();
+  await page.keyboard.press('Enter');
+  await expect(focus).toHaveAttribute('aria-pressed', 'true');
+  await expect(edit).toBeHidden();
+  await expect(page.locator('.statistics-metric-value')).toHaveText(values);
+  await page.keyboard.press('Enter');
+  await expect(focus).toHaveAttribute('aria-pressed', 'false');
+  await edit.click();
+  await expect(
+    page.getByRole('dialog', { name: 'Edit statistic' }),
+  ).toBeVisible();
+});

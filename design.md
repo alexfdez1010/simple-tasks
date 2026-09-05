@@ -15,10 +15,32 @@ the accessible primitives; Tailwind CSS 4 provides layout and product styling.
 - Words and patterns to avoid: Marketing copy, gamification, jargon, decorative
   dashboards, and controls without an immediate task.
 
+## Current redesign baseline — 2026-09-05
+
+- Direction: frosted mineral glass, with a warm neutral canvas and restrained
+  forest light. Glass indicates workspace layers; data stays crisp and opaque.
+- Shared glass tokens provide translucent surfaces, a fine illuminated inner edge,
+  soft directional shadows, and solid fallbacks. Blur is limited to panels;
+  individual task cards do not create additional backdrop filters.
+- Remove dot textures, diagonal rules, colored KPI text, and decorative card orbs.
+  Keep user-selected colors in small identity marks and meaningful chart marks.
+- Statistics use spacious card interiors, tabular numerals, and proportion bars
+  for category task shares. Shares remain explicitly task-based, including when
+  the selected measure is a numeric property or multi-value category.
+- A reversible Focus view hides widget editing controls while retaining all data.
+  It is session-local and never changes saved definitions or their order.
+- Responsive: single-column phone canvas; donut and legend may sit side by side
+  only when the card itself has room. Controls remain visible on touch devices.
+- Accessibility: full-opacity text, visible keyboard focus, no required motion;
+  opaque surfaces for reduced transparency and system colors in forced colors.
+- SOLID: the dashboard owns edit state, a focused header owns navigation/display
+  controls, and chart/legend components own their existing data presentation.
+  No persistence interfaces or aggregate semantics change.
+
 ## 2. Visual direction
 
 - Design principles, in priority order: Clarity, speed, restraint, accessibility.
-- Reference products or visual inspirations: Editorial index cards and the calm
+- Reference products or visual inspirations: Frosted mineral glass and the calm
   density of a well-kept workshop board.
 - What makes this product recognisable: A warm workflow-studio canvas, ink
   typography, softly recessed columns, and configurable colour signals that
@@ -41,11 +63,11 @@ the accessible primitives; Tailwind CSS 4 provides layout and product styling.
 | `muted`      | `oklch(0.52 0.018 65)`  | `oklch(0.72 0.015 75)` | Secondary text   |
 | `danger`     | `oklch(0.55 0.19 28)`   | `oklch(0.7 0.16 28)`   | Destructive UI   |
 
-The canvas uses a low-contrast radial wash and a sparse dot grid to create depth
-without competing with content. These textures are CSS-only, remain below 5%
-contrast, and disappear in forced-colours mode. The primary accent stays green;
-workflow colours are local wayfinding signals rather than additional brand
-accents.
+The canvas uses two low-contrast forest light washes behind translucent panels.
+There are no dot grids, diagonal rules, or decorative card orbs. The primary
+accent stays green; workflow colours are local wayfinding signals rather than
+additional brand accents. Shared glass surfaces use an opaque fallback, fine
+illuminated edges, and a single consistent light direction.
 
 Workflow colours are user-configurable hex values. They are rendered as rails,
 dots, and restrained card-to-surface gradients, never as body-text colour. Text
@@ -54,7 +76,7 @@ therefore retains WCAG contrast independently of the chosen workflow colour.
 Statistic colours are chosen from six curated semantic palettes: forest, ocean,
 iris, amber, coral, and graphite. Each palette defines a card accent plus five
 coordinated chart tones in light and dark modes. The selected colour is used for
-the top rail, low-contrast surface wash, KPI emphasis, and data marks; labels and
+the small title marker and data marks; labels and
 controls continue to use foreground tokens so palette choice cannot reduce text
 contrast. Colour controls always pair a visible swatch with a localized name.
 
@@ -257,6 +279,8 @@ Component rules:
 
 | Date       | Decision                                                                              | Reason                                                                                                 | Owner        |
 | ---------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------ |
+| 2026-09-05 | Use shared glass surfaces, neutral KPI values, and session-local focus view           | Gives data priority, reduces editing clutter, and keeps saved definitions unchanged                    | Design       |
+| 2026-09-05 | Keep legend proportions task-based even for numeric measures                          | Prevents visual shares from implying a fraction of the numeric sum                                     | Architecture |
 | 2026-08-29 | Keep a single shared-password session instead of user accounts                        | Matches the requested private, simple board                                                            | Product      |
 | 2026-08-29 | Use horizontally scrollable columns on mobile                                         | Preserves the spatial workflow and supports touch drag                                                 | Design       |
 | 2026-08-29 | Treat workflow colours as accents, not text colours                                   | User-selected colours cannot guarantee readable contrast                                               | Design       |
@@ -294,3 +318,18 @@ Component rules:
 - [x] Approved HeroUI primitives and variants are listed.
 - [x] A representative page has been checked at mobile and desktop widths.
 - [x] The design system is approved as the implementation baseline.
+
+## Implementation memory — glass redesign
+
+- HeroUI's default button foreground and link tokens must follow the app's
+  foreground token because this app selects dark mode with a media query.
+- Recharts axis labels need an explicit muted fill; its default gray does not
+  track this theme. Exact legend values remain available beside every chart.
+- Container queries belong to the widget, not the viewport: a full-width donut
+  can have a side legend while a compact widget remains vertically stacked.
+- Visual QA data was created only in the disposable test database. No demo tasks
+  or modified default statistics belong in production seeds.
+- References: [HeroUI Card](https://heroui.com/docs/react/components/card),
+  [Tailwind backdrop blur](https://tailwindcss.com/docs/backdrop-filter-blur),
+  [Recharts Area](https://recharts.github.io/en-US/api/Area/), and
+  [React derived state](https://react.dev/learn/you-might-not-need-an-effect).

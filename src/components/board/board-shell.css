@@ -4,29 +4,6 @@
   overflow-x: clip;
 }
 
-.board-app::before {
-  position: fixed;
-  z-index: -1;
-  inset: 0;
-  background-image:
-    radial-gradient(
-      circle at 12% -10%,
-      color-mix(in oklab, var(--accent) 10%, transparent),
-      transparent 34rem
-    ),
-    radial-gradient(
-      circle at 1px 1px,
-      color-mix(in oklab, var(--foreground) 6%, transparent) 1px,
-      transparent 0
-    );
-  background-size:
-    auto,
-    24px 24px;
-  content: '';
-  opacity: 0.62;
-  pointer-events: none;
-}
-
 .skip-link {
   position: fixed;
   z-index: 50;
