@@ -76,7 +76,7 @@
 
   .statistics-widget-kpi[data-size='WIDE'] .statistics-metric-value,
   .statistics-widget-kpi[data-size='FULL'] .statistics-metric-value {
-    font-size: clamp(4rem, 8vw, 7rem);
+    font-size: clamp(2.75rem, 16cqi, 6rem);
   }
 }
 

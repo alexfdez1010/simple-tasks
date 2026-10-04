@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, useOverlayState } from '@heroui/react';
+import { Button, Card, useOverlayState } from '@heroui/react';
 import { useSortable } from '@dnd-kit/react/sortable';
 import { useDateFormatter } from '@react-aria/i18n';
 
@@ -65,17 +65,19 @@ export function TaskCard({
     },
   });
 
-  /** Opens the read-only task inspector from a safe card content zone. */
-  function openDetails() {
-    detailState.open();
-  }
-
-  /** Gives keyboard users the same card-level detail affordance. */
-  function openDetailsFromKeyboard(event: React.KeyboardEvent) {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      detailState.open();
+  /**
+   * Opens inspection from card content while preserving links and controls.
+   * @param event - Pointer click bubbling from the card subtree.
+   * @returns Nothing; opens the overlay only for noninteractive content.
+   */
+  function openDetailsFromCard(event: React.MouseEvent) {
+    if (
+      event.target instanceof Element &&
+      event.target.closest('a, button, input, [role="button"], [role="dialog"]')
+    ) {
+      return;
     }
+    detailState.open();
   }
 
   return (
@@ -84,7 +86,11 @@ export function TaskCard({
       className={`task-card-wrapper ${isDragging ? 'is-dragging' : ''}`}
       aria-label={task.title}
     >
-      <Card className="task-card gap-0 border-0 p-0" variant="default">
+      <Card
+        className="task-card gap-0 border-0 p-0"
+        variant="default"
+        onClick={openDetailsFromCard}
+      >
         <Card.Header className="task-card-header flex-row items-start gap-2">
           <button
             ref={handleRef}
@@ -94,15 +100,17 @@ export function TaskCard({
           >
             <GripIcon className="size-3.5" />
           </button>
-          <Card.Title
-            className="task-card-title-trigger min-w-0 flex-1 text-left"
-            role="button"
-            tabIndex={0}
-            aria-label={t('task.openDetails', { title: task.title })}
-            onClick={openDetails}
-            onKeyDown={openDetailsFromKeyboard}
-          >
-            {task.title}
+          <Card.Title className="min-w-0 flex-1">
+            <Button
+              className="task-card-title-trigger h-auto min-h-8 w-full justify-start rounded-md px-0 py-1 text-left text-sm font-semibold whitespace-normal"
+              variant="ghost"
+              aria-label={t('task.openDetails', { title: task.title })}
+              onPress={detailState.open}
+            >
+              <span className="min-w-0 [overflow-wrap:anywhere]">
+                {task.title}
+              </span>
+            </Button>
           </Card.Title>
           <TaskDialog
             task={task}
@@ -112,14 +120,7 @@ export function TaskCard({
           />
         </Card.Header>
 
-        <div
-          className="task-card-body-trigger"
-          role="button"
-          tabIndex={0}
-          aria-label={t('task.openDetails', { title: task.title })}
-          onClick={openDetails}
-          onKeyDown={openDetailsFromKeyboard}
-        >
+        <div>
           {task.description ? (
             <Card.Content className="task-description-preview mx-3 mb-2.5 ms-16 text-[13px] text-muted md:ms-12">
               <Markdown>{task.description}</Markdown>

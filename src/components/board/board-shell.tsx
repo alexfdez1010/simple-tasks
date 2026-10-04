@@ -176,7 +176,7 @@ export function BoardShell({
         </div>
       </header>
 
-      <main id="task-board" className="board-workspace">
+      <main id="task-board" className="board-workspace" tabIndex={-1}>
         <KanbanBoard
           statuses={statuses}
           properties={properties}

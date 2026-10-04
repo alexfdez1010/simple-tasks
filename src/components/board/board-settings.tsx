@@ -49,7 +49,7 @@ export function BoardSettings(props: BoardSettingsProps) {
         aria-label={t('settings.ariaLabel')}
       >
         <SettingsIcon className="size-4" />
-        <span className="hidden sm:inline">{t('settings.title')}</span>
+        <span>{t('settings.title')}</span>
       </Button>
       <Modal.Backdrop>
         <Modal.Container

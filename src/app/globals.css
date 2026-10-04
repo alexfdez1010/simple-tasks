@@ -3,6 +3,7 @@
 @import '../components/board/board-shell.css';
 @import '../components/board/board.css';
 @import '../components/board/task-card.css';
+@import '../components/board/task-detail.css';
 @import '../components/board/board-mobile.css';
 @import '../components/statistics/statistics.css';
 @import '../components/statistics/statistics-header.css';
@@ -89,4 +90,14 @@ input,
 textarea,
 [role='button'] {
   outline-offset: 3px;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 25%, var(--surface));
+  color: var(--foreground);
+}
+
+input,
+textarea {
+  caret-color: var(--accent);
 }

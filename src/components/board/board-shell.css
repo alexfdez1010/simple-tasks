@@ -29,11 +29,10 @@
 }
 
 .board-toolbar {
-  display: grid;
+  @apply grid min-w-0 items-center;
   max-width: 1800px;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.75rem 1rem;
-  align-items: center;
   margin-inline: auto;
   border: 1px solid color-mix(in oklab, var(--divider) 76%, transparent);
   border-radius: 1.25rem;
@@ -55,43 +54,52 @@
 }
 
 .board-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
+  @apply flex min-w-0 flex-wrap items-center gap-1;
 }
 
 .board-actions form {
   display: flex;
 }
 
+.board-action-button,
 .board-action-link {
-  display: inline-flex;
-  min-width: 2.75rem;
-  min-height: 2.75rem;
-  align-items: center;
-  justify-content: center;
+  @apply min-h-11 min-w-11 shrink-0;
+}
+
+.board-action-link {
+  @apply inline-flex items-center justify-center;
   padding-inline: 0.75rem;
 }
 
 .board-metrics {
-  display: grid;
+  @apply grid min-w-0 items-center;
   grid-column: 1 / -1;
-  grid-template-columns: auto minmax(4rem, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+  grid-template-areas: 'copy visible' 'progress progress';
   gap: 0.625rem;
-  align-items: center;
-  min-width: 0;
   border-top: 1px solid color-mix(in oklab, var(--divider) 68%, transparent);
   padding: 0.625rem 0.25rem 0.125rem;
 }
 
 .board-metric-copy,
 .board-visible-count {
+  @apply min-w-0;
   color: var(--muted);
   font-size: 0.6875rem;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+}
+
+.board-metric-copy {
+  grid-area: copy;
+}
+
+.board-visible-count {
+  grid-area: visible;
+  text-align: end;
 }
 
 .board-progress {
+  grid-area: progress;
   min-width: 0;
 }
 
@@ -119,8 +127,28 @@
   }
 
   .board-toolbar {
-    grid-template-columns: auto minmax(18rem, 1fr) auto;
+    grid-template-columns: auto minmax(0, 1fr);
     padding: 0.875rem 1rem;
+  }
+
+  .board-actions {
+    justify-self: end;
+    justify-content: end;
+  }
+
+  .board-metrics {
+    grid-template-columns: minmax(0, auto) minmax(4rem, 1fr) minmax(0, auto);
+    grid-template-areas: 'copy progress visible';
+  }
+
+  .board-workspace {
+    padding-block: 1.25rem 2rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .board-toolbar {
+    grid-template-columns: auto minmax(0, 1fr) auto;
   }
 
   .board-actions {
@@ -132,10 +160,6 @@
     grid-row: 1;
     border-top: 0;
     padding: 0 1rem;
-  }
-
-  .board-workspace {
-    padding-block: 1.25rem 2rem;
   }
 }
 

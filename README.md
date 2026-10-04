@@ -36,6 +36,13 @@ Your deployment, database, credentials, and task data stay under your control.
 - Keep active work ordered by deadline and finished work ordered by completion date.
 - Switch the complete interface between English and Spanish.
 
+On phones, navigation has its own wrapping row so the board title and every
+action stay readable, including in Spanish. Use the skip link to focus the
+board directly. Each task has one keyboard-accessible title button: press
+Enter or Space to inspect it, or click the card content. Markdown links open
+independently without opening the inspector. Long titles and exact KPI values
+wrap inside their own cards, including compact statistic formats.
+
 The default workflow — **Blocked**, **To do**, **In progress**, and **Done** — is
 ready immediately, but none of those labels has to define your process.
 

@@ -24,11 +24,6 @@
     height: 2.25rem;
   }
 
-  .board-action-button {
-    min-width: 2.75rem;
-    min-height: 2.75rem;
-  }
-
   .board-metrics {
     gap: 0.5rem;
     padding-top: 0.5rem;
@@ -52,7 +47,7 @@
   }
 
   .board-app :focus {
-    scroll-margin-top: 9rem;
+    scroll-margin-top: 14rem;
   }
 
   .board-modal-container {
