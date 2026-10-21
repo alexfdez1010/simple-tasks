@@ -66,7 +66,6 @@ export function BoardShell({
     setProperties,
     refresh: router.refresh,
   });
-
   return (
     <div className="board-app min-h-dvh bg-background text-foreground">
       <a className="skip-link" href="#task-board">
@@ -90,6 +89,12 @@ export function BoardShell({
           </div>
 
           <div className="board-actions">
+            <Link
+              className="board-action-link text-sm font-medium"
+              href="/api-access"
+            >
+              API
+            </Link>
             <Link
               className="board-action-link text-sm font-medium"
               href="/skill"

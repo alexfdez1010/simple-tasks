@@ -73,8 +73,11 @@ for (const width of [768, 900, 1440]) {
           ),
         ).toBeLessThanOrEqual(1);
       }
+      await expect(
+        actions.getByRole('link', { name: 'API', exact: true }),
+      ).toBeVisible();
       const controls = actions.locator('a, button');
-      await expect(controls).toHaveCount(4);
+      await expect(controls).toHaveCount(5);
       const boxes = [];
       for (const control of await controls.all()) {
         await expect(control).toBeVisible();

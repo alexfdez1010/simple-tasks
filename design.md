@@ -15,6 +15,38 @@ the accessible primitives; Tailwind CSS 4 provides layout and product styling.
 - Words and patterns to avoid: Marketing copy, gamification, jargon, decorative
   dashboards, and controls without an immediate task.
 
+## API access extension — 2026-10-21
+
+- Extend the existing mineral-glass workspace in Operate mode; documentation is Read mode.
+- Add a named API navigation link. The protected API page uses a compact heading,
+  an inline creation form, a one-time secret reveal, and a divided token list.
+- Preserve Geist, forest accent, shared surfaces and light/dark tokens. Use only
+  HeroUI v3 controls and Tailwind 4 utilities; no new visual identity or card grid.
+- Show token name, identifying hint, permissions, creation/last-use dates and
+  revocation state. Tokens never expire, per Alejandro's explicit preference.
+- Creation defaults to read-only; write access is an explicit choice. The secret
+  appears once, with copy feedback and an explicit dismissal. Revocation requires
+  confirmation and explains that connected integrations stop immediately.
+- Mobile: stack form and reference content, wrap long hints and endpoint paths,
+  retain named 44 px actions. Keyboard focus, live feedback and English/Spanish
+  copy cover empty, pending, success, clipboard failure and server error states.
+- Final Impeccable review: ship. Dark fields and confirmation surfaces, localized
+  endpoint descriptions, and 44 px actions are verified in the final captures.
+- SRP separates token management, credentials, rate limiting and transport. REST
+  adapters depend on existing task/status/property services; the endpoint registry
+  supplies both dispatch and documentation to prevent contract drift.
+- Verify authenticated creation/revocation, anonymous rejection, read-only writes,
+  pagination/history, validation, concurrent rate limits, desktop/mobile and dark mode.
+- Implementation: constrain HeroUI field colors to the API surface's existing
+  semantic tokens, including hover/focus and dark states; keep portaled permission
+  choices and revocation confirmation on the same surface/foreground palette.
+  Endpoint summaries follow English/Spanish selection while API paths remain exact.
+- Evidence: desktop, phone, Spanish, dark, secret-reveal and documentation captures
+  live in `.impeccable/review/`. The scoped visual detector returned no findings;
+  project validation recorded 43 browser, 163 unit and 21 integration tests passing,
+  plus production build and lint/format checks. Preserve the incumbent token scale
+  and document structure; this extension introduces no new system-wide tokens.
+
 ## Current redesign baseline — 2026-09-05
 
 - Direction: frosted mineral glass, with a warm neutral canvas and restrained

@@ -73,6 +73,20 @@ of filtered tasks; these remain task shares when plotting numeric properties.
 Donut legends sit beside the chart when the card has room, and timelines use a
 light area fill with straight segments between observed buckets.
 
+## Connect your own tools through REST
+
+Open **API** from the board to create a named read-only or read/write token,
+copy its secret once, view its identifying hint and last use, or revoke it.
+Tokens never expire. Only credential hashes are stored in PostgreSQL.
+
+The versioned API at `/api/v1` covers tasks, statuses, typed properties and
+property values, with cursor pagination over the complete task history.
+Statistics are excluded. Shared database limits enforce 120 requests and
+30 writes per token per minute, plus 600 requests per instance per minute.
+
+Read the guide at `/api-docs`, download `/api/openapi`, or see the
+[repository API documentation](docs/api.md) for examples and error handling.
+
 ## 🤖 Delegate the busywork through MCP
 
 Simple Tasks exposes the board as an authenticated

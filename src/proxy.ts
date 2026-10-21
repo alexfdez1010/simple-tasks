@@ -4,7 +4,13 @@ import { getAuthConfig } from '@/lib/auth/config';
 import { AUTH_COOKIE } from '@/lib/auth/constants';
 import { createSessionToken, timingSafeMatch } from '@/lib/auth/token';
 
-const PUBLIC_PATHS = ['/login', '/api/mcp'];
+const PUBLIC_PATHS = [
+  '/login',
+  '/api/mcp',
+  '/api/v1',
+  '/api/openapi',
+  '/api-docs',
+];
 
 /** Identifies routes that use their own authentication or host the login form. */
 function isPublicPath(pathname: string): boolean {

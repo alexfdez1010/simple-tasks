@@ -7,6 +7,8 @@ import { useI18n } from '@/lib/i18n/provider';
 
 interface ConfirmationDialogProps {
   body: string;
+  buttonClassName?: string;
+  dialogClassName?: string;
   confirmLabel: string;
   heading: string;
   triggerAriaLabel?: string;
@@ -23,6 +25,8 @@ interface ConfirmationDialogProps {
  */
 export function ConfirmationDialog({
   body,
+  buttonClassName,
+  dialogClassName,
   confirmLabel,
   heading,
   triggerAriaLabel,
@@ -45,6 +49,7 @@ export function ConfirmationDialog({
   return (
     <>
       <Button
+        className={buttonClassName}
         size="sm"
         variant={triggerVariant}
         aria-label={triggerAriaLabel}
@@ -58,7 +63,7 @@ export function ConfirmationDialog({
           placement="auto"
           size="sm"
         >
-          <AlertDialog.Dialog>
+          <AlertDialog.Dialog className={dialogClassName}>
             <AlertDialog.CloseTrigger />
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />
@@ -68,10 +73,15 @@ export function ConfirmationDialog({
               <p>{body}</p>
             </AlertDialog.Body>
             <AlertDialog.Footer>
-              <Button slot="close" variant="tertiary">
+              <Button
+                className={buttonClassName}
+                slot="close"
+                variant="tertiary"
+              >
                 {t('common.cancel')}
               </Button>
               <Button
+                className={buttonClassName}
                 isPending={isPending}
                 variant="danger"
                 onPress={() => void handleConfirm()}
