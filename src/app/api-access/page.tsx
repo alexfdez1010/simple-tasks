@@ -46,7 +46,7 @@ export default async function ApiAccessPage() {
               className="overflow-x-auto rounded-xl bg-surface-secondary p-4 font-mono text-xs leading-6"
               tabIndex={0}
               aria-label="curl"
-            >{`curl 'https://your-domain/api/v1/tasks?limit=50' -H 'Authorization: Bearer YOUR_TOKEN'`}</pre>
+            >{`curl 'https://tasks.alejandrofernandezcamello.me/api/v1/tasks?limit=50' -H 'Authorization: Bearer YOUR_TOKEN'`}</pre>
             <ApiDocsLink label={copy.docs} />
           </section>
           <section className="space-y-3">

@@ -120,7 +120,7 @@ the downloaded file.
 
 Authenticated `HEAD` probes return an empty `405 Method Not Allowed` response
 immediately, with `Allow: POST`. For example, probe with
-`curl --head --max-time 5 -H "Authorization: Bearer $SIMPLE_TASKS_MCP_TOKEN" https://your-domain/api/mcp/mcp`.
+`curl --head --max-time 5 -H "Authorization: Bearer $SIMPLE_TASKS_MCP_TOKEN" https://tasks.alejandrofernandezcamello.me/api/mcp/mcp`.
 Missing or invalid credentials still receive `401`. The route exports a
 60-second Vercel execution limit; the adapter's own `maxDuration` option does
 not configure that platform limit. See the

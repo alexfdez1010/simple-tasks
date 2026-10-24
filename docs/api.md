@@ -13,7 +13,7 @@ never expire. Store each in a secret manager, then send it over HTTPS:
 
 ```sh
 export SIMPLE_TASKS_API_TOKEN='your-token-from-the-web-interface'
-curl 'https://your-domain/api/v1/tasks?limit=50&scope=active' \
+curl 'https://tasks.alejandrofernandezcamello.me/api/v1/tasks?limit=50&scope=active' \
   -H "Authorization: Bearer $SIMPLE_TASKS_API_TOKEN"
 ```
 
@@ -55,7 +55,7 @@ JSON successes use `{ "data": ... }` except task pages, which also have
 Create a task:
 
 ```sh
-curl 'https://your-domain/api/v1/tasks' \
+curl 'https://tasks.alejandrofernandezcamello.me/api/v1/tasks' \
   -H "Authorization: Bearer $SIMPLE_TASKS_API_TOKEN" \
   -H 'Content-Type: application/json' \
   --data '{"title":"Prepare release","description":"**Review** the changes"}'
