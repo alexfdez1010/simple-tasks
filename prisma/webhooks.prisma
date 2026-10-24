@@ -1,0 +1,28 @@
+model WebhookEndpoint {
+  id        String   @id @default("default")
+  url       String
+  secret    String
+  enabled   Boolean  @default(true)
+  revision  Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model WebhookDelivery {
+  id            String    @id
+  revision      Int
+  event         String
+  payload       Json
+  state         String    @default("PENDING")
+  attempts      Int       @default(0)
+  nextAttemptAt DateTime  @default(now())
+  lockedUntil   DateTime?
+  claimToken    String?
+  responseCode  Int?
+  error         String?
+  createdAt     DateTime  @default(now())
+  deliveredAt   DateTime?
+
+  @@index([state, nextAttemptAt, lockedUntil])
+  @@index([createdAt(sort: Desc)])
+}

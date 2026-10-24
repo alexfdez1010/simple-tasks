@@ -10,6 +10,8 @@ const PUBLIC_PATHS = [
   '/api/v1',
   '/api/openapi',
   '/api-docs',
+  '/webhook-docs',
+  '/api/webhooks/dispatch',
 ];
 
 /** Identifies routes that use their own authentication or host the login form. */

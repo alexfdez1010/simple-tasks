@@ -100,6 +100,21 @@ Statistics are excluded. Shared database limits enforce 120 requests and
 Read the guide at `/api-docs`, download `/api/openapi`, or see the
 [repository API documentation](docs/api.md) for examples and error handling.
 
+## Send task events to a webhook
+
+Open **Connections → Task webhook** to save one HTTPS destination for all task
+creation, editing, movement and deletion events. Events from the web, REST API
+and MCP share a versioned JSON payload, a stable event id and a verifiable HMAC
+signature. Reveal/copy the database-backed signing secret, send a test, inspect
+recent outcomes, pause delivery or retry an event from the same page.
+
+Task changes and events commit together; network failures do not block tasks.
+Ready events are sent after responses, with five automatic attempts. For retries
+while the app is idle, configure the authenticated drain endpoint in your
+scheduler using an existing read/write API token. See the
+[webhook guide](docs/webhooks.md) and the in-app **Webhook documentation** for the
+payload, verification example, retry timing, destination restrictions and setup.
+
 ## 🤖 Delegate the busywork through MCP
 
 Simple Tasks exposes the board as an authenticated

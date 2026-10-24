@@ -1,9 +1,11 @@
+import { scheduleWebhookDelivery } from '@/lib/webhooks/schedule';
 import { BoardShell } from '@/components/board/board-shell';
 import type { BoardStatus, PropertyDefinition } from '@/components/board/types';
 import { getBoardSnapshot } from '@/lib/tasks/queries';
 
 /** Ensures every board request reads the latest persisted workflow state. */
 export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
 
 /**
  * Loads and renders the authenticated task board.
@@ -12,6 +14,7 @@ export const dynamic = 'force-dynamic';
  */
 export default async function Home() {
   const snapshot = await getBoardSnapshot();
+  scheduleWebhookDelivery();
   const initialStatuses: BoardStatus[] = snapshot.statuses.map((status) => ({
     id: status.id,
     name: status.name,

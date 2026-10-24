@@ -1,11 +1,21 @@
 'use client';
 
+import {
+  WebhookPanel,
+  type WebhookSettings,
+} from '@/components/connections/webhook-panel';
 import { Link } from '@heroui/react';
 import { connectionsCopy } from '@/components/connections/copy';
 import type { Language } from '@/lib/i18n/config';
 
 /** Explains the two integration paths without claiming unverified connection health. */
-export function ConnectionsContent({ language }: { language: Language }) {
+export function ConnectionsContent({
+  language,
+  webhook,
+}: {
+  language: Language;
+  webhook: WebhookSettings;
+}) {
   const copy = connectionsCopy[language];
   return (
     <main className="mx-auto min-h-dvh max-w-3xl px-5 py-8 text-foreground sm:py-16">
@@ -19,6 +29,7 @@ export function ConnectionsContent({ language }: { language: Language }) {
         {copy.intro}
       </p>
       <div className="mt-10 divide-y divide-divider">
+        <WebhookPanel settings={webhook} language={language} />
         {copy.entries.map((entry) => (
           <section className="py-7 first:pt-0" key={entry.href}>
             <h2 className="text-lg font-semibold">{entry.title}</h2>

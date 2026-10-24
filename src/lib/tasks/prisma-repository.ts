@@ -1,4 +1,6 @@
 import type { PrismaClient, Task } from '@/generated/prisma';
+import { recordTaskEvent, webhookTaskSnapshot } from '@/lib/webhooks/outbox';
+import { reorderTaskRows } from '@/lib/tasks/task-reorder';
 import { runSerializable } from '@/lib/db/transaction';
 import { persistTaskPropertyValues } from '@/lib/properties/value-persistence';
 import { resequenceTasks, taskListOrder } from '@/lib/tasks/ordering';
@@ -17,7 +19,7 @@ import type {
   TaskWithStatus,
   UpdateTaskInput,
 } from '@/lib/tasks/types';
-import { conflict, notFound } from '@/lib/validation/errors';
+import { notFound } from '@/lib/validation/errors';
 
 /** Prisma-backed task repository with transactional ordering invariants. */
 export class PrismaTaskRepository implements TaskRepository {
@@ -88,6 +90,7 @@ export class PrismaTaskRepository implements TaskRepository {
           true,
         );
       }
+      await recordTaskEvent(transaction, 'task.created', task.id);
       return task;
     });
   }
@@ -128,6 +131,12 @@ export class PrismaTaskRepository implements TaskRepository {
           true,
         );
       }
+      await recordTaskEvent(
+        transaction,
+        updated.statusId === task.statusId ? 'task.updated' : 'task.moved',
+        task.id,
+        updated.statusId === task.statusId ? null : task.statusId,
+      );
       return updated;
     });
   }
@@ -137,6 +146,8 @@ export class PrismaTaskRepository implements TaskRepository {
     await runSerializable(this.client, async (transaction) => {
       const task = await transaction.task.findUnique({ where: { id } });
       if (!task) throw notFound('The task');
+      const snapshot = await webhookTaskSnapshot(transaction, id);
+      await recordTaskEvent(transaction, 'task.deleted', id, null, snapshot);
       await transaction.task.delete({ where: { id } });
       const remaining = await transaction.task.findMany({
         where: { statusId: task.statusId },
@@ -161,34 +172,24 @@ export class PrismaTaskRepository implements TaskRepository {
       });
       if (!task) throw notFound('The task');
       if (!target) throw notFound('The status');
-      return editTaskPlacement(transaction, task, target, input.index);
+      const moved = await editTaskPlacement(
+        transaction,
+        task,
+        target,
+        input.index,
+      );
+      await recordTaskEvent(
+        transaction,
+        task.statusId === target.id ? 'task.updated' : 'task.moved',
+        task.id,
+        task.statusId === target.id ? null : task.statusId,
+      );
+      return moved;
     });
   }
 
   /** Reorders a complete non-terminal column after verifying exact membership. */
   async reorder(input: ReorderTasksInput): Promise<void> {
-    await runSerializable(this.client, async (transaction) => {
-      const status = await transaction.status.findUnique({
-        where: { id: input.statusId },
-      });
-      if (!status) throw notFound('The status');
-      if (status.isTerminal)
-        throw conflict('Terminal statuses are ordered by completion date.');
-      const rows = await transaction.task.findMany({
-        where: { statusId: input.statusId },
-        select: { id: true },
-      });
-      const expected = rows.map((item) => item.id).sort();
-      const received = [...new Set(input.taskIds)].sort();
-      if (
-        expected.length !== received.length ||
-        expected.some((id, index) => id !== received[index])
-      ) {
-        throw conflict(
-          'The order must include every task in the status exactly once.',
-        );
-      }
-      await resequenceTasks(transaction, input.taskIds);
-    });
+    await reorderTaskRows(this.client, input);
   }
 }

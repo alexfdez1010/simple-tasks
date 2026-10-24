@@ -2,7 +2,7 @@ import { handleApiRequest } from '@/lib/api/handler';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-export const maxDuration = 30;
+export const maxDuration = 60;
 
 /** Delegates a versioned REST request after resolving Next.js asynchronous route parameters. */
 async function dispatch(

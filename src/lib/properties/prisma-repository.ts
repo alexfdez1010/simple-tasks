@@ -1,3 +1,7 @@
+import {
+  deleteTaskValue,
+  setTaskValue,
+} from '@/lib/properties/task-value-repository';
 import type { PrismaClient } from '@/generated/prisma';
 import { runSerializable } from '@/lib/db/transaction';
 import {
@@ -19,7 +23,6 @@ import type {
   TaskPropertyValueData,
   UpdatePropertyInput,
 } from '@/lib/properties/types';
-import { persistTaskPropertyValues } from '@/lib/properties/value-persistence';
 import { conflict, notFound } from '@/lib/validation/errors';
 import {
   createPropertySchema,
@@ -149,24 +152,11 @@ export class PrismaPropertyRepository implements PropertyRepository {
   async setValue(
     input: SetTaskPropertyValueInput,
   ): Promise<TaskPropertyValueData> {
-    return runSerializable(this.client, async (transaction) => {
-      if (!(await transaction.task.findUnique({ where: { id: input.taskId } })))
-        throw notFound('The task');
-      const [value] = await persistTaskPropertyValues(
-        transaction,
-        input.taskId,
-        [input],
-        false,
-      );
-      return value;
-    });
+    return setTaskValue(this.client, input);
   }
 
-  /** Deletes one task value without affecting its definition. */
+  /** Deletes one task value without affecting its definition, queuing the task event atomically. */
   async deleteValue(taskId: string, propertyId: string): Promise<void> {
-    const result = await this.client.taskPropertyValue.deleteMany({
-      where: { taskId, propertyId },
-    });
-    if (result.count === 0) throw notFound('The property value');
+    await deleteTaskValue(this.client, taskId, propertyId);
   }
 }
