@@ -43,7 +43,10 @@ test.describe('shared-password gateway', () => {
     await page.goto('/login');
     await page.getByLabel('Password').fill(PASSWORD);
     await page.getByRole('button', { name: 'Sign in' }).click();
-    await page.getByRole('link', { name: 'AI' }).click();
+    await page.getByRole('link', { name: 'Connections', exact: true }).click();
+    await page
+      .getByRole('link', { name: 'Set up an agent', exact: true })
+      .click();
 
     const token = page.getByLabel('MCP token');
     await expect(page).toHaveURL(/\/skill$/);

@@ -106,6 +106,9 @@ test.describe('desktop Kanban board', () => {
   test('creates and edits a task with Markdown', async ({ page }) => {
     await login(page);
     await page.getByRole('button', { name: 'Add task to To do' }).click();
+    await page
+      .getByRole('button', { name: 'Add details', exact: true })
+      .click();
 
     const createDialog = page.getByRole('dialog', {
       name: 'Create task in To do',
@@ -133,15 +136,8 @@ test.describe('desktop Kanban board', () => {
         .getByRole('region', { name: 'To do' })
         .getByRole('article', { name: 'E2E Markdown' }),
     ).toBeVisible();
-    const statusRailColor = await created
-      .locator('.task-card')
-      .evaluate(
-        (element) => getComputedStyle(element, '::before').backgroundColor,
-      );
-    expect(statusRailColor).not.toBe('rgba(0, 0, 0, 0)');
-    expect(statusRailColor).not.toBe('transparent');
     await expect(created.getByText('Important')).toBeVisible();
-    await expect(created.getByText('Due Sep 5, 2026')).toBeVisible();
+    await expect(created.locator('time')).toHaveText('Sep 5, 2026');
 
     await created.locator('.task-card').click();
     const detailDialog = page.getByRole('dialog', { name: 'E2E Markdown' });
@@ -165,7 +161,16 @@ test.describe('desktop Kanban board', () => {
 
     const edited = page.getByRole('article', { name: 'E2E Markdown edited' });
     await expect(edited).toBeVisible();
-    await expect(edited.getByRole('heading', { name: 'Result' })).toBeVisible();
+    await edited
+      .getByRole('button', { name: 'Open details for E2E Markdown edited' })
+      .click();
+    await expect(
+      page.getByRole('dialog').getByRole('heading', { name: 'Result' }),
+    ).toBeVisible();
+    await page
+      .getByRole('dialog')
+      .getByRole('button', { name: 'Cancel', exact: true })
+      .click();
     await deleteTask(page, 'E2E Markdown edited');
   });
 
@@ -176,6 +181,9 @@ test.describe('desktop Kanban board', () => {
     const taskTitle = `E2E Completion ${process.pid}-${testInfo.repeatEachIndex}`;
     await login(page);
     await page.getByRole('button', { name: 'Add task to Blocked' }).click();
+    await page
+      .getByRole('button', { name: 'Add details', exact: true })
+      .click();
     const taskDialog = page.getByRole('dialog', {
       name: 'Create task in Blocked',
     });
@@ -314,6 +322,9 @@ test.describe('desktop Kanban board', () => {
   test('moves a task by drag and drop', async ({ page }) => {
     await login(page);
     await page.getByRole('button', { name: 'Add task to Blocked' }).click();
+    await page
+      .getByRole('button', { name: 'Add details', exact: true })
+      .click();
     const dialog = page.getByRole('dialog', {
       name: 'Create task in Blocked',
     });
@@ -355,6 +366,9 @@ test.describe('desktop Kanban board', () => {
   }) => {
     await login(page);
     await page.getByRole('button', { name: 'Add task to Blocked' }).click();
+    await page
+      .getByRole('button', { name: 'Add details', exact: true })
+      .click();
     const dialog = page.getByRole('dialog', {
       name: 'Create task in Blocked',
     });

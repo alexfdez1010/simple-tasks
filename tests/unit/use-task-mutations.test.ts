@@ -60,6 +60,59 @@ describe('useTaskMutations', () => {
     actions.update.mockResolvedValue({ success: true });
   });
 
+  /** Keeps a failed non-drag move mounted for retry and never overwrites task fields. */
+  it('moves through the dedicated action and retains state on a transport failure', async () => {
+    const setStatuses = vi.fn();
+    const refresh = vi.fn();
+    const announce = vi.fn();
+    const mutations = useTaskMutations({
+      statuses: BOARD,
+      setStatuses,
+      refresh,
+      announce,
+    });
+    actions.move.mockRejectedValueOnce(new Error('offline'));
+    expect(await mutations.moveTask('task-1', 'done')).toMatchObject({
+      success: false,
+    });
+    expect(setStatuses).not.toHaveBeenCalled();
+    expect(refresh).not.toHaveBeenCalled();
+    expect(await mutations.moveTask('task-1', 'done')).toMatchObject({
+      success: true,
+    });
+    expect(actions.move).toHaveBeenLastCalledWith({
+      id: 'task-1',
+      statusId: 'done',
+      index: 0,
+    });
+    expect(actions.update).not.toHaveBeenCalled();
+    expect(refresh).toHaveBeenCalledOnce();
+    expect(announce).toHaveBeenCalledWith('Task moved to Done.');
+  });
+
+  /** Removes failed optimistic creations while returning a retryable result to the form. */
+  it('rolls back creation when the server transport rejects', async () => {
+    const setStatuses = vi.fn();
+    const refresh = vi.fn();
+    actions.create.mockRejectedValueOnce(new Error('offline'));
+    const mutations = useTaskMutations({
+      statuses: BOARD,
+      setStatuses,
+      refresh,
+      announce: vi.fn(),
+    });
+    expect(
+      await mutations.create({
+        title: 'Draft',
+        description: '',
+        dueDate: '',
+        statusId: 'todo',
+      }),
+    ).toMatchObject({ success: false });
+    expect(setStatuses).toHaveBeenLastCalledWith(BOARD);
+    expect(refresh).not.toHaveBeenCalled();
+  });
+
   /** Proves successful creation reconciles the optimistic id with persistence. */
   it('replaces a temporary task id with the canonical server id', async () => {
     actions.create.mockResolvedValue({

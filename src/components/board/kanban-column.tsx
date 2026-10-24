@@ -6,7 +6,8 @@ import { useNumberFormatter } from '@react-aria/i18n';
 
 import { PlusIcon } from '@/components/board/icons';
 import { TaskCard } from '@/components/board/task-card';
-import { TaskDialog } from '@/components/board/task-dialog';
+import { useRef } from 'react';
+import { QuickTaskCreate } from '@/components/board/quick-task-create';
 import type {
   BoardStatus,
   MutationResult,
@@ -16,8 +17,13 @@ import type {
 import { useI18n } from '@/lib/i18n/provider';
 
 interface KanbanColumnProps {
+  statuses: BoardStatus[];
+  isCreating: boolean;
+  onStartCreate: () => void;
+  onStopCreate: () => void;
   status: BoardStatus;
   properties: PropertyDefinition[];
+  onMove: (taskId: string, statusId: string) => Promise<MutationResult>;
   onCreate: (values: TaskValues) => Promise<MutationResult>;
   onUpdate: (taskId: string, values: TaskValues) => Promise<MutationResult>;
   onDelete: (taskId: string) => Promise<MutationResult>;
@@ -31,12 +37,23 @@ interface KanbanColumnProps {
  */
 export function KanbanColumn({
   status,
+  statuses,
+  isCreating,
+  onStartCreate,
+  onStopCreate,
   properties,
+  onMove,
   onCreate,
   onUpdate,
   onDelete,
 }: KanbanColumnProps) {
   const { t } = useI18n();
+  const addRef = useRef<HTMLButtonElement>(null);
+  /** Returns focus to this column after capture is completed or cancelled. */
+  function closeCapture() {
+    onStopCreate();
+    addRef.current?.focus();
+  }
   const numberFormatter = useNumberFormatter();
   const taskCount = numberFormatter.format(status.tasks.length);
   const { ref: droppableRef, isDropTarget } = useDroppable({
@@ -49,6 +66,7 @@ export function KanbanColumn({
   return (
     <section
       className={`kanban-column ${isDropTarget ? 'is-drop-target' : ''}`}
+      data-status-id={status.id}
       aria-labelledby={`status-${status.id}`}
       style={{ '--status-color': status.color } as React.CSSProperties}
     >
@@ -80,25 +98,28 @@ export function KanbanColumn({
             </p>
           ) : null}
         </div>
-        <TaskDialog
-          createContext={status.name}
-          defaultStatusId={status.id}
-          properties={properties}
-          trigger={
-            <Button
-              className="column-add-button"
-              size="sm"
-              variant="ghost"
-              aria-label={t('task.addTo', { status: status.name })}
-            >
-              <PlusIcon className="size-3.5" />
-              {t('task.add')}
-            </Button>
-          }
-          onSave={onCreate}
-        />
+        <Button
+          ref={addRef}
+          className="column-add-button"
+          size="sm"
+          variant="ghost"
+          aria-label={t('task.addTo', { status: status.name })}
+          onPress={onStartCreate}
+          aria-expanded={isCreating}
+        >
+          <PlusIcon className="size-3.5" />
+          {t('task.add')}
+        </Button>
       </header>
 
+      {isCreating ? (
+        <QuickTaskCreate
+          status={status}
+          properties={properties}
+          onCreate={onCreate}
+          onClose={closeCapture}
+        />
+      ) : null}
       <div
         ref={droppableRef}
         className="kanban-task-list"
@@ -120,9 +141,11 @@ export function KanbanColumn({
             <div className="kanban-task-item" key={task.id} role="listitem">
               <TaskCard
                 task={task}
+                statuses={statuses}
                 status={status}
                 index={index}
                 properties={properties}
+                onMove={(statusId) => onMove(task.id, statusId)}
                 onSave={(values) => onUpdate(task.id, values)}
                 onDelete={() => onDelete(task.id)}
               />

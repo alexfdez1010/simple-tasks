@@ -2,6 +2,7 @@
 
 import { Button, Modal, Tabs, useOverlayState } from '@heroui/react';
 
+import { logoutAction } from '@/lib/auth/actions';
 import { SettingsIcon } from '@/components/board/icons';
 import { LanguageSettings } from '@/components/board/language-settings';
 import { PropertySettings } from '@/components/board/property-settings';
@@ -103,7 +104,12 @@ export function BoardSettings(props: BoardSettingsProps) {
                 </Tabs.Panel>
               </Tabs>
             </Modal.Body>
-            <Modal.Footer>
+            <Modal.Footer className="justify-between">
+              <form action={logoutAction}>
+                <Button className="min-h-11" type="submit" variant="ghost">
+                  {t('board.signOut')}
+                </Button>
+              </form>
               <Button slot="close">{t('settings.done')}</Button>
             </Modal.Footer>
           </Modal.Dialog>

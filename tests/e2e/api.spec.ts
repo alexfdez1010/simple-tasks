@@ -11,7 +11,10 @@ test('creates scoped tokens, performs REST operations and revokes access', async
     .getByLabel('Password', { exact: true })
     .fill(process.env.PASSWORD ?? 'dev-password');
   await page.getByRole('button', { name: 'Sign in', exact: true }).click();
-  await page.getByRole('link', { name: 'API', exact: true }).click();
+  await page.getByRole('link', { name: 'Connections', exact: true }).click();
+  await page
+    .getByRole('link', { name: 'Manage API access', exact: true })
+    .click();
   await expect(
     page.getByRole('heading', { level: 1, name: 'API access' }),
   ).toBeVisible();

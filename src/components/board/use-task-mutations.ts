@@ -1,5 +1,6 @@
 'use client';
 
+import { taskActionResult } from '@/components/board/task-action-result';
 import type { Dispatch, SetStateAction } from 'react';
 
 import {
@@ -60,13 +61,17 @@ export function useTaskMutations({
     const snapshot = cloneBoard(statuses);
     const optimisticId = `optimistic-${crypto.randomUUID()}`;
     setStatuses(addTask(snapshot, values, optimisticId));
-    const result = await createTaskAction({
-      title: values.title,
-      description: values.description || null,
-      dueDate: values.dueDate || null,
-      statusId: values.statusId,
-      propertyValues: values.propertyValues,
-    });
+    const result = await taskActionResult(
+      () =>
+        createTaskAction({
+          title: values.title,
+          description: values.description || null,
+          dueDate: values.dueDate || null,
+          statusId: values.statusId,
+          propertyValues: values.propertyValues,
+        }),
+      localize('task.retry'),
+    );
     if (!result.success) setStatuses(snapshot);
     else {
       const persistedId = result.data?.id;
@@ -91,21 +96,52 @@ export function useTaskMutations({
     const target = findTask(next, taskId);
     const statusChanged = previous?.status.id !== values.statusId;
     setStatuses(next);
-    const result = await updateTaskAction({
-      id: taskId,
-      title: values.title,
-      description: values.description || null,
-      dueDate: values.dueDate || null,
-      propertyValues: values.propertyValues,
-      ...(statusChanged
-        ? { statusId: values.statusId, index: target?.index ?? 0 }
-        : {}),
-    });
+    const result = await taskActionResult(
+      () =>
+        updateTaskAction({
+          id: taskId,
+          title: values.title,
+          description: values.description || null,
+          dueDate: values.dueDate || null,
+          propertyValues: values.propertyValues,
+          ...(statusChanged
+            ? { statusId: values.statusId, index: target?.index ?? 0 }
+            : {}),
+        }),
+      localize('task.saveFallback'),
+    );
     if (!result.success) {
       setStatuses(snapshot);
       return result;
     }
+    if (statusChanged)
+      announce(
+        localize('task.movedAnnouncement', {
+          status: target?.status.name ?? values.statusId,
+        }),
+      );
     refresh();
+    return result;
+  }
+
+  /** Moves without unmounting the inspector until persistence succeeds, retaining errors and selection. */
+  async function moveTask(
+    taskId: string,
+    statusId: string,
+  ): Promise<MutationResult> {
+    const result = await taskActionResult(
+      () => moveTaskAction({ id: taskId, statusId, index: 0 }),
+      localize('task.saveFallback'),
+    );
+    if (result.success) {
+      announce(
+        localize('task.movedAnnouncement', {
+          status:
+            statuses.find((status) => status.id === statusId)?.name ?? statusId,
+        }),
+      );
+      refresh();
+    }
     return result;
   }
 
@@ -155,5 +191,5 @@ export function useTaskMutations({
     }
   }
 
-  return { create, update, remove, persistDrag };
+  return { create, update, moveTask, remove, persistDrag };
 }

@@ -7,6 +7,7 @@ import { useI18n } from '@/lib/i18n/provider';
 
 interface ConfirmationDialogProps {
   body: string;
+  isDisabled?: boolean;
   buttonClassName?: string;
   dialogClassName?: string;
   confirmLabel: string;
@@ -25,6 +26,7 @@ interface ConfirmationDialogProps {
  */
 export function ConfirmationDialog({
   body,
+  isDisabled = false,
   buttonClassName,
   dialogClassName,
   confirmLabel,
@@ -49,6 +51,7 @@ export function ConfirmationDialog({
   return (
     <>
       <Button
+        isDisabled={isDisabled}
         className={buttonClassName}
         size="sm"
         variant={triggerVariant}

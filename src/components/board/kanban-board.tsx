@@ -9,6 +9,7 @@ import {
 import type { Dispatch, SetStateAction } from 'react';
 import { useRef } from 'react';
 
+import type { useBoardNavigation } from '@/components/board/use-board-navigation';
 import { cloneBoard } from '@/components/board/board-state';
 import { KanbanColumn } from '@/components/board/kanban-column';
 import type {
@@ -20,9 +21,11 @@ import type {
 import { useI18n } from '@/lib/i18n/provider';
 
 interface KanbanBoardProps {
+  navigation: ReturnType<typeof useBoardNavigation>;
   statuses: BoardStatus[];
   properties: PropertyDefinition[];
   setStatuses: Dispatch<SetStateAction<BoardStatus[]>>;
+  onMove: (taskId: string, statusId: string) => Promise<MutationResult>;
   onCreate: (values: TaskValues) => Promise<MutationResult>;
   onUpdate: (taskId: string, values: TaskValues) => Promise<MutationResult>;
   onDelete: (taskId: string) => Promise<MutationResult>;
@@ -62,15 +65,18 @@ function applyGroupedTasks(
  * @returns A responsive drag-and-drop Kanban board.
  */
 export function KanbanBoard({
+  navigation,
   statuses,
   properties,
   setStatuses,
+  onMove,
   onCreate,
   onUpdate,
   onDelete,
   onPersistDrag,
 }: KanbanBoardProps) {
   const { t } = useI18n();
+  const { boardRef, syncColumn } = navigation;
   const snapshotRef = useRef<BoardStatus[]>(statuses);
   const latestRef = useRef<BoardStatus[]>(statuses);
 
@@ -114,12 +120,22 @@ export function KanbanBoard({
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
-      <div className="kanban-board" aria-label={t('task.board')}>
+      <div
+        ref={boardRef}
+        onScroll={syncColumn}
+        className="kanban-board"
+        aria-label={t('task.board')}
+      >
         {statuses.map((status) => (
           <KanbanColumn
             key={status.id}
+            statuses={statuses}
+            isCreating={navigation.creatingId === status.id}
+            onStartCreate={() => navigation.startCreate(status.id)}
+            onStopCreate={navigation.stopCreate}
             status={status}
             properties={properties}
+            onMove={onMove}
             onCreate={onCreate}
             onUpdate={onUpdate}
             onDelete={onDelete}

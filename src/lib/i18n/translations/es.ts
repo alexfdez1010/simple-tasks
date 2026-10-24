@@ -1,3 +1,4 @@
+import { workspaceEs } from '@/lib/i18n/translations/workspace';
 import type { en } from '@/lib/i18n/translations/en';
 export const es: Record<keyof typeof en, string> = {
   'app.title': 'Tareas',
@@ -12,19 +13,17 @@ export const es: Record<keyof typeof en, string> = {
   'common.type': 'Tipo',
   'common.optional': 'Opcional',
   'board.skipToTaskBoard': 'Saltar al tablero de tareas',
+  ...workspaceEs,
   'board.title': 'Tareas',
   'board.ai': 'IA',
   'board.statistics': 'Estadísticas',
   'board.signOut': 'Cerrar sesión',
-  'board.summary': 'Resumen del tablero visible',
   'board.active.one': '{count} activa',
   'board.active.other': '{count} activas',
   'board.finished.one': '{count} finalizada',
   'board.finished.other': '{count} finalizadas',
   'board.visible.one': '{count} visible',
   'board.visible.other': '{count} visibles',
-  'board.progress.one': '{percentage}% de {count} tarea visible finalizada',
-  'board.progress.other': '{percentage}% de {count} tareas terminadas',
   'settings.ariaLabel': 'Ajustes · Configurar estados, propiedades e idioma',
   'settings.title': 'Ajustes',
   'settings.sections': 'Secciones de ajustes',

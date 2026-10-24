@@ -7,6 +7,7 @@ async function createTask(
   description = '',
 ): Promise<void> {
   await page.getByRole('button', { name: 'Add task to To do' }).click();
+  await page.getByRole('button', { name: 'Add details', exact: true }).click();
   const dialog = page.getByRole('dialog', { name: 'Create task in To do' });
   await dialog.getByLabel('Title').fill(title);
   if (description)
@@ -98,7 +99,11 @@ test('keeps Markdown navigation independent of task inspection', async ({
         route.fulfill({ body: 'Guide' }),
       );
     const card = page.getByRole('article', { name: title, exact: true });
-    const link = card.getByRole('link', { name: 'Guide' });
+    await card
+      .getByRole('button', { name: `Open details for ${title}` })
+      .click();
+    const dialog = page.getByRole('dialog', { name: title, exact: true });
+    const link = dialog.getByRole('link', { name: 'Guide' });
     for (const input of ['pointer', 'keyboard']) {
       const popupPromise = page.waitForEvent('popup');
       if (input === 'pointer') await link.click();
@@ -107,14 +112,9 @@ test('keeps Markdown navigation independent of task inspection', async ({
         await page.keyboard.press('Enter');
       }
       const popup = await popupPromise;
-      await expect(page.getByRole('dialog')).toHaveCount(0);
+      await expect(dialog).toBeVisible();
       await popup.close();
     }
-    await card
-      .locator('.task-description-preview')
-      .click({ position: { x: 5, y: 5 } });
-    const dialog = page.getByRole('dialog', { name: title, exact: true });
-    await expect(dialog).toBeVisible();
     await dialog.getByRole('button', { name: 'Cancel', exact: true }).click();
   } finally {
     await removeTask(page, title);

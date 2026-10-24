@@ -141,6 +141,9 @@ test.describe('desktop configurable properties', () => {
     await settings.getByRole('button', { exact: true, name: 'Done' }).click();
 
     await page.getByRole('button', { name: 'Add task to Blocked' }).click();
+    await page
+      .getByRole('button', { name: 'Add details', exact: true })
+      .click();
     const createDialog = page.getByRole('dialog', {
       name: 'Create task in Blocked',
     });
@@ -168,10 +171,25 @@ test.describe('desktop configurable properties', () => {
     await taskCreation;
 
     const card = page.getByRole('article', { name: TASK_TITLE });
-    await expect(card.getByText(UPDATED_PRIORITY_PROPERTY)).toBeVisible();
-    await expect(card.getByText('High', { exact: true })).toBeVisible();
-    await expect(card.getByText(AREAS_PROPERTY)).toBeVisible();
-    await expect(card.getByText('Frontend, Infra')).toBeVisible();
+    await page
+      .getByRole('button', { name: `Open details for ${TASK_TITLE}` })
+      .click();
+    await expect(
+      page.getByRole('dialog').getByText(UPDATED_PRIORITY_PROPERTY),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('dialog').getByText('High', { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('dialog').getByText(AREAS_PROPERTY),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('dialog').getByText('Frontend, Infra'),
+    ).toBeVisible();
+    await page
+      .getByRole('dialog')
+      .getByRole('button', { name: 'Cancel', exact: true })
+      .click();
 
     await page.getByRole('button', { name: `Edit ${TASK_TITLE}` }).click();
     const editDialog = page.getByRole('dialog', { name: 'Edit task' });
@@ -196,12 +214,33 @@ test.describe('desktop configurable properties', () => {
     await editDialog.getByRole('button', { name: 'Save' }).click();
     await taskUpdate;
 
-    await expect(card.getByText('Low', { exact: true })).toBeVisible();
-    await expect(card.getByText('Frontend, Infra, Backend')).toBeVisible();
+    await page
+      .getByRole('button', { name: `Open details for ${TASK_TITLE}` })
+      .click();
+    await expect(
+      page.getByRole('dialog').getByText('Low', { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('dialog').getByText('Frontend, Infra, Backend'),
+    ).toBeVisible();
+    await page
+      .getByRole('dialog')
+      .getByRole('button', { name: 'Cancel', exact: true })
+      .click();
     await page.reload();
-    const persisted = page.getByRole('article', { name: TASK_TITLE });
-    await expect(persisted.getByText('Low', { exact: true })).toBeVisible();
-    await expect(persisted.getByText('Frontend, Infra, Backend')).toBeVisible();
+    await page
+      .getByRole('button', { name: `Open details for ${TASK_TITLE}` })
+      .click();
+    await expect(
+      page.getByRole('dialog').getByText('Low', { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('dialog').getByText('Frontend, Infra, Backend'),
+    ).toBeVisible();
+    await page
+      .getByRole('dialog')
+      .getByRole('button', { name: 'Cancel', exact: true })
+      .click();
 
     await deleteTask(page, TASK_TITLE);
     await deleteLastProperty(page);

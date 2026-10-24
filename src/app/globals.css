@@ -12,6 +12,7 @@
 @import '../components/statistics/statistics-appearance.css';
 @import '../components/statistics/statistics-widget-themes.css';
 @import './glass.css';
+@import '../components/board/task-drawer.css';
 
 :root {
   --background: oklch(0.975 0.008 80);
@@ -24,6 +25,16 @@
   --accent: oklch(0.54 0.11 155);
   --accent-foreground: oklch(0.99 0.004 80);
   --danger: oklch(0.55 0.19 28);
+  --overlay: var(--surface);
+  --overlay-foreground: var(--foreground);
+  --field-background: var(--surface-secondary);
+  --field-foreground: var(--foreground);
+  --field-placeholder: var(--muted);
+  --field-border: var(--divider);
+  --field-hover: var(--surface-tertiary);
+  --field-focus: var(--surface-secondary);
+  --field-border-hover: var(--divider);
+  --field-border-focus: var(--accent);
   --default: var(--surface-secondary);
   --default-foreground: var(--foreground);
   --link: var(--foreground);

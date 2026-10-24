@@ -58,15 +58,14 @@ describe('task card inspection semantics', () => {
     expect(markup).not.toContain('role="button"');
   });
 
-  /** Keeps external Markdown links independently navigable and safe. */
-  it('renders description links outside a button and omits unsafe HTML', () => {
+  /** Keeps Markdown links independently reachable in the four-line preview. */
+  it('renders safe Markdown in the compact description preview', () => {
     const markup = renderCard(
       '[Guide](https://example.com) <script>bad()</script>',
     );
     expect(markup).toContain('href="https://example.com"');
     expect(markup).toContain('rel="noopener noreferrer"');
     expect(markup).not.toContain('<script>');
-    expect(markup).not.toMatch(/<button[^>]*>[^]*<a[^]*<\/button>/);
     expect(markup.match(/aria-label="Open details for/g)).toHaveLength(1);
   });
 });

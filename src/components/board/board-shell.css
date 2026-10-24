@@ -1,170 +1,59 @@
 .board-app {
-  position: relative;
-  isolation: isolate;
-  overflow-x: clip;
+  @apply relative isolate min-h-dvh overflow-x-clip;
 }
-
 .skip-link {
-  position: fixed;
-  z-index: 50;
-  inset: 0 auto auto 1rem;
-  translate: 0 -140%;
-  border-radius: 0 0 0.625rem 0.625rem;
-  background: var(--accent);
-  color: var(--accent-foreground);
-  padding: 0.625rem 0.875rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  transition: translate 120ms ease;
+  @apply fixed top-0 left-4 z-50 -translate-y-full rounded-b-lg bg-accent px-4 py-3 text-sm text-accent-foreground;
 }
-
 .skip-link:focus {
-  translate: 0 0;
+  @apply translate-y-0;
 }
-
 .board-toolbar-wrap {
-  position: relative;
-  z-index: 10;
-  padding: 0.75rem 1rem 0;
+  @apply sticky top-0 z-10 bg-background px-3 pt-3 pb-2 md:relative md:px-6 md:pt-6;
+  padding-top: max(0.75rem, env(safe-area-inset-top));
+  padding-inline-start: max(0.75rem, env(safe-area-inset-left));
+  padding-inline-end: max(0.75rem, env(safe-area-inset-right));
 }
-
 .board-toolbar {
-  @apply grid min-w-0 items-center;
-  max-width: 1800px;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0.75rem 1rem;
-  margin-inline: auto;
-  border: 1px solid color-mix(in oklab, var(--divider) 76%, transparent);
-  border-radius: 1.25rem;
-  background: color-mix(in oklab, var(--surface) 86%, transparent);
-  box-shadow:
-    0 1px 0 color-mix(in oklab, white 70%, transparent) inset,
-    0 10px 30px color-mix(in oklab, var(--foreground) 7%, transparent);
-  padding: 0.75rem;
-  backdrop-filter: blur(18px) saturate(120%);
+  @apply mx-auto grid max-w-[1800px] min-w-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-2;
 }
-
 .board-mark {
-  width: 2.5rem;
-  height: 2.5rem;
-  flex: none;
-  filter: drop-shadow(
-    0 5px 9px color-mix(in oklab, var(--foreground) 14%, transparent)
-  );
+  @apply size-8 shrink-0;
 }
-
+.board-create {
+  @apply col-start-2 row-start-1;
+}
 .board-actions {
-  @apply flex min-w-0 flex-wrap items-center gap-1;
+  @apply col-span-2 grid min-w-0 grid-cols-4 items-center gap-0.5 border-b border-divider;
 }
-
-.board-actions form {
-  display: flex;
-}
-
-.board-action-button,
 .board-action-link {
-  @apply min-h-11 min-w-11 shrink-0;
+  @apply flex min-h-11 min-w-11 w-full items-center md:w-auto justify-center rounded-lg px-1 text-xs font-medium text-muted sm:px-3 sm:text-sm;
 }
-
-.board-action-link {
-  @apply inline-flex items-center justify-center;
-  padding-inline: 0.75rem;
+.board-action-link[aria-current='page'] {
+  @apply text-foreground;
 }
-
-.board-metrics {
-  @apply grid min-w-0 items-center;
-  grid-column: 1 / -1;
-  grid-template-columns: minmax(0, 1fr) minmax(0, auto);
-  grid-template-areas: 'copy visible' 'progress progress';
-  gap: 0.625rem;
-  border-top: 1px solid color-mix(in oklab, var(--divider) 68%, transparent);
-  padding: 0.625rem 0.25rem 0.125rem;
+.board-action-link:hover {
+  @apply bg-surface-secondary text-foreground;
 }
-
-.board-metric-copy,
-.board-visible-count {
-  @apply min-w-0;
-  color: var(--muted);
-  font-size: 0.6875rem;
-  overflow-wrap: anywhere;
+.board-action-button {
+  @apply min-h-11 min-w-11 gap-1 px-1 text-xs sm:px-3 sm:text-sm;
 }
-
-.board-metric-copy {
-  grid-area: copy;
+.board-action-button > svg {
+  @apply hidden sm:block;
 }
-
-.board-visible-count {
-  grid-area: visible;
-  text-align: end;
+.board-column-navigation {
+  @apply col-span-2 min-w-0 md:hidden;
 }
-
-.board-progress {
-  grid-area: progress;
-  min-width: 0;
-}
-
-.board-progress-track {
-  height: 0.25rem;
-  overflow: hidden;
-  border-radius: 999px;
-  background: var(--surface-tertiary);
-}
-
-.board-progress-fill {
-  border-radius: inherit;
-  background: var(--accent);
-}
-
 .board-workspace {
-  position: relative;
-  z-index: 1;
-  padding-block: 1rem 1.5rem;
+  @apply relative z-0 pt-2 pb-6 md:pt-6;
 }
-
 @media (min-width: 768px) {
-  .board-toolbar-wrap {
-    padding: 1rem 1.5rem 0;
-  }
-
   .board-toolbar {
-    grid-template-columns: auto minmax(0, 1fr);
-    padding: 0.875rem 1rem;
+    @apply grid-cols-[auto_minmax(0,1fr)_auto] gap-6;
   }
-
   .board-actions {
-    justify-self: end;
-    justify-content: end;
+    @apply col-span-1 col-start-2 row-start-1 flex justify-end border-0;
   }
-
-  .board-metrics {
-    grid-template-columns: minmax(0, auto) minmax(4rem, 1fr) minmax(0, auto);
-    grid-template-areas: 'copy progress visible';
-  }
-
-  .board-workspace {
-    padding-block: 1.25rem 2rem;
-  }
-}
-
-@media (min-width: 1200px) {
-  .board-toolbar {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-  }
-
-  .board-actions {
-    grid-column: 3;
-  }
-
-  .board-metrics {
-    grid-column: 2;
-    grid-row: 1;
-    border-top: 0;
-    padding: 0 1rem;
-  }
-}
-
-@media (forced-colors: active) {
-  .board-app::before {
-    display: none;
+  .board-create {
+    @apply col-start-3;
   }
 }

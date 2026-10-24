@@ -36,12 +36,25 @@ Your deployment, database, credentials, and task data stay under your control.
 - Keep active work ordered by deadline and finished work ordered by completion date.
 - Switch the complete interface between English and Spanish.
 
-On phones, navigation has its own wrapping row so the board title and every
-action stay readable, including in Spanish. Use the skip link to focus the
-board directly. Each task has one keyboard-accessible title button: press
-Enter or Space to inspect it, or click the card content. Markdown links open
-independently without opening the inspector. Long titles and exact KPI values
-wrap inside their own cards, including compact statistic formats.
+Use **New task** to capture work in the selected column, or **Add** in any column.
+Enter a title and press Enter or **Create task**. Escape or **Cancel** closes the
+inline form. **Add details** opens the complete editor with the title retained;
+cancelling that editor returns to the inline draft. Failed saves preserve input.
+
+Cards show the title, up to four lines of Markdown description, configured
+Responsable/Assignee and the relevant date.
+Open the title to read Markdown and all properties in the inspector; **Edit**
+opens its form. The inspector is a side panel on desktop and a bottom sheet on
+phones, with explicit Save/Cancel actions and a reachable footer. Use **Move to**
+and **Move task** as an alternative to pointer, touch or keyboard dragging.
+
+On phones, **Go to column** jumps horizontally without moving the page. Native
+scrolling updates the selection, and **New task** targets that selected column.
+Named navigation and frequent controls retain 44 px touch targets at 320 px.
+**Settings** contains workflow, properties, language and Sign out.
+**Connections** offers the agent/MCP and application/API setup paths. Existing
+setup URLs and credential behavior remain unchanged. The board shows per-column
+counts rather than a completion percentage computed from a partial history.
 
 The default workflow — **Blocked**, **To do**, **In progress**, and **Done** — is
 ready immediately, but none of those labels has to define your process.
@@ -75,7 +88,7 @@ light area fill with straight segments between observed buckets.
 
 ## Connect your own tools through REST
 
-Open **API** from the board to create a named read-only or read/write token,
+Open **Connections → Manage API access** from the board to create a named read-only or read/write token,
 copy its secret once, view its identifying hint and last use, or revoke it.
 Tokens never expire. Only credential hashes are stored in PostgreSQL.
 

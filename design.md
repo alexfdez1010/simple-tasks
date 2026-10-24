@@ -4,6 +4,22 @@ This document is the source of truth for the product's visual language,
 interaction model, accessibility, and responsive behavior. HeroUI v3 provides
 the accessible primitives; Tailwind CSS 4 provides layout and product styling.
 
+## Approved simplicity and mobile refinement — 2026-10-24
+
+- Approved by Alejandro: prioritize ease of use on mobile while retaining a clear developer integration path. Operate mode; retain Geist, warm neutrals, forest accent and existing data contracts.
+- Header: brand and one primary New task action; named Board, Statistics, Connections and Settings controls. Move Sign out into Settings. Remove global completion percentages because terminal columns show only a preview.
+- Capture: Add in a column opens an inline title field. Enter creates, Escape cancels; Add details opens the complete editor with the draft retained. The global action targets the visible mobile column (first non-terminal column initially).
+- Cards: neutral surfaces with title, configured assignee (Responsable/Assignee), and due date or completion date. Alejandro explicitly requested description previews: show up to four lines of Markdown on cards, retaining independent links. Complete descriptions and other properties remain in the inspector. Preserve one semantic title trigger, a drag handle and an explicit edit action.
+- Detail: HeroUI Drawer, right-side on desktop and bottom sheet on phones. Keep the board behind it, trap and restore focus, keep footer reachable above safe areas; do not dismiss unsaved edits by outside click or dragging. Explicit Save/Cancel, retain drafts on failure.
+- Movement: visible Move to control in the inspector, supporting click, touch and keyboard; inject the same task mutation used by editing. State choices come from configured workflow states, never hard-coded names. Completion and sorting invariants stay server-owned.
+- Mobile: sticky compact two-row header, 44px targets, labelled column selector with counts. Selection scrolls to the column; manual scrolling updates the selector. Do not force vertical page jumps. Columns stay horizontally scrollable and all states stay available for dragging.
+- Connections: one protected page links to agent/MCP setup and application/API access with concise next steps. Credentials retain current reveal/copy/permission behavior. Never fabricate connection health.
+- Visual grammar: task titles 14px/medium, secondary data 12px; quiet neutral cards, restrained status dot, no per-card gradients/colored rails. Motion only for state and panel transitions, disabled with reduced motion.
+- SOLID: capture, navigation, task summary and drawer footer each own one responsibility (SRP); views depend on narrow injected mutation callbacks (ISP/DIP). Compose existing services and components (OCP), keeping TaskValues and persistence behavior interchangeable (LSP).
+- Proof: title-only capture, draft promotion, cancel/error recovery, edit/delete, pointer/touch/keyboard moves, terminal completion, settings/language, connections; 320/390/768/1440px, Spanish/English, light/dark and long content. Run lint-format, unit/integration/E2E, production build and bounded visual review before publishing main.
+- Implementation memory: retain the incumbent palette and Geist families. Cards use 14px semibold titles, 13px Markdown previews and 12px metadata; description previews clamp to four lines and expand while a link inside has keyboard focus. HeroUI field and overlay aliases reference existing semantic colors, so system dark mode also reaches portaled controls without a second palette.
+- Recorded verification: 168 unit, 21 integration, 44 browser and 7 focused browser checks passed. The scoped detector returned `[]`. Board, detail and Connections evidence in `.impeccable/review/` covers desktop, mobile and mobile dark mode; phone board/detail captures use the viewport because Chromium full-page stitching misrepresents fixed panels. This approved section takes precedence over historical header, card, creation and drag-only descriptions below; the incumbent system has not been reformatted or expanded.
+
 ## 1. Product foundation
 
 - Product name: Tasks

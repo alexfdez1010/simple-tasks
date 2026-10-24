@@ -98,6 +98,9 @@ test.describe('mobile configurable properties', () => {
       'Personal',
     ]);
     await page.getByRole('button', { name: 'Add task to Blocked' }).click();
+    await page
+      .getByRole('button', { name: 'Add details', exact: true })
+      .click();
     const createDialog = page.getByRole('dialog', {
       name: 'Create task in Blocked',
     });
@@ -120,8 +123,19 @@ test.describe('mobile configurable properties', () => {
     await taskCreation;
 
     const card = page.getByRole('article', { name: TASK_TITLE });
-    await expect(card.getByText('Urgent', { exact: true })).toBeVisible();
-    await expect(card.getByText('Home, Work')).toBeVisible();
+    await page
+      .getByRole('button', { name: `Open details for ${TASK_TITLE}` })
+      .click();
+    await expect(
+      page.getByRole('dialog').getByText('Urgent', { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('dialog').getByText('Home, Work'),
+    ).toBeVisible();
+    await page
+      .getByRole('dialog')
+      .getByRole('button', { name: 'Cancel', exact: true })
+      .click();
 
     await page.getByRole('button', { name: `Edit ${TASK_TITLE}` }).click();
     const editDialog = page.getByRole('dialog', { name: 'Edit task' });
@@ -141,14 +155,30 @@ test.describe('mobile configurable properties', () => {
     await editDialog.getByRole('button', { name: 'Save' }).click();
     await taskUpdate;
 
-    await expect(card.getByText('Normal', { exact: true })).toBeVisible();
-    await expect(card.getByText('Home, Work, Personal')).toBeVisible();
-    await page.reload();
+    await page
+      .getByRole('button', { name: `Open details for ${TASK_TITLE}` })
+      .click();
     await expect(
-      page
-        .getByRole('article', { name: TASK_TITLE })
-        .getByText('Home, Work, Personal'),
+      page.getByRole('dialog').getByText('Normal', { exact: true }),
     ).toBeVisible();
+    await expect(
+      page.getByRole('dialog').getByText('Home, Work, Personal'),
+    ).toBeVisible();
+    await page
+      .getByRole('dialog')
+      .getByRole('button', { name: 'Cancel', exact: true })
+      .click();
+    await page.reload();
+    await page
+      .getByRole('button', { name: `Open details for ${TASK_TITLE}` })
+      .click();
+    await expect(
+      page.getByRole('dialog').getByText('Home, Work, Personal'),
+    ).toBeVisible();
+    await page
+      .getByRole('dialog')
+      .getByRole('button', { name: 'Cancel', exact: true })
+      .click();
 
     await page.getByRole('button', { name: `Edit ${TASK_TITLE}` }).click();
     const deleteDialog = page.getByRole('dialog', { name: 'Edit task' });

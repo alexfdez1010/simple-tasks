@@ -2,12 +2,11 @@
 
 import { Button, Card, useOverlayState } from '@heroui/react';
 import { useSortable } from '@dnd-kit/react/sortable';
-import { useDateFormatter } from '@react-aria/i18n';
 
-import { CalendarIcon, GripIcon } from '@/components/board/icons';
-import { Markdown } from '@/components/board/markdown';
+import { GripIcon } from '@/components/board/icons';
 import { TaskDialog } from '@/components/board/task-dialog';
-import { TaskPropertySummary } from '@/components/board/task-property-summary';
+import { Markdown } from '@/components/board/markdown';
+import { TaskCardMeta } from '@/components/board/task-card-meta';
 import type {
   BoardTask,
   BoardStatus,
@@ -20,8 +19,10 @@ import { useI18n } from '@/lib/i18n/provider';
 interface TaskCardProps {
   task: BoardTask;
   status: BoardStatus;
+  statuses?: BoardStatus[];
   index: number;
   properties: PropertyDefinition[];
+  onMove?: (statusId: string) => Promise<MutationResult>;
   onSave: (values: TaskValues) => Promise<MutationResult>;
   onDelete: () => Promise<MutationResult>;
 }
@@ -35,19 +36,15 @@ interface TaskCardProps {
 export function TaskCard({
   task,
   status,
+  statuses = [],
   index,
   properties,
+  onMove,
   onSave,
   onDelete,
 }: TaskCardProps) {
   const { t } = useI18n();
   const detailState = useOverlayState();
-  const dateFormatter = useDateFormatter({
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-    timeZone: 'UTC',
-  });
   const {
     ref: sortableRef,
     handleRef,
@@ -120,48 +117,16 @@ export function TaskCard({
           />
         </Card.Header>
 
-        <div>
-          {task.description ? (
-            <Card.Content className="task-description-preview mx-3 mb-2.5 ms-16 text-[13px] text-muted md:ms-12">
-              <Markdown>{task.description}</Markdown>
-            </Card.Content>
-          ) : null}
-
-          {task.propertyValues.length > 0 ? (
-            <Card.Content className="mx-3 mb-2.5 ms-16 md:ms-12">
-              <TaskPropertySummary
-                properties={properties}
-                values={task.propertyValues}
-              />
-            </Card.Content>
-          ) : null}
-
-          {task.completedAt || task.dueDate ? (
-            <Card.Footer className="task-card-footer ms-16 md:ms-12">
-              {task.completedAt ? (
-                <p className="task-date-chip task-date-chip-completed">
-                  <CalendarIcon className="size-3" />
-                  <span>{t('task.completedAt')}</span>
-                  <time dateTime={task.completedAt}>
-                    {dateFormatter.format(new Date(task.completedAt))}
-                  </time>
-                </p>
-              ) : null}
-              {task.dueDate ? (
-                <p className="task-date-chip">
-                  <CalendarIcon className="size-3" />
-                  <time dateTime={task.dueDate}>
-                    {t('task.due', {
-                      date: dateFormatter.format(new Date(task.dueDate)),
-                    })}
-                  </time>
-                </p>
-              ) : null}
-            </Card.Footer>
-          ) : null}
-        </div>
+        {task.description ? (
+          <Card.Content className="task-description-preview mx-3 mb-3 text-[13px] leading-5 text-muted">
+            <Markdown>{task.description}</Markdown>
+          </Card.Content>
+        ) : null}
+        <TaskCardMeta task={task} properties={properties} />
         <TaskDialog
           mode="view"
+          statuses={statuses}
+          onMove={onMove}
           state={detailState}
           task={task}
           status={status}

@@ -111,14 +111,16 @@ test.describe('mobile Kanban board', () => {
       'position',
       'sticky',
     );
-    await expectTouchTarget(page.getByRole('link', { name: 'AI' }));
+    await expectTouchTarget(page.getByRole('link', { name: 'Connections' }));
     await expectTouchTarget(page.getByRole('button', { name: /Settings/ }));
-    await expectTouchTarget(page.getByRole('button', { name: 'Sign out' }));
     await expectTouchTarget(
       page.getByRole('button', { name: 'Add task to Blocked' }),
     );
 
     await page.getByRole('button', { name: 'Add task to Blocked' }).click();
+    await page
+      .getByRole('button', { name: 'Add details', exact: true })
+      .click();
     const dialog = page.getByRole('dialog', {
       name: 'Create task in Blocked',
     });
