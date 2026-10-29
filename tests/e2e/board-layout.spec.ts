@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { expectCenteredSelectText } from './select-alignment';
 
 for (const width of [768, 900, 1440]) {
   for (const language of ['en', 'es'] as const) {
@@ -28,6 +29,7 @@ for (const width of [768, 900, 1440]) {
           exact: true,
         }),
       ).toBeVisible();
+      await expectCenteredSelectText(page);
       const toolbar = page.locator('.workspace-header');
       for (const control of await toolbar
         .locator('a:visible, button:visible')

@@ -103,6 +103,10 @@ textarea,
   outline-offset: 3px;
 }
 
+[data-slot='select-trigger'] {
+  @apply items-center;
+}
+
 ::selection {
   background: color-mix(in oklab, var(--accent) 25%, var(--surface));
   color: var(--foreground);

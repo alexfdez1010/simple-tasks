@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { expectCenteredSelectText } from './select-alignment';
 
 for (const width of [320, 390])
   for (const language of ['en', 'es'] as const) {
@@ -28,6 +29,7 @@ for (const width of [320, 390])
           exact: true,
         }),
       ).toBeVisible();
+      await expectCenteredSelectText(page);
       expect(
         await page.evaluate(
           () => document.documentElement.scrollWidth - innerWidth,
@@ -54,5 +56,6 @@ for (const width of [320, 390])
           name: language === 'es' ? /^Título/ : /^Title/,
         }),
       ).toBeFocused();
+      await expectCenteredSelectText(page);
     });
   }
