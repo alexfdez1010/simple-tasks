@@ -1,0 +1,778 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-29T12:15:31.365904+00:00",
+  "title": "Design System: Tasks",
+  "extensions": {
+    "colorMeta": {
+      "workspace-background-light": {
+        "role": "neutral",
+        "displayName": "Workspace Background Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.00171 247.84)",
+          "oklch(0.2643 0.00171 247.84)",
+          "oklch(0.3786 0.00171 247.84)",
+          "oklch(0.4929 0.00171 247.84)",
+          "oklch(0.6071 0.00171 247.84)",
+          "oklch(0.7214 0.00171 247.84)",
+          "oklch(0.8357 0.00171 247.84)",
+          "oklch(0.9500 0.00171 247.84)"
+        ]
+      },
+      "workspace-foreground-light": {
+        "role": "neutral",
+        "displayName": "Workspace Foreground Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.01315 253.03)",
+          "oklch(0.2643 0.01315 253.03)",
+          "oklch(0.3786 0.01315 253.03)",
+          "oklch(0.4929 0.01315 253.03)",
+          "oklch(0.6071 0.01315 253.03)",
+          "oklch(0.7214 0.01315 253.03)",
+          "oklch(0.8357 0.01315 253.03)",
+          "oklch(0.9500 0.01315 253.03)"
+        ]
+      },
+      "workspace-surface-light": {
+        "role": "neutral",
+        "displayName": "Workspace Surface Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.00000 89.88)",
+          "oklch(0.2643 0.00000 89.88)",
+          "oklch(0.3786 0.00000 89.88)",
+          "oklch(0.4929 0.00000 89.88)",
+          "oklch(0.6071 0.00000 89.88)",
+          "oklch(0.7214 0.00000 89.88)",
+          "oklch(0.8357 0.00000 89.88)",
+          "oklch(0.9500 0.00000 89.88)"
+        ]
+      },
+      "workspace-surface-secondary-light": {
+        "role": "neutral",
+        "displayName": "Workspace Surface Secondary Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.00344 247.86)",
+          "oklch(0.2643 0.00344 247.86)",
+          "oklch(0.3786 0.00344 247.86)",
+          "oklch(0.4929 0.00344 247.86)",
+          "oklch(0.6071 0.00344 247.86)",
+          "oklch(0.7214 0.00344 247.86)",
+          "oklch(0.8357 0.00344 247.86)",
+          "oklch(0.9500 0.00344 247.86)"
+        ]
+      },
+      "workspace-surface-tertiary-light": {
+        "role": "neutral",
+        "displayName": "Workspace Surface Tertiary Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.00630 255.48)",
+          "oklch(0.2643 0.00630 255.48)",
+          "oklch(0.3786 0.00630 255.48)",
+          "oklch(0.4929 0.00630 255.48)",
+          "oklch(0.6071 0.00630 255.48)",
+          "oklch(0.7214 0.00630 255.48)",
+          "oklch(0.8357 0.00630 255.48)",
+          "oklch(0.9500 0.00630 255.48)"
+        ]
+      },
+      "workspace-muted-light": {
+        "role": "neutral",
+        "displayName": "Workspace Muted Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.01859 254.00)",
+          "oklch(0.2643 0.01859 254.00)",
+          "oklch(0.3786 0.01859 254.00)",
+          "oklch(0.4929 0.01859 254.00)",
+          "oklch(0.6071 0.01859 254.00)",
+          "oklch(0.7214 0.01859 254.00)",
+          "oklch(0.8357 0.01859 254.00)",
+          "oklch(0.9500 0.01859 254.00)"
+        ]
+      },
+      "workspace-divider-light": {
+        "role": "neutral",
+        "displayName": "Workspace Divider Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.00983 252.82)",
+          "oklch(0.2643 0.00983 252.82)",
+          "oklch(0.3786 0.00983 252.82)",
+          "oklch(0.4929 0.00983 252.82)",
+          "oklch(0.6071 0.00983 252.82)",
+          "oklch(0.7214 0.00983 252.82)",
+          "oklch(0.8357 0.00983 252.82)",
+          "oklch(0.9500 0.00983 252.82)"
+        ]
+      },
+      "workspace-accent-light": {
+        "role": "primary",
+        "displayName": "Workspace Accent Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.06518 161.58)",
+          "oklch(0.2643 0.06518 161.58)",
+          "oklch(0.3786 0.06518 161.58)",
+          "oklch(0.4929 0.06518 161.58)",
+          "oklch(0.6071 0.06518 161.58)",
+          "oklch(0.7214 0.06518 161.58)",
+          "oklch(0.8357 0.06518 161.58)",
+          "oklch(0.9500 0.06518 161.58)"
+        ]
+      },
+      "workspace-accent-foreground-light": {
+        "role": "neutral",
+        "displayName": "Workspace Accent Foreground Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.00000 89.88)",
+          "oklch(0.2643 0.00000 89.88)",
+          "oklch(0.3786 0.00000 89.88)",
+          "oklch(0.4929 0.00000 89.88)",
+          "oklch(0.6071 0.00000 89.88)",
+          "oklch(0.7214 0.00000 89.88)",
+          "oklch(0.8357 0.00000 89.88)",
+          "oklch(0.9500 0.00000 89.88)"
+        ]
+      },
+      "workspace-background-dark": {
+        "role": "neutral",
+        "displayName": "Workspace Background Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.00902 255.61)",
+          "oklch(0.2643 0.00902 255.61)",
+          "oklch(0.3786 0.00902 255.61)",
+          "oklch(0.4929 0.00902 255.61)",
+          "oklch(0.6071 0.00902 255.61)",
+          "oklch(0.7214 0.00902 255.61)",
+          "oklch(0.8357 0.00902 255.61)",
+          "oklch(0.9500 0.00902 255.61)"
+        ]
+      },
+      "workspace-foreground-dark": {
+        "role": "neutral",
+        "displayName": "Workspace Foreground Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.00580 264.53)",
+          "oklch(0.2643 0.00580 264.53)",
+          "oklch(0.3786 0.00580 264.53)",
+          "oklch(0.4929 0.00580 264.53)",
+          "oklch(0.6071 0.00580 264.53)",
+          "oklch(0.7214 0.00580 264.53)",
+          "oklch(0.8357 0.00580 264.53)",
+          "oklch(0.9500 0.00580 264.53)"
+        ]
+      },
+      "workspace-surface-dark": {
+        "role": "neutral",
+        "displayName": "Workspace Surface Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.01252 258.37)",
+          "oklch(0.2643 0.01252 258.37)",
+          "oklch(0.3786 0.01252 258.37)",
+          "oklch(0.4929 0.01252 258.37)",
+          "oklch(0.6071 0.01252 258.37)",
+          "oklch(0.7214 0.01252 258.37)",
+          "oklch(0.8357 0.01252 258.37)",
+          "oklch(0.9500 0.01252 258.37)"
+        ]
+      },
+      "workspace-surface-secondary-dark": {
+        "role": "neutral",
+        "displayName": "Workspace Surface Secondary Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.01434 256.78)",
+          "oklch(0.2643 0.01434 256.78)",
+          "oklch(0.3786 0.01434 256.78)",
+          "oklch(0.4929 0.01434 256.78)",
+          "oklch(0.6071 0.01434 256.78)",
+          "oklch(0.7214 0.01434 256.78)",
+          "oklch(0.8357 0.01434 256.78)",
+          "oklch(0.9500 0.01434 256.78)"
+        ]
+      },
+      "workspace-surface-tertiary-dark": {
+        "role": "neutral",
+        "displayName": "Workspace Surface Tertiary Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.01816 254.76)",
+          "oklch(0.2643 0.01816 254.76)",
+          "oklch(0.3786 0.01816 254.76)",
+          "oklch(0.4929 0.01816 254.76)",
+          "oklch(0.6071 0.01816 254.76)",
+          "oklch(0.7214 0.01816 254.76)",
+          "oklch(0.8357 0.01816 254.76)",
+          "oklch(0.9500 0.01816 254.76)"
+        ]
+      },
+      "workspace-muted-dark": {
+        "role": "neutral",
+        "displayName": "Workspace Muted Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.01991 255.56)",
+          "oklch(0.2643 0.01991 255.56)",
+          "oklch(0.3786 0.01991 255.56)",
+          "oklch(0.4929 0.01991 255.56)",
+          "oklch(0.6071 0.01991 255.56)",
+          "oklch(0.7214 0.01991 255.56)",
+          "oklch(0.8357 0.01991 255.56)",
+          "oklch(0.9500 0.01991 255.56)"
+        ]
+      },
+      "workspace-divider-dark": {
+        "role": "neutral",
+        "displayName": "Workspace Divider Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.01984 254.06)",
+          "oklch(0.2643 0.01984 254.06)",
+          "oklch(0.3786 0.01984 254.06)",
+          "oklch(0.4929 0.01984 254.06)",
+          "oklch(0.6071 0.01984 254.06)",
+          "oklch(0.7214 0.01984 254.06)",
+          "oklch(0.8357 0.01984 254.06)",
+          "oklch(0.9500 0.01984 254.06)"
+        ]
+      },
+      "workspace-accent-dark": {
+        "role": "primary",
+        "displayName": "Workspace Accent Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.05457 156.80)",
+          "oklch(0.2643 0.05457 156.80)",
+          "oklch(0.3786 0.05457 156.80)",
+          "oklch(0.4929 0.05457 156.80)",
+          "oklch(0.6071 0.05457 156.80)",
+          "oklch(0.7214 0.05457 156.80)",
+          "oklch(0.8357 0.05457 156.80)",
+          "oklch(0.9500 0.05457 156.80)"
+        ]
+      },
+      "workspace-accent-foreground-dark": {
+        "role": "neutral",
+        "displayName": "Workspace Accent Foreground Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.02668 157.50)",
+          "oklch(0.2643 0.02668 157.50)",
+          "oklch(0.3786 0.02668 157.50)",
+          "oklch(0.4929 0.02668 157.50)",
+          "oklch(0.6071 0.02668 157.50)",
+          "oklch(0.7214 0.02668 157.50)",
+          "oklch(0.8357 0.02668 157.50)",
+          "oklch(0.9500 0.02668 157.50)"
+        ]
+      },
+      "retained-background-light": {
+        "role": "neutral",
+        "displayName": "Retained Background Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.00800 80.00)",
+          "oklch(0.2643 0.00800 80.00)",
+          "oklch(0.3786 0.00800 80.00)",
+          "oklch(0.4929 0.00800 80.00)",
+          "oklch(0.6071 0.00800 80.00)",
+          "oklch(0.7214 0.00800 80.00)",
+          "oklch(0.8357 0.00800 80.00)",
+          "oklch(0.9500 0.00800 80.00)"
+        ]
+      },
+      "retained-foreground-light": {
+        "role": "neutral",
+        "displayName": "Retained Foreground Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.01200 65.00)",
+          "oklch(0.2643 0.01200 65.00)",
+          "oklch(0.3786 0.01200 65.00)",
+          "oklch(0.4929 0.01200 65.00)",
+          "oklch(0.6071 0.01200 65.00)",
+          "oklch(0.7214 0.01200 65.00)",
+          "oklch(0.8357 0.01200 65.00)",
+          "oklch(0.9500 0.01200 65.00)"
+        ]
+      },
+      "retained-surface-light": {
+        "role": "neutral",
+        "displayName": "Retained Surface Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.00400 80.00)",
+          "oklch(0.2643 0.00400 80.00)",
+          "oklch(0.3786 0.00400 80.00)",
+          "oklch(0.4929 0.00400 80.00)",
+          "oklch(0.6071 0.00400 80.00)",
+          "oklch(0.7214 0.00400 80.00)",
+          "oklch(0.8357 0.00400 80.00)",
+          "oklch(0.9500 0.00400 80.00)"
+        ]
+      },
+      "retained-surface-secondary-light": {
+        "role": "neutral",
+        "displayName": "Retained Surface Secondary Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.00900 78.00)",
+          "oklch(0.2643 0.00900 78.00)",
+          "oklch(0.3786 0.00900 78.00)",
+          "oklch(0.4929 0.00900 78.00)",
+          "oklch(0.6071 0.00900 78.00)",
+          "oklch(0.7214 0.00900 78.00)",
+          "oklch(0.8357 0.00900 78.00)",
+          "oklch(0.9500 0.00900 78.00)"
+        ]
+      },
+      "retained-surface-tertiary-light": {
+        "role": "neutral",
+        "displayName": "Retained Surface Tertiary Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.01200 76.00)",
+          "oklch(0.2643 0.01200 76.00)",
+          "oklch(0.3786 0.01200 76.00)",
+          "oklch(0.4929 0.01200 76.00)",
+          "oklch(0.6071 0.01200 76.00)",
+          "oklch(0.7214 0.01200 76.00)",
+          "oklch(0.8357 0.01200 76.00)",
+          "oklch(0.9500 0.01200 76.00)"
+        ]
+      },
+      "retained-muted-light": {
+        "role": "neutral",
+        "displayName": "Retained Muted Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.01800 65.00)",
+          "oklch(0.2643 0.01800 65.00)",
+          "oklch(0.3786 0.01800 65.00)",
+          "oklch(0.4929 0.01800 65.00)",
+          "oklch(0.6071 0.01800 65.00)",
+          "oklch(0.7214 0.01800 65.00)",
+          "oklch(0.8357 0.01800 65.00)",
+          "oklch(0.9500 0.01800 65.00)"
+        ]
+      },
+      "retained-divider-light": {
+        "role": "neutral",
+        "displayName": "Retained Divider Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.01400 72.00)",
+          "oklch(0.2643 0.01400 72.00)",
+          "oklch(0.3786 0.01400 72.00)",
+          "oklch(0.4929 0.01400 72.00)",
+          "oklch(0.6071 0.01400 72.00)",
+          "oklch(0.7214 0.01400 72.00)",
+          "oklch(0.8357 0.01400 72.00)",
+          "oklch(0.9500 0.01400 72.00)"
+        ]
+      },
+      "retained-accent-light": {
+        "role": "primary",
+        "displayName": "Retained Accent Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.11000 155.00)",
+          "oklch(0.2643 0.11000 155.00)",
+          "oklch(0.3786 0.11000 155.00)",
+          "oklch(0.4929 0.11000 155.00)",
+          "oklch(0.6071 0.11000 155.00)",
+          "oklch(0.7214 0.11000 155.00)",
+          "oklch(0.8357 0.11000 155.00)",
+          "oklch(0.9500 0.11000 155.00)"
+        ]
+      },
+      "retained-accent-foreground-light": {
+        "role": "neutral",
+        "displayName": "Retained Accent Foreground Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.00400 80.00)",
+          "oklch(0.2643 0.00400 80.00)",
+          "oklch(0.3786 0.00400 80.00)",
+          "oklch(0.4929 0.00400 80.00)",
+          "oklch(0.6071 0.00400 80.00)",
+          "oklch(0.7214 0.00400 80.00)",
+          "oklch(0.8357 0.00400 80.00)",
+          "oklch(0.9500 0.00400 80.00)"
+        ]
+      },
+      "retained-danger-light": {
+        "role": "neutral",
+        "displayName": "Retained Danger Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.19000 28.00)",
+          "oklch(0.2643 0.19000 28.00)",
+          "oklch(0.3786 0.19000 28.00)",
+          "oklch(0.4929 0.19000 28.00)",
+          "oklch(0.6071 0.19000 28.00)",
+          "oklch(0.7214 0.19000 28.00)",
+          "oklch(0.8357 0.19000 28.00)",
+          "oklch(0.9500 0.19000 28.00)"
+        ]
+      },
+      "retained-background-dark": {
+        "role": "neutral",
+        "displayName": "Retained Background Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.01200 70.00)",
+          "oklch(0.2643 0.01200 70.00)",
+          "oklch(0.3786 0.01200 70.00)",
+          "oklch(0.4929 0.01200 70.00)",
+          "oklch(0.6071 0.01200 70.00)",
+          "oklch(0.7214 0.01200 70.00)",
+          "oklch(0.8357 0.01200 70.00)",
+          "oklch(0.9500 0.01200 70.00)"
+        ]
+      },
+      "retained-foreground-dark": {
+        "role": "neutral",
+        "displayName": "Retained Foreground Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.00800 80.00)",
+          "oklch(0.2643 0.00800 80.00)",
+          "oklch(0.3786 0.00800 80.00)",
+          "oklch(0.4929 0.00800 80.00)",
+          "oklch(0.6071 0.00800 80.00)",
+          "oklch(0.7214 0.00800 80.00)",
+          "oklch(0.8357 0.00800 80.00)",
+          "oklch(0.9500 0.00800 80.00)"
+        ]
+      },
+      "retained-surface-dark": {
+        "role": "neutral",
+        "displayName": "Retained Surface Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.01200 70.00)",
+          "oklch(0.2643 0.01200 70.00)",
+          "oklch(0.3786 0.01200 70.00)",
+          "oklch(0.4929 0.01200 70.00)",
+          "oklch(0.6071 0.01200 70.00)",
+          "oklch(0.7214 0.01200 70.00)",
+          "oklch(0.8357 0.01200 70.00)",
+          "oklch(0.9500 0.01200 70.00)"
+        ]
+      },
+      "retained-surface-secondary-dark": {
+        "role": "neutral",
+        "displayName": "Retained Surface Secondary Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.01300 70.00)",
+          "oklch(0.2643 0.01300 70.00)",
+          "oklch(0.3786 0.01300 70.00)",
+          "oklch(0.4929 0.01300 70.00)",
+          "oklch(0.6071 0.01300 70.00)",
+          "oklch(0.7214 0.01300 70.00)",
+          "oklch(0.8357 0.01300 70.00)",
+          "oklch(0.9500 0.01300 70.00)"
+        ]
+      },
+      "retained-surface-tertiary-dark": {
+        "role": "neutral",
+        "displayName": "Retained Surface Tertiary Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.01400 70.00)",
+          "oklch(0.2643 0.01400 70.00)",
+          "oklch(0.3786 0.01400 70.00)",
+          "oklch(0.4929 0.01400 70.00)",
+          "oklch(0.6071 0.01400 70.00)",
+          "oklch(0.7214 0.01400 70.00)",
+          "oklch(0.8357 0.01400 70.00)",
+          "oklch(0.9500 0.01400 70.00)"
+        ]
+      },
+      "retained-muted-dark": {
+        "role": "neutral",
+        "displayName": "Retained Muted Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.01500 75.00)",
+          "oklch(0.2643 0.01500 75.00)",
+          "oklch(0.3786 0.01500 75.00)",
+          "oklch(0.4929 0.01500 75.00)",
+          "oklch(0.6071 0.01500 75.00)",
+          "oklch(0.7214 0.01500 75.00)",
+          "oklch(0.8357 0.01500 75.00)",
+          "oklch(0.9500 0.01500 75.00)"
+        ]
+      },
+      "retained-divider-dark": {
+        "role": "neutral",
+        "displayName": "Retained Divider Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.01400 70.00)",
+          "oklch(0.2643 0.01400 70.00)",
+          "oklch(0.3786 0.01400 70.00)",
+          "oklch(0.4929 0.01400 70.00)",
+          "oklch(0.6071 0.01400 70.00)",
+          "oklch(0.7214 0.01400 70.00)",
+          "oklch(0.8357 0.01400 70.00)",
+          "oklch(0.9500 0.01400 70.00)"
+        ]
+      },
+      "retained-accent-dark": {
+        "role": "primary",
+        "displayName": "Retained Accent Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.11000 155.00)",
+          "oklch(0.2643 0.11000 155.00)",
+          "oklch(0.3786 0.11000 155.00)",
+          "oklch(0.4929 0.11000 155.00)",
+          "oklch(0.6071 0.11000 155.00)",
+          "oklch(0.7214 0.11000 155.00)",
+          "oklch(0.8357 0.11000 155.00)",
+          "oklch(0.9500 0.11000 155.00)"
+        ]
+      },
+      "retained-accent-foreground-dark": {
+        "role": "neutral",
+        "displayName": "Retained Accent Foreground Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.01200 70.00)",
+          "oklch(0.2643 0.01200 70.00)",
+          "oklch(0.3786 0.01200 70.00)",
+          "oklch(0.4929 0.01200 70.00)",
+          "oklch(0.6071 0.01200 70.00)",
+          "oklch(0.7214 0.01200 70.00)",
+          "oklch(0.8357 0.01200 70.00)",
+          "oklch(0.9500 0.01200 70.00)"
+        ]
+      },
+      "retained-danger-dark": {
+        "role": "neutral",
+        "displayName": "Retained Danger Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.16000 28.00)",
+          "oklch(0.2643 0.16000 28.00)",
+          "oklch(0.3786 0.16000 28.00)",
+          "oklch(0.4929 0.16000 28.00)",
+          "oklch(0.6071 0.16000 28.00)",
+          "oklch(0.7214 0.16000 28.00)",
+          "oklch(0.8357 0.16000 28.00)",
+          "oklch(0.9500 0.16000 28.00)"
+        ]
+      },
+      "graph-edge-light": {
+        "role": "neutral",
+        "displayName": "Graph Edge Light",
+        "tonalRamp": [
+          "oklch(0.1500 0.01991 255.56)",
+          "oklch(0.2643 0.01991 255.56)",
+          "oklch(0.3786 0.01991 255.56)",
+          "oklch(0.4929 0.01991 255.56)",
+          "oklch(0.6071 0.01991 255.56)",
+          "oklch(0.7214 0.01991 255.56)",
+          "oklch(0.8357 0.01991 255.56)",
+          "oklch(0.9500 0.01991 255.56)"
+        ]
+      },
+      "graph-edge-dark": {
+        "role": "neutral",
+        "displayName": "Graph Edge Dark",
+        "tonalRamp": [
+          "oklch(0.1500 0.02619 254.52)",
+          "oklch(0.2643 0.02619 254.52)",
+          "oklch(0.3786 0.02619 254.52)",
+          "oklch(0.4929 0.02619 254.52)",
+          "oklch(0.6071 0.02619 254.52)",
+          "oklch(0.7214 0.02619 254.52)",
+          "oklch(0.8357 0.02619 254.52)",
+          "oklch(0.9500 0.02619 254.52)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "workspace-title": {
+        "displayName": "Workspace Title",
+        "purpose": "Application brand and inspector headings."
+      },
+      "node-title": {
+        "displayName": "Node Title",
+        "purpose": "Readable two-line task summary."
+      },
+      "node-meta": {
+        "displayName": "Node Meta",
+        "purpose": "Owner, state and optional reviewer."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Workspace controls and ordinary content."
+      },
+      "page-title": {
+        "displayName": "Page Title",
+        "purpose": "Retained Connections/API page headings."
+      },
+      "statistics-title": {
+        "displayName": "Statistics Title",
+        "purpose": "Retained responsive Statistics heading."
+      },
+      "statistics-value": {
+        "displayName": "Statistics Value",
+        "purpose": "Exact KPI value sized against its widget."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Technical examples; statistics count uses the same face at 11px."
+      }
+    },
+    "shadows": [
+      {
+        "name": "node-rest",
+        "value": "0 3px 12px #1a25340a, 0 1px 3px #1a253408",
+        "purpose": "Opaque workspace nodes."
+      },
+      {
+        "name": "node-hover",
+        "value": "0 5px 18px #1a253410",
+        "purpose": "Node pointer feedback."
+      },
+      {
+        "name": "camera-tray",
+        "value": "0 3px 15px #1a25340b",
+        "purpose": "Canvas controls."
+      },
+      {
+        "name": "inspector",
+        "value": "-5px 0 30px #1a253408",
+        "purpose": "Nonmodal right inspector."
+      },
+      {
+        "name": "retained-glass",
+        "value": "inset 0 1px 0 var(--glass-light), inset 1px 0 0 color-mix(in oklab, var(--glass-light) 35%, transparent), 0 8px 32px var(--glass-shadow)",
+        "purpose": "Statistics only; solid fallback and reduced-transparency variant."
+      }
+    ],
+    "motion": [
+      {
+        "name": "button-transform",
+        "value": "250ms ease",
+        "purpose": "HeroUI press feedback, scale .97 for medium buttons."
+      },
+      {
+        "name": "button-colour",
+        "value": "100ms cubic-bezier(0, 0, 0.2, 1)",
+        "purpose": "HeroUI background and shadow feedback."
+      },
+      {
+        "name": "field-colour",
+        "value": "150ms ease",
+        "purpose": "HeroUI input background and border feedback."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0s",
+        "purpose": "Workspace descendants suppress animation and transition durations."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "workspace-phone",
+        "value": "640px"
+      },
+      {
+        "name": "editor-desktop",
+        "value": "768px"
+      },
+      {
+        "name": "statistics-grid",
+        "value": "900px"
+      },
+      {
+        "name": "inspector-reserved-space",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Workspace primary button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "HeroUI primary styling with workspace height and radius overrides.",
+      "html": "<div class=\"ds-workspace\"><button class=\"ds-button-primary\">New task</button></div>",
+      "css": ".ds-workspace{--background:#f6f7f8;--foreground:#252a30;--surface:#ffffff;--surface-secondary:#eef0f2;--surface-tertiary:#e5e8ec;--muted:#626a74;--divider:#d9dee4;--accent:#35654e;--accent-foreground:#ffffff;--field-border:transparent;font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--foreground)}@media(prefers-color-scheme:dark){.ds-workspace{--background:#191c20;--foreground:#e7e9ed;--surface:#24282e;--surface-secondary:#2d3239;--surface-tertiary:#383f48;--muted:#aab3bf;--divider:#414953;--accent:#9ec5ac;--accent-foreground:#17261d;}}.ds-button-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:transform 250ms ease,background-color 100ms cubic-bezier(0,0,.2,1);background:var(--accent);color:var(--accent-foreground)}.ds-button-primary:hover{background:color-mix(in oklab,var(--accent) 90%,var(--accent-foreground) 10%)}.ds-button-primary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.ds-button-primary:active{transform:scale(.97)}.ds-button-primary:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-button-primary{transition:none;animation:none}}"
+    },
+    {
+      "name": "Workspace secondary button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "HeroUI secondary styling with workspace height and radius overrides.",
+      "html": "<div class=\"ds-workspace\"><button class=\"ds-button-secondary\">Edit</button></div>",
+      "css": ".ds-workspace{--background:#f6f7f8;--foreground:#252a30;--surface:#ffffff;--surface-secondary:#eef0f2;--surface-tertiary:#e5e8ec;--muted:#626a74;--divider:#d9dee4;--accent:#35654e;--accent-foreground:#ffffff;--field-border:transparent;font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--foreground)}@media(prefers-color-scheme:dark){.ds-workspace{--background:#191c20;--foreground:#e7e9ed;--surface:#24282e;--surface-secondary:#2d3239;--surface-tertiary:#383f48;--muted:#aab3bf;--divider:#414953;--accent:#9ec5ac;--accent-foreground:#17261d;}}.ds-button-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:transform 250ms ease,background-color 100ms cubic-bezier(0,0,.2,1);background:var(--surface-secondary);color:color-mix(in oklab,var(--accent) 70%,var(--foreground) 30%)}.ds-button-secondary:hover{background:color-mix(in oklab,var(--surface-secondary) 96%,var(--foreground) 4%)}.ds-button-secondary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.ds-button-secondary:active{transform:scale(.97)}.ds-button-secondary:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-button-secondary{transition:none;animation:none}}"
+    },
+    {
+      "name": "Workspace ghost button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "HeroUI ghost styling with workspace height and radius overrides.",
+      "html": "<div class=\"ds-workspace\"><button class=\"ds-button-ghost\">Refresh</button></div>",
+      "css": ".ds-workspace{--background:#f6f7f8;--foreground:#252a30;--surface:#ffffff;--surface-secondary:#eef0f2;--surface-tertiary:#e5e8ec;--muted:#626a74;--divider:#d9dee4;--accent:#35654e;--accent-foreground:#ffffff;--field-border:transparent;font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--foreground)}@media(prefers-color-scheme:dark){.ds-workspace{--background:#191c20;--foreground:#e7e9ed;--surface:#24282e;--surface-secondary:#2d3239;--surface-tertiary:#383f48;--muted:#aab3bf;--divider:#414953;--accent:#9ec5ac;--accent-foreground:#17261d;}}.ds-button-ghost{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:transform 250ms ease,background-color 100ms cubic-bezier(0,0,.2,1);background:transparent;color:var(--foreground)}.ds-button-ghost:hover{background:var(--surface-secondary)}.ds-button-ghost:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.ds-button-ghost:active{transform:scale(.97)}.ds-button-ghost:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-button-ghost{transition:none;animation:none}}"
+    },
+    {
+      "name": "Workspace search",
+      "kind": "input",
+      "refersTo": "workspace-search",
+      "description": "Search field with the implemented local field palette.",
+      "html": "<div class=\"ds-workspace\"><input class=\"ds-search\" aria-label=\"Search tasks\" placeholder=\"Search tasks\" /></div>",
+      "css": ".ds-workspace{--background:#f6f7f8;--foreground:#252a30;--surface:#ffffff;--surface-secondary:#eef0f2;--surface-tertiary:#e5e8ec;--muted:#626a74;--divider:#d9dee4;--accent:#35654e;--accent-foreground:#ffffff;--field-border:transparent;font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--foreground)}@media(prefers-color-scheme:dark){.ds-workspace{--background:#191c20;--foreground:#e7e9ed;--surface:#24282e;--surface-secondary:#2d3239;--surface-tertiary:#383f48;--muted:#aab3bf;--divider:#414953;--accent:#9ec5ac;--accent-foreground:#17261d;}}.ds-search{max-width:256px;border:0;border-radius:12px;background:var(--surface-secondary);color:var(--foreground);padding:8px 12px;font:14px/20px var(--font-geist-sans,Geist),sans-serif;box-shadow:var(--field-shadow,0 1px 3px #00000014);transition:background-color 150ms ease}.ds-search::placeholder{color:var(--muted)}.ds-search:hover{background:var(--surface-tertiary)}.ds-search:focus-visible{outline:2px solid var(--accent);outline-offset:3px;background:var(--surface-secondary)}@media(prefers-reduced-motion:reduce){.ds-search{transition:none;animation:none}}"
+    },
+    {
+      "name": "Workspace navigation",
+      "kind": "nav",
+      "refersTo": "workspace-navigation",
+      "description": "Named navigation stays visible and wraps on phones.",
+      "html": "<div class=\"ds-workspace\"><nav class=\"ds-nav\" aria-label=\"Tasks\"><a href=\"#statistics\">Statistics</a><a href=\"#connections\">Connections</a></nav></div>",
+      "css": ".ds-workspace{--background:#f6f7f8;--foreground:#252a30;--surface:#ffffff;--surface-secondary:#eef0f2;--surface-tertiary:#e5e8ec;--muted:#626a74;--divider:#d9dee4;--accent:#35654e;--accent-foreground:#ffffff;--field-border:transparent;font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--foreground)}@media(prefers-color-scheme:dark){.ds-workspace{--background:#191c20;--foreground:#e7e9ed;--surface:#24282e;--surface-secondary:#2d3239;--surface-tertiary:#383f48;--muted:#aab3bf;--divider:#414953;--accent:#9ec5ac;--accent-foreground:#17261d;}}.ds-nav{display:flex;flex-wrap:wrap;align-items:center;gap:4px}.ds-nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;color:var(--foreground);font-size:14px;text-decoration:none}.ds-nav a:hover{text-decoration:underline}.ds-nav a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}@media(max-width:639px){.ds-nav{justify-content:space-between;gap:0}.ds-nav a{padding-inline:8px;font-size:12px}}@media(prefers-reduced-motion:reduce){.ds-nav{transition:none;animation:none}}"
+    },
+    {
+      "name": "Task graph node",
+      "kind": "custom",
+      "refersTo": "graph-node",
+      "description": "Synthetic preview using the actual default assignee colour; production names and colours are dynamic.",
+      "html": "<div class=\"ds-workspace\"><button class=\"ds-node\" aria-pressed=\"false\" aria-label=\"Example task · Example owner · Ready\"><span class=\"ds-node-title\">Example task</span><span class=\"ds-node-footer\"><span class=\"ds-node-owner\"><span class=\"ds-avatar\" aria-hidden=\"true\">E</span>Example owner</span><span class=\"ds-state\">Ready</span></span></button></div>",
+      "css": ".ds-workspace{--background:#f6f7f8;--foreground:#252a30;--surface:#ffffff;--surface-secondary:#eef0f2;--surface-tertiary:#e5e8ec;--muted:#626a74;--divider:#d9dee4;--accent:#35654e;--accent-foreground:#ffffff;--field-border:transparent;font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--foreground)}@media(prefers-color-scheme:dark){.ds-workspace{--background:#191c20;--foreground:#e7e9ed;--surface:#24282e;--surface-secondary:#2d3239;--surface-tertiary:#383f48;--muted:#aab3bf;--divider:#414953;--accent:#9ec5ac;--accent-foreground:#17261d;}}.ds-node{--assignee-color:#7297CA;display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;gap:12px;width:244px;height:128px;padding:16px;border:0;border-radius:12px;text-align:left;color:var(--foreground);background:color-mix(in oklab,var(--assignee-color) 13%,var(--surface));box-shadow:0 3px 12px #1a25340a,0 1px 3px #1a253408;cursor:pointer;font-family:var(--font-geist-sans,Geist),sans-serif}.ds-node:hover{background:color-mix(in oklab,var(--assignee-color) 19%,var(--surface));box-shadow:0 5px 18px #1a253410}.ds-node:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.ds-node[aria-pressed=true]{outline:2px solid var(--accent);outline-offset:2px}.ds-node:active{transform:scale(.97)}.ds-node-title{font-size:14px;font-weight:500;line-height:20px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.ds-node-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;color:var(--muted)}.ds-node-owner{display:flex;align-items:center;gap:6px}.ds-avatar{display:flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:9999px;background:var(--surface-secondary);font-size:10px}.ds-state{color:var(--accent)}@media(prefers-reduced-motion:reduce){.ds-node{transition:none;animation:none}.ds-node-title{transition:none;animation:none}.ds-node-footer{transition:none;animation:none}.ds-node-owner{transition:none;animation:none}.ds-avatar{transition:none;animation:none}.ds-state{transition:none;animation:none}}"
+    },
+    {
+      "name": "Graph camera tray",
+      "kind": "custom",
+      "refersTo": "graph-controls",
+      "description": "Preview of the explicit zoom and Fit controls; no simulated camera behavior.",
+      "html": "<div class=\"ds-workspace\"><div class=\"ds-camera\"><button aria-label=\"Zoom out\">−</button><span>100%</span><button aria-label=\"Zoom in\">+</button><button>Fit</button></div></div>",
+      "css": ".ds-workspace{--background:#f6f7f8;--foreground:#252a30;--surface:#ffffff;--surface-secondary:#eef0f2;--surface-tertiary:#e5e8ec;--muted:#626a74;--divider:#d9dee4;--accent:#35654e;--accent-foreground:#ffffff;--field-border:transparent;font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--foreground)}@media(prefers-color-scheme:dark){.ds-workspace{--background:#191c20;--foreground:#e7e9ed;--surface:#24282e;--surface-secondary:#2d3239;--surface-tertiary:#383f48;--muted:#aab3bf;--divider:#414953;--accent:#9ec5ac;--accent-foreground:#17261d;}}.ds-camera{display:inline-flex;align-items:center;gap:4px;padding:4px;border-radius:12px;background:var(--surface);box-shadow:0 3px 15px #1a25340b}.ds-camera button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:transform 250ms ease,background-color 100ms cubic-bezier(0,0,.2,1);padding:0 12px;background:transparent;color:var(--foreground)}.ds-camera button:hover{background:var(--surface-secondary)}.ds-camera button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.ds-camera button:active{transform:scale(.97)}.ds-camera span{font-size:12px;font-variant-numeric:tabular-nums}@media(prefers-reduced-motion:reduce){.ds-camera{transition:none;animation:none}}"
+    },
+    {
+      "name": "Retained Statistics card",
+      "kind": "card",
+      "refersTo": "statistics-card",
+      "description": "Existing warm mineral-glass widget; sample value is illustrative.",
+      "html": "<article class=\"ds-stat\"><h3>Example statistic</h3><p class=\"ds-stat-value\">24</p><p class=\"ds-stat-note\">Example task count</p></article>",
+      "css": ".ds-stat{max-width:320px;min-height:240px;padding:24px;border:1px solid var(--glass-edge,color-mix(in oklab,var(--surface,oklch(.995 .004 80)) 80%,var(--divider,oklch(.83 .014 72))));border-radius:24px;background:var(--surface,oklch(.995 .004 80));color:var(--foreground,oklch(.22 .012 65));font-family:var(--font-geist-sans,Geist),sans-serif;box-shadow:inset 0 1px 0 var(--glass-light,#ffffffad),0 8px 32px var(--glass-shadow,#00000012);container-type:inline-size}.ds-stat h3{margin:0;font-size:16px;font-weight:600;letter-spacing:-.025em}.ds-stat-value{margin:32px 0 0;font-size:clamp(2rem,20cqi,5rem);font-weight:550;line-height:1.05;letter-spacing:-.04em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.ds-stat-note{margin:16px 0 0;font-size:12px;color:var(--muted,oklch(.52 .018 65))}@supports(backdrop-filter:blur(1px)){.ds-stat{background:var(--glass-surface,color-mix(in oklab,var(--surface,oklch(.995 .004 80)) 76%,transparent));backdrop-filter:blur(24px) saturate(115%)}}.ds-stat:hover{box-shadow:inset 0 1px 0 var(--glass-light,#ffffffad),0 8px 32px var(--glass-shadow,#00000012)}.ds-stat:focus-within{outline:2px solid var(--accent,oklch(.54 .11 155));outline-offset:3px}@media(prefers-reduced-transparency:reduce){.ds-stat{background:var(--surface,oklch(.995 .004 80));backdrop-filter:none}}@media(forced-colors:active){.ds-stat{border:1px solid CanvasText;background:Canvas;color:CanvasText;box-shadow:none;backdrop-filter:none}}@media(prefers-reduced-motion:reduce){.ds-stat{transition:none;animation:none}.ds-stat-value{transition:none;animation:none}.ds-stat-note{transition:none;animation:none}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Work routes",
+    "overview": "A minimal operating canvas makes real tasks, responsible parties and prerequisites visible together. Cool neutrals, softly elevated nodes and compact Geist typography give the graph room; owner-selected tints identify responsibility without colouring the text. The user rejected brutalism, decorative rules and explanatory dashboard filler.\n\nThe workspace theme is local to the graph and its themed editing/management surfaces. Statistics keeps its existing warm mineral-glass presentation; Connections, API access, API documentation and authentication keep the shared warm editorial foundation. This document captures those boundaries rather than prescribing a whole-app reskin.",
+    "keyCharacteristics": [
+      "Actual directed dependencies and project lanes.",
+      "Readable native-scale entry, with an explicit overview control.",
+      "Quiet chrome, dynamic owner colours and full-contrast task text.",
+      "Persistent drafts and graph context during background synchronization."
+    ],
+    "rules": [
+      {
+        "name": "Context before colour",
+        "body": "Owner tint supplements the written assignee and state; completed tasks keep full-opacity text.",
+        "section": "colors"
+      },
+      {
+        "name": "Readable entry",
+        "body": "Open the graph at scale 1, including constrained desktops and phones; Fit is the explicit full-graph overview.",
+        "section": "typography"
+      },
+      {
+        "name": "Scoped materials",
+        "body": "Opaque graph surfaces and retained Statistics glass coexist; do not spread either treatment to unrelated routes.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use HeroUI v3 compound primitives and Tailwind CSS 4, with existing Geist fonts.",
+      "Do render stored projects, owners and dependency relationships, retaining prerequisite ancestors when filtering.",
+      "Do preserve camera position, selection and typed drafts through ordinary polling updates.",
+      "Do keep English/Spanish labels, keyboard activation, visible focus and textual state cues.",
+      "Do check native-scale entry and explicit Fit separately at desktop and phone sizes."
+    ],
+    "donts": [
+      "Don't introduce brutalist framing, grid overlays, decorative rules or descriptive dashboard filler.",
+      "Don't reduce completed-node opacity or use owner colour as the only identity signal.",
+      "Don't auto-fit a populated graph when polling adds or removes tasks.",
+      "Don't turn the inspector into a blocking modal or let outside clicks dismiss task editing.",
+      "Don't hard-code agent names, schedule models or restore retired webhook UI.",
+      "Don't describe Statistics or Connections as using the graph's cool palette."
+    ]
+  }
+}

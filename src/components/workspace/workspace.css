@@ -99,9 +99,6 @@
 .graph-state[data-ready='true'] {
   color: var(--accent);
 }
-.graph-node[data-complete='true'] {
-  opacity: 0.65;
-}
 .graph-controls {
   @apply absolute bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-xl bg-surface p-1;
   box-shadow: 0 3px 15px #1a25340b;

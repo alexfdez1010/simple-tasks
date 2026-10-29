@@ -1,442 +1,261 @@
-# Design system
+---
+name: 'Tasks'
+description: 'Minimal dependency workspace with retained editorial integration and statistics surfaces.'
+colors:
+  workspace-background-light: '#f6f7f8'
+  workspace-foreground-light: '#252a30'
+  workspace-surface-light: '#ffffff'
+  workspace-surface-secondary-light: '#eef0f2'
+  workspace-surface-tertiary-light: '#e5e8ec'
+  workspace-muted-light: '#626a74'
+  workspace-divider-light: '#d9dee4'
+  workspace-accent-light: '#35654e'
+  workspace-accent-foreground-light: '#ffffff'
+  workspace-background-dark: '#191c20'
+  workspace-foreground-dark: '#e7e9ed'
+  workspace-surface-dark: '#24282e'
+  workspace-surface-secondary-dark: '#2d3239'
+  workspace-surface-tertiary-dark: '#383f48'
+  workspace-muted-dark: '#aab3bf'
+  workspace-divider-dark: '#414953'
+  workspace-accent-dark: '#9ec5ac'
+  workspace-accent-foreground-dark: '#17261d'
+  retained-background-light: 'oklch(0.975 0.008 80)'
+  retained-foreground-light: 'oklch(0.22 0.012 65)'
+  retained-surface-light: 'oklch(0.995 0.004 80)'
+  retained-surface-secondary-light: 'oklch(0.955 0.009 78)'
+  retained-surface-tertiary-light: 'oklch(0.93 0.012 76)'
+  retained-muted-light: 'oklch(0.52 0.018 65)'
+  retained-divider-light: 'oklch(0.83 0.014 72)'
+  retained-accent-light: 'oklch(0.54 0.11 155)'
+  retained-accent-foreground-light: 'oklch(0.99 0.004 80)'
+  retained-danger-light: 'oklch(0.55 0.19 28)'
+  retained-background-dark: 'oklch(0.17 0.012 70)'
+  retained-foreground-dark: 'oklch(0.94 0.008 80)'
+  retained-surface-dark: 'oklch(0.22 0.012 70)'
+  retained-surface-secondary-dark: 'oklch(0.255 0.013 70)'
+  retained-surface-tertiary-dark: 'oklch(0.29 0.014 70)'
+  retained-muted-dark: 'oklch(0.72 0.015 75)'
+  retained-divider-dark: 'oklch(0.36 0.014 70)'
+  retained-accent-dark: 'oklch(0.72 0.11 155)'
+  retained-accent-foreground-dark: 'oklch(0.17 0.012 70)'
+  retained-danger-dark: 'oklch(0.7 0.16 28)'
+  graph-edge-light: '#aab3bf'
+  graph-edge-dark: '#596472'
+typography:
+  workspace-title:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: '18px'
+    fontWeight: 600
+    lineHeight: '28px'
+    letterSpacing: '-0.025em'
+  node-title:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: '14px'
+    fontWeight: 500
+    lineHeight: '20px'
+  node-meta:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: '11px'
+    lineHeight: 'normal'
+  body:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: '14px'
+    lineHeight: '20px'
+  page-title:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: '30px'
+    fontWeight: 600
+    lineHeight: '36px'
+    letterSpacing: '-0.025em'
+  statistics-title:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: 'clamp(2rem, 4vw, 3.5rem)'
+    fontWeight: 600
+    lineHeight: 1.05
+    letterSpacing: '-0.065em'
+  statistics-value:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: 'clamp(2rem, 20cqi, 5rem)'
+    fontWeight: 550
+    lineHeight: 1.05
+    letterSpacing: '-0.04em'
+  mono:
+    fontFamily: 'Geist Mono, monospace'
+    fontSize: '12px'
+    lineHeight: '24px'
+rounded:
+  control: '8px'
+  node: '12px'
+  sheet: '16px'
+  api-panel: '20px'
+  statistics: '24px'
+  avatar: '9999px'
+spacing:
+  1: '4px'
+  '1.5': '6px'
+  2: '8px'
+  3: '12px'
+  4: '16px'
+  5: '20px'
+  6: '24px'
+  7: '28px'
+  8: '32px'
+components:
+  button-primary:
+    backgroundColor: '{colors.workspace-accent-light}'
+    textColor: '{colors.workspace-accent-foreground-light}'
+    rounded: '{rounded.control}'
+    height: '44px'
+    padding: '0 16px'
+    typography: '{typography.body}'
+  button-secondary:
+    backgroundColor: '{colors.workspace-surface-secondary-light}'
+    textColor: 'color-mix(in oklab, #35654e 70%, #252a30 30%)'
+    rounded: '{rounded.control}'
+    height: '44px'
+    padding: '0 16px'
+  button-ghost:
+    backgroundColor: 'transparent'
+    textColor: '{colors.workspace-foreground-light}'
+    rounded: '{rounded.control}'
+    height: '44px'
+    padding: '0 16px'
+  workspace-search:
+    backgroundColor: '{colors.workspace-surface-secondary-light}'
+    textColor: '{colors.workspace-foreground-light}'
+    rounded: '{rounded.node}'
+    padding: '8px 12px'
+    typography: '{typography.body}'
+  workspace-navigation:
+    textColor: '{colors.workspace-foreground-light}'
+    padding: '12px'
+    typography: '{typography.body}'
+  graph-node:
+    backgroundColor: 'color-mix(in oklab, var(--assignee-color) 13%, var(--surface))'
+    textColor: '{colors.workspace-foreground-light}'
+    rounded: '{rounded.node}'
+    padding: '16px'
+    width: '244px'
+    height: '128px'
+    typography: '{typography.node-title}'
+  graph-controls:
+    backgroundColor: '{colors.workspace-surface-light}'
+    rounded: '{rounded.node}'
+    padding: '4px'
+  statistics-card:
+    backgroundColor: 'color-mix(in oklab, var(--surface) 76%, transparent)'
+    textColor: '{colors.retained-foreground-light}'
+    rounded: '{rounded.statistics}'
+    padding: '24px'
+---
 
-## Minimal dependency graph — 2026-10-29 (in progress)
+# Design System: Tasks
 
-- Confirmed brief: replace the task-management Kanban with a dependency-focused operation surface; every task has a persisted human or agent assignee with editable instructions. Preserve existing task assignments and integration contracts. Agent names are user-managed through MCP and UI.
-- Superseding user direction: minimalist graph-first management, based on the work-routes prototype. Actual data-driven dependency edges, one compact task title/assignee/state per node, project grouping/filtering, and details on selection. Remove decorative rules, frames and explanatory copy. Soft neutral canvas, readable sans, white nodes and restrained semantic status accents.
-- Optional review: a second dynamic responsible party can approve or request changes. Keep the reviewer visible in the selected task and a compact node label. Approval is the completion gate; review controls live in the detail panel.
-- Poll snapshots at 15 seconds by default, with pause/30/60-second options, no overlapping requests, hidden-tab suspension and unchanged-response deduplication. Forms and selections remain mounted; show last successful sync and recoverable connection failures.
-- Domain design: tasks, assignees and dependency relations have separate responsibilities; narrow service/repository contracts preserve shared UI/MCP/REST behavior (SRP/ISP/DIP). Derive readiness server-side and revalidate it atomically on claim.
-- Migration expands schema, backfills existing Responsible/Assignee property values and retains legacy data. New assignments are canonical relations; legacy writes stay compatible. Verify preservation and document rollback.
-- User selected work routes and minimalist styling. Final documentation records actual shipped tokens and responsive behavior.
+## Overview
 
-This document is the source of truth for the product's visual language,
-interaction model, accessibility, and responsive behavior. HeroUI v3 provides
-the accessible primitives; Tailwind CSS 4 provides layout and product styling.
+**Creative North Star: "Work routes"**
 
-## Webhook retirement — 2026-10-29
+A minimal operating canvas makes real tasks, responsible parties and prerequisites visible together. Cool neutrals, softly elevated nodes and compact Geist typography give the graph room; owner-selected tints identify responsibility without colouring the text. The user rejected brutalism, decorative rules and explanatory dashboard filler.
 
-- Alejandro removed task webhooks from the product scope. Connections contains only MCP and REST integration paths. Remove the form, secret reveal, history, public guide, dispatch endpoint and all task event capture/delivery hooks.
-- Keep task, property, dependency and review transactions intact; remove their dependency on notification delivery (SRP/DIP). Preserve the new graph workspace and existing API/MCP contracts.
-- Retain the already-applied migration and inert legacy tables for rollout compatibility; ignored Prisma models must not expose runtime client operations. No destructive data migration or production reset.
-- Verify Connections in English/Spanish and on mobile, task/property/coordination persistence, retired route absence, build and required lint-format. The graph is published first in 210efd6; webhook retirement follows in a separate commit and push.
-- Verification memory: lint-format, regenerated route types, TypeScript and production build passed. 176 unit and 38 integration tests passed. The full browser run passed 50 cases; two new phone checks were corrected to wait for login completion, then all three Connections cases passed in the focused rerun (52 distinct browser cases covered). An enabled legacy endpoint and pending delivery remained inert across task create/edit/move/delete. Comparing the schema before/after retirement reports no database difference; historical SQL is unchanged.
+The workspace theme is local to the graph and its themed editing/management surfaces. Statistics keeps its existing warm mineral-glass presentation; Connections, API access, API documentation and authentication keep the shared warm editorial foundation. This document captures those boundaries rather than prescribing a whole-app reskin.
 
-## Approved simplicity and mobile refinement — 2026-10-24
+**Key Characteristics:**
 
-- Approved by Alejandro: prioritize ease of use on mobile while retaining a clear developer integration path. Operate mode; retain Geist, warm neutrals, forest accent and existing data contracts.
-- Header: brand and one primary New task action; named Board, Statistics, Connections and Settings controls. Move Sign out into Settings. Remove global completion percentages because terminal columns show only a preview.
-- Capture: Add in a column opens an inline title field. Enter creates, Escape cancels; Add details opens the complete editor with the draft retained. The global action targets the visible mobile column (first non-terminal column initially).
-- Cards: neutral surfaces with title, configured assignee (Responsable/Assignee), and due date or completion date. Alejandro explicitly requested description previews: show up to four lines of Markdown on cards, retaining independent links. Complete descriptions and other properties remain in the inspector. Preserve one semantic title trigger, a drag handle and an explicit edit action.
-- Detail: HeroUI Drawer, right-side on desktop and bottom sheet on phones. Keep the board behind it, trap and restore focus, keep footer reachable above safe areas; do not dismiss unsaved edits by outside click or dragging. Explicit Save/Cancel, retain drafts on failure.
-- Movement: visible Move to control in the inspector, supporting click, touch and keyboard; inject the same task mutation used by editing. State choices come from configured workflow states, never hard-coded names. Completion and sorting invariants stay server-owned.
-- Mobile: sticky compact two-row header, 44px targets, labelled column selector with counts. Selection scrolls to the column; manual scrolling updates the selector. Do not force vertical page jumps. Columns stay horizontally scrollable and all states stay available for dragging.
-- Connections: one protected page links to agent/MCP setup and application/API access with concise next steps. Credentials retain current reveal/copy/permission behavior. Never fabricate connection health.
-- Visual grammar: task titles 14px/medium, secondary data 12px; quiet neutral cards, restrained status dot, no per-card gradients/colored rails. Motion only for state and panel transitions, disabled with reduced motion.
-- SOLID: capture, navigation, task summary and drawer footer each own one responsibility (SRP); views depend on narrow injected mutation callbacks (ISP/DIP). Compose existing services and components (OCP), keeping TaskValues and persistence behavior interchangeable (LSP).
-- Proof: title-only capture, draft promotion, cancel/error recovery, edit/delete, pointer/touch/keyboard moves, terminal completion, settings/language, connections; 320/390/768/1440px, Spanish/English, light/dark and long content. Run lint-format, unit/integration/E2E, production build and bounded visual review before publishing main.
-- Implementation memory: retain the incumbent palette and Geist families. Cards use 14px semibold titles, 13px Markdown previews and 12px metadata; description previews clamp to four lines and expand while a link inside has keyboard focus. HeroUI field and overlay aliases reference existing semantic colors, so system dark mode also reaches portaled controls without a second palette.
-- Recorded verification: 168 unit, 21 integration, 44 browser and 7 focused browser checks passed. The scoped detector returned `[]`. Board, detail and Connections evidence in `.impeccable/review/` covers desktop, mobile and mobile dark mode; phone board/detail captures use the viewport because Chromium full-page stitching misrepresents fixed panels. This approved section takes precedence over historical header, card, creation and drag-only descriptions below; the incumbent system has not been reformatted or expanded.
+- Actual directed dependencies and project lanes.
+- Readable native-scale entry, with an explicit overview control.
+- Quiet chrome, dynamic owner colours and full-contrast task text.
+- Persistent drafts and graph context during background synchronization.
 
-## 1. Product foundation
+Authority: [PRODUCT.md](./PRODUCT.md), the [workspace direction contract](./.impeccable/surfaces/src-app-page-tsx.md), and implemented code. This is a scan of the finished world, refreshed on 2026-10-29. It supersedes the previous Kanban composition and stale workspace glass guidance.
 
-- Product name: Tasks
-- One-sentence promise: Capture, move, and finish work without losing focus.
-- Primary audience: A single person or small trusted team using one shared board.
-- Key user needs: See the whole workflow, create or edit quickly, and move tasks
-  reliably on pointer, touch, or keyboard.
-- Brand personality: Calm, precise, tactile, quietly confident.
-- Words and patterns to avoid: Marketing copy, gamification, jargon, decorative
-  dashboards, and controls without an immediate task.
+## Colors
 
-## API access extension — 2026-10-21
+The normative frontmatter preserves the source formats: workspace hex and retained-surface OKLCH. Keys ending in `light`/`dark` are paired by `prefers-color-scheme`; the palette is not a manual per-page toggle.
 
-- Extend the existing mineral-glass workspace in Operate mode; documentation is Read mode.
-- Add a named API navigation link. The protected API page uses a compact heading,
-  an inline creation form, a one-time secret reveal, and a divided token list.
-- Preserve Geist, forest accent, shared surfaces and light/dark tokens. Use only
-  HeroUI v3 controls and Tailwind 4 utilities; no new visual identity or card grid.
-- Show token name, identifying hint, permissions, creation/last-use dates and
-  revocation state. Tokens never expire, per Alejandro's explicit preference.
-- Creation defaults to read-only; write access is an explicit choice. The secret
-  appears once, with copy feedback and an explicit dismissal. Revocation requires
-  confirmation and explains that connected integrations stop immediately.
-- Mobile: stack form and reference content, wrap long hints and endpoint paths,
-  retain named 44 px actions. Keyboard focus, live feedback and English/Spanish
-  copy cover empty, pending, success, clipboard failure and server error states.
-- Final Impeccable review: ship. Dark fields and confirmation surfaces, localized
-  endpoint descriptions, and 44 px actions are verified in the final captures.
-- SRP separates token management, credentials, rate limiting and transport. REST
-  adapters depend on existing task/status/property services; the endpoint registry
-  supplies both dispatch and documentation to prevent contract drift.
-- Verify authenticated creation/revocation, anonymous rejection, read-only writes,
-  pagination/history, validation, concurrent rate limits, desktop/mobile and dark mode.
-- Implementation: constrain HeroUI field colors to the API surface's existing
-  semantic tokens, including hover/focus and dark states; keep portaled permission
-  choices and revocation confirmation on the same surface/foreground palette.
-  Endpoint summaries follow English/Spanish selection while API paths remain exact.
-- Evidence: desktop, phone, Spanish, dark, secret-reveal and documentation captures
-  live in `.impeccable/review/`. The scoped visual detector returned no findings;
-  project validation recorded 43 browser, 163 unit and 21 integration tests passing,
-  plus production build and lint/format checks. Preserve the incumbent token scale
-  and document structure; this extension introduces no new system-wide tokens.
+- **Primary — forest / sage:** `workspace-accent-*` drives New task, ready text, selected outlines and active dependency edges. Its paired foreground supplies action contrast.
+- **Identity:** each persisted HUMAN or AGENT has a selected colour. Node surfaces mix it with the workspace surface in OKLab: 13% at rest, 19% on hover, 20% for related nodes. These are tint ratios, not alpha on the whole node. Names, instructions and colours remain user-managed.
+- **Neutral — cool canvas / white node / ink:** `workspace-background-*`, `workspace-surface-*` and `workspace-foreground-*` define the graph. Secondary and tertiary surfaces distinguish fields and hover; muted identifies metadata; divider serves structural form separation where needed.
+- **Edges:** `graph-edge-*` is the quiet connector colour; selected incoming/outgoing paths use the workspace accent. Path stroke is 1.4px, increasing to 2px when active.
+- **Retained neutrals and forest:** `retained-*` is the current global foundation for Statistics, Connections, API and auth surfaces. Danger remains the inherited global error/destructive colour even inside the workspace. Statistics also retains its six curated widget palettes in `statistics-widget-themes.css`; those are chart choices, not graph owner colours.
 
-## Current redesign baseline — 2026-09-05
+**The Context before colour Rule.** Owner tint supplements the written assignee and state; completed tasks keep full-opacity text.
 
-- Direction: frosted mineral glass, with a warm neutral canvas and restrained
-  forest light. Glass indicates workspace layers; data stays crisp and opaque.
-- Shared glass tokens provide translucent surfaces, a fine illuminated inner edge,
-  soft directional shadows, and solid fallbacks. Blur is limited to panels;
-  individual task cards do not create additional backdrop filters.
-- Remove dot textures, diagonal rules, colored KPI text, and decorative card orbs.
-  Keep user-selected colors in small identity marks and meaningful chart marks.
-- Statistics use spacious card interiors, tabular numerals, and proportion bars
-  for category task shares. Shares remain explicitly task-based, including when
-  the selected measure is a numeric property or multi-value category.
-- A reversible Focus view hides widget editing controls while retaining all data.
-  It is session-local and never changes saved definitions or their order.
-- Responsive: single-column phone canvas; donut and legend may sit side by side
-  only when the card itself has room. Controls remain visible on touch devices.
-- Accessibility: full-opacity text, visible keyboard focus, no required motion;
-  opaque surfaces for reduced transparency and system colors in forced colors.
-- SOLID: the dashboard owns edit state, a focused header owns navigation/display
-  controls, and chart/legend components own their existing data presentation.
-  No persistence interfaces or aggregate semantics change.
+## Typography
 
-## Interface refinement — 2026-10-04
+Geist is the display, body and control face; Geist Mono serves technical examples and statistics counts. Both load through `next/font`. There is no alternate workspace display font or fixed modular scale: the observed hierarchy uses metadata (11–12px), body/node titles (14px), application/inspector headings (18px), editor headings (20px), retained page headings (30px), and responsive statistics headings/values.
 
-- Preserve the frosted mineral identity, product copy, workflow, and persistence.
-- Improve the board's task-reading and navigation path.
-- Header: keep all actions visibly named. On phones give navigation its own
-  wrapping row; show the brand above it and the summary below it. Use a two-row
-  header on tablets and reserve the single-row composition for wide screens.
-- Card: one semantic title button opens details. Noninteractive card content
-  also opens details by pointer; Markdown links retain their own navigation.
-  Do not introduce empty or duplicate keyboard stops. Wrap unbroken titles.
-- KPI typography scales with its own card width, never the viewport. Exact
-  localized values remain readable in compact cards and wrap when necessary.
-- Keep keyboard focus inside card edges; maintain 44 px frequent touch targets.
-- SOLID: separate visual actions and responsive layout from mutation ownership;
-  keep Markdown rendering responsible for content and task cards for inspection.
-- Verification: English/Spanish, light/dark, 320/390/768/900/1440 px, long titles,
-  links, keyboard inspection, empty cards, compact KPI values, drag regression.
+Node titles use medium weight and a two-line clamp; owner and reviewer names truncate within the node. The accessible node name retains title, assignee, state and reviewer. Full descriptions and editing belong in the task panel. Statistics values use tabular numerals and container units; exact localized values can wrap. Editor input/textarea text stays 16px, including phones.
 
-## 2. Visual direction
+**The Readable entry Rule.** Open the graph at scale 1, including constrained desktops and phones; Fit is the explicit full-graph overview.
 
-- Design principles, in priority order: Clarity, speed, restraint, accessibility.
-- Reference products or visual inspirations: Frosted mineral glass and the calm
-  density of a well-kept workshop board.
-- What makes this product recognisable: A warm workflow-studio canvas, ink
-  typography, softly recessed columns, and configurable colour signals that
-  follow each workflow state.
-- Density: Compact; task cards expose only scannable information and expand into
-  a read-only inspector for detail, with editing available as a separate action.
-- Shape language: Soft rectangles with nested 10–20 px radii; outer workspace
-  surfaces are softer than the controls and cards within them.
+## Layout
 
-## 3. Foundations
+- **Workspace:** full viewport height (`100dvh`), with a 560px minimum. Header and filter toolbar precede a flexing, overflow-clipped graph (320px minimum). Desktop header uses 20px horizontal padding, expanding to 32px from 640px; vertical padding is 16px. Search caps at 256px, owner selector at 176px, project wrapper at 208px and sync selector at 112px.
+- **Graph geometry:** nodes are 244 × 128px (1.90625:1), with 16px padding. Dependency ranks advance 314px horizontally (70px clear gap); rows advance 152px (24px gap). Project lanes begin at y=44px; nodes sit 38px below each label. Lanes use `50 + rowCount × 152px` height and a 36px inter-lane gap. Left inset is 40px. Graph bounds are at least 560 × 340px. Cubic directed edges connect prerequisite right centres to dependent left centres; cross-project relationships are real edges.
+- **Framing:** initial and responsive framing keeps native text size, centring if space permits and anchoring the first node otherwise. Fit computes the complete overview, capped at scale 1. Zoom buttons use factors 0.8 and 1.25, centred on the viewport, clamped to 0.2–1.8. Pointer background dragging pans; task controls keep normal activation. Filters and empty/populated transitions establish a new frame; ordinary task membership updates retain the camera. Viewport resizing can reframe at native scale.
+- **Inspection:** desktop panel is 360px wide with 24px padding. At 1024px and above, selecting an existing task reserves that width from the graph. Below 640px it becomes a fixed, nonmodal bottom sheet, maximum 78dvh, with 20px padding and 32px bottom padding. Intermediate widths retain the right overlay.
+- **Phone header:** below 640px, brand and New task share the first row, full-width project selection occupies the second, named navigation the third. Header padding is 16px horizontal / 12px vertical. Filter controls wrap; labels visually hidden at this breakpoint retain accessible names. The graph stays spatial and pannable rather than stacking nodes into cards.
+- **Protected editor:** below 768px, bottom-aligned drawer occupies up to 92dvh, respects visual viewport height and safe-area insets; at 768px it becomes a right drawer (`min(36rem, 70vw)`). Scrollable body and a separate action footer retain reachable Save/Cancel.
+- **Retained routes:** Connections caps at 48rem and stacks its two integration paths with structural dividers. API management caps at 72rem, adding a 19rem reference column from 1024px; API docs cap at 56rem. Statistics caps at 92rem; its single phone column becomes twelve columns at 900px. Automatic KPI/chart spans are 4/6; compact/square/wide/full spans are 3/4/6/12. Square uses a 1:1 minimum proportion; content can expand. Donut legends become side-by-side only when their own container reaches 32rem.
 
-### Color
+## Elevation & Depth
 
-| Token        | Light value             | Dark value             | Usage            |
-| ------------ | ----------------------- | ---------------------- | ---------------- |
-| `background` | `oklch(0.975 0.008 80)` | `oklch(0.17 0.012 70)` | App canvas       |
-| `foreground` | `oklch(0.22 0.012 65)`  | `oklch(0.94 0.008 80)` | Primary text     |
-| `surface`    | `oklch(0.995 0.004 80)` | `oklch(0.22 0.012 70)` | Cards and panels |
-| `accent`     | `oklch(0.54 0.11 155)`  | `oklch(0.72 0.11 155)` | Primary action   |
-| `muted`      | `oklch(0.52 0.018 65)`  | `oklch(0.72 0.015 75)` | Secondary text   |
-| `danger`     | `oklch(0.55 0.19 28)`   | `oklch(0.7 0.16 28)`   | Destructive UI   |
+The graph uses opaque tonal layering and small shadows, without a glass backdrop or decorative canvas texture. Node rest shadow is `0 3px 12px #1a25340a, 0 1px 3px #1a253408`; hover is `0 5px 18px #1a253410`. Canvas controls use `0 3px 15px #1a25340b`; the inspector uses `-5px 0 30px #1a253408`. Workspace buttons explicitly remove shadows.
 
-The canvas uses two low-contrast forest light washes behind translucent panels.
-There are no dot grids, diagonal rules, or decorative card orbs. The primary
-accent stays green; workflow colours are local wayfinding signals rather than
-additional brand accents. Shared glass surfaces use an opaque fallback, fine
-illuminated edges, and a single consistent light direction.
+Statistics retains `glass-panel`: an opaque fallback, a one-pixel edge, illuminated inset highlights and `0 8px 32px var(--glass-shadow)`. When supported, its surface is a 76% surface mix with 24px blur / 115% saturation, behind crisp opaque data. Two low-contrast forest radial washes belong only to Statistics. Reduced transparency removes its blur; forced colours replace glass with system surfaces and borders.
 
-Workflow colours are user-configurable hex values. They are rendered as rails,
-dots, and restrained card-to-surface gradients, never as body-text colour. Text
-therefore retains WCAG contrast independently of the chosen workflow colour.
+**The Scoped materials Rule.** Opaque graph surfaces and retained Statistics glass coexist; do not spread either treatment to unrelated routes.
 
-Statistic colours are chosen from six curated semantic palettes: forest, ocean,
-iris, amber, coral, and graphite. Each palette defines a card accent plus five
-coordinated chart tones in light and dark modes. The selected colour is used for
-the small title marker and data marks; labels and
-controls continue to use foreground tokens so palette choice cannot reduce text
-contrast. Colour controls always pair a visible swatch with a localized name.
+## Shapes
 
-Contrast requirements: WCAG 2.2 AA, at least 4.5:1 for normal text and 3:1 for
-large text, component boundaries, and focus indicators.
+Workspace controls use compact 8px corners, nodes and canvas-control trays 12px, the phone inspector/editor sheet and management modal 16px. Owner initials occupy a 20px circular avatar. API panels retain 20px corners and Statistics cards/header 24px. Fields inherit HeroUI's 12px field radius. Keep nesting intentional; the graph's blank canvas needs no enclosing frame.
 
-### Typography
+## Components
 
-- Display family and weights: Geist Sans 600–700, tight tracking.
-- Body family and weights: Geist Sans 400–600.
-- Code family: Geist Mono 400–500 for dates and technical identifiers.
-- Type scale: 12, 14, 16, 20, 28, 36 px.
-- Line-height rules: 1.15 for display, 1.45–1.65 for body and Markdown.
-- Maximum readable line length: 68 characters for descriptions.
+### Buttons, navigation and fields
 
-### Spacing, shape, and elevation
+HeroUI v3 owns semantics, keyboard behavior and interactive states; use `onPress`, semantic variants and compound APIs. Workspace buttons and select triggers have a 44px minimum height. Primary actions use accent/foreground; secondary uses the default surface and HeroUI's derived accent-soft foreground; ghost stays transparent until hover. Library hover tokens derive from the current semantic palette. Standard button padding is 16px horizontally; frequent navigation remains visibly named, with 12px text on phones and 14px otherwise.
 
-- Base spacing unit: 4 px.
-- Spacing scale: 4, 8, 12, 16, 24, 32, 48 px.
-- Border radii: 10 px controls, 14 px cards, 18 px columns, 20 px workspace
-  panels.
-- Border treatment: Use only for input boundaries, dashed empty states, and
-  structural separators. Columns and task cards do not receive decorative boxes.
-- Shadow/elevation levels: A recessed inner shadow defines each column well; a
-  tinted two-layer shadow lifts task cards; a clearer lifted shadow appears
-  while dragging or for modal overlays. All shadows share a top-left light
-  source.
-- Focus ring treatment: 2 px accent ring with 2 px canvas offset.
+Fields use secondary surfaces, foreground text, muted placeholders, tertiary hover and an accent focus border. Workspace field borders are transparent at rest. Header and toolbar rows align by the visible controls at the bottom; search inputs, selectors and adjacent actions share 44px height, with the completed checkbox centred inside the same line. Keep labels and existing responsive wrapping. HeroUI keeps focus, invalid, disabled and pending behavior. Reuse the existing controlled select/listbox composition for project, assignee, status and refresh choices. Management lives behind Organize with separate assignee/project tabs; instructions and selected colours are edited there.
 
-### Motion
+### Task graph and panel
 
-- Motion principles: Movement confirms cause and destination; it never decorates.
-- Duration scale: 120 ms feedback, 180 ms transitions, 240 ms overlays.
-- Easing curves: `cubic-bezier(0.2, 0.8, 0.2, 1)`.
-- Reduced-motion behavior: Remove transforms and animated reordering while
-  preserving immediate state changes and focus movement.
+Each task is one HeroUI button with `aria-pressed` selection. Titles, written owner/state and optional reviewer carry the summary; a 2px accent outline with 2px offset marks selection. Related nodes receive the stronger owner tint. Selection emphasizes only real incoming/outgoing edges, and filtering retains prerequisite ancestors, including completed ancestors needed to explain visible work. Completed nodes retain full contrast.
 
-## 4. Component system
+The read-only inspector is an `aside`, preserving graph interaction. It moves focus to the heading; close/Escape returns focus to the node or New task fallback. Prerequisite buttons navigate to the selected task. Full editing uses the modal HeroUI drawer: outside dismissal is disabled, pending submission disables closure, Save/Cancel remain explicit, and failed saves keep the draft. Poll snapshots do not key/remount the open editor. Review feedback persists on rejected requests; stale pending review versions disable decisions with a visible message.
 
-| Component/pattern | HeroUI primitive                                   | Approved variants                 | Usage guidance                               |
-| ----------------- | -------------------------------------------------- | --------------------------------- | -------------------------------------------- |
-| Button            | `Button`                                           | primary, secondary, ghost, danger | One primary action per surface               |
-| Link              | `Link`                                             | primary, secondary                | Navigation and documentation only            |
-| Card              | `Card` compound API                                | secondary, tertiary               | Tasks and focused panels                     |
-| Form field        | `TextField`, `TextArea`                            | default                           | Visible labels; descriptions for constraints |
-| Selection         | `Select`                                           | single, multiple                  | Configurable properties only                 |
-| Language choice   | `RadioGroup`, `Radio`                              | secondary                         | English and Spanish in settings              |
-| Property value    | `TextField`, `NumberField`, `DatePicker`, `Select` | typed values                      | Generated from a focused property definition |
-| Colour control    | `ColorPicker` compound API                         | controlled                        | Workflow colour configuration                |
-| Overlay           | `Modal`, `AlertDialog`                             | default, danger                   | Editing, settings, and confirmations         |
-| Feedback          | `Alert`, inline field error                        | success, danger                   | Specific, short, actionable                  |
-| Statistics metric | `Card` compound API                                | secondary, tertiary               | One primary value, unit, and concise context |
-| Statistics chart  | `Card` compound API + Recharts                     | secondary                         | Chart plus an equivalent textual breakdown   |
-| Metric library    | `Modal`, `Button`, `Select`, `TextField`           | primary, secondary, ghost         | Add or edit one focused statistic at a time  |
-| Metric appearance | `RadioGroup`, `Radio`                              | secondary                         | Named colour swatches and shape previews     |
+Optional independent review stays in the panel: `NOT_REQUESTED`, `PENDING`, `APPROVED`, `CHANGES_REQUESTED`. The reviewer can approve or request changes with feedback; approval gates completion, edits invalidate approval, and changes retain the original owner. The compact graph reviewer label does not replace the assignee.
 
-Component rules:
+### Synchronization and feedback
 
-- Composition rule: Prefer HeroUI compound APIs and one wrapper per product
-  responsibility; no configurable “god components.”
-- Loading and pending states: Disable the submitting control, retain its label,
-  and show one adjacent progress cue.
-- Empty states: One sentence and one primary creation action.
-- Error states: Keep user input, focus the first invalid field, and explain how
-  to recover.
-- Destructive actions: Require explicit confirmation for task or state deletion.
-- Native browser confirmation and date-picker UI is not used; HeroUI owns these
-  experiences for consistent styling, focus management, and mobile behavior.
-- MCP credentials: The protected AI setup page may reveal the configured token
-  on explicit request and offer a copy action. It is masked by default and the
-  page renders dynamically so secrets never enter static build output.
-- Property definitions: Managed in settings as a compact ordered list. Type is
-  explicit and immutable after creation when changing it could discard values.
-- Property options: Select and multi-select options use short visible labels;
-  empty, duplicate, and whitespace-only options are rejected inline.
-- Property values: Optional by default. Empty values are omitted from cards so
-  configured metadata never overwhelms the task title and due date.
-- Task transitions: Dragging is the only state-change control. The drag handle
-  supports pointer, touch, and keyboard operation and announces the destination.
-- Terminal completion: Entering a terminal state fills the completion date with
-  the transition time automatically. Leaving terminal workflow clears it;
-  moving between terminal states preserves the original completion time.
-- Task ordering: Non-terminal columns are ordered by due date ascending and
-  terminal columns by completion date descending. Tasks without the primary
-  ordering date come last. A drag within one terminal column returns to the
-  persisted order and explains why; dragging out to another column remains
-  available.
-- Task creation: Every workflow column exposes an Add action. It opens the shared
-  task dialog with that column preselected; the state remains implicit and cannot
-  be changed from the form.
-- Task cards: Keep title and edit affordance on the first row; use a narrow
-  workflow-colour cap, clamp long descriptions with a visible fade rather than
-  cutting content abruptly, render property values as a quiet wrapping metadata
-  line, and group dates in compact footer chips. Show the completion date only
-  when `completedAt` exists; active tasks must not reserve space or display an
-  empty completion field. Use one HeroUI title button for keyboard inspection;
-  pointer clicks on noninteractive card content open the same inspector.
-  Links, buttons, inputs, and dialog content keep their own interactions.
-- Board header: Use one floating utility bar with the product mark, total and
-  active task context, a compact completion meter, and existing AI/settings/
-  sign-out actions. Metrics are descriptive, never gamified. Do not add an
-  eyebrow or category label when the page title already communicates the
-  product context.
-- Statistics navigation: Expose Statistics beside the existing AI utility in
-  the board toolbar and a matching Back to board action on the statistics page.
-  The current destination is conveyed by the page heading rather than a
-  decorative active-state treatment.
-- Statistics page: Treat analytics as a configurable editorial workbench. The
-  header explains the current widget count and exposes one clear “Add
-  statistic” action. A compact starter set is created only when no widgets have
-  been configured; afterwards the user owns the canvas. Cards may show scalar
-  KPIs, categorical breakdowns, or date timelines. Every chart keeps an exact
-  textual equivalent so meaning never depends on colour, hover, or pointer
-  precision. Edit, move, and delete controls stay visually quiet until the card
-  is focused or hovered, while remaining keyboard reachable.
-- Statistics configuration: The editor reveals only fields relevant to the
-  selected visualization and measure. System dates (created, updated, deadline,
-  completed) and DATE properties share one date-dimension control. Any custom
-  property can be selected: text/select values form categories, multi-select
-  values may contribute to several categories, number properties support
-  arithmetic aggregations, and date properties support time buckets. Invalid
-  combinations are rejected by the shared service used by UI and MCP.
-- Statistics periods: Every widget may filter its source data with a relative
-  calendar period such as today, the last 7/30/90 days, the current
-  week/month/quarter/year, or the next 7/30 days. Periods are recalculated at
-  request time from the selected system date or DATE property; fixed dates are
-  never persisted. Cards name every active period in their description so the
-  visible value always carries its time context.
-- Statistics appearance: Every widget persists one curated colour palette and
-  one layout size. Automatic keeps the established KPI/chart proportions;
-  compact is a small tile, square is a balanced 1:1 tile, wide is a
-  landscape card, and full spans the canvas. On narrow screens every size uses
-  the available width. Appearance is part of the shared UI/MCP definition and
-  never changes the calculated result.
-- Brand icon: Use the supplied green-and-ivory checkmark artwork as the single
-  source for both the in-product mark and browser app icon. Do not redraw or
-  substitute it with a different workflow symbol.
-- Settings continuity: Successful create, update, delete, and reorder actions
-  reconcile board data without dismissing the settings modal. Only the close
-  trigger, Done action, Escape, or backdrop dismissal closes it.
-- Column wells: Give each workflow a stable surface, a status-colour top edge,
-  a named header, a tabular count, and a purposeful empty state. The well must
-  remain visually legible during drag-over without relying on colour alone.
-- Responsive behavior: Modals become near-full-width sheets on small screens;
-  the Kanban remains horizontally scrollable with 88vw columns and snap points.
-- Mobile touch behavior: Primary toolbar, column, drag, and card actions expose a
-  minimum 44 px touch target. Their visual glyphs may remain compact, but the
-  interactive area must not shrink below the target.
-- Mobile overlays: Task and settings modals dock to the bottom edge as rounded
-  sheets, respect device safe areas, and keep their action footer visible while
-  the body scrolls. Desktop overlays remain centred.
+Default polling is 15 seconds; choices are 15/30/60 seconds or pause, plus manual Refresh. Requests do not overlap, unchanged snapshots deduplicate, hidden tabs suspend network checks, and failures display a recoverable status message. The hook records last successful synchronization internally; the current header does not display a timestamp. This interface does not invoke models or schedule cron work.
 
-## 5. Accessibility and content
+### Accessibility and retained components
 
-- Keyboard interaction expectations: Every action is reachable by Tab; tasks can
-  be moved and reordered with keyboard drag controls; Escape closes overlays.
-- Screen-reader and semantic HTML requirements: Landmarks, named lists/regions,
-  task cards as articles, live announcements for moves, and real form labels.
-- Board entry: A visible-on-focus skip link moves focus directly to the board.
-  Task inspection has one title-button Tab stop, including cards without body
-  content; Markdown links remain independently reachable.
-- Drag alternatives: The keyboard drag contract remains available and terminal
-  ordering constraints are announced through the same polite live region.
-- Minimum contrast target: WCAG 2.2 AA.
-- Localization and text expansion rules: English is the default UI language;
-  Spanish is available from Settings and persists in a functional, app-wide
-  cookie. Controls tolerate 40% text expansion, accessible names change with
-  the selected language, and dates and numbers use locale-aware formatting.
-- Voice and tone: Direct, human, and brief. Use verbs such as “Create”, “Move”,
-  “Save”, and “Delete”.
-- Content examples: “No tasks”, “New task”, “Changes saved”.
+A visible-on-focus skip link targets the graph landmark. Nodes and canvas controls are keyboard accessible; dependency lists provide textual navigation while SVG paths are decorative to assistive technology. Owner colour never substitutes for names or state text. Workspace reduced-motion rules remove descendant animation/transition durations; library controls also respect reduced motion. Preserve English/Spanish labels, locale-aware content and focus visibility. Do not equate focus availability with an unperformed full WCAG audit.
 
-## 6. Layout and responsive behavior
+Statistics retains HeroUI cards, textual chart equivalents, tabular KPI values and user-selected widget definitions; Focus mode changes editing chrome without changing data. Connections provides only MCP and REST setup paths, without fabricated health. Webhooks were retired in commit `3949488`; historical SQL and ignored legacy tables are inert rollback context, not an active component or public integration path. The protected `/design-preview` route remains an isolated synthetic preview and does not mutate live work.
 
-- Container widths: Full viewport board; workspace content capped at 1800 px so
-  columns retain readable widths on very large displays.
-- Breakpoints: Tailwind defaults, with board layout shifts at 768 and 1200 px.
-- Navigation behavior by breakpoint: The phone toolbar separates the brand,
-  wrapping navigation, and summary. Tablet places brand and navigation above
-  the summary; at 1200 px these share one row. All actions, including Settings,
-  retain visible localized labels and 44 px targets.
-- Mobile-first exceptions: Kanban columns preserve task context through horizontal
-  scrolling rather than stacking every workflow into a very long page. Columns
-  occupy 88vw with 16 px gutters and scroll snapping; the utility bar wraps
-  navigation and summary beneath the brand without hiding task controls. The bar
-  is sticky on small screens so navigation and board context remain reachable in
-  long columns, and its outer spacing includes display-cutout safe areas.
-- Data-density strategy: Active states show all tasks. Terminal states show only
-  their 20 latest completed tasks, with the limit explained in the column.
-- Statistics-density strategy: Analytics always use the complete persisted task
-  history, not the board's 20-item terminal preview. The widget canvas forms one
-  column on small screens and a twelve-column masonry-like grid on larger
-  screens: KPI cards use four columns and charts six, expanding to full width
-  when their labels need it. Configuration uses a bottom sheet on mobile and a
-  centred modal on desktop. Long category lists show the most relevant values
-  plus an explicit remainder, while retaining exact accessible labels.
-  User-selected sizes map to a twelve-column canvas at desktop widths: compact
-  spans three columns, square four, wide six, and full twelve. Automatic spans
-  four columns for KPIs and six for charts. Square is a minimum proportion rather
-  than a clipping boundary, so long localized labels and textual chart legends
-  may expand the card vertically without hiding information.
-- KPI values: Scale type against each widget's inline size using container units
-  (`cqi`). Preserve the exact localized value and allow wrapping inside the card;
-  use tabular numerals, -0.04em tracking, and a 1.05 line height for legibility.
-- Property-density strategy: Task cards show non-empty values in a compact
-  two-column metadata list. Multi-select values wrap as quiet chips. Property
-  settings and task forms use one column on mobile and two where space permits.
+Finish evidence: the independent review resolved native-scale constrained views, completed-node contrast and polling camera resets, with disposition **ship** at that scope. The graph baseline passed 209 unit, 47 integration and 52 E2E tests; finish fixes passed 19 focused E2E checks, lint-format and production build. Six final desktop/phone, detail and dark captures live in `.impeccable/review/final-*.jpg`; sample records are synthetic in an isolated database. The route was deliberately code-first: no image comp was approved and no new raster asset ships. Existing app icon artwork is retained. These are scope-specific finish records, not a claim that every retained route was redesigned or re-audited.
 
-## 7. Decision log
+Sources: `src/components/workspace/workspace-theme.css`, `workspace.css`, `graph-layout.ts`, `use-graph-camera.ts`, panel/editor/polling components; `src/app/globals.css`, `glass.css`; retained Statistics and Connections implementations. Sidecar ramps are generated previews only; they are not additional runtime colour tokens. Component snippets expand the actual styling for a framework-free preview; they are not alternate production components.
 
-| Date       | Decision                                                                              | Reason                                                                                                 | Owner         |
-| ---------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------- |
-| 2026-10-04 | Give navigation a wrapping row and retain visible localized labels on phones          | Prevents overlap and clipping at 320 px while keeping actions discoverable                             | Design        |
-| 2026-10-04 | Use one semantic task inspection button and preserve Markdown navigation              | Removes duplicate keyboard stops and competing click/Enter behavior                                    | Accessibility |
-| 2026-10-04 | Scale KPI type with card width and allow exact values to wrap                         | Keeps compact widgets readable without changing data or localized formatting                           | Design        |
-| 2026-09-05 | Use shared glass surfaces, neutral KPI values, and session-local focus view           | Gives data priority, reduces editing clutter, and keeps saved definitions unchanged                    | Design        |
-| 2026-09-05 | Keep legend proportions task-based even for numeric measures                          | Prevents visual shares from implying a fraction of the numeric sum                                     | Architecture  |
-| 2026-08-29 | Keep a single shared-password session instead of user accounts                        | Matches the requested private, simple board                                                            | Product       |
-| 2026-08-29 | Use horizontally scrollable columns on mobile                                         | Preserves the spatial workflow and supports touch drag                                                 | Design        |
-| 2026-08-29 | Treat workflow colours as accents, not text colours                                   | User-selected colours cannot guarantee readable contrast                                               | Design        |
-| 2026-08-29 | Limit every terminal state to 20 visible tasks                                        | Keeps completed work available without overwhelming the board                                          | Product       |
-| 2026-08-29 | Model custom properties as definitions plus typed task values                         | Keeps the board extensible without adding permanent task fields                                        | Product       |
-| 2026-08-29 | Support text, number, date, select, and multi-select initially                        | Covers useful metadata while preserving the deliberately small scope                                   | Product       |
-| 2026-08-29 | Remove decorative borders and the per-card state selector                             | Makes the board lighter and keeps state changes spatial through drag                                   | Design        |
-| 2026-08-29 | Reduce card height and metadata density                                               | More tasks remain scannable without turning cards into mini forms                                      | Design        |
-| 2026-08-29 | Add per-column creation and status-tinted card gradients                              | Makes placement faster and workflow ownership visually memorable                                       | Design        |
-| 2026-08-29 | Replace native date, colour, number, and confirmation controls                        | Keeps interaction styling and accessibility consistent through HeroUI                                  | Design        |
-| 2026-08-29 | Reveal and copy the MCP token only from the protected setup page                      | Makes agent setup easier without placing the secret in static output                                   | Security      |
-| 2026-08-30 | Treat the board as a tactile workflow studio with recessed wells                      | Adds hierarchy and depth while keeping task content primary                                            | Design        |
-| 2026-08-30 | Show active/finished context and a restrained completion meter                        | Makes board state scannable without introducing dashboard clutter                                      | Product       |
-| 2026-08-30 | Sort tasks by due date per status type                                                | Makes upcoming and terminal work easy to scan                                                          | Product       |
-| 2026-08-30 | Keep settings mounted while refreshed snapshots reconcile                             | Prevents successful mutations from unexpectedly dismissing the dialog                                  | Product       |
-| 2026-08-30 | Use the supplied green checkmark as the shared app and tab icon                       | Preserves the intended identity with one artwork source                                                | Design        |
-| 2026-08-30 | Make the mobile toolbar sticky and overlays bottom-aligned                            | Keeps frequent controls reachable and forms comfortable on touch                                       | Design        |
-| 2026-08-30 | Standardise frequent mobile actions on 44 px touch targets                            | Reduces accidental activation and exceeds WCAG 2.2 target minimum                                      | Design        |
-| 2026-08-30 | Default to English with Spanish selectable in Settings                                | Keeps current behavior stable while adding a persistent language choice                                | Product       |
-| 2026-08-31 | Open task details from the card and keep editing as a secondary action                | Makes Markdown, dates, status, and every property discoverable without crowding cards                  | Product       |
-| 2026-09-01 | Sort terminal work by completion date and reveal that date conditionally              | Makes recent completions scannable without exposing empty metadata on active tasks                     | Product       |
-| 2026-09-02 | Make terminal completion an invariant and remove configurable automation              | Keeps core task completion predictable while returning the product to its intentionally small scope    | Product       |
-| 2026-09-02 | Add a dedicated editorial statistics page backed by all completed tasks               | Separates analysis from daily task flow while making custom select properties automatically reportable | Product       |
-| 2026-09-03 | Make the statistics canvas user-configurable and persist widget definitions           | Supports focused views without hard-coding one dashboard for every workflow                            | Product       |
-| 2026-09-03 | Share statistics validation and CRUD between the web UI and MCP                       | Keeps agent-created analytics interchangeable with user-created analytics                              | Architecture  |
-| 2026-09-03 | Support system/custom dates, property dimensions, numeric measures, and state filters | Covers delivery pace, workload mix, deadlines, and custom workflow questions with one composable model | Product       |
-| 2026-09-03 | Filter every statistic through request-relative calendar periods                      | Keeps recurring dashboards current without requiring users or MCP clients to edit fixed dates          | Product       |
-| 2026-09-03 | Add curated statistic palettes and responsive card formats to the shared UI/MCP model | Makes the canvas personal and scannable while preserving contrast, compatibility, and agent parity     | Design        |
+## Do's and Don'ts
 
-## 8. Review checklist
+### Do:
 
-- [x] All placeholders are resolved.
-- [x] Tokens are semantic and have light/dark values where needed.
-- [x] Keyboard, focus, contrast, and reduced-motion behavior are defined.
-- [x] Approved HeroUI primitives and variants are listed.
-- [x] A representative page has been checked at mobile and desktop widths.
-- [x] The design system is approved as the implementation baseline.
+- Do use HeroUI v3 compound primitives and Tailwind CSS 4, with existing Geist fonts.
+- Do render stored projects, owners and dependency relationships, retaining prerequisite ancestors when filtering.
+- Do preserve camera position, selection and typed drafts through ordinary polling updates.
+- Do keep English/Spanish labels, keyboard activation, visible focus and textual state cues.
+- Do check native-scale entry and explicit Fit separately at desktop and phone sizes.
 
-## Implementation memory — glass redesign
+### Don't:
 
-- HeroUI's default button foreground and link tokens must follow the app's
-  foreground token because this app selects dark mode with a media query.
-- Recharts axis labels need an explicit muted fill; its default gray does not
-  track this theme. Exact legend values remain available beside every chart.
-- Container queries belong to the widget, not the viewport: a full-width donut
-  can have a side legend while a compact widget remains vertically stacked.
-- Visual QA data was created only in the disposable test database. No demo tasks
-  or modified default statistics belong in production seeds.
-- References: [HeroUI Card](https://heroui.com/docs/react/components/card),
-  [Tailwind backdrop blur](https://tailwindcss.com/docs/backdrop-filter-blur),
-  [Recharts Area](https://recharts.github.io/en-US/api/Area/), and
-  [React derived state](https://react.dev/learn/you-might-not-need-an-effect).
-
-## Implementation memory — interface refinement
-
-- HeroUI `Button` owns task-title keyboard activation. Card pointer delegation
-  excludes nested links, buttons, inputs, button roles, and dialogs so opening or
-  dismissing an overlay cannot reopen it through the card.
-- Keep task-detail styles in their own stylesheet. This preserves the inspector's
-  appearance while keeping the card stylesheet within the 200-line code limit.
-- KPI font sizing must use the widget container rather than viewport width;
-  compact widgets and exact localized values share the same wrapping contract.
+- Don't introduce brutalist framing, grid overlays, decorative rules or descriptive dashboard filler.
+- Don't reduce completed-node opacity or use owner colour as the only identity signal.
+- Don't auto-fit a populated graph when polling adds or removes tasks.
+- Don't turn the inspector into a blocking modal or let outside clicks dismiss task editing.
+- Don't hard-code agent names, schedule models or restore retired webhook UI.
+- Don't describe Statistics or Connections as using the graph's cool palette.

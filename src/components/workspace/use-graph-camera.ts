@@ -17,7 +17,7 @@ export function useGraphCamera(
     originX: number;
     originY: number;
   } | null>(null);
-  /** Fits the full graph on demand; initial phone framing keeps its first task readable. */
+  /** Fits on demand; initial framing preserves native text size in constrained viewports. */
   const fit = useCallback(
     (readable = false) => {
       const element = container.current;
@@ -27,13 +27,14 @@ export function useGraphCamera(
         element.clientHeight / height,
         1,
       );
-      const phone = readable && element.clientWidth < 640;
-      const scale = phone ? Math.max(0.85, overview) : overview;
+      const entryFrame = readable && overview < 1;
+      const scale = readable ? 1 : overview;
       setCamera({
-        x: phone
-          ? 20 - entry.x * scale
-          : Math.max(0, (element.clientWidth - width * scale) / 2),
-        y: phone
+        x:
+          entryFrame && element.clientWidth < width
+            ? 20 - entry.x * scale
+            : Math.max(0, (element.clientWidth - width * scale) / 2),
+        y: entryFrame
           ? 52 - entry.y * scale
           : Math.max(0, (element.clientHeight - height * scale) / 2),
         scale,

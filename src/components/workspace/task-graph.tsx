@@ -45,7 +45,7 @@ export function TaskGraph({
   } = useGraphCamera(
     layout.width,
     layout.height,
-    scope,
+    `${scope}-${tasks.length > 0}`,
     [...layout.positions.values()].sort(
       (a, b) => a.y - b.y || a.x - b.x,
     )[0] ?? { x: 0, y: 0 },

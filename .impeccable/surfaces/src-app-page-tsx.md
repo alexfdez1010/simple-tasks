@@ -17,7 +17,7 @@ OWN-WORLD: Cool neutral canvas, white softly elevated nodes, restrained sage sta
 
 STORY: Choose a project, see which task blocks another, open a task to edit its owner or dependencies, and retain the view while server updates arrive.
 
-FIRST VIEWPORT: Compact application header with project selector and New task. The dependency graph fills the remaining viewport; nodes show title, owner and state. Actual directed edges connect prerequisites to dependents. Fit/zoom controls sit on the canvas. A nonmodal detail panel opens only on selection, and collapses to an accessible sheet on phones. Optional review actions stay in that panel. Phone entry framing keeps nodes legible; Fit provides the complete overview.
+FIRST VIEWPORT: Compact application header with project selector and New task. The dependency graph fills the remaining viewport; nodes show title, owner and state. Actual directed edges connect prerequisites to dependents. Fit/zoom controls sit on the canvas. A nonmodal detail panel opens only on selection, and collapses to an accessible sheet on phones. Optional review actions stay in that panel. Initial framing at native text size keeps nodes legible on phones and constrained desktop windows; Fit provides the complete overview.
 
 FORM: User pinned the minimal work-routes graph, derived from the competitive orienteering challenger in seed bc685d82; map material is translated to neutral minimalism and the geometry represents stored relationships. The user's explicit choice supersedes the assigned workshop desk.
 

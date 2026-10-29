@@ -165,10 +165,7 @@ export function DependencyWorkspace({
           projects={snapshot.projects}
           selectedId={selected}
           onSelect={setSelected}
-          scope={`${projectId}-${assigneeId}-${search}-${showCompleted}-${graphTasks
-            .map((task) => task.id)
-            .sort()
-            .join(',')}`}
+          scope={`${projectId}-${assigneeId}-${search}-${showCompleted}`}
           labels={{
             graph: copy.graph,
             zoomIn: copy.zoomIn,
