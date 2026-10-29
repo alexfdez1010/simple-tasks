@@ -1,4 +1,3 @@
-import { recordTaskEvent, webhookTaskSnapshot } from '@/lib/webhooks/outbox';
 import type { PrismaClient, Task } from '@/generated/prisma';
 import { reorderTaskRows } from '@/lib/tasks/task-reorder';
 import { runSerializable } from '@/lib/db/transaction';
@@ -82,8 +81,6 @@ export class PrismaTaskRepository implements TaskRepository {
           'Remove references to this prerequisite before deleting it.',
         );
 
-      const snapshot = await webhookTaskSnapshot(transaction, id);
-      await recordTaskEvent(transaction, 'task.deleted', id, null, snapshot);
       await transaction.task.delete({ where: { id } });
       const remaining = await transaction.task.findMany({
         where: { statusId: task.statusId },
@@ -117,12 +114,6 @@ export class PrismaTaskRepository implements TaskRepository {
         input.index,
       );
 
-      await recordTaskEvent(
-        transaction,
-        task.statusId === target.id ? 'task.updated' : 'task.moved',
-        task.id,
-        task.statusId === target.id ? null : task.statusId,
-      );
       return moved;
     });
   }

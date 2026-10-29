@@ -1,4 +1,3 @@
-import { scheduleWebhookDelivery } from '@/lib/webhooks/schedule';
 import { requireAuthenticated } from '@/lib/auth/session';
 import {
   getWorkspaceSnapshot,
@@ -14,6 +13,5 @@ export const maxDuration = 60;
 export default async function Home() {
   await requireAuthenticated();
   const snapshot = await getWorkspaceSnapshot();
-  scheduleWebhookDelivery();
   return <DependencyWorkspace initial={serializeWorkspace(snapshot)} />;
 }

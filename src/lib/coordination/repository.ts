@@ -1,4 +1,3 @@
-import { recordTaskEvent } from '@/lib/webhooks/outbox';
 import { readGraphSnapshot } from '@/lib/coordination/graph-repository';
 import type { Assignee, PrismaClient, Project } from '@/generated/prisma';
 import { runSerializable } from '@/lib/db/transaction';
@@ -78,7 +77,6 @@ export class PrismaCoordinationRepository implements CoordinationRepository {
           where: { id: task.id },
           data: { updatedAt: new Date() },
         });
-        await recordTaskEvent(transaction, 'task.updated', task.id);
       }
       return assignee;
     });
@@ -153,7 +151,6 @@ export class PrismaCoordinationRepository implements CoordinationRepository {
         );
       await assertDependenciesSatisfied(transaction, id, target);
       await editTaskPlacement(transaction, task, target, 0);
-      await recordTaskEvent(transaction, 'task.moved', id, task.statusId);
 
       return coordinatedTask(
         await transaction.task.findUniqueOrThrow({

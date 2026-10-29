@@ -3,9 +3,8 @@ import { runSerializable } from '@/lib/db/transaction';
 import { resequenceTasks } from '@/lib/tasks/ordering';
 import type { ReorderTasksInput } from '@/lib/tasks/types';
 import { conflict, notFound } from '@/lib/validation/errors';
-import { recordTaskEvent } from '@/lib/webhooks/outbox';
 
-/** Verifies exact membership before reordering, recording only tasks whose stored position changes. */
+/** Verifies exact membership and reorders a non-terminal column atomically. */
 export async function reorderTaskRows(
   client: PrismaClient,
   input: ReorderTasksInput,
@@ -31,9 +30,5 @@ export async function reorderTaskRows(
         'The order must include every task in the status exactly once.',
       );
     await resequenceTasks(transaction, input.taskIds);
-    const positions = new Map(rows.map((row) => [row.id, row.position]));
-    for (const [position, id] of input.taskIds.entries())
-      if (positions.get(id) !== position)
-        await recordTaskEvent(transaction, 'task.updated', id);
   });
 }

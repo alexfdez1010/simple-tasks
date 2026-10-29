@@ -1,4 +1,3 @@
-import { recordTaskEvent } from '@/lib/webhooks/outbox';
 import {
   assertReviewer,
   assertReviewTransition,
@@ -78,7 +77,6 @@ export function createAssignedTask(
     await assertDependenciesSatisfied(transaction, task.id, status);
     await assertReviewTransition(transaction, task.id, status);
 
-    await recordTaskEvent(transaction, 'task.created', task.id);
     return task;
   });
 }
@@ -189,12 +187,6 @@ export function updateAssignedTask(
       where: { id: task.id },
     });
 
-    await recordTaskEvent(
-      transaction,
-      final.statusId === task.statusId ? 'task.updated' : 'task.moved',
-      task.id,
-      final.statusId === task.statusId ? null : task.statusId,
-    );
     return final;
   });
 }

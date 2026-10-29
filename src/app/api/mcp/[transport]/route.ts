@@ -1,4 +1,3 @@
-import { scheduleWebhookDelivery } from '@/lib/webhooks/schedule';
 import { createMcpHandler, withMcpAuth } from 'mcp-handler';
 
 import { isValidMcpToken } from '@/lib/mcp/auth';
@@ -23,7 +22,6 @@ function handleMcpRequest(request: Request): Response | Promise<Response> {
   if (request.method === 'HEAD') {
     return new Response(null, { status: 405, headers: { Allow: 'POST' } });
   }
-  if (request.method === 'POST') scheduleWebhookDelivery();
   return handler(request);
 }
 

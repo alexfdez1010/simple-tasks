@@ -1,4 +1,3 @@
-import { scheduleWebhookDelivery } from '@/lib/webhooks/schedule';
 import { revalidatePath } from 'next/cache';
 
 import { translateErrorMessage } from '@/lib/i18n/error-messages';
@@ -15,7 +14,6 @@ export async function executeBoardAction<T = void>(
   try {
     const data = await operation();
     revalidatePath('/');
-    scheduleWebhookDelivery();
     return data === undefined ? { success: true } : { success: true, data };
   } catch (error) {
     const language = await getCurrentLanguage();

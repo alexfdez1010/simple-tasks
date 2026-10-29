@@ -1,4 +1,3 @@
-import { recordTaskEvent } from '@/lib/webhooks/outbox';
 import type { PrismaClient } from '@/generated/prisma';
 import type { z } from 'zod';
 import type {
@@ -73,12 +72,6 @@ export class PrismaReviewRepository implements ReviewRepository {
         reviewedAt: null,
       });
 
-      await recordTaskEvent(
-        transaction,
-        task.statusId === target.id ? 'task.updated' : 'task.moved',
-        task.id,
-        task.statusId === target.id ? null : task.statusId,
-      );
       return coordinatedTask(
         await transaction.task.findUniqueOrThrow({
           where: { id: task.id },
@@ -126,7 +119,6 @@ export class PrismaReviewRepository implements ReviewRepository {
         reviewedAt: new Date(),
       });
 
-      await recordTaskEvent(transaction, 'task.moved', task.id, task.statusId);
       return coordinatedTask(
         await transaction.task.findUniqueOrThrow({
           where: { id: task.id },

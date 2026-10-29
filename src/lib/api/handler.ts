@@ -1,5 +1,4 @@
 import 'server-only';
-import { scheduleWebhookDelivery } from '@/lib/webhooks/schedule';
 import { randomUUID } from 'node:crypto';
 import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/db/client';
@@ -105,7 +104,6 @@ export async function handleApiRequest(
     if (write) {
       revalidatePath('/');
       revalidatePath('/statistics');
-      scheduleWebhookDelivery();
     }
     response =
       match.endpoint.response === 'Empty'
