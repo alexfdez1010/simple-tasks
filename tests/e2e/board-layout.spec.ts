@@ -43,6 +43,33 @@ for (const width of [768, 900, 1440]) {
           (element) => element.scrollWidth - element.clientWidth,
         ),
       ).toBeLessThanOrEqual(1);
+      const filters = page.locator('.workspace-toolbar');
+      const search = await filters.getByRole('textbox').boundingBox();
+      const owner = await filters
+        .locator('[data-slot="select-trigger"]')
+        .first()
+        .boundingBox();
+      const interval = await filters
+        .locator('.workspace-sync [data-slot="select-trigger"]')
+        .boundingBox();
+      const refresh = await filters
+        .locator('.workspace-sync > button')
+        .boundingBox();
+      for (const control of [search, owner, interval, refresh]) {
+        expect(control).not.toBeNull();
+        expect(control!.height).toBe(44);
+      }
+      const completed = await filters
+        .locator('.checkbox__content')
+        .boundingBox();
+      expect(completed).not.toBeNull();
+      expect(
+        Math.abs(
+          completed!.y + completed!.height / 2 - search!.y - search!.height / 2,
+        ),
+      ).toBeLessThanOrEqual(1);
+      expect(Math.abs(search!.y - owner!.y)).toBeLessThanOrEqual(1);
+      expect(Math.abs(interval!.y - refresh!.y)).toBeLessThanOrEqual(1);
       await expect(page.getByRole('progressbar')).toHaveCount(0);
       await expect(
         page.getByRole('link', {
