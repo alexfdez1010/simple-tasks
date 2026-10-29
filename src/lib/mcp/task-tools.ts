@@ -2,6 +2,7 @@ import 'server-only';
 
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
+import { dependencyIdsSchema } from '@/lib/coordination/schemas';
 
 import { runMcpTool } from '@/lib/mcp/shared';
 import {
@@ -47,8 +48,12 @@ export function registerTaskTools(server: McpServer): void {
     {
       title: 'Create a task',
       description:
-        'Create a task at the end of a status. Omit statusId to use the first non-terminal status.',
+        'Create a task at the end of a status. Set assigneeId and projectId; omitted ownership preserves legacy assignments or defaults to Alejandro. dependencyIds are prerequisite task IDs; cycles are rejected. Omit statusId for a READY state.',
       inputSchema: {
+        assigneeId: id.optional(),
+        reviewerId: id.nullable().optional(),
+        projectId: id.optional(),
+        dependencyIds: dependencyIdsSchema.optional(),
         title: z.string().trim().min(1).max(160),
         description: z.string().max(20_000).nullable().optional(),
         dueDate: z.string().datetime().nullable().optional(),
@@ -69,6 +74,11 @@ export function registerTaskTools(server: McpServer): void {
         'Atomically update task fields and optionally move it by sending statusId and index together. Omitted fields remain unchanged. propertyValues replaces the complete value set; use set_task_property_value to change only one.',
       inputSchema: {
         id,
+        expectedUpdatedAt: z.string().datetime().optional(),
+        assigneeId: id.optional(),
+        reviewerId: id.nullable().optional(),
+        projectId: id.optional(),
+        dependencyIds: dependencyIdsSchema.optional(),
         title: z.string().trim().min(1).max(160).optional(),
         description: z.string().max(20_000).nullable().optional(),
         dueDate: z.string().datetime().nullable().optional(),

@@ -1,0 +1,49 @@
+enum AssigneeKind {
+  HUMAN
+  AGENT
+}
+
+enum WorkType {
+  READY
+  WORKING
+  BLOCKED
+  REVIEW
+}
+
+model Assignee {
+  id          String       @id @default(cuid())
+  name        String       @unique
+  kind        AssigneeKind @default(HUMAN)
+  description String       @default("")
+  color       String       @default("#64748B")
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  tasks       Task[]       @relation("TaskAssignee")
+  reviews     Task[]       @relation("TaskReviewer")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String   @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  tasks       Task[]
+}
+
+model TaskDependency {
+  taskId      String
+  dependsOnId String
+  task        Task   @relation("TaskPrerequisites", fields: [taskId], references: [id], onDelete: Cascade)
+  dependsOn   Task   @relation("TaskDependents", fields: [dependsOnId], references: [id], onDelete: Restrict)
+
+  @@id([taskId, dependsOnId])
+  @@index([dependsOnId])
+}
+
+enum ReviewState {
+  NOT_REQUESTED
+  PENDING
+  APPROVED
+  CHANGES_REQUESTED
+}

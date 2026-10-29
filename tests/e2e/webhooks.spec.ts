@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { selectWorkspaceOption } from './workspace-fixtures';
 import {
   clearWebhookFixtures,
   fixtureSigningSecret,
@@ -42,11 +43,17 @@ test('manages a single webhook and reports the test result', async ({
     await page
       .getByRole('textbox', { name: /^Title/ })
       .fill('E2E Webhook task');
-    await page
-      .getByRole('button', { name: 'Create task', exact: true })
-      .click();
+    const owner = await webhookTestDb.assignee.findUniqueOrThrow({
+      where: { id: 'assignee-default' },
+    });
+    await selectWorkspaceOption(
+      page.getByTestId('task-panel'),
+      'Responsible party',
+      owner.name,
+    );
+    await page.getByRole('button', { name: 'Save', exact: true }).click();
     await expect(
-      page.getByRole('article', { name: 'E2E Webhook task', exact: true }),
+      page.getByRole('button', { name: /^E2E Webhook task ·/ }),
     ).toBeVisible();
     await expect
       .poll(() =>

@@ -3,7 +3,7 @@
 The public guide is at `/api-docs`; download the OpenAPI 3.0.3 contract from
 `/api/openapi` and import it into Postman, Insomnia, or a compatible client
 code generator. Owner-only token management is at `/api-access`, linked from
-the board. Statistics are intentionally excluded. All tokens access the same
+the board. Statistics are intentionally excluded. Responsible parties, projects and dependency-aware task operations are documented in [agent coordination](agents.md). All tokens access the same
 single-instance board, with either read-only or read/write permission.
 
 ## Connect
@@ -64,7 +64,7 @@ curl 'https://tasks.alejandrofernandezcamello.me/api/v1/tasks' \
 ## Pagination and filters
 
 `GET /tasks` accepts `limit` (integer 1–100, default 50), `cursor` (opaque),
-`statusId`, `scope` (`all`, `active`, `completed`; default all), and `search`
+`assigneeId`, `projectId`, `statusId`, `scope` (`all`, `active`, `completed`; default all), and `search`
 (case-insensitive title/description). Unknown or repeated parameters fail with 422. Tasks are ordered by ascending immutable id; all completed history is
 available, without the web board's 20-completions cap. The response includes
 `pagination: { limit, hasMore, nextCursor }`. Repeat with `cursor=nextCursor`

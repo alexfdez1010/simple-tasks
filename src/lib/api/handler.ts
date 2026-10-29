@@ -114,7 +114,11 @@ export async function handleApiRequest(
             match.endpoint.response === 'TasksPage' ? result : { data: result },
             {
               status:
-                request.method === 'POST' && !path.endsWith('/move')
+                request.method === 'POST' &&
+                !path.endsWith('/move') &&
+                !path.endsWith('/start') &&
+                !path.endsWith('/submit-review') &&
+                !path.endsWith('/review')
                   ? 201
                   : 200,
             },

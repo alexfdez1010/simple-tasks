@@ -43,6 +43,26 @@ Use the MCP server at \`${serverUrl}\`. Discover exact input schemas with \`tool
 | \`reorder_statistics\` | Replace the complete statistic order. |
 | \`delete_statistic\` | Delete one statistic definition. |
 
+## Coordination
+
+- Every task has a database-backed responsible party and project. Use \`list_assignees\` and \`list_projects\` for IDs; do not hard-code agent names.
+- Use \`create_assignee\` / \`update_assignee\` with name, HUMAN or AGENT kind, description/instructions and a #RRGGBB color. Use \`create_project\` / \`update_project\` for shared project context.
+- Set \`assigneeId\`, \`projectId\` and \`dependencyIds\` in \`create_task\` / \`update_task\`. Dependencies are prerequisite task IDs; cycles and self-reference are rejected.
+- For compatibility, omitted ownership uses a supplied legacy Responsable/Assignee property, otherwise Alejandro for creation; updates retain the current owner. New integrations should always send assigneeId explicitly.
+- Call \`list_ready_tasks\` with your assigneeId and optional projectId/limit. It returns READY tasks with all prerequisites completed; it does not reserve them.
+- Call \`start_task\` with id and assigneeId before working. It rechecks readiness atomically and moves to a WORKING status. A competing start returns a conflict; choose another task. This is durable workflow ownership, without an automatic lease timeout. If interrupted, leave context and explicitly move/reassign the task when appropriate.
+- Read \`get_task\` for owner instructions, project context and prerequisite results. Use \`search_tasks\` for filtered, cursor-paginated full history.
+- Finish through \`update_task\` or \`move_task\` only after prerequisites are complete. Record the result in the description while preserving existing content. Status workType is READY, WORKING or BLOCKED; isTerminal determines completion. Clients invoke agents and scheduling externally; this server does not start models.
+- Send expectedUpdatedAt from the latest get_task in update_task to reject stale edits.
+
+## Optional review
+
+- Set reviewerId to a different configured human or agent, or null for no review. The original responsible party stays assigned.
+- Call submit_task_for_review with id and assigneeId when the deliverable is ready. It enters REVIEW and does not unlock dependents yet.
+- Check list_pending_reviews with your reviewerId as well as list_ready_tasks with your assigneeId.
+- Call review_task with id, reviewerId, expectedUpdatedAt from the version inspected, and APPROVE or REQUEST_CHANGES. Requested changes require a note and return the work to its owner; approval completes it.
+- Content/assignment/dependency changes invalidate pending or approved review. Re-read stale tasks instead of approving a newer version blindly. Responsible-party IDs coordinate trusted clients using the existing shared MCP credential; they are not separate authentication identities.
+
 ## Rules
 
 - Ask for confirmation before \`delete_task\`, \`delete_status\`, \`delete_property\`, or \`delete_statistic\`.

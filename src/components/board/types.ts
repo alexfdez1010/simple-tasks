@@ -8,6 +8,7 @@ export type { PropertyDefinition, TaskPropertyValueData };
 
 /** Serializable workflow state consumed by the client-side board. */
 export interface BoardStatus {
+  workType?: 'READY' | 'WORKING' | 'BLOCKED' | 'REVIEW';
   id: string;
   name: string;
   color: string;
@@ -48,6 +49,7 @@ export interface PropertyValues {
 
 /** Values accepted by the create and edit status forms. */
 export interface StatusValues {
+  workType?: 'READY' | 'WORKING' | 'BLOCKED' | 'REVIEW';
   name: string;
   color: string;
   isTerminal: boolean;

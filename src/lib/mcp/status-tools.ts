@@ -29,13 +29,15 @@ export function registerStatusTools(server: McpServer): void {
       inputSchema: {
         name: z.string().trim().min(1).max(60),
         color,
+        workType: z.enum(['READY', 'WORKING', 'BLOCKED', 'REVIEW']).optional(),
         isTerminal: z.boolean().optional(),
       },
     },
-    async ({ name, color: statusColor, isTerminal }) =>
+    async ({ name, color: statusColor, isTerminal, workType }) =>
       runMcpTool(() =>
         statusService.create({
           name,
+          workType,
           color: statusColor,
           isTerminal: isTerminal ?? false,
         }),
@@ -51,6 +53,7 @@ export function registerStatusTools(server: McpServer): void {
         id,
         name: z.string().trim().min(1).max(60).optional(),
         color: color.optional(),
+        workType: z.enum(['READY', 'WORKING', 'BLOCKED', 'REVIEW']).optional(),
         isTerminal: z.boolean().optional(),
       },
     },

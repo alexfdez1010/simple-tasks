@@ -1,7 +1,10 @@
 import 'server-only';
 import { z } from 'zod';
 import type { PrismaClient } from '@/generated/prisma';
-import { serializeTaskWithProperties } from '@/lib/tasks/serialization';
+import {
+  coordinatedTask,
+  coordinatedTaskInclude,
+} from '@/lib/coordination/read-model';
 import { ApiError } from '@/lib/api/errors';
 import { taskQuery } from '@/lib/api/schemas';
 import { idSchema } from '@/lib/validation/common';
@@ -30,9 +33,12 @@ export async function listTaskPage(
   client: PrismaClient,
   input: z.infer<typeof taskQuery>,
 ) {
-  const { limit, cursor, statusId, scope, search } = input;
+  const { limit, cursor, statusId, scope, search, assigneeId, projectId } =
+    input;
   const rows = await client.task.findMany({
     where: {
+      assigneeId,
+      projectId,
       ...(cursor ? { id: { gt: decodeCursor(cursor) } } : {}),
       ...(statusId ? { statusId } : {}),
       ...(scope === 'all'
@@ -49,13 +55,10 @@ export async function listTaskPage(
     },
     orderBy: { id: 'asc' },
     take: limit + 1,
-    include: { status: true, propertyValues: true },
+    include: coordinatedTaskInclude,
   });
   const hasMore = rows.length > limit;
-  const data = rows.slice(0, limit).map((row) => ({
-    ...serializeTaskWithProperties(row),
-    status: row.status,
-  }));
+  const data = rows.slice(0, limit).map(coordinatedTask);
   const last = data.at(-1);
   return {
     data,

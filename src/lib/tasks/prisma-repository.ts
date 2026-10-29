@@ -1,16 +1,21 @@
-import type { PrismaClient, Task } from '@/generated/prisma';
 import { recordTaskEvent, webhookTaskSnapshot } from '@/lib/webhooks/outbox';
+import type { PrismaClient, Task } from '@/generated/prisma';
 import { reorderTaskRows } from '@/lib/tasks/task-reorder';
 import { runSerializable } from '@/lib/db/transaction';
-import { persistTaskPropertyValues } from '@/lib/properties/value-persistence';
 import { resequenceTasks, taskListOrder } from '@/lib/tasks/ordering';
 import type { TaskRepository } from '@/lib/tasks/repository';
 import { serializeTaskWithProperties } from '@/lib/tasks/serialization';
+import { editTaskPlacement } from '@/lib/tasks/task-placement';
 import {
-  editAndRelocateTask,
-  editTaskPlacement,
-  type EditableTaskFields,
-} from '@/lib/tasks/task-placement';
+  createAssignedTask,
+  updateAssignedTask,
+} from '@/lib/tasks/task-writes';
+import {
+  coordinatedTask,
+  coordinatedTaskInclude,
+} from '@/lib/coordination/read-model';
+import { assertReviewTransition } from '@/lib/coordination/review-guards';
+import { assertDependenciesSatisfied } from '@/lib/coordination/dependencies';
 import type {
   BoardStatus,
   CreateTaskInput,
@@ -19,7 +24,7 @@ import type {
   TaskWithStatus,
   UpdateTaskInput,
 } from '@/lib/tasks/types';
-import { notFound } from '@/lib/validation/errors';
+import { conflict, notFound } from '@/lib/validation/errors';
 
 /** Prisma-backed task repository with transactional ordering invariants. */
 export class PrismaTaskRepository implements TaskRepository {
@@ -49,96 +54,20 @@ export class PrismaTaskRepository implements TaskRepository {
   async findById(id: string): Promise<TaskWithStatus | null> {
     const task = await this.client.task.findUnique({
       where: { id },
-      include: { status: true, propertyValues: true },
+      include: coordinatedTaskInclude,
     });
     if (!task) return null;
-    return { ...serializeTaskWithProperties(task), status: task.status };
+    return coordinatedTask(task);
   }
 
-  /** Creates a task at the end of an existing or default non-terminal column. */
-  async create(input: CreateTaskInput): Promise<Task> {
-    return runSerializable(this.client, async (transaction) => {
-      let status = input.statusId
-        ? await transaction.status.findUnique({ where: { id: input.statusId } })
-        : await transaction.status.findFirst({
-            where: { isTerminal: false },
-            orderBy: { position: 'asc' },
-          });
-      status ??= input.statusId
-        ? null
-        : await transaction.status.findFirst({ orderBy: { position: 'asc' } });
-      if (!status) throw notFound('The status');
-      const aggregate = await transaction.task.aggregate({
-        where: { statusId: status.id },
-        _max: { position: true },
-      });
-      const task = await transaction.task.create({
-        data: {
-          title: input.title,
-          description: input.description ?? null,
-          dueDate: input.dueDate instanceof Date ? input.dueDate : null,
-          statusId: status.id,
-          position: (aggregate._max.position ?? -1) + 1,
-          completedAt: status.isTerminal ? new Date() : null,
-        },
-      });
-      if (input.propertyValues?.length) {
-        await persistTaskPropertyValues(
-          transaction,
-          task.id,
-          input.propertyValues,
-          true,
-        );
-      }
-      await recordTaskEvent(transaction, 'task.created', task.id);
-      return task;
-    });
+  /** Creates an assigned task, preserving all ordering and dependency invariants. */
+  create(input: CreateTaskInput): Promise<Task> {
+    return createAssignedTask(this.client, input);
   }
 
-  /** Atomically updates editable fields and optionally relocates the task. */
-  async update(input: UpdateTaskInput): Promise<Task> {
-    return runSerializable(this.client, async (transaction) => {
-      const task = await transaction.task.findUnique({
-        where: { id: input.id },
-      });
-      if (!task) throw notFound('The task');
-      const edits: EditableTaskFields = {
-        title: input.title,
-        description: input.description,
-        dueDate:
-          input.dueDate instanceof Date || input.dueDate === null
-            ? input.dueDate
-            : undefined,
-      };
-      const updated =
-        input.statusId === undefined || input.index === undefined
-          ? await transaction.task.update({
-              where: { id: input.id },
-              data: edits,
-            })
-          : await editAndRelocateTask(
-              transaction,
-              task,
-              input.statusId,
-              input.index,
-              edits,
-            );
-      if (input.propertyValues !== undefined) {
-        await persistTaskPropertyValues(
-          transaction,
-          task.id,
-          input.propertyValues,
-          true,
-        );
-      }
-      await recordTaskEvent(
-        transaction,
-        updated.statusId === task.statusId ? 'task.updated' : 'task.moved',
-        task.id,
-        updated.statusId === task.statusId ? null : task.statusId,
-      );
-      return updated;
-    });
+  /** Edits ownership, relationships and fields in one transaction. */
+  update(input: UpdateTaskInput): Promise<Task> {
+    return updateAssignedTask(this.client, input);
   }
 
   /** Deletes a task atomically and compacts remaining positions. */
@@ -146,6 +75,13 @@ export class PrismaTaskRepository implements TaskRepository {
     await runSerializable(this.client, async (transaction) => {
       const task = await transaction.task.findUnique({ where: { id } });
       if (!task) throw notFound('The task');
+      if (
+        await transaction.taskDependency.count({ where: { dependsOnId: id } })
+      )
+        throw conflict(
+          'Remove references to this prerequisite before deleting it.',
+        );
+
       const snapshot = await webhookTaskSnapshot(transaction, id);
       await recordTaskEvent(transaction, 'task.deleted', id, null, snapshot);
       await transaction.task.delete({ where: { id } });
@@ -172,12 +108,15 @@ export class PrismaTaskRepository implements TaskRepository {
       });
       if (!task) throw notFound('The task');
       if (!target) throw notFound('The status');
+      await assertDependenciesSatisfied(transaction, task.id, target);
+      await assertReviewTransition(transaction, task.id, target);
       const moved = await editTaskPlacement(
         transaction,
         task,
         target,
         input.index,
       );
+
       await recordTaskEvent(
         transaction,
         task.statusId === target.id ? 'task.updated' : 'task.moved',

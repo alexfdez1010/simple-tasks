@@ -1,5 +1,10 @@
 /** Labels for capture, column navigation and non-drag movement. */
 export const workspaceEn = {
+  'status.review': 'Awaiting review',
+  'status.workType': 'Agent availability',
+  'status.ready': 'Ready to start',
+  'status.working': 'Working',
+  'status.blocked': 'Manually blocked',
   'board.home': 'Board',
   'board.connections': 'Connections',
   'board.chooseColumn': 'Go to column',
@@ -13,6 +18,11 @@ export const workspaceEn = {
   'task.retry': 'Could not save. Your text is safe; try again.',
 };
 export const workspaceEs = {
+  'status.review': 'En revisión',
+  'status.workType': 'Disponibilidad para agentes',
+  'status.ready': 'Disponible para empezar',
+  'status.working': 'En curso',
+  'status.blocked': 'Bloqueada manualmente',
   'board.home': 'Tablero',
   'board.connections': 'Conexiones',
   'board.chooseColumn': 'Ir a la columna',

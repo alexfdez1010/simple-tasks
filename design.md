@@ -1,5 +1,15 @@
 # Design system
 
+## Minimal dependency graph — 2026-10-29 (in progress)
+
+- Confirmed brief: replace the task-management Kanban with a dependency-focused operation surface; every task has a persisted human or agent assignee with editable instructions. Preserve existing task assignments and integration contracts. Agent names are user-managed through MCP and UI.
+- Superseding user direction: minimalist graph-first management, based on the work-routes prototype. Actual data-driven dependency edges, one compact task title/assignee/state per node, project grouping/filtering, and details on selection. Remove decorative rules, frames and explanatory copy. Soft neutral canvas, readable sans, white nodes and restrained semantic status accents.
+- Optional review: a second dynamic responsible party can approve or request changes. Keep the reviewer visible in the selected task and a compact node label. Approval is the completion gate; review controls live in the detail panel.
+- Poll snapshots at 15 seconds by default, with pause/30/60-second options, no overlapping requests, hidden-tab suspension and unchanged-response deduplication. Forms and selections remain mounted; show last successful sync and recoverable connection failures.
+- Domain design: tasks, assignees and dependency relations have separate responsibilities; narrow service/repository contracts preserve shared UI/MCP/REST behavior (SRP/ISP/DIP). Derive readiness server-side and revalidate it atomically on claim.
+- Migration expands schema, backfills existing Responsible/Assignee property values and retains legacy data. New assignments are canonical relations; legacy writes stay compatible. Verify preservation and document rollback.
+- User selected work routes and minimalist styling. Final documentation records actual shipped tokens and responsive behavior.
+
 This document is the source of truth for the product's visual language,
 interaction model, accessibility, and responsive behavior. HeroUI v3 provides
 the accessible primitives; Tailwind CSS 4 provides layout and product styling.

@@ -82,6 +82,8 @@ export const taskQuery = z
       .regex(/^[A-Za-z0-9_-]+$/)
       .max(256)
       .optional(),
+    assigneeId: idSchema.optional(),
+    projectId: idSchema.optional(),
     statusId: idSchema.optional(),
     scope: z.enum(['all', 'active', 'completed']).default('all'),
     search: z.string().trim().min(1).max(160).optional(),

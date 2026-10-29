@@ -5,6 +5,18 @@ import { z } from 'zod';
 import { registerSimpleTaskTools } from '@/lib/mcp/tools';
 
 const EXPECTED_TOOLS = [
+  'list_pending_reviews',
+  'submit_task_for_review',
+  'review_task',
+  'list_assignees',
+  'create_assignee',
+  'update_assignee',
+  'list_projects',
+  'create_project',
+  'update_project',
+  'list_ready_tasks',
+  'start_task',
+  'search_tasks',
   'create_statistic',
   'create_status',
   'create_task',

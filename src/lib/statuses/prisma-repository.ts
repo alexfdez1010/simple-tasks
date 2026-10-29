@@ -1,4 +1,6 @@
 import type { Prisma, PrismaClient, Status } from '@/generated/prisma';
+import { assertReviewTransition } from '@/lib/coordination/review-guards';
+import { assertDependenciesSatisfied } from '@/lib/coordination/dependencies';
 import { runSerializable } from '@/lib/db/transaction';
 import type { StatusRepository } from '@/lib/statuses/repository';
 import type {
@@ -53,8 +55,19 @@ export class PrismaStatusRepository implements StatusRepository {
           name: input.name,
           color: input.color,
           isTerminal: input.isTerminal,
+          workType: input.workType,
         },
       });
+      if (input.isTerminal !== undefined || input.workType !== undefined) {
+        const tasks = await transaction.task.findMany({
+          where: { statusId: status.id },
+          select: { id: true },
+        });
+        for (const task of tasks) {
+          await assertDependenciesSatisfied(transaction, task.id, status);
+          await assertReviewTransition(transaction, task.id, status);
+        }
+      }
       if (input.isTerminal === true && !current.isTerminal) {
         await transaction.task.updateMany({
           where: { statusId: input.id, completedAt: null },

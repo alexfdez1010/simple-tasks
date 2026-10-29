@@ -1,0 +1,17 @@
+model ApiToken {
+  id         String    @id @default(cuid())
+  name       String
+  hint       String
+  tokenHash  String    @unique
+  canWrite   Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  lastUsedAt DateTime?
+  revokedAt  DateTime?
+}
+
+model ApiRateLimit {
+  key         String   @id
+  windowStart DateTime
+  count       Int
+  writes      Int
+}

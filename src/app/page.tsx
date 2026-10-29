@@ -1,44 +1,19 @@
 import { scheduleWebhookDelivery } from '@/lib/webhooks/schedule';
-import { BoardShell } from '@/components/board/board-shell';
-import type { BoardStatus, PropertyDefinition } from '@/components/board/types';
-import { getBoardSnapshot } from '@/lib/tasks/queries';
+import { requireAuthenticated } from '@/lib/auth/session';
+import {
+  getWorkspaceSnapshot,
+  serializeWorkspace,
+} from '@/lib/coordination/snapshot';
+import { DependencyWorkspace } from '@/components/workspace/workspace';
+import '@/components/workspace/workspace.css';
 
-/** Ensures every board request reads the latest persisted workflow state. */
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
 
-/**
- * Loads and renders the authenticated task board.
- *
- * @returns The server-rendered board shell with serializable initial data.
- */
+/** Loads the authenticated dependency graph with persisted projects and mandatory responsible parties. */
 export default async function Home() {
-  const snapshot = await getBoardSnapshot();
+  await requireAuthenticated();
+  const snapshot = await getWorkspaceSnapshot();
   scheduleWebhookDelivery();
-  const initialStatuses: BoardStatus[] = snapshot.statuses.map((status) => ({
-    id: status.id,
-    name: status.name,
-    color: status.color,
-    position: status.position,
-    isTerminal: status.isTerminal,
-    tasks: status.tasks.map((task) => ({
-      id: task.id,
-      title: task.title,
-      description: task.description,
-      dueDate: task.dueDate?.toISOString() ?? null,
-      createdAt: task.createdAt.toISOString(),
-      completedAt: task.completedAt?.toISOString() ?? null,
-      statusId: task.statusId,
-      position: task.position,
-      updatedAt: task.updatedAt.toISOString(),
-      propertyValues: task.propertyValues,
-    })),
-  }));
-  const initialProperties: PropertyDefinition[] = snapshot.properties;
-  return (
-    <BoardShell
-      initialStatuses={initialStatuses}
-      initialProperties={initialProperties}
-    />
-  );
+  return <DependencyWorkspace initial={serializeWorkspace(snapshot)} />;
 }

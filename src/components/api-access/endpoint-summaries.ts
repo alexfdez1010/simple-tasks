@@ -1,4 +1,17 @@
 export const spanishEndpointSummaries: Record<string, string> = {
+  'GET /tasks/reviews': 'Consultar las revisiones pendientes de un responsable',
+  'POST /tasks/{id}/submit-review': 'Enviar el trabajo al revisor opcional',
+  'POST /tasks/{id}/review':
+    'Aprobar o solicitar cambios en la versión revisada',
+  'GET /assignees': 'Consultar personas y agentes',
+  'POST /assignees': 'Crear un responsable con instrucciones y color',
+  'PATCH /assignees/{id}': 'Editar un responsable sin perder sus asignaciones',
+  'GET /projects': 'Consultar los proyectos',
+  'POST /projects': 'Crear un proyecto',
+  'PATCH /projects/{id}': 'Editar un proyecto',
+  'GET /tasks/ready': 'Consultar trabajo disponible para un responsable',
+  'POST /tasks/{id}/start': 'Iniciar una tarea disponible de forma atómica',
+
   'GET /tasks': 'Consultar y filtrar todo el historial de tareas',
   'POST /tasks': 'Crear una tarea',
   'GET /tasks/{id}': 'Consultar una tarea con su estado y propiedades',

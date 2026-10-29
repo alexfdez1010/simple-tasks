@@ -17,6 +17,10 @@ export type BoardSnapshot = {
 
 export type CreateTaskInput = {
   title: string;
+  reviewerId?: string | null;
+  assigneeId?: string;
+  projectId?: string;
+  dependencyIds?: string[];
   description?: string | null;
   dueDate?: string | Date | null;
   statusId?: string;
@@ -24,7 +28,12 @@ export type CreateTaskInput = {
 };
 
 export type UpdateTaskInput = {
+  expectedUpdatedAt?: string;
   id: string;
+  reviewerId?: string | null;
+  assigneeId?: string;
+  projectId?: string;
+  dependencyIds?: string[];
   title?: string;
   description?: string | null;
   dueDate?: string | Date | null;

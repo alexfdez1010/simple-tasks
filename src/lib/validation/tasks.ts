@@ -4,12 +4,18 @@ import { MAX_TASK_PROPERTIES } from '@/lib/properties/limits';
 import { idSchema, indexSchema } from '@/lib/validation/common';
 import { taskPropertyValueInputSchema } from '@/lib/validation/properties';
 
+import { dependencyIdsSchema } from '@/lib/coordination/schemas';
+
 const titleSchema = z.string().trim().min(1).max(160);
 const descriptionSchema = z.string().trim().max(20_000).nullable();
 const dateInputSchema = z.union([z.string(), z.date()]).nullable();
 
 export const createTaskSchema = z.object({
   title: titleSchema,
+  assigneeId: idSchema.optional(),
+  reviewerId: idSchema.nullable().optional(),
+  projectId: idSchema.optional(),
+  dependencyIds: dependencyIdsSchema.optional(),
   description: descriptionSchema.optional(),
   dueDate: dateInputSchema.optional(),
   statusId: idSchema.optional(),
@@ -22,6 +28,11 @@ export const createTaskSchema = z.object({
 export const updateTaskSchema = z
   .object({
     id: idSchema,
+    expectedUpdatedAt: z.string().datetime().optional(),
+    assigneeId: idSchema.optional(),
+    reviewerId: idSchema.nullable().optional(),
+    projectId: idSchema.optional(),
+    dependencyIds: dependencyIdsSchema.optional(),
     title: titleSchema.optional(),
     description: descriptionSchema.optional(),
     dueDate: dateInputSchema.optional(),

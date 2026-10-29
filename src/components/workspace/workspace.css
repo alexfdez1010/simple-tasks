@@ -1,0 +1,189 @@
+@import './workspace-theme.css';
+@reference '../../app/globals.css';
+
+.workspace {
+  @apply flex h-dvh min-h-[560px] flex-col;
+}
+.workspace .button,
+.workspace-theme .button {
+  @apply min-h-11 rounded-lg shadow-none;
+}
+.workspace-header {
+  @apply flex flex-wrap items-center gap-4 px-5 py-4 sm:px-8;
+}
+.workspace-brand {
+  @apply mr-5 text-lg font-semibold tracking-tight;
+}
+.workspace-header nav {
+  @apply flex flex-wrap items-center gap-1;
+}
+.workspace-header .select {
+  @apply min-w-44;
+}
+.workspace-toolbar {
+  @apply flex flex-wrap items-center gap-3 px-5 pb-3 sm:px-8;
+}
+.workspace-toolbar .text-field {
+  @apply w-full max-w-64;
+}
+.workspace-sync {
+  @apply ml-auto flex items-center gap-2 text-xs text-muted;
+}
+.workspace-content {
+  @apply relative min-h-0 flex-1;
+}
+.task-graph {
+  @apply relative h-full min-h-80 overflow-hidden;
+}
+.graph-viewport {
+  @apply relative h-full w-full touch-none overflow-hidden;
+  cursor: grab;
+}
+.graph-viewport:active {
+  cursor: grabbing;
+}
+.graph-world {
+  @apply absolute left-0 top-0 origin-top-left;
+}
+.graph-edges {
+  @apply pointer-events-none absolute inset-0 overflow-visible;
+  color: #aab3bf;
+}
+.graph-edge {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+}
+.graph-edge-active {
+  color: var(--accent);
+  stroke-width: 2;
+}
+.graph-project-label {
+  @apply absolute text-sm font-medium text-muted;
+}
+.workspace .graph-node {
+  @apply absolute flex flex-col items-stretch justify-between gap-3 rounded-xl bg-surface p-4 text-left whitespace-normal;
+  box-shadow:
+    0 3px 12px #1a25340a,
+    0 1px 3px #1a253408;
+}
+.workspace .graph-node {
+  background: color-mix(in oklab, var(--assignee-color) 13%, var(--surface));
+}
+.workspace .graph-node:hover {
+  background: color-mix(in oklab, var(--assignee-color) 19%, var(--surface));
+  box-shadow: 0 5px 18px #1a253410;
+}
+.workspace .graph-node[aria-pressed='true'] {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.workspace .graph-node[data-related='true'] {
+  background: color-mix(in oklab, var(--assignee-color) 20%, var(--surface));
+}
+.graph-node-title {
+  @apply line-clamp-2 text-sm font-medium leading-5;
+}
+.graph-node-footer {
+  @apply flex w-full items-center justify-between gap-2 text-[11px] text-muted;
+}
+.graph-assignee {
+  @apply flex min-w-0 items-center gap-1.5 truncate;
+}
+.graph-avatar {
+  @apply flex size-5 shrink-0 items-center justify-center rounded-full bg-surface-secondary text-[10px];
+}
+.graph-state {
+  @apply shrink-0;
+}
+.graph-state[data-ready='true'] {
+  color: var(--accent);
+}
+.graph-node[data-complete='true'] {
+  opacity: 0.65;
+}
+.graph-controls {
+  @apply absolute bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-xl bg-surface p-1;
+  box-shadow: 0 3px 15px #1a25340b;
+}
+.graph-empty {
+  @apply flex h-full items-center justify-center px-8 text-center text-sm text-muted;
+}
+.workspace-detail {
+  @apply absolute inset-y-0 right-0 z-10 w-[360px] overflow-y-auto bg-surface p-6;
+  box-shadow: -5px 0 30px #1a253408;
+}
+.workspace-detail-header {
+  @apply mb-6 flex items-start justify-between gap-3;
+}
+.workspace-detail h2 {
+  @apply text-lg font-semibold leading-snug tracking-tight;
+}
+.workspace-detail-fields {
+  @apply flex flex-col gap-5;
+}
+.workspace-dependency {
+  @apply flex items-center justify-between gap-3 py-2 text-sm;
+}
+.workspace-feedback {
+  @apply px-6 py-2 text-sm text-danger;
+}
+.workspace-demo {
+  @apply px-5 py-2 text-xs text-muted sm:px-8;
+}
+@media (max-width: 639px) {
+  .workspace-header {
+    @apply grid grid-cols-[1fr_auto] gap-2 px-4 py-3;
+  }
+  .workspace-brand {
+    @apply mr-auto;
+  }
+  .workspace-header nav {
+    @apply col-span-2 row-start-3 w-full justify-between gap-0;
+  }
+  .workspace-header > div {
+    @apply col-span-2 row-start-2 w-full;
+  }
+  .workspace-header #new-task {
+    @apply col-start-2 row-start-1;
+  }
+  .workspace-header nav .button,
+  .workspace-header nav a {
+    @apply min-h-11 items-center px-2 text-xs;
+  }
+  .workspace-header .select {
+    @apply w-full;
+  }
+  .workspace-toolbar {
+    @apply px-4;
+  }
+  .workspace-header [data-slot='label'],
+  .workspace-toolbar [data-slot='label'] {
+    @apply sr-only;
+  }
+  .workspace-detail {
+    @apply fixed inset-x-0 bottom-0 top-auto max-h-[78dvh] w-full rounded-t-2xl p-5 pb-8;
+  }
+  .graph-controls {
+    @apply bottom-4;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .workspace *,
+  .workspace *::before,
+  .workspace *::after {
+    animation-duration: 0s !important;
+    transition-duration: 0s !important;
+  }
+}
+
+.workspace [data-slot='select-trigger'],
+.workspace-theme [data-slot='select-trigger'] {
+  @apply min-h-11;
+}
+
+@media (min-width: 1024px) {
+  .workspace-content[data-inspecting='true'] .task-graph {
+    width: calc(100% - 360px);
+  }
+}

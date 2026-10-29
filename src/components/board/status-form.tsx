@@ -10,6 +10,7 @@ import {
 } from '@heroui/react';
 import { useState } from 'react';
 
+import { StatisticSelect } from '@/components/statistics/statistic-select';
 import { StatusColorPicker } from '@/components/board/status-color-picker';
 import type { MutationResult, StatusValues } from '@/components/board/types';
 import { useI18n } from '@/lib/i18n/provider';
@@ -73,6 +74,25 @@ export function StatusForm({
           onChange={(color) => setValues((current) => ({ ...current, color }))}
         />
       </div>
+
+      {!values.isTerminal ? (
+        <StatisticSelect
+          label={t('status.workType')}
+          value={values.workType ?? 'READY'}
+          onChange={(workType) =>
+            setValues((current) => ({
+              ...current,
+              workType: workType as StatusValues['workType'],
+            }))
+          }
+          options={[
+            { id: 'READY', label: t('status.ready') },
+            { id: 'WORKING', label: t('status.working') },
+            { id: 'BLOCKED', label: t('status.blocked') },
+            { id: 'REVIEW', label: t('status.review') },
+          ]}
+        />
+      ) : null}
 
       <Checkbox
         isSelected={values.isTerminal}

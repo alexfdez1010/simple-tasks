@@ -1,10 +1,15 @@
+import { reviewEndpoints } from '@/lib/api/review-endpoints';
+import { coordinationEndpoints } from '@/lib/api/coordination-endpoints';
 import { taskEndpoints } from '@/lib/api/task-endpoints';
 import { configurationEndpoints } from '@/lib/api/configuration-endpoints';
 import type { Endpoint } from '@/lib/api/endpoint';
 
-export const endpoints = [...taskEndpoints, ...configurationEndpoints].sort(
-  (a, b) => a.path.split('{').length - b.path.split('{').length,
-);
+export const endpoints = [
+  ...taskEndpoints,
+  ...configurationEndpoints,
+  ...coordinationEndpoints,
+  ...reviewEndpoints,
+].sort((a, b) => a.path.split('{').length - b.path.split('{').length);
 
 /** Finds an exact path template before dynamic alternatives and extracts decoded identifiers. */
 export function matchEndpoints(

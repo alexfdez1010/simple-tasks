@@ -8,6 +8,7 @@ const status = z.object({
   color: z.string(),
   position: z.number().int(),
   isTerminal: z.boolean(),
+  workType: z.enum(['READY', 'WORKING', 'BLOCKED', 'REVIEW']),
 });
 const property = z.object({
   id,
@@ -17,8 +18,42 @@ const property = z.object({
   options: z.array(z.string()),
 });
 const propertyValue = z.object({ propertyId: id, value });
+const assignee = z.object({
+  id,
+  name: z.string(),
+  kind: z.enum(['HUMAN', 'AGENT']),
+  description: z.string(),
+  color: z.string(),
+  createdAt: timestamp,
+  updatedAt: timestamp,
+});
+const project = z.object({
+  id,
+  name: z.string(),
+  description: z.string(),
+  createdAt: timestamp,
+  updatedAt: timestamp,
+});
 const task = z.object({
   id,
+  reviewerId: id.nullable(),
+  reviewer: assignee.nullable(),
+  reviewState: z.enum([
+    'NOT_REQUESTED',
+    'PENDING',
+    'APPROVED',
+    'CHANGES_REQUESTED',
+  ]),
+  reviewNote: z.string().nullable(),
+  reviewedAt: timestamp.nullable(),
+  assigneeId: id,
+  projectId: id,
+  assignee,
+  project,
+  dependencyIds: z.array(id),
+  dependentIds: z.array(id),
+  blockingDependencyIds: z.array(id),
+  ready: z.boolean(),
   title: z.string(),
   description: z.string().nullable(),
   statusId: id,
@@ -32,6 +67,11 @@ const task = z.object({
 });
 
 export const responseSchemas = {
+  Assignee: z.object({ data: assignee }),
+  Assignees: z.object({ data: z.array(assignee) }),
+  Project: z.object({ data: project }),
+  Projects: z.object({ data: z.array(project) }),
+  ReadyTasks: z.object({ data: z.array(task) }),
   Task: z.object({ data: task }),
   Status: z.object({ data: status }),
   Property: z.object({ data: property }),

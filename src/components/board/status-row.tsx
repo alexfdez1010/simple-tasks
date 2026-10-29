@@ -62,6 +62,7 @@ export function StatusRow({
         <StatusForm
           initialValues={{
             name: status.name,
+            workType: status.workType,
             color: status.color,
             isTerminal: status.isTerminal,
           }}

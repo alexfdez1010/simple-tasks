@@ -1,3 +1,7 @@
+import {
+  resolveAssignee,
+  mirrorLegacyAssignee,
+} from '@/lib/coordination/ownership';
 import type { Prisma } from '@/generated/prisma';
 import { deserializeOptions } from '@/lib/properties/serialization';
 import type {
@@ -44,7 +48,12 @@ export async function persistTaskPropertyValues(
 ): Promise<TaskPropertyValueData[]> {
   const normalized = await normalizeTaskPropertyValues(transaction, inputs);
   if (replaceExisting) {
-    await transaction.taskPropertyValue.deleteMany({ where: { taskId } });
+    await transaction.taskPropertyValue.deleteMany({
+      where: {
+        taskId,
+        propertyId: { notIn: normalized.map((value) => value.propertyId) },
+      },
+    });
   }
   for (const input of normalized) {
     await transaction.taskPropertyValue.upsert({
@@ -53,5 +62,20 @@ export async function persistTaskPropertyValues(
       update: { value: input.value },
     });
   }
+  const task = await transaction.task.findUniqueOrThrow({
+    where: { id: taskId },
+  });
+  const assigneeId = await resolveAssignee(
+    transaction,
+    undefined,
+    normalized,
+    task.assigneeId,
+  );
+  if (assigneeId !== task.assigneeId)
+    await transaction.task.update({
+      where: { id: taskId },
+      data: { assigneeId },
+    });
+  await mirrorLegacyAssignee(transaction, taskId, assigneeId);
   return normalized;
 }

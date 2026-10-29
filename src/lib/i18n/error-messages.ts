@@ -1,3 +1,4 @@
+import { coordinationErrorsEs } from '@/lib/i18n/coordination-errors';
 import type { Language } from '@/lib/i18n/config';
 import { translate, type TranslationKey } from '@/lib/i18n/translations';
 
@@ -51,6 +52,8 @@ export function translateErrorMessage(
   language: Language,
   message: string,
 ): string {
+  if (language === 'es' && coordinationErrorsEs[message])
+    return coordinationErrorsEs[message];
   const key = ERROR_KEYS[message as keyof typeof ERROR_KEYS];
   if (key) return translate(language, key);
 

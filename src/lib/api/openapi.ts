@@ -30,7 +30,11 @@ function operation(endpoint: Endpoint) {
   const status =
     response === 'Empty'
       ? '204'
-      : method === 'POST' && !path.endsWith('/move')
+      : method === 'POST' &&
+          !path.endsWith('/move') &&
+          !path.endsWith('/start') &&
+          !path.endsWith('/submit-review') &&
+          !path.endsWith('/review')
         ? '201'
         : '200';
   return {

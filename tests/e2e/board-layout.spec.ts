@@ -28,7 +28,7 @@ for (const width of [768, 900, 1440]) {
           exact: true,
         }),
       ).toBeVisible();
-      const toolbar = page.locator('.board-toolbar');
+      const toolbar = page.locator('.workspace-header');
       for (const control of await toolbar
         .locator('a:visible, button:visible')
         .all()) {
@@ -52,9 +52,7 @@ for (const width of [768, 900, 1440]) {
       ).toBeVisible();
       const skip = page.getByRole('link', {
         name:
-          language === 'es'
-            ? 'Saltar al tablero de tareas'
-            : 'Skip to task board',
+          language === 'es' ? 'Dependencias de tareas' : 'Task dependencies',
       });
       await skip.focus();
       await skip.press('Enter');

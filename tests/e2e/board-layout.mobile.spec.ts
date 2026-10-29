@@ -1,9 +1,9 @@
 import { expect, test } from '@playwright/test';
 
-for (const width of [320, 390]) {
+for (const width of [320, 390])
   for (const language of ['en', 'es'] as const) {
-    /** Proves narrow localized controls remain reachable and a tap jumps to the desired column. */
-    test(`phone header at ${width}px in ${language}`, async ({ page }) => {
+    /** Proves the minimal graph header and task capture remain reachable without page overflow. */
+    test(`graph management at ${width}px in ${language}`, async ({ page }) => {
       await page.setViewportSize({ width, height: 844 });
       await page.context().addCookies([
         {
@@ -22,63 +22,37 @@ for (const width of [320, 390]) {
           exact: true,
         })
         .click();
-      await expect(page.locator('.board-toolbar-wrap')).toHaveCSS(
-        'position',
-        'sticky',
-      );
-      for (const control of await page
-        .locator('.board-toolbar')
-        .locator('a:visible, button:visible')
-        .all()) {
-        const box = await control.boundingBox();
-        if (!box) continue;
-        expect(box.height).toBeGreaterThanOrEqual(44);
-        expect(box.width).toBeGreaterThanOrEqual(44);
-        expect(box.x).toBeGreaterThanOrEqual(0);
-        expect(box.x + box.width).toBeLessThanOrEqual(width);
-      }
+      await expect(
+        page.getByRole('heading', {
+          name: language === 'es' ? 'Tareas' : 'Tasks',
+          exact: true,
+        }),
+      ).toBeVisible();
       expect(
         await page.evaluate(
           () => document.documentElement.scrollWidth - innerWidth,
         ),
       ).toBeLessThanOrEqual(1);
-      const selector = page.getByRole('button', {
-        name: /Go to column|Ir a la columna/,
-      });
-      await selector.tap();
-      await page
-        .getByRole('option', { name: 'In progress · 0', exact: true })
-        .tap();
-      await expect(selector).toContainText('In progress');
-      const column = page.getByRole('region', {
-        name: 'In progress',
-        exact: true,
-      });
-      const box = await column.boundingBox();
-      expect(box!.x).toBeGreaterThanOrEqual(0);
-      expect(box!.x + box!.width).toBeLessThanOrEqual(width);
+      for (const control of await page
+        .locator('.workspace-header')
+        .locator('a:visible,button:visible')
+        .all()) {
+        const box = await control.boundingBox();
+        if (!box) continue;
+        expect(box.height).toBeGreaterThanOrEqual(44);
+        expect(box.x).toBeGreaterThanOrEqual(0);
+        expect(box.x + box.width).toBeLessThanOrEqual(width);
+      }
       await page
         .getByRole('button', {
           name: language === 'es' ? 'Nueva tarea' : 'New task',
           exact: true,
         })
-        .tap();
+        .click();
       await expect(
-        column.getByRole('textbox', {
+        page.getByRole('dialog').getByRole('textbox', {
           name: language === 'es' ? /^Título/ : /^Title/,
         }),
       ).toBeFocused();
-      await column
-        .getByRole('button', {
-          name: language === 'es' ? 'Cancelar' : 'Cancel',
-          exact: true,
-        })
-        .tap();
-      const board = page.locator('.kanban-board');
-      await board.evaluate((element) => {
-        element.scrollLeft = 0;
-      });
-      await expect(selector).toContainText('Blocked');
     });
   }
-}

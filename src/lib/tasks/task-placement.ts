@@ -3,6 +3,12 @@ import { clampTaskIndex, resequenceTasks } from '@/lib/tasks/ordering';
 import { notFound } from '@/lib/validation/errors';
 
 export type EditableTaskFields = {
+  reviewerId?: string | null;
+  reviewState?: 'NOT_REQUESTED' | 'PENDING' | 'APPROVED' | 'CHANGES_REQUESTED';
+  reviewNote?: string | null;
+  reviewedAt?: Date | null;
+  assigneeId?: string;
+  projectId?: string;
   title?: string;
   description?: string | null;
   dueDate?: Date | null;

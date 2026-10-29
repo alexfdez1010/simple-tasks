@@ -6,6 +6,18 @@ const BASE_URL = process.env.PLAYWRIGHT_BASE_URL ?? 'http://localhost:3000';
 const MCP_TOKEN = process.env.MCP_TOKEN ?? 'dev-mcp-token';
 const MCP_URL = new URL('/api/mcp/mcp', BASE_URL);
 const EXPECTED_TOOLS = [
+  'list_pending_reviews',
+  'submit_task_for_review',
+  'review_task',
+  'list_assignees',
+  'create_assignee',
+  'update_assignee',
+  'list_projects',
+  'create_project',
+  'update_project',
+  'list_ready_tasks',
+  'start_task',
+  'search_tasks',
   'create_statistic',
   'create_status',
   'create_task',

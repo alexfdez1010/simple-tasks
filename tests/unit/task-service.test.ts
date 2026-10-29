@@ -4,6 +4,12 @@ import { TaskService } from '@/lib/tasks/service';
 import { describe, expect, it, vi } from 'vitest';
 
 const SAVED_TASK = {
+  reviewerId: null,
+  reviewState: 'NOT_REQUESTED',
+  reviewNote: null,
+  reviewedAt: null,
+  assigneeId: 'assignee-default',
+  projectId: 'project-general',
   completedAt: null,
   createdAt: new Date('2026-08-29T12:00:00.000Z'),
   description: null,

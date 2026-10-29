@@ -4,6 +4,7 @@ import { StatusService } from '@/lib/statuses/service';
 import { describe, expect, it, vi } from 'vitest';
 
 const SAVED_STATUS = {
+  workType: 'READY',
   color: '#2667FF',
   id: 'status-1',
   isTerminal: false,

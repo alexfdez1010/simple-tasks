@@ -29,6 +29,11 @@ status `{ id, name, isTerminal }`, and `propertyValues` entries with
 null. `previousStatusId` is null except for state changes. Completed tasks retain
 the server's completion metadata. The same event id and payload survive retries.
 
+Task snapshots also include assigneeId, projectId, reviewerId, reviewState,
+reviewNote and reviewedAt. Submitting or deciding a review emits task.moved when
+the workflow state changes. A content edit that invalidates review also emits
+task.moved when it reopens the task; previousStatusId identifies its former state.
+
 Configuration changes to statuses, property definitions and statistics do not
 emit task events; automatic position compaction of neighboring rows is not an
 explicit task edit. Enabling the webhook does not replay previous task history.

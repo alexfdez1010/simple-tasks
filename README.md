@@ -1,63 +1,46 @@
 # Simple Tasks
 
-> A beautifully simple, deeply customizable task board that you can run
-> yourself — and hand over to AI whenever you want.
+> A private task workspace for humans and agents, connected by clear dependencies.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Falexfdez1010%2Fsimple-tasks&project-name=simple-tasks&repository-name=simple-tasks&env=PASSWORD,AUTH_SECRET,MCP_TOKEN&envDescription=Choose%20a%20shared%20login%20password%20and%20two%20independent%20random%20secrets.%20Keep%20all%20three%20private.&envLink=https%3A%2F%2Fgithub.com%2Falexfdez1010%2Fsimple-tasks%23environment-variables&stores=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22neon%22%2C%22productSlug%22%3A%22neon%22%2C%22protocol%22%3A%22storage%22%2C%22allowConnectExistingProduct%22%3Atrue%7D%5D)
 
-Simple Tasks gives one person or a small trusted team a calm Kanban workspace
-without turning task management into another project. Start with four useful
-states, then shape the board around the way you actually work.
+Simple Tasks gives one person or a small trusted team a shared view of work:
+who owns each task, what it needs first, and what can start now. Group work by
+project, choose responsible humans or agents, and inspect actual dependencies.
 
-Create any workflow states. Add typed properties. Build the exact statistics
-you care about. Use everything from the responsive web interface, or delegate
-the same operations to an AI agent through the built-in MCP server.
+Use the responsive web interface or the built-in MCP server. Your deployment,
+database, credentials and task data stay under your control.
 
-Your deployment, database, credentials, and task data stay under your control.
+## Human and agent coordination
 
-## ✨ Why Simple Tasks
+The main workspace now uses a minimal dependency graph grouped by project.
+Every task belongs to a responsible human or agent. Configure their names,
+instructions and node colors dynamically in Organize or through MCP. The panel
+refreshes every 15 seconds, with pause/30/60-second options, while preserving drafts.
 
-|                          |                                                                                      |
-| ------------------------ | ------------------------------------------------------------------------------------ |
-| **Simple by default**    | Open the board, add a task, and move it. No workspace ceremony or feature maze.      |
-| **Yours to shape**       | Create any states, colors, terminal stages, and typed custom properties you need.    |
-| **Useful analytics**     | Compose KPIs, breakdowns, and timelines instead of accepting a fixed dashboard.      |
-| **Built for AI**         | A complete MCP API lets an agent manage tasks, workflow, properties, and statistics. |
-| **Private by design**    | One protected deployment for you or a small trusted team, backed by your Postgres.   |
-| **Great on every input** | Drag with a pointer, touch, or keyboard on a responsive desktop and mobile board.    |
+MCP clients can create responsible parties/projects, set task prerequisites,
+query assigned ready work and start it atomically. Read the
+[agent coordination guide](docs/agents.md) for tools, REST equivalents,
+dependency rules, synchronization and the data-preserving migration.
 
-## 🧭 A board that adapts to you
+## A workspace that explains the work
 
-- Create, rename, color, reorder, and remove workflow states.
-- Mark any state as terminal. Entering it automatically records completion time.
-- Add `TEXT`, `NUMBER`, `DATE`, `SELECT`, and `MULTI_SELECT` properties.
-- Write task descriptions in Markdown and inspect every field in one focused view.
-- Reorder and move tasks with accessible pointer, touch, and keyboard drag controls.
-- Keep active work ordered by deadline and finished work ordered by completion date.
-- Switch the complete interface between English and Spanish.
+- See tasks as nodes and prerequisites as directed edges, grouped by project.
+- Filter by project or responsible party, search titles, pan, zoom and fit the graph.
+- Give every task one responsible human or agent, with shared instructions and a chosen node color.
+- Add an optional independent reviewer. Approval completes reviewed work; requested changes return it to its original owner with feedback.
+- Write task descriptions in Markdown, preserve custom properties and set due dates.
+- Inspect prerequisites and edit task ownership, project, workflow or dependencies in one focused drawer.
+- Keep drafts while background polling updates the graph; reject conflicting edits rather than overwrite newer work.
+- Create workflow states and configure their READY, WORKING, BLOCKED or REVIEW behavior; terminal states represent successful completion.
+- Add TEXT, NUMBER, DATE, SELECT and MULTI_SELECT properties for additional metadata.
+- Use the complete interface in English or Spanish, including touch and keyboard controls.
 
-Use **New task** to capture work in the selected column, or **Add** in any column.
-Enter a title and press Enter or **Create task**. Escape or **Cancel** closes the
-inline form. **Add details** opens the complete editor with the title retained;
-cancelling that editor returns to the inline draft. Failed saves preserve input.
-
-Cards show the title, up to four lines of Markdown description, configured
-Responsable/Assignee and the relevant date.
-Open the title to read Markdown and all properties in the inspector; **Edit**
-opens its form. The inspector is a side panel on desktop and a bottom sheet on
-phones, with explicit Save/Cancel actions and a reachable footer. Use **Move to**
-and **Move task** as an alternative to pointer, touch or keyboard dragging.
-
-On phones, **Go to column** jumps horizontally without moving the page. Native
-scrolling updates the selection, and **New task** targets that selected column.
-Named navigation and frequent controls retain 44 px touch targets at 320 px.
-**Settings** contains workflow, properties, language and Sign out.
-**Connections** offers the agent/MCP and application/API setup paths. Existing
-setup URLs and credential behavior remain unchanged. The board shows per-column
-counts rather than a completion percentage computed from a partial history.
-
-The default workflow — **Blocked**, **To do**, **In progress**, and **Done** — is
-ready immediately, but none of those labels has to define your process.
+Organize manages responsible parties and projects. Settings retains workflow,
+properties and language. Connections provides agent/MCP, REST and webhook setup.
+The graph includes active work, a preview of the latest 20 completions and the
+older prerequisite ancestors needed to explain those tasks. Search through MCP
+or REST provides access to the complete history.
 
 ## 📊 Statistics that answer your questions
 
@@ -243,7 +226,6 @@ bun run database:down
 - [HeroUI v3](https://heroui.com/en/docs/react/components) and
   [Tailwind CSS 4](https://tailwindcss.com/docs)
 - [Prisma](https://www.prisma.io/docs/orm) and PostgreSQL
-- [dnd kit](https://dndkit.com/react/quickstart/) for accessible drag and drop
 - [Recharts](https://recharts.github.io/) for the statistics canvas
 - [MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk)
 - Vitest and Playwright
