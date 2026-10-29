@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-29T12:15:31.365904+00:00",
+  "generatedAt": "2026-10-29T14:04:51.536928+00:00",
   "title": "Design System: Tasks",
   "extensions": {
     "colorMeta": {
@@ -750,7 +750,7 @@
       },
       {
         "name": "Readable entry",
-        "body": "Open the graph at scale 1, including constrained desktops and phones; Fit is the explicit full-graph overview.",
+        "body": "Open the graph at scale 1, including constrained desktops and phones; Fit is the explicit full-graph overview. The header project selector keeps its accessible label visually hidden at every viewport width.",
         "section": "typography"
       },
       {

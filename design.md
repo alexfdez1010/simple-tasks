@@ -187,7 +187,7 @@ Geist is the display, body and control face; Geist Mono serves technical example
 
 Node titles use medium weight and a two-line clamp; owner and reviewer names truncate within the node. The accessible node name retains title, assignee, state and reviewer. Full descriptions and editing belong in the task panel. Statistics values use tabular numerals and container units; exact localized values can wrap. Editor input/textarea text stays 16px, including phones.
 
-**The Readable entry Rule.** Open the graph at scale 1, including constrained desktops and phones; Fit is the explicit full-graph overview.
+**The Readable entry Rule.** Open the graph at scale 1, including constrained desktops and phones; Fit is the explicit full-graph overview. The header project selector keeps its accessible label visually hidden at every viewport width.
 
 ## Layout
 
