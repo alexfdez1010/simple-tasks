@@ -9,10 +9,10 @@
   @apply min-h-11 rounded-lg shadow-none;
 }
 .workspace-header {
-  @apply flex flex-wrap items-center gap-4 px-5 py-4 sm:px-8;
+  @apply flex flex-wrap items-end gap-4 px-5 py-4 sm:px-8;
 }
 .workspace-brand {
-  @apply mr-5 text-lg font-semibold tracking-tight;
+  @apply mr-5 flex min-h-11 items-center text-lg font-semibold tracking-tight;
 }
 .workspace-header nav {
   @apply flex flex-wrap items-center gap-1;
@@ -21,13 +21,20 @@
   @apply min-w-44;
 }
 .workspace-toolbar {
-  @apply flex flex-wrap items-center gap-3 px-5 pb-3 sm:px-8;
+  @apply flex flex-wrap items-end gap-3 px-5 pb-3 sm:px-8;
 }
 .workspace-toolbar .text-field {
   @apply w-full max-w-64;
 }
+.workspace-toolbar .input,
+.workspace-toolbar .checkbox {
+  @apply h-11;
+}
+.workspace-toolbar .checkbox {
+  @apply justify-center;
+}
 .workspace-sync {
-  @apply ml-auto flex items-center gap-2 text-xs text-muted;
+  @apply ml-auto flex items-end gap-2 text-xs text-muted;
 }
 .workspace-content {
   @apply relative min-h-0 flex-1;
