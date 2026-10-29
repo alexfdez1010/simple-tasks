@@ -16,6 +16,19 @@ export const coordinationErrorsEs: Record<string, string> = {
   'Reassign all tasks and reviews before deleting this responsible party.':
     'Reasigna todas las tareas y revisiones antes de eliminar este responsable.',
   'The project does not exist.': 'El proyecto no existe.',
+  'The destination project does not exist.':
+    'El proyecto de destino ya no existe.',
+  'The default project cannot be deleted.':
+    'No se puede eliminar el proyecto de respaldo.',
+  'Keep at least one project.': 'Conserva al menos un proyecto.',
+  'Choose a destination different from the project being deleted.':
+    'Elige un destino distinto del proyecto que vas a eliminar.',
+  'Choose a destination project to preserve all tasks, including completed history.':
+    'Elige un proyecto de destino para conservar todas las tareas, incluidas las terminadas.',
+  'Move pending or approved review tasks through the task editor before deleting this project.':
+    'Traslada desde el editor las tareas con una revisión pendiente o aprobada antes de eliminar este proyecto.',
+  'The project changed while deleting it. Refresh and retry.':
+    'El proyecto ha cambiado. Actualiza y vuelve a intentarlo.',
   'A responsible party already has this name.':
     'Ya existe un responsable con ese nombre.',
   'A project already has this name.': 'Ya existe un proyecto con ese nombre.',

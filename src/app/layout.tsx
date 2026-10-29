@@ -22,14 +22,29 @@ export async function generateMetadata(): Promise<Metadata> {
   const language = await getCurrentLanguage();
   return {
     title: translate(language, 'app.title'),
+    applicationName: 'Simple Tasks',
+    appleWebApp: {
+      capable: true,
+      title: 'Simple Tasks',
+      statusBarStyle: 'default',
+    },
+    icons: {
+      apple: [
+        {
+          url: '/icons/apple-touch-icon.png',
+          sizes: '180x180',
+          type: 'image/png',
+        },
+      ],
+    },
     description: translate(language, 'app.description'),
   };
 }
 
 export const viewport: Viewport = {
   themeColor: [
-    { color: '#f8f6f0', media: '(prefers-color-scheme: light)' },
-    { color: '#211f1d', media: '(prefers-color-scheme: dark)' },
+    { color: '#f5f6f5', media: '(prefers-color-scheme: light)' },
+    { color: '#151a17', media: '(prefers-color-scheme: dark)' },
   ],
   viewportFit: 'cover',
 };

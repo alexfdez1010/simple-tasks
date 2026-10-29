@@ -25,6 +25,22 @@ Project descriptions provide shared context. Neither names nor model providers
 are fixed in application code. Configuration does not create user accounts,
 credentials, external agents or schedules.
 
+Delete a project from Organize or call `delete_project` with its `id`. An empty
+project needs no destination. If it contains tasks, pass `destinationProjectId`
+for a different existing project; every task, including completed history, moves
+within the same transaction before deletion. Task descriptions, ownership,
+workflow states, completion dates, properties and dependency edges are preserved.
+The legacy default project and last remaining project cannot be deleted. Tasks
+with pending or approved reviews must first be moved through the task editor,
+which applies the existing review-invalidation flow; bulk deletion never silently
+changes review or completion state. Task versions update so stale editors must
+reload. Obtain user confirmation unless the deletion was already explicitly requested.
+
+For example, after explicit user authorization, call
+`delete_project({"id":"SOURCE_ID","destinationProjectId":"DESTINATION_ID"})`.
+Use `list_projects` to resolve both IDs; no project name is hard-coded. For
+an empty project, call `delete_project({"id":"EMPTY_PROJECT_ID"})` instead.
+
 ## Periodic synchronization
 
 The authenticated panel polls /api/workspace every 15 seconds by default. Choose
@@ -130,19 +146,20 @@ All paths below are relative to /api/v1 and use existing bearer-token scopes and
 rate limits. Creation returns 201; reads/edits/start return 200. Requests and
 responses are documented in /api/openapi.
 
-| Operation                | Endpoint               | Body or query                                               |
-| ------------------------ | ---------------------- | ----------------------------------------------------------- |
-| List responsible parties | GET /assignees         | None                                                        |
-| Create responsible party | POST /assignees        | name, kind, description, color                              |
-| Edit responsible party   | PATCH /assignees/{id}  | Selected fields                                             |
-| Delete unused party      | DELETE /assignees/{id} | None; returns 204, 404 if missing, 409 if in use or default |
-| List projects            | GET /projects          | None                                                        |
-| Create project           | POST /projects         | name, description                                           |
-| Edit project             | PATCH /projects/{id}   | Selected fields                                             |
-| Read available work      | GET /tasks/ready       | assigneeId, optional projectId, limit                       |
-| Start task               | POST /tasks/{id}/start | assigneeId                                                  |
-| Edit relationships       | PATCH /tasks/{id}      | assigneeId, projectId, dependencyIds                        |
-| Search history           | GET /tasks             | Existing filters plus assigneeId, projectId                 |
+| Operation                | Endpoint               | Body or query                                                            |
+| ------------------------ | ---------------------- | ------------------------------------------------------------------------ |
+| List responsible parties | GET /assignees         | None                                                                     |
+| Create responsible party | POST /assignees        | name, kind, description, color                                           |
+| Edit responsible party   | PATCH /assignees/{id}  | Selected fields                                                          |
+| Delete unused party      | DELETE /assignees/{id} | None; returns 204, 404 if missing, 409 if in use or default              |
+| List projects            | GET /projects          | None                                                                     |
+| Create project           | POST /projects         | name, description                                                        |
+| Edit project             | PATCH /projects/{id}   | Selected fields                                                          |
+| Delete project           | DELETE /projects/{id}  | Optional JSON destinationProjectId; required if tasks exist; returns 204 |
+| Read available work      | GET /tasks/ready       | assigneeId, optional projectId, limit                                    |
+| Start task               | POST /tasks/{id}/start | assigneeId                                                               |
+| Edit relationships       | PATCH /tasks/{id}      | assigneeId, projectId, dependencyIds                                     |
+| Search history           | GET /tasks             | Existing filters plus assigneeId, projectId                              |
 
 For example, an authenticated script can GET /api/v1/tasks/ready?assigneeId=ID,
 then POST /api/v1/tasks/TASK_ID/start with {"assigneeId":"ID"}. A read-only token

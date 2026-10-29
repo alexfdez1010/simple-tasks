@@ -13,17 +13,18 @@
 @import '../components/statistics/statistics-widget-themes.css';
 @import './glass.css';
 @import '../components/board/task-drawer.css';
+@import './interaction.css';
 
 :root {
-  --background: oklch(0.975 0.008 80);
-  --foreground: oklch(0.22 0.012 65);
-  --surface: oklch(0.995 0.004 80);
-  --surface-secondary: oklch(0.955 0.009 78);
-  --surface-tertiary: oklch(0.93 0.012 76);
-  --muted: oklch(0.52 0.018 65);
-  --divider: oklch(0.83 0.014 72);
-  --accent: oklch(0.54 0.11 155);
-  --accent-foreground: oklch(0.99 0.004 80);
+  --background: #f5f6f5;
+  --foreground: #202724;
+  --surface: #ffffff;
+  --surface-secondary: #edf0ed;
+  --surface-tertiary: #e3e9e4;
+  --muted: #65716a;
+  --divider: #dce3dd;
+  --accent: #32654b;
+  --accent-foreground: #ffffff;
   --danger: oklch(0.55 0.19 28);
   --overlay: var(--surface);
   --overlay-foreground: var(--foreground);
@@ -43,6 +44,7 @@
   --chart-3: oklch(0.57 0.12 235);
   --chart-4: oklch(0.61 0.13 25);
   --chart-5: oklch(0.55 0.1 315);
+  --graph-edge: #7b8a80;
   --chart-grid: color-mix(in oklab, var(--foreground) 14%, transparent);
   --chart-hover: color-mix(in oklab, var(--accent) 8%, transparent);
 }
@@ -64,15 +66,16 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: oklch(0.17 0.012 70);
-    --foreground: oklch(0.94 0.008 80);
-    --surface: oklch(0.22 0.012 70);
-    --surface-secondary: oklch(0.255 0.013 70);
-    --surface-tertiary: oklch(0.29 0.014 70);
-    --muted: oklch(0.72 0.015 75);
-    --divider: oklch(0.36 0.014 70);
-    --accent: oklch(0.72 0.11 155);
-    --accent-foreground: oklch(0.17 0.012 70);
+    --background: #151a17;
+    --foreground: #edf2ee;
+    --surface: #202823;
+    --surface-secondary: #29332c;
+    --surface-tertiary: #344237;
+    --muted: #a5b3a9;
+    --divider: #37473c;
+    --graph-edge: #73857a;
+    --accent: #afd4b6;
+    --accent-foreground: #151a17;
     --danger: oklch(0.7 0.16 28);
     --chart-1: oklch(0.74 0.11 155);
     --chart-2: oklch(0.78 0.11 75);

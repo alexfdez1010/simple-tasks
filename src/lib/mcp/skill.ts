@@ -24,6 +24,7 @@ Use the MCP server at \`${serverUrl}\`. Discover exact input schemas with \`tool
 | \`move_task\` | Move a task to a status and zero-based index. |
 | \`reorder_tasks\` | Replace the complete order of a non-terminal column. |
 | \`delete_task\` | Permanently delete a task. |
+| \`delete_project\` | Remove a project, preserving its tasks in an explicit destination. |
 | \`list_statuses\` | Read configured statuses. |
 | \`create_status\` | Add a status with name, hex color, and terminal behavior. |
 | \`update_status\` | Customize a status. |
@@ -48,6 +49,7 @@ Use the MCP server at \`${serverUrl}\`. Discover exact input schemas with \`tool
 - Every task has a database-backed responsible party and project. Use \`list_assignees\` and \`list_projects\` for IDs; do not hard-code agent names.
 - Use \`create_assignee\` / \`update_assignee\` with name, HUMAN or AGENT kind, description/instructions and a #RRGGBB color. Use \`create_project\` / \`update_project\` for shared project context.
 - Use \`delete_assignee\` with id to remove an unused responsible party. Reassign all owned tasks and reviews first, including completed history. The default responsible party is protected. Legacy assignment SELECT options are cleaned atomically; an emptied list retains the default owner.
+- Use \`delete_project\` with id and optional destinationProjectId. Occupied projects require a different, existing destination; all active and completed tasks transfer atomically. The default and final projects are protected. Move tasks with pending or approved reviews through the task editor first, so review invalidation stays explicit.
 - Set \`assigneeId\`, \`projectId\` and \`dependencyIds\` in \`create_task\` / \`update_task\`. Dependencies are prerequisite task IDs; cycles and self-reference are rejected.
 - For compatibility, omitted ownership uses a supplied legacy Responsable/Assignee property, otherwise Alejandro for creation; updates retain the current owner. New integrations should always send assigneeId explicitly.
 - Call \`list_ready_tasks\` with your assigneeId and optional projectId/limit. It returns READY tasks with all prerequisites completed; it does not reserve them.
@@ -66,7 +68,7 @@ Use the MCP server at \`${serverUrl}\`. Discover exact input schemas with \`tool
 
 ## Rules
 
-- Ask for confirmation before \`delete_task\`, \`delete_status\`, \`delete_property\`, \`delete_statistic\`, or \`delete_assignee\`, unless the user has already explicitly requested that deletion.
+- Ask for confirmation before \`delete_task\`, \`delete_status\`, \`delete_property\`, \`delete_statistic\`, \`delete_assignee\`, or \`delete_project\`, unless the user has already explicitly requested that deletion.
 - Preserve Markdown exactly in task descriptions unless the user requests edits.
 - Send due dates as ISO 8601 strings.
 - In \`update_task\`, send \`statusId\` and \`index\` together; \`propertyValues\` replaces the complete value set.

@@ -10,28 +10,18 @@
 }
 
 .statistics-main {
-  padding: 1.25rem 1rem 4rem;
+  padding: 0 1rem 4rem;
 }
 
 .statistics-canvas {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 .statistics-widget {
-  @apply relative isolate min-w-0 rounded-3xl p-6;
+  @apply relative isolate min-w-0 rounded-2xl p-6;
   container-type: inline-size;
-}
-
-.statistics-widget-header h3::before {
-  display: inline-block;
-  width: 0.4rem;
-  height: 0.4rem;
-  margin: 0 0.5rem 0.15rem 0;
-  border-radius: 50%;
-  background: var(--statistic-accent);
-  content: '';
 }
 
 .statistics-widget-header > div:first-child {
@@ -48,12 +38,6 @@
 
 .statistics-widget-content {
   @apply min-w-0 pt-4;
-}
-
-.statistics-widget-actions {
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  max-width: 5rem;
 }
 
 [data-focus='true'] .statistics-widget-actions {
@@ -79,16 +63,21 @@
 .statistics-widget-actions {
   display: flex;
   flex: none;
+  width: 2.75rem;
   margin: -0.25rem -0.25rem 0 0;
 }
 
+.statistics-action-menu {
+  @apply min-w-48 max-w-[calc(100vw-2rem)] rounded-xl p-1;
+}
+
 .statistics-widget-actions button {
-  min-width: 2.5rem;
-  min-height: 2.5rem;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
 }
 
 .statistics-widget-content {
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 .statistics-metric-value {
@@ -129,7 +118,7 @@
 
 @media (min-width: 900px) {
   .statistics-main {
-    padding: 2rem 1.5rem 5rem;
+    padding: 0 2rem 5rem;
   }
   .statistics-canvas {
     grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -144,7 +133,7 @@
 
 @media (hover: hover) {
   .statistics-widget-actions {
-    opacity: 0.65;
+    opacity: 0.7;
     transition: opacity 120ms ease;
   }
 
@@ -156,5 +145,32 @@
 @media (forced-colors: active) {
   .statistics-app::before {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .statistics-canvas,
+  .statistics-empty {
+    animation: statistics-arrive 540ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@keyframes statistics-arrive {
+  from {
+    transform: translateY(10px);
+    clip-path: inset(0 0 10px 0);
+  }
+  to {
+    transform: translateY(0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .statistics-app *,
+  .statistics-app *::before,
+  .statistics-app *::after {
+    transition: none !important;
+    animation: none !important;
   }
 }

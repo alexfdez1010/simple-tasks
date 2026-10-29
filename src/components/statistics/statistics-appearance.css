@@ -44,7 +44,6 @@
   border: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
   border-radius: 0.35rem;
   background: var(--swatch);
-  box-shadow: 0 2px 7px color-mix(in oklab, var(--swatch) 28%, transparent);
 }
 
 .statistics-color-swatch[data-color='FOREST'] {

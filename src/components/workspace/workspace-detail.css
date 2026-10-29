@@ -1,0 +1,102 @@
+@reference '../../app/globals.css';
+
+.workspace-detail {
+  @apply absolute inset-y-0 right-0 z-10 w-[360px] overflow-y-auto rounded-2xl bg-surface p-6;
+  box-shadow: -8px 8px 36px
+    color-mix(in oklab, var(--foreground) 7%, transparent);
+  overscroll-behavior: contain;
+}
+.workspace-detail-header {
+  @apply mb-7 flex items-start justify-between gap-3;
+}
+.workspace-detail-header > .button {
+  @apply -mt-1 -mr-2 shrink-0 rounded-full;
+}
+.workspace-detail h2 {
+  @apply pt-1 text-xl leading-snug font-semibold tracking-tight;
+  overflow-wrap: anywhere;
+}
+.workspace-detail-fields {
+  @apply flex flex-col gap-7;
+}
+.inspection-metadata {
+  @apply flex flex-col gap-4 text-sm;
+}
+.inspection-metadata > div {
+  @apply flex items-center justify-between gap-6;
+}
+.inspection-metadata dt {
+  @apply shrink-0 text-xs text-muted;
+}
+.inspection-metadata dd {
+  @apply min-w-0 text-right;
+  overflow-wrap: anywhere;
+}
+.inspection-owner {
+  @apply flex items-center justify-end gap-2;
+}
+.inspection-avatar {
+  @apply flex size-6 shrink-0 items-center justify-center rounded-full text-[11px] font-semibold;
+  background: color-mix(in oklab, var(--assignee-color) 20%, var(--surface));
+}
+.inspection-status {
+  @apply flex items-center justify-end gap-2 text-xs;
+}
+.inspection-status[data-ready='true'] {
+  color: var(--accent);
+}
+.inspection-section {
+  @apply min-w-0;
+}
+.inspection-section > h3 {
+  @apply mb-3 text-xs font-medium text-muted;
+}
+.inspection-section .task-markdown {
+  @apply text-sm leading-6;
+}
+.inspection-dependencies {
+  @apply flex flex-col gap-2;
+}
+.workspace .workspace-dependency {
+  @apply flex h-auto min-h-16 w-full items-center justify-start gap-3 rounded-xl bg-surface-secondary px-3 py-3 text-left text-sm whitespace-normal;
+}
+.inspection-dependency-label {
+  @apply flex min-w-0 flex-1 flex-col gap-1;
+  overflow-wrap: anywhere;
+}
+.inspection-updated {
+  @apply flex flex-col gap-1 text-[11px] leading-5 text-muted;
+}
+.inspection-actions {
+  @apply flex flex-col gap-2;
+}
+.inspection-actions > .button:first-child {
+  @apply w-full justify-between px-4;
+}
+.inspection-actions > .button:last-child {
+  @apply text-muted;
+}
+@media (min-width: 1024px) {
+  .workspace-content[data-inspecting='true'] .task-graph {
+    width: calc(100% - 376px);
+  }
+}
+@media (max-width: 639px) {
+  .workspace-detail {
+    @apply fixed inset-x-0 bottom-0 top-auto max-h-[78dvh] w-full rounded-b-none rounded-t-[24px] px-5 pb-8 pt-7;
+    padding-bottom: max(2rem, env(safe-area-inset-bottom));
+    box-shadow: 0 -12px 48px
+      color-mix(in oklab, var(--foreground) 12%, transparent);
+  }
+  .workspace-detail::before {
+    @apply absolute top-2.5 left-1/2 h-1 w-8 -translate-x-1/2 rounded-full;
+    background: var(--divider);
+    content: '';
+  }
+}
+@media (forced-colors: active) {
+  .workspace-detail {
+    border: 1px solid CanvasText;
+    box-shadow: none;
+  }
+}

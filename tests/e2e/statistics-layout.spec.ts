@@ -77,7 +77,15 @@ for (const format of FORMATS) {
         }
       }
     } finally {
-      await page.getByRole('button', { name: `Delete: ${name}` }).click();
+      await widget
+        .getByRole('button', {
+          name: `Statistic actions: ${name}`,
+          exact: true,
+        })
+        .click();
+      await page
+        .getByRole('menuitem', { name: `Delete: ${name}`, exact: true })
+        .click();
       const deleteDialog = page.getByRole('dialog', {
         name: 'Delete statistic',
       });

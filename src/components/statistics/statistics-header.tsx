@@ -1,10 +1,10 @@
 'use client';
 
 import { Button, Link } from '@heroui/react';
-import Image from 'next/image';
+import { AppLogo } from '@/components/app-logo';
 
-import appIcon from '@/app/icon.png';
 import { getStatisticsCopy } from '@/components/statistics/copy';
+import { WorkspaceIcon } from '@/components/workspace/workspace-icons';
 import { useI18n } from '@/lib/i18n/provider';
 
 interface StatisticsHeaderProps {
@@ -15,9 +15,9 @@ interface StatisticsHeaderProps {
 }
 
 /**
- * Displays navigation and session-local focus controls, including an empty canvas.
- * @param props - Widget count, focus state, and callbacks owned by the dashboard.
- * @returns A localized header; pressing controls invokes the supplied callbacks.
+ * Presents the statistics title, actual widget count and canvas controls.
+ * @param props - Persisted widget count and session-owned focus/create actions.
+ * @returns Localized navigation and actions; an empty canvas remains usable.
  */
 export function StatisticsHeader({
   widgetCount,
@@ -29,41 +29,38 @@ export function StatisticsHeader({
   return (
     <header className="statistics-header-wrap">
       <div className="statistics-header">
-        <div className="statistics-heading-group">
-          <Image
-            alt=""
-            aria-hidden="true"
-            className="statistics-mark"
-            priority
-            sizes="48px"
-            src={appIcon}
-          />
-          <div>
-            <h1>{getStatisticsCopy(language, 'heading')}</h1>
+        <Link className="statistics-back-link" href="/">
+          <WorkspaceIcon name="arrow" className="size-4 rotate-180" />
+          {getStatisticsCopy(language, 'backToBoard')}
+        </Link>
+        <div className="statistics-heading-row">
+          <div className="statistics-heading-group">
+            <h1 className="flex items-center gap-3">
+              <AppLogo className="size-10 shrink-0" />
+              {getStatisticsCopy(language, 'heading')}
+            </h1>
             <p>{getStatisticsCopy(language, 'subtitle')}</p>
             <span className="statistics-count">
+              <WorkspaceIcon name="chart" className="size-3.5" />
               {getStatisticsCopy(language, 'widgetsConfigured', {
                 count: new Intl.NumberFormat(locale).format(widgetCount),
               })}
             </span>
           </div>
-        </div>
-        <div className="statistics-header-actions">
-          <Button
-            variant="secondary"
-            aria-pressed={isFocused}
-            onPress={onToggleFocus}
-          >
-            {getStatisticsCopy(language, 'focusView')}
-          </Button>
-          <Link className="statistics-back-link" href="/">
-            <span aria-hidden="true">←</span>
-            {getStatisticsCopy(language, 'backToBoard')}
-          </Link>
-          <Button onPress={() => onCreate()}>
-            <span aria-hidden="true">＋</span>
-            {getStatisticsCopy(language, 'addStatistic')}
-          </Button>
+          <div className="statistics-header-actions">
+            <Button
+              variant="secondary"
+              aria-pressed={isFocused}
+              onPress={onToggleFocus}
+            >
+              <WorkspaceIcon name="fit" className="size-4" />
+              {getStatisticsCopy(language, 'focusView')}
+            </Button>
+            <Button onPress={onCreate}>
+              <WorkspaceIcon name="plus" className="size-4" />
+              {getStatisticsCopy(language, 'addStatistic')}
+            </Button>
+          </div>
         </div>
       </div>
     </header>

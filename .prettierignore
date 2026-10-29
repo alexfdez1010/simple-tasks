@@ -8,3 +8,6 @@ src/generated
 
 # Skills bundles — vendored docs, keep upstream formatting intact
 .agents/skills/
+
+# Live SQLite files may disappear during code-review graph checkpoints.
+.code-review-graph/

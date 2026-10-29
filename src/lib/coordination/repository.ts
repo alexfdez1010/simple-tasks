@@ -1,5 +1,6 @@
 import { readGraphSnapshot } from '@/lib/coordination/graph-repository';
 import { deleteUnusedAssignee } from '@/lib/coordination/assignee-deletion';
+import { deleteProjectAndMoveTasks } from '@/lib/coordination/project-deletion';
 import type { Assignee, PrismaClient, Project } from '@/generated/prisma';
 import { runSerializable } from '@/lib/db/transaction';
 import {
@@ -18,6 +19,7 @@ import type {
   readyQuery,
   updateAssigneeSchema,
   updateProjectSchema,
+  DeleteProjectInput,
 } from '@/lib/coordination/schemas';
 
 type AssigneeInput = z.infer<typeof assigneeFields>;
@@ -32,6 +34,7 @@ export interface CoordinationRepository {
   listProjects(): Promise<Project[]>;
   createProject(input: ProjectInput): Promise<Project>;
   updateProject(input: z.infer<typeof updateProjectSchema>): Promise<Project>;
+  deleteProject(input: DeleteProjectInput): Promise<void>;
   snapshot(): Promise<{
     tasks: CoordinatedTask[];
     assignees: Assignee[];
@@ -107,6 +110,10 @@ export class PrismaCoordinationRepository implements CoordinationRepository {
     if (existing && existing.id !== id)
       throw conflict('A project already has this name.');
     return this.client.project.update({ where: { id }, data: input });
+  }
+  /** Deletes one project through the shared task-preserving transaction boundary. */
+  deleteProject(input: DeleteProjectInput) {
+    return deleteProjectAndMoveTasks(this.client, input);
   }
   /** Returns one repeatable dependency graph snapshot. */
   snapshot() {

@@ -6,6 +6,7 @@ import type { WorkspaceSnapshot } from '@/lib/coordination/snapshot';
 import { WorkspaceTaskEditor } from '@/components/workspace/task-editor';
 import { TaskInspection } from '@/components/workspace/task-inspection';
 import { useWorkspaceCopy } from '@/components/workspace/copy';
+import { WorkspaceIcon } from '@/components/workspace/workspace-icons';
 
 type PanelProps = {
   id: string;
@@ -80,7 +81,7 @@ export function WorkspaceTaskPanel({
             aria-label={copy.close}
             onPress={close}
           >
-            ×
+            <WorkspaceIcon name="close" className="size-5" />
           </Button>
         </header>
         {task ? (

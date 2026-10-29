@@ -10,6 +10,7 @@ export const spanishEndpointSummaries: Record<string, string> = {
   'GET /projects': 'Consultar los proyectos',
   'POST /projects': 'Crear un proyecto',
   'PATCH /projects/{id}': 'Editar un proyecto',
+  'DELETE /projects/{id}': 'Eliminar un proyecto conservando sus tareas',
   'GET /tasks/ready': 'Consultar trabajo disponible para un responsable',
   'POST /tasks/{id}/start': 'Iniciar una tarea disponible de forma atómica',
 

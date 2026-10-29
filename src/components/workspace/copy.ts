@@ -2,6 +2,9 @@
 import { useI18n } from '@/lib/i18n/provider';
 
 const en = {
+  navigation: 'Main navigation',
+  connectedWork: 'People and agents, together',
+  workOverview: 'Your work, connected',
   reviewer: 'Reviewer',
   noReviewer: 'No review required',
   submitReview: 'Send for review',
@@ -18,6 +21,7 @@ const en = {
   newTask: 'New task',
   tasks: 'Tasks',
   ready: 'Ready',
+  readyPlural: 'ready',
   waiting: 'Waiting',
   graph: 'Task dependencies',
   zoomIn: 'Zoom in',
@@ -55,6 +59,13 @@ const en = {
   instructions: 'Description and instructions',
   addAssignee: 'Add responsible party',
   addProject: 'Add project',
+  deleteProject: 'Delete project',
+  deleteProjectHelp:
+    'All tasks, including completed work, will move to the selected project. Their content and dependencies will be preserved. The project itself will be permanently deleted.',
+  deleteProjectFailed:
+    'Could not delete the project. Your tasks are preserved. Try again.',
+  moveTasksTo: 'Move tasks to',
+  protectedProject: 'The fallback project cannot be deleted',
   missing: 'This task is no longer available.',
   changed:
     'This task changed while you were editing. Reopen it to load the latest version.',
@@ -66,6 +77,9 @@ const en = {
   selectTask: 'Open task',
 };
 const es: Record<keyof typeof en, string> = {
+  navigation: 'Navegación principal',
+  connectedWork: 'Personas y agentes, juntos',
+  workOverview: 'Tu trabajo, conectado',
   reviewer: 'Revisor',
   noReviewer: 'Sin revisión',
   submitReview: 'Enviar a revisión',
@@ -82,6 +96,7 @@ const es: Record<keyof typeof en, string> = {
   newTask: 'Nueva tarea',
   tasks: 'Tareas',
   ready: 'Disponible',
+  readyPlural: 'disponibles',
   waiting: 'En espera',
   graph: 'Dependencias de tareas',
   zoomIn: 'Acercar',
@@ -119,6 +134,13 @@ const es: Record<keyof typeof en, string> = {
   instructions: 'Descripción e instrucciones',
   addAssignee: 'Añadir responsable',
   addProject: 'Añadir proyecto',
+  deleteProject: 'Eliminar proyecto',
+  deleteProjectHelp:
+    'Todas las tareas, incluidas las terminadas, pasarán al proyecto elegido. Se conservarán su contenido y sus dependencias. El proyecto se eliminará de forma permanente.',
+  deleteProjectFailed:
+    'No se pudo eliminar el proyecto. Conservamos tus tareas. Vuelve a intentarlo.',
+  moveTasksTo: 'Trasladar tareas a',
+  protectedProject: 'El proyecto de respaldo no se puede eliminar',
   missing: 'Esta tarea ya no está disponible.',
   changed:
     'La tarea ha cambiado mientras la editabas. Ábrela de nuevo para cargar la última versión.',

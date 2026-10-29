@@ -51,6 +51,59 @@ describe('REST body boundary', () => {
       ),
     ).rejects.toMatchObject({ status: 413 });
   });
+  it('accepts absent and empty streamed DELETE bodies only in optional mode', async () => {
+    const empty = new Request('http://localhost', {
+      method: 'DELETE',
+      body: new Blob([]),
+    });
+    expect(empty.body).not.toBeNull();
+    expect(empty.headers.get('Content-Type')).toBeNull();
+    await expect(readJsonBody(empty, { allowEmpty: true })).resolves.toEqual(
+      {},
+    );
+    await expect(
+      readJsonBody(new Request('http://localhost', { method: 'DELETE' }), {
+        allowEmpty: true,
+      }),
+    ).resolves.toEqual({});
+    await expect(
+      readJsonBody(
+        new Request('http://localhost', {
+          method: 'DELETE',
+          body: new Blob([]),
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      ),
+    ).rejects.toMatchObject({ status: 400 });
+  });
+  it('keeps JSON validation and byte limits for nonempty optional DELETE bodies', async () => {
+    for (const [body, headers, status] of [
+      ['{}', {}, 415],
+      ['{', { 'Content-Type': 'application/json' }, 400],
+      [
+        'x'.repeat(MAX_BODY_BYTES + 1),
+        { 'Content-Type': 'application/json', 'Content-Length': '0' },
+        413,
+      ],
+    ] as const) {
+      await expect(
+        readJsonBody(
+          new Request('http://localhost', { method: 'DELETE', body, headers }),
+          { allowEmpty: true },
+        ),
+      ).rejects.toMatchObject({ status });
+    }
+    await expect(
+      readJsonBody(
+        new Request('http://localhost', {
+          method: 'DELETE',
+          body: '{"destinationProjectId":"target"}',
+          headers: { 'Content-Type': 'application/json' },
+        }),
+        { allowEmpty: true },
+      ),
+    ).resolves.toEqual({ destinationProjectId: 'target' });
+  });
   it('redacts unexpected failures and emits field-level validation errors', async () => {
     const internal = apiErrorResponse(
       new Error('postgres://private-password'),

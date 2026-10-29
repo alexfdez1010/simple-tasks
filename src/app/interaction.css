@@ -1,0 +1,44 @@
+:root {
+  --ease-workspace: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-soft: 0 8px 28px
+    color-mix(in oklab, var(--foreground) 5%, transparent);
+  --shadow-float: 0 16px 48px
+    color-mix(in oklab, var(--foreground) 9%, transparent);
+}
+
+.button {
+  @apply min-h-11 rounded-[10px] font-medium;
+  transition:
+    background-color 180ms,
+    color 180ms,
+    box-shadow 220ms,
+    transform 220ms var(--ease-workspace);
+}
+.button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+a {
+  text-underline-offset: 4px;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+[data-slot='select-trigger'],
+.input,
+.textarea {
+  @apply rounded-[10px];
+}
+[data-slot='modal-dialog'] {
+  box-shadow: var(--shadow-float);
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

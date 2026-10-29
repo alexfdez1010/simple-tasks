@@ -38,7 +38,7 @@ test.describe('mobile configurable statistics', () => {
   });
 });
 
-/** Proves glass panels fit narrow screens and focus can be reversed by touch. */
+/** Proves statistic surfaces fit narrow screens and focus can be reversed by touch. */
 test('keeps statistics and focus controls within a narrow viewport', async ({
   page,
 }) => {
@@ -48,11 +48,17 @@ test('keeps statistics and focus controls within a narrow viewport', async ({
   await focus.tap();
   await expect(focus).toHaveAttribute('aria-pressed', 'true');
   await expect(
-    page.getByRole('button', { name: 'Edit: Completed tasks', exact: true }),
+    page.getByRole('button', {
+      name: 'Statistic actions: Completed tasks',
+      exact: true,
+    }),
   ).toBeHidden();
   await focus.tap();
   await expect(
-    page.getByRole('button', { name: 'Edit: Completed tasks', exact: true }),
+    page.getByRole('button', {
+      name: 'Statistic actions: Completed tasks',
+      exact: true,
+    }),
   ).toBeVisible();
   const panels = await page
     .locator('.statistics-widget, .statistics-header')

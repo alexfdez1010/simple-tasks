@@ -1,0 +1,101 @@
+@reference '../../app/globals.css';
+
+.workspace .graph-node {
+  transition:
+    background 220ms ease,
+    box-shadow 260ms var(--ease-workspace),
+    translate 260ms var(--ease-workspace),
+    outline-color 180ms ease;
+  animation: graph-arrive 600ms var(--ease-workspace) both;
+  animation-delay: calc(var(--node-order, 0) * 24ms);
+}
+.workspace .graph-node:hover {
+  translate: 0 -2px;
+}
+.workspace .graph-node[data-pressed='true'] {
+  translate: 0 1px;
+}
+.graph-node-open {
+  transition:
+    opacity 180ms ease,
+    translate 220ms var(--ease-workspace);
+}
+.graph-node:is(:hover, :focus-visible) .graph-node-open {
+  opacity: 1;
+  translate: 2px 0;
+}
+.graph-edge-active {
+  animation: graph-connect 700ms var(--ease-workspace);
+}
+.workspace-detail {
+  animation: inspector-arrive 360ms var(--ease-workspace);
+}
+@keyframes graph-arrive {
+  from {
+    opacity: 0.78;
+    transform: translateY(7px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes graph-connect {
+  from {
+    stroke-dasharray: 5 7;
+    stroke-dashoffset: 24;
+    opacity: 0.35;
+  }
+  80% {
+    stroke-dasharray: 5 7;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  to {
+    stroke-dasharray: none;
+    opacity: 1;
+  }
+}
+@keyframes inspector-arrive {
+  from {
+    opacity: 0.85;
+    transform: translateX(24px);
+    clip-path: inset(0 0 0 8% round 16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    clip-path: inset(0 round 16px);
+  }
+}
+@media (max-width: 639px) {
+  .workspace-detail {
+    animation-name: inspector-rise;
+  }
+  @keyframes inspector-rise {
+    from {
+      opacity: 0.85;
+      transform: translateY(32px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .workspace *,
+  .workspace *::before,
+  .workspace *::after,
+  .workspace-theme *,
+  .workspace-theme *::before,
+  .workspace-theme *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .workspace .graph-node:hover,
+  .workspace .graph-node[data-pressed='true'],
+  .graph-node:is(:hover, :focus-visible) .graph-node-open {
+    translate: none;
+  }
+}

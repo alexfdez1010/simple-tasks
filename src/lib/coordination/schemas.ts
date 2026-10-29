@@ -21,6 +21,20 @@ export const projectFields = z.object({
 export const updateProjectSchema = projectFields
   .partial()
   .extend({ id: idSchema });
+export const deleteProjectFields = z
+  .object({
+    id: idSchema,
+    destinationProjectId: idSchema.optional(),
+  })
+  .strict();
+export const deleteProjectSchema = deleteProjectFields.refine(
+  ({ id, destinationProjectId }) => id !== destinationProjectId,
+  {
+    message: 'Choose a different destination project.',
+    path: ['destinationProjectId'],
+  },
+);
+export type DeleteProjectInput = z.infer<typeof deleteProjectSchema>;
 export const dependencyIdsSchema = z
   .array(idSchema)
   .max(100)

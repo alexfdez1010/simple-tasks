@@ -1,269 +1,333 @@
 ---
-name: 'Tasks'
-description: 'Minimal dependency workspace with retained editorial integration and statistics surfaces.'
+name: 'Tasks — connected work'
+description: 'A calm, precise workspace for people, agents and the work between them'
 colors:
-  workspace-background-light: '#f6f7f8'
-  workspace-foreground-light: '#252a30'
-  workspace-surface-light: '#ffffff'
-  workspace-surface-secondary-light: '#eef0f2'
-  workspace-surface-tertiary-light: '#e5e8ec'
-  workspace-muted-light: '#626a74'
-  workspace-divider-light: '#d9dee4'
-  workspace-accent-light: '#35654e'
-  workspace-accent-foreground-light: '#ffffff'
-  workspace-background-dark: '#191c20'
-  workspace-foreground-dark: '#e7e9ed'
-  workspace-surface-dark: '#24282e'
-  workspace-surface-secondary-dark: '#2d3239'
-  workspace-surface-tertiary-dark: '#383f48'
-  workspace-muted-dark: '#aab3bf'
-  workspace-divider-dark: '#414953'
-  workspace-accent-dark: '#9ec5ac'
-  workspace-accent-foreground-dark: '#17261d'
-  retained-background-light: 'oklch(0.975 0.008 80)'
-  retained-foreground-light: 'oklch(0.22 0.012 65)'
-  retained-surface-light: 'oklch(0.995 0.004 80)'
-  retained-surface-secondary-light: 'oklch(0.955 0.009 78)'
-  retained-surface-tertiary-light: 'oklch(0.93 0.012 76)'
-  retained-muted-light: 'oklch(0.52 0.018 65)'
-  retained-divider-light: 'oklch(0.83 0.014 72)'
-  retained-accent-light: 'oklch(0.54 0.11 155)'
-  retained-accent-foreground-light: 'oklch(0.99 0.004 80)'
-  retained-danger-light: 'oklch(0.55 0.19 28)'
-  retained-background-dark: 'oklch(0.17 0.012 70)'
-  retained-foreground-dark: 'oklch(0.94 0.008 80)'
-  retained-surface-dark: 'oklch(0.22 0.012 70)'
-  retained-surface-secondary-dark: 'oklch(0.255 0.013 70)'
-  retained-surface-tertiary-dark: 'oklch(0.29 0.014 70)'
-  retained-muted-dark: 'oklch(0.72 0.015 75)'
-  retained-divider-dark: 'oklch(0.36 0.014 70)'
-  retained-accent-dark: 'oklch(0.72 0.11 155)'
-  retained-accent-foreground-dark: 'oklch(0.17 0.012 70)'
-  retained-danger-dark: 'oklch(0.7 0.16 28)'
-  graph-edge-light: '#aab3bf'
-  graph-edge-dark: '#596472'
+  background-light: '#f5f6f5'
+  foreground-light: '#202724'
+  surface-light: '#ffffff'
+  secondary-light: '#edf0ed'
+  tertiary-light: '#e3e9e4'
+  muted-light: '#65716a'
+  divider-light: '#dce3dd'
+  graph-edge-light: '#7b8a80'
+  accent-light: '#32654b'
+  accent-foreground-light: '#ffffff'
+  background-dark: '#151a17'
+  foreground-dark: '#edf2ee'
+  surface-dark: '#202823'
+  secondary-dark: '#29332c'
+  tertiary-dark: '#344237'
+  muted-dark: '#a5b3a9'
+  divider-dark: '#37473c'
+  graph-edge-dark: '#73857a'
+  accent-dark: '#afd4b6'
+  accent-foreground-dark: '#151a17'
+  offline-accent-foreground-dark: '#183321'
+  danger-light: 'oklch(0.55 0.19 28)'
+  danger-dark: 'oklch(0.7 0.16 28)'
+  chart-forest-light: 'oklch(0.56 0.12 155)'
+  chart-amber-light: 'oklch(0.62 0.12 70)'
+  chart-ocean-light: 'oklch(0.57 0.12 235)'
+  chart-coral-light: 'oklch(0.61 0.13 25)'
+  chart-iris-light: 'oklch(0.55 0.1 315)'
+  chart-forest-dark: 'oklch(0.74 0.11 155)'
+  chart-amber-dark: 'oklch(0.78 0.11 75)'
+  chart-ocean-dark: 'oklch(0.74 0.1 235)'
+  chart-coral-dark: 'oklch(0.73 0.12 30)'
+  chart-iris-dark: 'oklch(0.72 0.1 315)'
 typography:
-  workspace-title:
+  title:
     fontFamily: 'Geist, sans-serif'
-    fontSize: '18px'
+    fontSize: '32px'
     fontWeight: 600
-    lineHeight: '28px'
-    letterSpacing: '-0.025em'
+    lineHeight: 1.25
+    letterSpacing: '-0.035em'
+  page-headline:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: 'clamp(2rem, 3.6vw, 3rem)'
+    fontWeight: 600
+    lineHeight: 1.15
+    letterSpacing: '-0.035em'
+  body:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: '14px'
+    lineHeight: '20px'
+  metadata:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: '12px'
+    lineHeight: '16px'
   node-title:
     fontFamily: 'Geist, sans-serif'
     fontSize: '14px'
     fontWeight: 500
     lineHeight: '20px'
-  node-meta:
-    fontFamily: 'Geist, sans-serif'
-    fontSize: '11px'
-    lineHeight: 'normal'
-  body:
-    fontFamily: 'Geist, sans-serif'
-    fontSize: '14px'
-    lineHeight: '20px'
-  page-title:
-    fontFamily: 'Geist, sans-serif'
-    fontSize: '30px'
-    fontWeight: 600
-    lineHeight: '36px'
-    letterSpacing: '-0.025em'
-  statistics-title:
-    fontFamily: 'Geist, sans-serif'
-    fontSize: 'clamp(2rem, 4vw, 3.5rem)'
-    fontWeight: 600
-    lineHeight: 1.05
-    letterSpacing: '-0.065em'
-  statistics-value:
+    letterSpacing: '-0.01em'
+  metric:
     fontFamily: 'Geist, sans-serif'
     fontSize: 'clamp(2rem, 20cqi, 5rem)'
     fontWeight: 550
     lineHeight: 1.05
     letterSpacing: '-0.04em'
-  mono:
-    fontFamily: 'Geist Mono, monospace'
-    fontSize: '12px'
-    lineHeight: '24px'
+  avatar:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: '10px'
+    fontWeight: 600
+  fineprint:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: '11px'
+  chart-metadata:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: '0.6875rem'
+  wordmark:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: '20px'
+    letterSpacing: '-0.035em'
+  wordmark-compact:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: '18px'
+    letterSpacing: '-0.035em'
+  wordmark-phone:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: '17px'
+    letterSpacing: '-0.035em'
+  title-mobile:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: '28px'
+    fontWeight: 600
+    lineHeight: 1.25
+    letterSpacing: '-0.035em'
+  utility-headline:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: '30px'
+    fontWeight: 600
+    lineHeight: '36px'
+    letterSpacing: '-0.025em'
+  offline-headline:
+    fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif'
+    fontSize: '30px'
+    fontWeight: 600
+    lineHeight: 1.2
+    letterSpacing: '-0.035em'
+  connections-headline:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: '2.75rem'
+    fontWeight: 600
+    lineHeight: 1.25
+    letterSpacing: '-0.035em'
+  metric-wide:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: 'clamp(2.75rem, 16cqi, 6rem)'
+    fontWeight: 550
+    lineHeight: 1.05
+    letterSpacing: '-0.04em'
+  metric-empty:
+    fontFamily: 'Geist, sans-serif'
+    fontSize: 'clamp(2rem, 14cqi, 3.25rem)'
+    fontWeight: 550
+    lineHeight: 1.05
+    letterSpacing: '-0.04em'
 rounded:
-  control: '8px'
-  node: '12px'
-  sheet: '16px'
-  api-panel: '20px'
-  statistics: '24px'
-  avatar: '9999px'
+  control: '10px'
+  nested: '12px'
+  node: '16px'
+  canvas: '20px'
+  mobile-sheet: '24px'
+  color-swatch: '0.35rem'
+  miniature: '0.2rem'
+  chart-detail: '0.875rem'
 spacing:
-  1: '4px'
-  '1.5': '6px'
-  2: '8px'
-  3: '12px'
-  4: '16px'
-  5: '20px'
-  6: '24px'
-  7: '28px'
-  8: '32px'
+  unit: '4px'
+  control-gap: '8px'
+  group-gap: '12px'
+  mobile-gutter: '16px'
+  panel-padding: '24px'
+  desktop-gutter: '32px'
 components:
   button-primary:
-    backgroundColor: '{colors.workspace-accent-light}'
-    textColor: '{colors.workspace-accent-foreground-light}'
+    backgroundColor: '{colors.accent-light}'
+    textColor: '{colors.accent-foreground-light}'
     rounded: '{rounded.control}'
-    height: '44px'
     padding: '0 16px'
-    typography: '{typography.body}'
+    height: '44px'
   button-secondary:
-    backgroundColor: '{colors.workspace-surface-secondary-light}'
-    textColor: 'color-mix(in oklab, #35654e 70%, #252a30 30%)'
+    backgroundColor: '{colors.secondary-light}'
     rounded: '{rounded.control}'
-    height: '44px'
     padding: '0 16px'
+    height: '44px'
   button-ghost:
     backgroundColor: 'transparent'
-    textColor: '{colors.workspace-foreground-light}'
+    textColor: '{colors.foreground-light}'
     rounded: '{rounded.control}'
-    height: '44px'
     padding: '0 16px'
+    height: '44px'
   workspace-search:
-    backgroundColor: '{colors.workspace-surface-secondary-light}'
-    textColor: '{colors.workspace-foreground-light}'
-    rounded: '{rounded.node}'
-    padding: '8px 12px'
-    typography: '{typography.body}'
+    backgroundColor: '{colors.secondary-light}'
+    textColor: '{colors.foreground-light}'
+    rounded: '{rounded.control}'
+    padding: '8px 12px 8px 40px'
+    height: '44px'
   workspace-navigation:
-    textColor: '{colors.workspace-foreground-light}'
-    padding: '12px'
-    typography: '{typography.body}'
+    textColor: '{colors.muted-light}'
+    rounded: '{rounded.control}'
+    padding: '0 12px'
+    height: '44px'
+  task-state:
+    textColor: '{colors.accent-light}'
   graph-node:
-    backgroundColor: 'color-mix(in oklab, var(--assignee-color) 13%, var(--surface))'
-    textColor: '{colors.workspace-foreground-light}'
+    textColor: '{colors.foreground-light}'
     rounded: '{rounded.node}'
-    padding: '16px'
+    padding: '14px 16px'
     width: '244px'
     height: '128px'
     typography: '{typography.node-title}'
   graph-controls:
-    backgroundColor: '{colors.workspace-surface-light}'
+    backgroundColor: '{colors.surface-light}'
     rounded: '{rounded.node}'
-    padding: '4px'
+    padding: '6px'
   statistics-card:
-    backgroundColor: 'color-mix(in oklab, var(--surface) 76%, transparent)'
-    textColor: '{colors.retained-foreground-light}'
-    rounded: '{rounded.statistics}'
+    backgroundColor: '{colors.surface-light}'
+    textColor: '{colors.foreground-light}'
+    rounded: '{rounded.node}'
     padding: '24px'
 ---
 
-# Design System: Tasks
+# Tasks — connected work
 
 ## Overview
 
 **Creative North Star: "Work routes"**
 
-A minimal operating canvas makes real tasks, responsible parties and prerequisites visible together. Cool neutrals, softly elevated nodes and compact Geist typography give the graph room; owner-selected tints identify responsibility without colouring the text. The user rejected brutalism, decorative rules and explanatory dashboard filler.
+The interface is a quiet working instrument for real tasks, responsible parties and prerequisites. A persistent navigation rail frames a spacious dependency map. Mineral green neutrals, forest accents, precise Geist typography and soft physical depth make relationships easier to follow without turning the workspace into a dashboard of decorative information.
 
-The workspace theme is local to the graph and its themed editing/management surfaces. Statistics keeps its existing warm mineral-glass presentation; Connections, API access, API documentation and authentication keep the shared warm editorial foundation. This document captures those boundaries rather than prescribing a whole-app reskin.
+Tasks, statistics, connections and authentication share the same light and dark palette. Stored owner colors remain identity signals inside that system. The original PNG artwork in `src/app/icon.png` remains the app identity and appears through `AppLogo`; preserve its artwork and proportions. Titles, subtitles and brand marks never contain periods or decorative dot separators.
 
 **Key Characteristics:**
 
-- Actual directed dependencies and project lanes.
-- Readable native-scale entry, with an explicit overview control.
-- Quiet chrome, dynamic owner colours and full-contrast task text.
-- Persistent drafts and graph context during background synchronization.
-
-Authority: [PRODUCT.md](./PRODUCT.md), the [workspace direction contract](./.impeccable/surfaces/src-app-page-tsx.md), and implemented code. This is a scan of the finished world, refreshed on 2026-10-29. It supersedes the previous Kanban composition and stale workspace glass guidance.
+- Real dependency paths, project context and explicit responsibility
+- A calm navigation frame around an expressive, readable map
+- Soft surface depth and brief, purposeful spatial feedback
+- Continuous graph context and preserved drafts during synchronization
 
 ## Colors
 
-The normative frontmatter preserves the source formats: workspace hex and retained-surface OKLCH. Keys ending in `light`/`dark` are paired by `prefers-color-scheme`; the palette is not a manual per-page toggle.
+Forest accents give the interface one clear action voice; green mineral neutrals carry most of the screen. The frontmatter is normative and follows `src/app/globals.css`; preserve its hex and OKLCH source formats.
 
-- **Primary — forest / sage:** `workspace-accent-*` drives New task, ready text, selected outlines and active dependency edges. Its paired foreground supplies action contrast.
-- **Identity:** each persisted HUMAN or AGENT has a selected colour. Node surfaces mix it with the workspace surface in OKLab: 13% at rest, 19% on hover, 20% for related nodes. These are tint ratios, not alpha on the whole node. Names, instructions and colours remain user-managed.
-- **Neutral — cool canvas / white node / ink:** `workspace-background-*`, `workspace-surface-*` and `workspace-foreground-*` define the graph. Secondary and tertiary surfaces distinguish fields and hover; muted identifies metadata; divider serves structural form separation where needed.
-- **Edges:** `graph-edge-*` is the quiet connector colour; selected incoming/outgoing paths use the workspace accent. Path stroke is 1.4px, increasing to 2px when active.
-- **Retained neutrals and forest:** `retained-*` is the current global foundation for Statistics, Connections, API and auth surfaces. Danger remains the inherited global error/destructive colour even inside the workspace. Statistics also retains its six curated widget palettes in `statistics-widget-themes.css`; those are chart choices, not graph owner colours.
+### Primary
 
-**The Context before colour Rule.** Owner tint supplements the written assignee and state; completed tasks keep full-opacity text.
+Use the accent for the primary action, selected-node outlines, active relationship paths, ready states and visible keyboard focus. Dark mode changes the accent to pale sage and uses the dark background color for its text. Shared HeroUI semantic variants provide hover and disabled states. The self-contained public offline page retains its separately declared dark action-text token, `offline-accent-foreground-dark`; it does not inherit the authenticated application stylesheet.
+
+### Secondary
+
+The five chart colors distinguish data series. Configurable statistic widgets retain their stored Forest, Ocean, Iris, Amber, Coral or Graphite palette and format; these are data presentation choices, not competing application themes. Owner colors are also database-backed, never hard-coded to agent names.
+
+### Neutral
+
+The background frames opaque surfaces, secondary surfaces hold quiet controls and tertiary surfaces give hover feedback. Foreground text carries content; muted text carries context. Dividers support fields and settings where structure needs a boundary, without adding ornamental rules to the workspace. The offline card has no visible border in standard color modes; forced colors adds system-color boundaries. A computed default border color with zero border width is not a visible palette choice.
+
+Dependency paths use the dedicated opaque graph-edge token in each theme. They convey actual task relationships and need stronger contrast than decorative dividers. Preserve at least 3:1 contrast against the map base; selected paths use the accent and retain textual dependency navigation as an equivalent way to follow relationships.
+
+**The Context before color Rule** Owner tint supplements the written assignee and state; completed tasks retain full-opacity text. Danger colors identify errors and destructive actions.
 
 ## Typography
 
-Geist is the display, body and control face; Geist Mono serves technical examples and statistics counts. Both load through `next/font`. There is no alternate workspace display font or fixed modular scale: the observed hierarchy uses metadata (11–12px), body/node titles (14px), application/inspector headings (18px), editor headings (20px), retained page headings (30px), and responsive statistics headings/values.
+Geist is the interface face, loaded through Next.js font variables with a sans-serif fallback. Geist Mono remains available for technical examples. Page headlines use a tighter editorial rhythm, while task titles stay compact and readable at native graph scale. Statistics values use tabular numerals and container-relative sizing.
 
-Node titles use medium weight and a two-line clamp; owner and reviewer names truncate within the node. The accessible node name retains title, assignee, state and reviewer. Full descriptions and editing belong in the task panel. Statistics values use tabular numerals and container units; exact localized values can wrap. Editor input/textarea text stays 16px, including phones.
+The frontmatter records the desktop task title, secondary page headline, body, metadata, node title and KPI roles. The task title reduces to 28px below the phone breakpoint. Fields retain 16px text on phones; compact 14px field text begins at 640px. Labels and dynamic counts never become substitutes for accessible names.
 
-**The Readable entry Rule.** Open the graph at scale 1, including constrained desktops and phones; Fit is the explicit full-graph overview. The project, responsible-party and refresh-interval selectors keep their accessible labels visually hidden at every viewport width.
+Compact type roles are intentional and local. The avatar token is reserved for graph initials. Fineprint covers 11px node states, project counts, inspector timestamps, footer context and compact phone controls; chart metadata preserves the equivalent `0.6875rem` source spelling for chart labels and shares. Do not use these roles for descriptions, forms or primary task text.
+
+The wordmark has desktop, compact-navigation and phone roles. Utility headlines cover the 30px API and skill headings, while the offline page uses its explicit 30px system-font headline. Connections uses its larger headline role from 640px and the existing 2rem size below that breakpoint. Wide and Full KPI cards use `metric-wide` from the statistics desktop breakpoint; an empty KPI uses `metric-empty`, caps its line length at 12ch and wraps long text. These semantic variants preserve the implemented endpoints rather than introducing a second general-purpose type scale.
+
+**The Readable entry Rule** Enter a populated graph at scale 1; Fit is the explicit overview action. Keep project, responsible-party and refresh selectors labelled even when their labels are visually hidden.
 
 ## Layout
 
-- **Workspace:** full viewport height (`100dvh`), with a 560px minimum. Header and filter toolbar precede a flexing, overflow-clipped graph (320px minimum). Desktop header uses 20px horizontal padding, expanding to 32px from 640px; vertical padding is 16px. Search caps at 256px, owner selector at 176px, project wrapper at 208px and sync selector at 112px.
-- **Graph geometry:** nodes are 244 × 128px (1.90625:1), with 16px padding. Dependency ranks advance 314px horizontally (70px clear gap); rows advance 152px (24px gap). Project lanes begin at y=44px; nodes sit 38px below each label. Lanes use `50 + rowCount × 152px` height and a 36px inter-lane gap. Left inset is 40px. Graph bounds are at least 560 × 340px. Cubic directed edges connect prerequisite right centres to dependent left centres; cross-project relationships are real edges.
-- **Framing:** initial and responsive framing keeps native text size, centring if space permits and anchoring the first node otherwise. Fit computes the complete overview, capped at scale 1. Zoom buttons use factors 0.8 and 1.25, centred on the viewport, clamped to 0.2–1.8. Pointer background dragging pans; task controls keep normal activation. Filters and empty/populated transitions establish a new frame; ordinary task membership updates retain the camera. Viewport resizing can reframe at native scale.
-- **Inspection:** desktop panel is 360px wide with 24px padding. At 1024px and above, selecting an existing task reserves that width from the graph. Below 640px it becomes a fixed, nonmodal bottom sheet, maximum 78dvh, with 20px padding and 32px bottom padding. Intermediate widths retain the right overlay.
-- **Phone header:** below 640px, brand and New task share the first row, full-width project selection occupies the second, named navigation the third. Header padding is 16px horizontal / 12px vertical. Filter controls wrap; labels visually hidden at this breakpoint retain accessible names. The graph stays spatial and pannable rather than stacking nodes into cards.
-- **Protected editor:** below 768px, bottom-aligned drawer occupies up to 92dvh, respects visual viewport height and safe-area insets; at 768px it becomes a right drawer (`min(36rem, 70vw)`). Scrollable body and a separate action footer retain reachable Save/Cancel.
-- **Retained routes:** Connections caps at 48rem and stacks its two integration paths with structural dividers. API management caps at 72rem, adding a 19rem reference column from 1024px; API docs cap at 56rem. Statistics caps at 92rem; its single phone column becomes twelve columns at 900px. Automatic KPI/chart spans are 4/6; compact/square/wide/full spans are 3/4/6/12. Square uses a 1:1 minimum proportion; content can expand. Donut legends become side-by-side only when their own container reaches 32rem.
+Desktop uses a 224px navigation rail and an inset surface that fills the viewport. The workspace has a 12px outer inset and 32px header and toolbar gutters. The map takes the remaining height, with small independent gutters so controls do not compete with the graph. Actual project links and task counts live in navigation.
+
+Below 1100px, navigation becomes a compact top row. At intermediate widths it wraps into a dedicated named navigation row. Below 640px, the workspace uses 16px horizontal gutters, filters form useful rows and the project selector takes a full row. Support 320px screens without clipping actions or shrinking task geometry.
+
+Task nodes remain 244 × 128px, arranged by dependency rank and project lane. The camera supports panning, explicit zoom and Fit. Ordinary polling retains the camera, selection and typed drafts. Filtering keeps prerequisite ancestors so the visible work remains explainable.
+
+The read-only inspector is a 360px right surface. At 1024px and above the map reserves 376px for it; on phones the inspector rises as a bottom sheet with at most 78dvh height and safe-area padding. Editing uses the protected HeroUI drawer with explicit save and cancel actions.
+
+Statistics uses a centered container of at most 92rem. Below 900px widgets stack; from 900px a 12-column grid supports the stored Compact, Square, Wide and Full footprints. Keep real widget configuration, ordering and data.
 
 ## Elevation & Depth
 
-The graph uses opaque tonal layering and small shadows, without a glass backdrop or decorative canvas texture. Node rest shadow is `0 3px 12px #1a25340a, 0 1px 3px #1a253408`; hover is `0 5px 18px #1a253410`. Canvas controls use `0 3px 15px #1a25340b`; the inspector uses `-5px 0 30px #1a253408`. Workspace buttons explicitly remove shadows.
+Opaque surfaces and diffuse shadows provide depth across routes. Task nodes lift slightly under a pointer, while the inspector and camera tray sit above the map. Statistics cards share the mineral surfaces; do not restore the former warm glass treatment. Forced colors replaces shadows with visible system-color boundaries.
 
-Statistics retains `glass-panel`: an opaque fallback, a one-pixel edge, illuminated inset highlights and `0 8px 32px var(--glass-shadow)`. When supported, its surface is a 76% surface mix with 24px blur / 115% saturation, behind crisp opaque data. Two low-contrast forest radial washes belong only to Statistics. Reduced transparency removes its blur; forced colours replace glass with system surfaces and borders.
+The sidecar records exact shadows from `workspace.css`, `workspace-graph.css`, `workspace-detail.css`, `glass.css` and `interaction.css`. It also owns motion and breakpoint extensions that the frontmatter schema cannot represent.
 
-**The Scoped materials Rule.** Opaque graph surfaces and retained Statistics glass coexist; do not spread either treatment to unrelated routes.
+**The Purposeful motion Rule** Motion explains arrival, selection and spatial relationships. Use the shared `cubic-bezier(0.16, 1, 0.3, 1)` easing, short state transitions and one-shot entrances. Node arrival takes 600ms with a bounded 24ms stagger; relationship emphasis takes 700ms; the inspector takes 360ms. Polling must not replay arrivals. Reduced motion removes workspace animation and transforms and reduces global durations; surfaces remain opaque.
 
 ## Shapes
 
-Workspace controls use compact 8px corners, nodes and canvas-control trays 12px, the phone inspector/editor sheet and management modal 16px. Owner initials occupy a 20px circular avatar. API panels retain 20px corners and Statistics cards/header 24px. Fields inherit HeroUI's 12px field radius. Keep nesting intentional; the graph's blank canvas needs no enclosing frame.
+Gently rounded controls use the control token. Nodes, statistic cards and the inspector share the node radius; the outer workspace and graph use the canvas radius. Nested dependency buttons and camera buttons use the nested radius. Phone sheets use the larger top-corner radius with square lower edges. Avatars and semantic status indicators may be round; they are information, not decorative punctuation. Smaller radii are reserved for small graphics: `color-swatch` shapes statistic palette samples, `miniature` shapes size previews and chart legend markers, and `chart-detail` shapes chart empty-state containers. They do not replace the main control and surface radii.
+
+SVG controls share a rounded 1.6px line system. The original PNG remains the brand artwork, with an empty alternative because the adjacent wordmark or link supplies the accessible name.
 
 ## Components
 
-### Buttons, navigation and fields
+Use HeroUI v3 and Tailwind CSS 4. Import components directly, compose `Card.Header` and `Card.Content`, use semantic variants and handle activation with `onPress`. Shared primitives require no additional HeroUI provider.
 
-HeroUI v3 owns semantics, keyboard behavior and interactive states; use `onPress`, semantic variants and compound APIs. Workspace buttons and select triggers have a 44px minimum height. Primary actions use accent/foreground; secondary uses the default surface and HeroUI's derived accent-soft foreground; ghost stays transparent until hover. Library hover tokens derive from the current semantic palette. Standard button padding is 16px horizontally; frequent navigation remains visibly named, with 12px text on phones and 14px otherwise.
+### Buttons
 
-Fields use secondary surfaces, foreground text, muted placeholders, tertiary hover and an accent focus border. Workspace field borders are transparent at rest. Header and toolbar rows align by the visible controls at the bottom; search inputs, selectors and adjacent actions share 44px height, with the completed checkbox centred inside the same line. Keep labels and existing responsive wrapping. All HeroUI select triggers also centre their contents vertically at the shared global style boundary, so enlarged controls, editors and integration selectors retain centred text (SRP/OCP). Verify the text range rather than only the control box. Regression proof reproduced a 4px vertical offset before the fix; all ten localized desktop/phone cases pass after centring, including visible editor selectors. Build, lint-format, screenshots and scoped layout scan also passed. Verified with production build, lint-format, ten desktop/mobile layout cases in English/Spanish and desktop/phone captures; scoped layout scan returned no findings. HeroUI keeps focus, invalid, disabled and pending behavior. Reuse the existing controlled select/listbox composition for project, assignee, status and refresh choices. Management lives behind Organize with separate assignee/project tabs; instructions and selected colours are edited there.
+Primary buttons use the forest accent; secondary buttons use quiet surfaces; ghost buttons let navigation and supporting actions recede. Controls are at least 44px high. Hover changes color or depth, focus has a visible two-pixel outline with a three-pixel offset, and press feedback uses a small scale change. Preserve pending and disabled semantics.
 
-### Task graph and panel
+### Fields
 
-Each task is one HeroUI button with `aria-pressed` selection. Titles, written owner/state and optional reviewer carry the summary; a 2px accent outline with 2px offset marks selection. Related nodes receive the stronger owner tint. Selection emphasizes only real incoming/outgoing edges, and filtering retains prerequisite ancestors, including completed ancestors needed to explain visible work. Completed nodes retain full contrast.
+Search and selects use secondary surfaces and the shared control radius. Search reserves room for its leading SVG. Workspace fields begin with a transparent border, reveal a subtle boundary on hover and use the accent for focus. Keep readable placeholders, written error feedback and phone text sizing.
 
-The read-only inspector is an `aside`, preserving graph interaction. It moves focus to the heading; close/Escape returns focus to the node or New task fallback. Prerequisite buttons navigate to the selected task. Full editing uses the modal HeroUI drawer: outside dismissal is disabled, pending submission disables closure, Save/Cancel remain explicit, and failed saves keep the draft. Poll snapshots do not key/remount the open editor. Review feedback persists on rejected requests; stale pending review versions disable decisions with a visible message.
+### Navigation
 
-Optional independent review stays in the panel: `NOT_REQUESTED`, `PENDING`, `APPROVED`, `CHANGES_REQUESTED`. The reviewer can approve or request changes with feedback; approval gates completion, edits invalidate approval, and changes retain the original owner. The compact graph reviewer label does not replace the assignee.
+Named Tasks, Statistics and Connections links remain visible. The active route uses a surface and stronger text; selected project buttons use a secondary surface and `aria-pressed`. Keep navigation semantics separate from the task inspector. The wordmark uses the original `AppLogo` artwork and has no decorative dot. The same original artwork appears in login, statistics, API access, API documentation and skill headers. If a selected project disappears after synchronization, navigation returns to all projects. New tasks created in that view prefer the existing Miscelánea project, with the legacy default as fallback.
 
-### Synchronization and feedback
+### Task nodes and states
 
-Default polling is 15 seconds; choices are 15/30/60 seconds or pause, plus manual Refresh. Requests do not overlap, unchanged snapshots deduplicate, hidden tabs suspend network checks, and failures display a recoverable status message. The hook records last successful synchronization internally; the current header does not display a timestamp. This interface does not invoke models or schedule cron work.
+Owner, task title and state occupy distinct rows. Owner tint is mixed into the node surface rather than applied to its text. Selection outlines the node and highlights actual related paths; readiness and completion remain written states. Node hover, press and arrow feedback follow the shared motion grammar. A graph skip link and textual dependency buttons preserve keyboard access.
 
-### Accessibility and retained components
+### Cards and inspectors
 
-A visible-on-focus skip link targets the graph landmark. Nodes and canvas controls are keyboard accessible; dependency lists provide textual navigation while SVG paths are decorative to assistive technology. Owner colour never substitutes for names or state text. Workspace reduced-motion rules remove descendant animation/transition durations; library controls also respect reduced motion. Preserve English/Spanish labels, locale-aware content and focus visibility. Do not equate focus availability with an unperformed full WCAG audit.
+Statistics widgets compose HeroUI cards with compact titles, actual values and exact textual chart equivalents. One labelled 44px overflow trigger opens the HeroUI action menu; move earlier, move later, edit and delete remain explicit named items with line SVGs. Boundary positions disable unavailable moves, pending changes disable action entry and the destructive item uses the semantic danger variant. Keep the menu separate from KPI content so titles retain room on narrow cards. Read-only task inspection stays nonmodal so the map remains available. Task editing protects unsaved drafts and preserves them through errors and background snapshots.
 
-Statistics retains HeroUI cards, textual chart equivalents, tabular KPI values and user-selected widget definitions; Focus mode changes editing chrome without changing data. Connections provides only MCP and REST setup paths, without fabricated health. Webhooks were retired in commit `3949488`; historical SQL and ignored legacy tables are inert rollback context, not an active component or public integration path. The protected `/design-preview` route remains an isolated synthetic preview and does not mutate live work.
+### Project management
 
-Finish evidence: the independent review resolved native-scale constrained views, completed-node contrast and polling camera resets, with disposition **ship** at that scope. The graph baseline passed 209 unit, 47 integration and 52 E2E tests; finish fixes passed 19 focused E2E checks, lint-format and production build. Six final desktop/phone, detail and dark captures live in `.impeccable/review/final-*.jpg`; sample records are synthetic in an isolated database. The route was deliberately code-first: no image comp was approved and no new raster asset ships. Existing app icon artwork is retained. These are scope-specific finish records, not a claim that every retained route was redesigned or re-audited.
+Organize keeps project removal separate from editing project context. On phones, each project name wraps across a full row and its edit and delete actions occupy the row below; from the small breakpoint they share the desktop row. Preserve full names rather than forcing them into the remaining width between actions. The delete action opens a HeroUI alert dialog with a labelled destination selector and explicit cancel and danger actions. It prefers an existing Miscelánea destination, excludes the source and prevents removal of the protected default or last project. All active tasks and completed history transfer atomically; pending or approved reviews require an explicit move through the task editor first. Keep errors inside the dialog, preserve the chosen destination after failure and refresh after confirmed success without optimistic removal.
 
-Sources: `src/components/workspace/workspace-theme.css`, `workspace.css`, `graph-layout.ts`, `use-graph-camera.ts`, panel/editor/polling components; `src/app/globals.css`, `glass.css`; retained Statistics and Connections implementations. Sidecar ramps are generated previews only; they are not additional runtime colour tokens. Component snippets expand the actual styling for a framework-free preview; they are not alternate production components.
+### Integration examples
 
-## Responsible-party deletion through MCP
+`AppLink` is the focused HeroUI client boundary for links composed inside server-rendered pages. Import it from `@/components/app-link` and use `<AppLink href="/connections" className="connections-back">Connections</AppLink>` in a server page. It accepts a string `href`, optional classes and renderable children; keep page data loading and metadata in the server page rather than widening the client boundary.
 
-`delete_assignee` removes an unused configured owner through the shared service;
-REST exposes the same operation. Reassign owned or reviewed tasks, including
-completed history, before deletion. The default owner remains protected for
-legacy clients. Deletion also removes the name from legacy assignment SELECT
-options in the same transaction. No new UI pattern or visual token is needed.
+`AppLogo` renders the preserved artwork and accepts an optional class string; use `<AppLogo className="workspace-logo" />` next to an accessible brand name. `WorkspaceIcon` renders a decorative SVG from its named path catalog; use `<WorkspaceIcon name="plus" />` inside a labelled control. Neither component owns product state.
+
+`WorkspaceHeader` receives filtered project context, counts and creation callbacks; compose it as `<WorkspaceHeader projectId={projectId} projects={projects} count={count} ready={ready} onProjectChange={setProjectId} onCreate={openEditor} />`. `WorkspaceNavigation` receives projects, tasks, the active project and its change callback; compose `<WorkspaceNavigation projects={projects} tasks={tasks} projectId={projectId} onProjectChange={setProjectId}>{managementActions}</WorkspaceNavigation>` to add management actions without coupling navigation to their state.
+
+`GraphNode` receives one graph record, its world position, selected and related flags, activation and optional bounded entrance order; compose `<GraphNode task={task} position={position} selected={selected} related={related} onSelect={selectTask} order={index} />`. It reports the selected identifier through its callback and does not mutate the task. These focused interfaces and composition keep navigation, graph layout, camera state, polling and editing separate responsibilities, while preserving existing snapshot and action contracts.
+
+`StatisticActions` receives a widget name, move availability, pending state and action callbacks. Compose `<StatisticActions name={definition.name} canMoveEarlier={canMoveEarlier} canMoveLater={canMoveLater} isPending={isPending} onMove={moveWidget} onEdit={editWidget} onDelete={confirmDelete} />` in `Card.Header`. The component owns menu presentation and dispatches the selected callback; the dashboard retains persistence, ordering and delete confirmation.
+
+`ProjectDelete` owns the confirmation state and destination choice for one project; compose `<ProjectDelete project={project} projects={projects} onSaved={refreshWorkspace} />` in the project management row. Each project supplies its stable identifier and display name. The callback refreshes the persisted snapshot after success; the shared server action owns authentication and delegates the atomic operation to the coordination service. Preserve this boundary instead of duplicating deletion rules in the UI. See [agent usage](docs/agents.md) and [REST usage](docs/api.md) for the equivalent public operations and invocation examples.
+
+The optional installation action is the same quiet HeroUI ghost button as other supporting navigation actions. It appears only when installation is available and opens the browser prompt after an explicit press. Mount `<PwaRegistration />` once in `AppProviders` and `<PwaInstallButton className="justify-start" />` in a localized workspace surface. The static offline fallback keeps the original artwork, mineral palette, readable system-font fallback and one retry action; it contains no private task data. See [PWA integration](docs/pwa.md) for registration, launcher assets and privacy boundaries.
+
+Use the official [HeroUI component documentation](https://heroui.com/en/docs/react/components) and [theming guide](https://heroui.com/en/docs/react/getting-started/theming), [Next.js CSS guide](https://nextjs.org/docs/app/getting-started/css), [Tailwind animation guide](https://tailwindcss.com/docs/animation) and [reduced-motion reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion) when extending the system.
 
 ## Do's and Don'ts
 
-### Do:
+### Do
 
-- Do use HeroUI v3 compound primitives and Tailwind CSS 4, with existing Geist fonts.
-- Do render stored projects, owners and dependency relationships, retaining prerequisite ancestors when filtering.
-- Do preserve camera position, selection and typed drafts through ordinary polling updates.
-- Do keep English/Spanish labels, keyboard activation, visible focus and textual state cues.
-- Do check native-scale entry and explicit Fit separately at desktop and phone sizes.
+- Do use HeroUI v3 compound primitives, Tailwind CSS 4 and the existing Geist fonts
+- Do preserve the original PNG identity and its proportions
+- Do render stored projects, owners, workflow states and real dependency relationships
+- Do preserve camera position, selection and typed drafts through ordinary polling updates
+- Do keep English and Spanish labels, keyboard activation, visible focus and textual state cues
+- Do verify light and dark themes, narrow screens, reduced motion, editing and secondary navigation
 
-### Don't:
+### Don't
 
-- Don't introduce brutalist framing, grid overlays, decorative rules or descriptive dashboard filler.
-- Don't reduce completed-node opacity or use owner colour as the only identity signal.
-- Don't auto-fit a populated graph when polling adds or removes tasks.
-- Don't turn the inspector into a blocking modal or let outside clicks dismiss task editing.
-- Don't hard-code agent names, schedule models or restore retired webhook UI.
-- Don't describe Statistics or Connections as using the graph's cool palette.
+- Don't add periods or decorative dot separators to titles, subtitles or brand marks
+- Don't restore brutalist framing, decorative rules or explanatory dashboard filler
+- Don't use owner color as the only identity signal or fade completed task text
+- Don't auto-fit the graph when polling adds or removes tasks
+- Don't make inspection modal or allow outside clicks to discard an editing draft
+- Don't hard-code agent names, invoke models or cache private task data for offline use

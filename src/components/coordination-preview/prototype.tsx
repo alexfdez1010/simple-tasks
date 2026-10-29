@@ -1,17 +1,22 @@
 'use client';
 
-import { Button, Label, TextArea, TextField } from '@heroui/react';
-import { useState } from 'react';
+import { Button } from '@heroui/react';
+import { useCallback, useState } from 'react';
 import {
   PREVIEW_TASKS,
   pendingDependencies,
   previewState,
   type PreviewTask,
 } from '@/components/coordination-preview/data';
+import { PreviewInspector } from '@/components/coordination-preview/preview-inspector';
 import { TaskGraph } from '@/components/workspace/task-graph';
-import { StatisticSelect } from '@/components/statistics/statistic-select';
+import { WorkspaceNavigation } from '@/components/workspace/workspace-navigation';
+import { WorkspaceHeader } from '@/components/workspace/workspace-header';
+import { WorkspaceIcon } from '@/components/workspace/workspace-icons';
 
-/** Demonstrates the user's selected minimalist graph direction with disposable tasks and actual edges. */
+const projects = [{ id: 'invites', name: 'Acceso por invitación' }];
+
+/** Demonstrates the production shell and graph using explicitly labelled, entirely local example tasks. */
 export function CoordinationPrototype() {
   const [tasks, setTasks] = useState(PREVIEW_TASKS);
   const [selected, setSelected] = useState<number | null>(null);
@@ -33,7 +38,7 @@ export function CoordinationPrototype() {
     ready: task.state === 'todo' && !pendingDependencies(task, tasks).length,
     dependencyIds: task.dependencies.map(String),
   }));
-  /** Replaces an example record without persisting any database changes. */
+  /** Replaces an example record in memory; no database or server action participates. */
   function updateTask(task: PreviewTask) {
     setTasks((previous) =>
       previous.map((candidate) =>
@@ -41,120 +46,100 @@ export function CoordinationPrototype() {
       ),
     );
   }
+  /** Adds a local example task and opens its editable inspector. */
+  function createTask() {
+    const id = Math.max(100, ...tasks.map((task) => task.id)) + 1;
+    setTasks((previous) => [
+      ...previous,
+      {
+        id,
+        title: 'Nueva tarea de ejemplo',
+        description: '',
+        owner: 'Alejandro',
+        state: 'todo',
+        dependencies: [],
+      },
+    ]);
+    setSelected(id);
+  }
+  /** Restores the exact synthetic baseline and dismisses local editing. */
+  function reset() {
+    setTasks(PREVIEW_TASKS);
+    setSelected(null);
+    setProject('all');
+  }
+  /** Dismisses local editing and restores keyboard focus to its task or the creation action. */
+  const close = useCallback(() => {
+    setSelected(null);
+    requestAnimationFrame(() =>
+      (
+        document.getElementById(`task-node-${selected}`) ??
+        document.getElementById('new-task')
+      )?.focus(),
+    );
+  }, [selected]);
   return (
     <div className="workspace">
-      <header className="workspace-header">
-        <span className="workspace-brand">Tasks</span>
-        <div className="w-52">
-          <StatisticSelect
-            label="Proyecto"
-            value={project}
-            onChange={setProject}
-            options={[
-              { id: 'all', label: 'Todos los proyectos' },
-              { id: 'invites', label: 'Acceso por invitación' },
-            ]}
-          />
-        </div>
-        <span className="ml-auto text-xs text-muted">Ejemplo interactivo</span>
-        <Button
-          variant="ghost"
-          onPress={() => {
-            setTasks(PREVIEW_TASKS);
-            setSelected(null);
-          }}
-        >
+      <a href="#dependency-workspace" className="skip-link">
+        Dependencias de tareas
+      </a>
+      <WorkspaceNavigation
+        projects={projects}
+        tasks={graphTasks.map((task) => ({
+          projectId: task.projectId,
+          status: { isTerminal: task.completed },
+        }))}
+        projectId={project}
+        onProjectChange={setProject}
+      >
+        <Button variant="ghost" onPress={reset}>
+          <WorkspaceIcon name="refresh" />
           Restablecer
         </Button>
-      </header>
-      <main className="workspace-content">
-        <TaskGraph
-          tasks={graphTasks}
-          projects={[{ id: 'invites', name: 'Acceso por invitación' }]}
-          scope={project}
-          selectedId={selected === null ? null : String(selected)}
-          onSelect={(id) => setSelected(Number(id))}
-          labels={{
-            graph: 'Dependencias de tareas',
-            zoomIn: 'Acercar',
-            zoomOut: 'Alejar',
-            fit: 'Encajar',
-            empty: 'No hay tareas en este proyecto.',
-          }}
+      </WorkspaceNavigation>
+      <div className="workspace-main">
+        <WorkspaceHeader
+          projectId={project}
+          projects={projects}
+          count={tasks.length}
+          ready={graphTasks.filter((task) => task.ready).length}
+          onProjectChange={setProject}
+          onCreate={createTask}
         />
-        {current ? (
-          <aside className="workspace-detail" aria-label="Detalle de tarea">
-            <header className="workspace-detail-header">
-              <h2>{current.title}</h2>
-              <Button
-                variant="ghost"
-                isIconOnly
-                aria-label="Cerrar detalle"
-                onPress={() => setSelected(null)}
-              >
-                ×
-              </Button>
-            </header>
-            <div className="workspace-detail-fields">
-              <div>
-                <span className="text-xs text-muted">Responsable</span>
-                <p className="mt-1 text-sm">{current.owner}</p>
-              </div>
-              <TextField
-                value={current.description}
-                onChange={(description) =>
-                  updateTask({ ...current, description })
-                }
-              >
-                <Label>Descripción</Label>
-                <TextArea rows={5} />
-              </TextField>
-              <section>
-                <h3 className="mb-2 text-xs text-muted">Depende de</h3>
-                {current.dependencies.length ? (
-                  current.dependencies.map((id) => {
-                    const prerequisite = tasks.find((task) => task.id === id)!;
-                    return (
-                      <Button
-                        key={id}
-                        variant="ghost"
-                        className="h-auto w-full justify-between gap-3 whitespace-normal py-3 text-left text-sm"
-                        onPress={() => setSelected(id)}
-                      >
-                        {prerequisite.title}
-                        <span className="text-xs text-muted">
-                          {prerequisite.state === 'done'
-                            ? 'Terminada'
-                            : 'Pendiente'}
-                        </span>
-                      </Button>
-                    );
-                  })
-                ) : (
-                  <p className="text-sm">Sin dependencias</p>
-                )}
-              </section>
-              <Button
-                isDisabled={
-                  Boolean(pendingDependencies(current, tasks).length) &&
-                  current.state !== 'done'
-                }
-                onPress={() =>
-                  updateTask({
-                    ...current,
-                    state: current.state === 'done' ? 'todo' : 'done',
-                  })
-                }
-              >
-                {current.state === 'done' ? 'Reabrir' : 'Completar'}
-              </Button>
-            </div>
-          </aside>
-        ) : null}
-      </main>
-      <p className="workspace-demo">
-        Datos de ejemplo. Los cambios no afectan a tus tareas.
-      </p>
+        <p className="workspace-demo">
+          Datos de ejemplo. Los cambios no afectan a tus tareas.
+        </p>
+        <main
+          id="dependency-workspace"
+          className="workspace-content"
+          data-inspecting={selected !== null}
+          tabIndex={-1}
+        >
+          <TaskGraph
+            tasks={graphTasks}
+            projects={projects}
+            scope={project}
+            selectedId={selected === null ? null : String(selected)}
+            onSelect={(id) => setSelected(Number(id))}
+            labels={{
+              graph: 'Dependencias de tareas',
+              zoomIn: 'Acercar',
+              zoomOut: 'Alejar',
+              fit: 'Encajar',
+              empty: 'No hay tareas en este proyecto.',
+            }}
+          />
+          {current ? (
+            <PreviewInspector
+              task={current}
+              tasks={tasks}
+              onUpdate={updateTask}
+              onSelect={setSelected}
+              onClose={close}
+            />
+          ) : null}
+        </main>
+      </div>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { executeBoardAction } from '@/lib/validation/action-result';
 import type { z } from 'zod';
 import type {
   assigneeFields,
+  deleteProjectSchema,
   projectFields,
   updateAssigneeSchema,
   updateProjectSchema,
@@ -45,5 +46,14 @@ export async function updateProjectAction(
   return executeBoardAction(async () => {
     await requireAuthenticated();
     await coordinationService.updateProject(input);
+  });
+}
+/** Deletes a project for an authenticated operator, preserving its tasks in the selected destination. */
+export async function deleteProjectAction(
+  input: z.input<typeof deleteProjectSchema>,
+) {
+  return executeBoardAction(async () => {
+    await requireAuthenticated();
+    await coordinationService.deleteProject(input);
   });
 }

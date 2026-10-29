@@ -1,3 +1,4 @@
+import { AppLogo } from '@/components/app-logo';
 import {
   ApiNavigation,
   ApiDocsLink,
@@ -28,7 +29,10 @@ export default async function ApiAccessPage() {
     <main className="mx-auto min-h-dvh [--field-background:var(--surface-secondary)] [--field-foreground:var(--foreground)] [--field-placeholder:var(--muted)] [--field-border:var(--divider)] [--field-hover:var(--surface-tertiary)] [--field-focus:var(--surface-secondary)] [--field-border-hover:var(--divider)] [--field-border-focus:var(--accent)] w-full max-w-6xl space-y-8 px-5 py-8 sm:px-8 sm:py-12">
       <ApiNavigation copy={copy} />
       <header className="space-y-3">
-        <h1 className="text-3xl font-semibold tracking-tight">{copy.title}</h1>
+        <h1 className="flex items-center gap-3 text-3xl font-semibold tracking-tight">
+          <AppLogo className="size-10 shrink-0" />
+          {copy.title}
+        </h1>
         <p className="max-w-prose text-sm leading-6 text-muted">{copy.intro}</p>
       </header>
       <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_19rem]">

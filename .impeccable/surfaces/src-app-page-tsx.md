@@ -2,27 +2,28 @@
 version: 1
 slug: 'src-app-page-tsx'
 primary_target: 'src/app/page.tsx'
-related_targets: ['src/app/design-preview/page.tsx']
+related_targets:
+  [
+    'src/app/design-preview/page.tsx',
+    'src/app/statistics/page.tsx',
+    'src/components/connections/connections-content.tsx',
+  ]
 ---
 
-# Dependency workspace
+# Connected work
 
-Mode: Operate. Scope: task graph, project grouping, assignee management and periodic synchronization. User selected work routes and explicitly replaced the brutalist visual request with minimalism.
+Mode: Operate. The user authorizes a comprehensive visual redesign, autonomous direction, exceptional animation and UX, verification and publication to main. No questions or approval board requested.
 
-## Direction contract
+THESIS: Make complex work feel composed: people, agents and their prerequisites live on a clear, navigable map.
 
-THESIS: See task prerequisites and responsible parties together in a data-driven graph with minimal interface chrome.
+OWN-WORLD: Mineral green-neutral canvas, forest accents, white or deep evergreen surfaces, Geist typography, soft physical depth and precise consistent SVG line icons. Quiet app navigation frames the expressive map; identity color belongs to responsible parties.
 
-OWN-WORLD: Cool neutral canvas, white softly elevated nodes, restrained sage state marks, assignee-selected pastel node tints, readable Geist and compact squared-to-soft controls. No decorative rules, grid overlay, oversized display, labels without information, or descriptive dashboard filler.
+FIRST VIEWPORT: Persistent navigation rail on desktop with named Tasks/Statistics/Connections, direct project navigation and management/settings. Main workspace has a clear title, actual task context, one creation action, accessible filters and an inset full-height graph. A narrow-screen top navigation replaces the rail. Controls remain reachable at 320px. No marketing hero or decorative dashboard filler.
 
-STORY: Choose a project, see which task blocks another, open a task to edit its owner or dependencies, and retain the view while server updates arrive.
+SIGNATURE INTERACTION: Select a task to illuminate its real paths and reveal a spatially animated inspector while the map remains usable. Task press feedback, active project transitions and entrance choreography share one easing grammar. Polling preserves camera, drafts and animation identity.
 
-FIRST VIEWPORT: Compact application header with project selector and New task. The dependency graph fills the remaining viewport; nodes show title, owner and state. Actual directed edges connect prerequisites to dependents. Fit/zoom controls sit on the canvas. A nonmodal detail panel opens only on selection, and collapses to an accessible sheet on phones. Optional review actions stay in that panel. Initial framing at native text size keeps nodes legible on phones and constrained desktop windows; Fit provides the complete overview.
+MOTION: Visible-by-default coordinated entrance; one-shot relationship emphasis; responsive spring-like easing through CSS, no animation dependency; no endless pulsing. Reduced motion is immediate and reduced transparency is opaque.
 
-FORM: User pinned the minimal work-routes graph, derived from the competitive orienteering challenger in seed bc685d82; map material is translated to neutral minimalism and the geometry represents stored relationships. The user's explicit choice supersedes the assigned workshop desk.
+QUALITY BAR: Every control works, data remains real, every state is legible, desktop and phone are both authored, light/dark are coherent, and motion reinforces focus. Preserve the 244×128 node geometry and accessible textual dependency navigation.
 
-SIGNATURE INTERACTION: Selecting a task highlights its actual incoming and outgoing dependency edges while a nonmodal inspector preserves the graph context. Pointer panning and centre-based zoom explore large graphs; polling preserves the camera and open drafts.
-
-MOTION: Content stays visible from first render. Brief native control hover/focus feedback and panel entrance serve orientation; reduced motion removes transitions and animation.
-
-FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+FINISH: Independent visual and code review, meaningful tests, build/lint-format, updated token-bearing design.md and .impeccable/design.json, then commit and push main.

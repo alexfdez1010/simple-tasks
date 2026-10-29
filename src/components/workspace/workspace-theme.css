@@ -1,42 +1,9 @@
 @reference '../../app/globals.css';
+
 .workspace,
 .workspace-theme {
-  --background: #f6f7f8;
-  --foreground: #252a30;
-  --surface: #ffffff;
-  --surface-secondary: #eef0f2;
-  --surface-tertiary: #e5e8ec;
-  --muted: #626a74;
-  --divider: #d9dee4;
-  --accent: #35654e;
-  --accent-foreground: #ffffff;
-  --default: var(--surface-secondary);
-  --default-foreground: var(--foreground);
-  --overlay: var(--surface);
-  --overlay-foreground: var(--foreground);
-  --field-background: var(--surface-secondary);
-  --field-foreground: var(--foreground);
-  --field-placeholder: var(--muted);
   --field-border: transparent;
-  --field-hover: var(--surface-tertiary);
-  --field-focus: var(--surface-secondary);
+  --field-border-hover: var(--divider);
   --field-border-focus: var(--accent);
   @apply bg-background text-foreground;
-}
-@media (prefers-color-scheme: dark) {
-  .workspace,
-  .workspace-theme {
-    --background: #191c20;
-    --foreground: #e7e9ed;
-    --surface: #24282e;
-    --surface-secondary: #2d3239;
-    --surface-tertiary: #383f48;
-    --muted: #aab3bf;
-    --divider: #414953;
-    --accent: #9ec5ac;
-    --accent-foreground: #17261d;
-  }
-  .graph-edges {
-    color: #596472;
-  }
 }

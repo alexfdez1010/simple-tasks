@@ -2,6 +2,7 @@ import type { CoordinationRepository } from '@/lib/coordination/repository';
 import {
   assigneeFields,
   deleteAssigneeSchema,
+  deleteProjectSchema,
   projectFields,
   readyQuery,
   startTaskSchema,
@@ -41,6 +42,10 @@ export class CoordinationService {
   /** Validates a partial project edit. */
   updateProject(input: z.input<typeof updateProjectSchema>) {
     return this.repository.updateProject(updateProjectSchema.parse(input));
+  }
+  /** Validates project deletion and its optional transfer destination before persistence. */
+  deleteProject(input: z.input<typeof deleteProjectSchema>) {
+    return this.repository.deleteProject(deleteProjectSchema.parse(input));
   }
   /** Returns the consistent graph snapshot and its metadata. */
   snapshot() {

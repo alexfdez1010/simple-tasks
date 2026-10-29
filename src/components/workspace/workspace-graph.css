@@ -1,0 +1,148 @@
+@reference '../../app/globals.css';
+
+.task-graph {
+  @apply relative h-full min-h-80 overflow-hidden rounded-[20px];
+  background: color-mix(in oklab, var(--surface) 55%, var(--background));
+  background-image: radial-gradient(
+    color-mix(in oklab, var(--foreground) 12%, transparent) 0.7px,
+    transparent 0.7px
+  );
+  background-size: 20px 20px;
+}
+.graph-viewport {
+  @apply relative h-full w-full touch-none overflow-hidden;
+  cursor: grab;
+}
+.graph-viewport:active {
+  cursor: grabbing;
+}
+.graph-world {
+  @apply absolute top-0 left-0 origin-top-left;
+}
+.graph-edges {
+  @apply pointer-events-none absolute inset-0 overflow-visible;
+  color: var(--graph-edge);
+}
+.graph-edge {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  transition:
+    stroke 200ms ease,
+    stroke-width 200ms ease;
+}
+.graph-edge-active {
+  color: var(--accent);
+  stroke-width: 2;
+}
+.graph-project-label {
+  @apply absolute flex items-center gap-2 text-xs font-medium text-muted;
+}
+.graph-project-count {
+  @apply ml-1 tabular-nums;
+  font-size: 11px;
+}
+.workspace .graph-node {
+  @apply absolute flex flex-col items-stretch justify-between gap-2 rounded-2xl px-4 py-3.5 text-left whitespace-normal;
+  background: color-mix(in oklab, var(--assignee-color) 6%, var(--surface));
+  color: var(--foreground);
+  box-shadow:
+    0 2px 3px color-mix(in oklab, var(--foreground) 3%, transparent),
+    0 8px 24px color-mix(in oklab, var(--foreground) 6%, transparent);
+}
+.workspace .graph-node:hover {
+  background: color-mix(in oklab, var(--assignee-color) 9%, var(--surface));
+  box-shadow:
+    0 3px 5px color-mix(in oklab, var(--foreground) 4%, transparent),
+    0 12px 28px color-mix(in oklab, var(--foreground) 10%, transparent);
+}
+.workspace .graph-node[aria-pressed='true'] {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.workspace .graph-node[data-related='true'] {
+  background: color-mix(in oklab, var(--assignee-color) 11%, var(--surface));
+}
+.graph-node-owner-row {
+  @apply flex w-full items-center justify-between gap-2 text-xs text-muted;
+}
+.graph-assignee {
+  @apply flex min-w-0 items-center gap-2;
+}
+.graph-avatar {
+  @apply flex size-5 shrink-0 items-center justify-center rounded-full text-[10px] font-semibold;
+  background: color-mix(in oklab, var(--assignee-color) 20%, var(--surface));
+  color: var(--foreground);
+}
+.graph-node-open {
+  @apply shrink-0;
+  opacity: 0.45;
+}
+.graph-node-title {
+  @apply line-clamp-2 text-sm leading-5 font-medium tracking-[-0.01em];
+}
+.graph-node-footer {
+  @apply flex w-full items-center justify-between gap-2 text-[11px] text-muted;
+}
+.graph-state {
+  @apply flex shrink-0 items-center gap-1.5;
+}
+.graph-state[data-ready='true'],
+.graph-state[data-complete='true'] {
+  color: var(--accent);
+}
+.graph-state-dot {
+  @apply inline-block size-1.5 shrink-0 rounded-full;
+  background: currentColor;
+}
+.graph-state:not([data-ready='true']) .graph-state-dot {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.2px currentColor;
+}
+.graph-node-reviewer {
+  @apply max-w-24 truncate;
+}
+.graph-controls {
+  @apply absolute bottom-5 left-1/2 z-1 flex -translate-x-1/2 items-center gap-1 rounded-2xl bg-surface p-1.5;
+  box-shadow: 0 6px 28px color-mix(in oklab, var(--foreground) 10%, transparent);
+}
+.graph-controls > span {
+  @apply min-w-11 text-center text-xs tabular-nums text-muted;
+}
+.graph-controls .button {
+  @apply min-h-11 rounded-xl;
+}
+.graph-controls .button:last-child {
+  @apply gap-2 px-3;
+}
+.graph-empty {
+  @apply flex h-full flex-col items-center justify-center gap-4 px-8 text-center text-sm text-muted;
+}
+.graph-empty > svg {
+  opacity: 0.55;
+}
+@media (max-width: 639px) {
+  .task-graph {
+    @apply rounded-2xl;
+  }
+  .graph-controls {
+    @apply bottom-4;
+  }
+}
+@media (forced-colors: active) {
+  .task-graph {
+    background: Canvas;
+  }
+  .workspace .graph-node,
+  .graph-controls {
+    border: 1px solid ButtonText;
+    background: Canvas;
+    box-shadow: none;
+  }
+  .graph-edge {
+    stroke: CanvasText;
+  }
+  .graph-node[aria-pressed='true'] {
+    outline-color: Highlight;
+  }
+}

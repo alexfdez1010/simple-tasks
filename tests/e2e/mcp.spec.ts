@@ -16,6 +16,7 @@ const EXPECTED_TOOLS = [
   'list_projects',
   'create_project',
   'update_project',
+  'delete_project',
   'list_ready_tasks',
   'start_task',
   'search_tasks',

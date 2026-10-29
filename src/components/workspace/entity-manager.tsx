@@ -11,6 +11,7 @@ import {
 } from '@/lib/coordination/actions';
 import { StatisticSelect } from '@/components/statistics/statistic-select';
 import { StatusColorPicker } from '@/components/board/status-color-picker';
+import { ProjectDelete } from '@/components/workspace/project-delete';
 import { useWorkspaceCopy } from '@/components/workspace/copy';
 
 type Entry = {
@@ -138,15 +139,22 @@ export function EntityManager({
     <section className="flex flex-col gap-5">
       <div className="flex flex-col gap-2">
         {entries.map((entry) => (
-          <div key={entry.id} className="flex items-center gap-3 py-2">
+          <div
+            key={entry.id}
+            className={
+              type === 'project'
+                ? 'grid grid-cols-[1fr_auto] items-center gap-2 py-3 sm:flex sm:gap-3'
+                : 'flex items-center gap-3 py-2'
+            }
+          >
             {entry.color ? (
               <span
                 className="size-3 shrink-0 rounded-full"
                 style={{ background: entry.color }}
               />
             ) : null}
-            <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium">{entry.name}</p>
+            <div className="col-span-2 min-w-0 flex-1">
+              <p className="break-words text-sm font-medium">{entry.name}</p>
               {entry.kind ? (
                 <p className="text-xs text-muted">
                   {entry.kind === 'AGENT' ? copy.agent : copy.human}
@@ -155,11 +163,19 @@ export function EntityManager({
             </div>
             <Button
               variant="ghost"
+              className="justify-self-start"
               onPress={() => setSelected(entry.id)}
               aria-label={`${copy.edit} ${entry.name}`}
             >
               {copy.edit}
             </Button>
+            {type === 'project' ? (
+              <ProjectDelete
+                project={entry}
+                projects={snapshot.projects}
+                onSaved={onSaved}
+              />
+            ) : null}
           </div>
         ))}
       </div>

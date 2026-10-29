@@ -1,6 +1,7 @@
 'use client';
 import { Button } from '@heroui/react';
 import { GraphNode } from '@/components/workspace/graph-node';
+import { WorkspaceIcon } from '@/components/workspace/workspace-icons';
 import { useId, useMemo } from 'react';
 import {
   layoutGraph,
@@ -58,7 +59,11 @@ export function TaskGraph({
     .filter((task) => task.dependencyIds.includes(selectedId ?? ''))
     .forEach((task) => related.add(task.id));
   return (
-    <section className="task-graph" aria-label={labels.graph}>
+    <section
+      className="task-graph"
+      aria-label={labels.graph}
+      data-has-selection={Boolean(selectedId)}
+    >
       <div
         className="graph-viewport"
         ref={containerRef}
@@ -131,10 +136,14 @@ export function TaskGraph({
                 style={{ top: lane.y, left: 40 }}
                 key={lane.id}
               >
+                <WorkspaceIcon name="folder" className="size-3.5" />
                 {lane.name}
+                <span className="graph-project-count">
+                  {tasks.filter((task) => task.projectId === lane.id).length}
+                </span>
               </div>
             ))}
-            {tasks.map((task) => {
+            {tasks.map((task, index) => {
               const position = layout.positions.get(task.id);
               return position ? (
                 <GraphNode
@@ -144,12 +153,16 @@ export function TaskGraph({
                   selected={selectedId === task.id}
                   related={related.has(task.id)}
                   onSelect={onSelect}
+                  order={index}
                 />
               ) : null;
             })}
           </div>
         ) : (
-          <p className="graph-empty">{labels.empty}</p>
+          <div className="graph-empty">
+            <WorkspaceIcon name="tasks" className="size-9" />
+            <p>{labels.empty}</p>
+          </div>
         )}
       </div>
       <div className="graph-controls">
@@ -159,7 +172,7 @@ export function TaskGraph({
           aria-label={labels.zoomOut}
           onPress={() => zoom(0.8)}
         >
-          −
+          <WorkspaceIcon name="minus" className="size-4" />
         </Button>
         <span className="text-xs tabular-nums">
           {Math.round(camera.scale * 100)}%
@@ -170,9 +183,10 @@ export function TaskGraph({
           aria-label={labels.zoomIn}
           onPress={() => zoom(1.25)}
         >
-          +
+          <WorkspaceIcon name="plus" className="size-4" />
         </Button>
         <Button variant="ghost" onPress={() => fit()}>
+          <WorkspaceIcon name="fit" className="size-4" />
           {labels.fit}
         </Button>
       </div>

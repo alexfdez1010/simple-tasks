@@ -1,651 +1,671 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-29T14:11:03.205094+00:00",
-  "title": "Design System: Tasks",
+  "generatedAt": "2026-10-29T19:11:00.098594Z",
+  "title": "Tasks — connected work",
   "extensions": {
     "colorMeta": {
-      "workspace-background-light": {
+      "background-light": {
         "role": "neutral",
-        "displayName": "Workspace Background Light",
+        "displayName": "Background light",
+        "canonical": "#f5f6f5",
         "tonalRamp": [
-          "oklch(0.1500 0.00171 247.84)",
-          "oklch(0.2643 0.00171 247.84)",
-          "oklch(0.3786 0.00171 247.84)",
-          "oklch(0.4929 0.00171 247.84)",
-          "oklch(0.6071 0.00171 247.84)",
-          "oklch(0.7214 0.00171 247.84)",
-          "oklch(0.8357 0.00171 247.84)",
-          "oklch(0.9500 0.00171 247.84)"
+          "oklch(0.150 0.0017 145.56)",
+          "oklch(0.264 0.0017 145.56)",
+          "oklch(0.379 0.0017 145.56)",
+          "oklch(0.493 0.0017 145.56)",
+          "oklch(0.607 0.0017 145.56)",
+          "oklch(0.721 0.0017 145.56)",
+          "oklch(0.836 0.0017 145.56)",
+          "oklch(0.950 0.0017 145.56)"
         ]
       },
-      "workspace-foreground-light": {
+      "foreground-light": {
         "role": "neutral",
-        "displayName": "Workspace Foreground Light",
+        "displayName": "Foreground light",
+        "canonical": "#202724",
         "tonalRamp": [
-          "oklch(0.1500 0.01315 253.03)",
-          "oklch(0.2643 0.01315 253.03)",
-          "oklch(0.3786 0.01315 253.03)",
-          "oklch(0.4929 0.01315 253.03)",
-          "oklch(0.6071 0.01315 253.03)",
-          "oklch(0.7214 0.01315 253.03)",
-          "oklch(0.8357 0.01315 253.03)",
-          "oklch(0.9500 0.01315 253.03)"
+          "oklch(0.150 0.0114 167.73)",
+          "oklch(0.264 0.0114 167.73)",
+          "oklch(0.379 0.0114 167.73)",
+          "oklch(0.493 0.0114 167.73)",
+          "oklch(0.607 0.0114 167.73)",
+          "oklch(0.721 0.0114 167.73)",
+          "oklch(0.836 0.0114 167.73)",
+          "oklch(0.950 0.0114 167.73)"
         ]
       },
-      "workspace-surface-light": {
+      "surface-light": {
         "role": "neutral",
-        "displayName": "Workspace Surface Light",
+        "displayName": "Surface light",
+        "canonical": "#ffffff",
         "tonalRamp": [
-          "oklch(0.1500 0.00000 89.88)",
-          "oklch(0.2643 0.00000 89.88)",
-          "oklch(0.3786 0.00000 89.88)",
-          "oklch(0.4929 0.00000 89.88)",
-          "oklch(0.6071 0.00000 89.88)",
-          "oklch(0.7214 0.00000 89.88)",
-          "oklch(0.8357 0.00000 89.88)",
-          "oklch(0.9500 0.00000 89.88)"
+          "oklch(0.150 0.0000 0.00)",
+          "oklch(0.264 0.0000 0.00)",
+          "oklch(0.379 0.0000 0.00)",
+          "oklch(0.493 0.0000 0.00)",
+          "oklch(0.607 0.0000 0.00)",
+          "oklch(0.721 0.0000 0.00)",
+          "oklch(0.836 0.0000 0.00)",
+          "oklch(0.950 0.0000 0.00)"
         ]
       },
-      "workspace-surface-secondary-light": {
+      "secondary-light": {
         "role": "neutral",
-        "displayName": "Workspace Surface Secondary Light",
+        "displayName": "Secondary light",
+        "canonical": "#edf0ed",
         "tonalRamp": [
-          "oklch(0.1500 0.00344 247.86)",
-          "oklch(0.2643 0.00344 247.86)",
-          "oklch(0.3786 0.00344 247.86)",
-          "oklch(0.4929 0.00344 247.86)",
-          "oklch(0.6071 0.00344 247.86)",
-          "oklch(0.7214 0.00344 247.86)",
-          "oklch(0.8357 0.00344 247.86)",
-          "oklch(0.9500 0.00344 247.86)"
+          "oklch(0.150 0.0051 145.54)",
+          "oklch(0.264 0.0051 145.54)",
+          "oklch(0.379 0.0051 145.54)",
+          "oklch(0.493 0.0051 145.54)",
+          "oklch(0.607 0.0051 145.54)",
+          "oklch(0.721 0.0051 145.54)",
+          "oklch(0.836 0.0051 145.54)",
+          "oklch(0.950 0.0051 145.54)"
         ]
       },
-      "workspace-surface-tertiary-light": {
+      "tertiary-light": {
         "role": "neutral",
-        "displayName": "Workspace Surface Tertiary Light",
+        "displayName": "Tertiary light",
+        "canonical": "#e3e9e4",
         "tonalRamp": [
-          "oklch(0.1500 0.00630 255.48)",
-          "oklch(0.2643 0.00630 255.48)",
-          "oklch(0.3786 0.00630 255.48)",
-          "oklch(0.4929 0.00630 255.48)",
-          "oklch(0.6071 0.00630 255.48)",
-          "oklch(0.7214 0.00630 255.48)",
-          "oklch(0.8357 0.00630 255.48)",
-          "oklch(0.9500 0.00630 255.48)"
+          "oklch(0.150 0.0092 150.68)",
+          "oklch(0.264 0.0092 150.68)",
+          "oklch(0.379 0.0092 150.68)",
+          "oklch(0.493 0.0092 150.68)",
+          "oklch(0.607 0.0092 150.68)",
+          "oklch(0.721 0.0092 150.68)",
+          "oklch(0.836 0.0092 150.68)",
+          "oklch(0.950 0.0092 150.68)"
         ]
       },
-      "workspace-muted-light": {
+      "muted-light": {
         "role": "neutral",
-        "displayName": "Workspace Muted Light",
+        "displayName": "Muted light",
+        "canonical": "#65716a",
         "tonalRamp": [
-          "oklch(0.1500 0.01859 254.00)",
-          "oklch(0.2643 0.01859 254.00)",
-          "oklch(0.3786 0.01859 254.00)",
-          "oklch(0.4929 0.01859 254.00)",
-          "oklch(0.6071 0.01859 254.00)",
-          "oklch(0.7214 0.01859 254.00)",
-          "oklch(0.8357 0.01859 254.00)",
-          "oklch(0.9500 0.01859 254.00)"
+          "oklch(0.150 0.0180 160.20)",
+          "oklch(0.264 0.0180 160.20)",
+          "oklch(0.379 0.0180 160.20)",
+          "oklch(0.493 0.0180 160.20)",
+          "oklch(0.607 0.0180 160.20)",
+          "oklch(0.721 0.0180 160.20)",
+          "oklch(0.836 0.0180 160.20)",
+          "oklch(0.950 0.0180 160.20)"
         ]
       },
-      "workspace-divider-light": {
+      "divider-light": {
         "role": "neutral",
-        "displayName": "Workspace Divider Light",
+        "displayName": "Divider light",
+        "canonical": "#dce3dd",
         "tonalRamp": [
-          "oklch(0.1500 0.00983 252.82)",
-          "oklch(0.2643 0.00983 252.82)",
-          "oklch(0.3786 0.00983 252.82)",
-          "oklch(0.4929 0.00983 252.82)",
-          "oklch(0.6071 0.00983 252.82)",
-          "oklch(0.7214 0.00983 252.82)",
-          "oklch(0.8357 0.00983 252.82)",
-          "oklch(0.9500 0.00983 252.82)"
-        ]
-      },
-      "workspace-accent-light": {
-        "role": "primary",
-        "displayName": "Workspace Accent Light",
-        "tonalRamp": [
-          "oklch(0.1500 0.06518 161.58)",
-          "oklch(0.2643 0.06518 161.58)",
-          "oklch(0.3786 0.06518 161.58)",
-          "oklch(0.4929 0.06518 161.58)",
-          "oklch(0.6071 0.06518 161.58)",
-          "oklch(0.7214 0.06518 161.58)",
-          "oklch(0.8357 0.06518 161.58)",
-          "oklch(0.9500 0.06518 161.58)"
-        ]
-      },
-      "workspace-accent-foreground-light": {
-        "role": "neutral",
-        "displayName": "Workspace Accent Foreground Light",
-        "tonalRamp": [
-          "oklch(0.1500 0.00000 89.88)",
-          "oklch(0.2643 0.00000 89.88)",
-          "oklch(0.3786 0.00000 89.88)",
-          "oklch(0.4929 0.00000 89.88)",
-          "oklch(0.6071 0.00000 89.88)",
-          "oklch(0.7214 0.00000 89.88)",
-          "oklch(0.8357 0.00000 89.88)",
-          "oklch(0.9500 0.00000 89.88)"
-        ]
-      },
-      "workspace-background-dark": {
-        "role": "neutral",
-        "displayName": "Workspace Background Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.00902 255.61)",
-          "oklch(0.2643 0.00902 255.61)",
-          "oklch(0.3786 0.00902 255.61)",
-          "oklch(0.4929 0.00902 255.61)",
-          "oklch(0.6071 0.00902 255.61)",
-          "oklch(0.7214 0.00902 255.61)",
-          "oklch(0.8357 0.00902 255.61)",
-          "oklch(0.9500 0.00902 255.61)"
-        ]
-      },
-      "workspace-foreground-dark": {
-        "role": "neutral",
-        "displayName": "Workspace Foreground Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.00580 264.53)",
-          "oklch(0.2643 0.00580 264.53)",
-          "oklch(0.3786 0.00580 264.53)",
-          "oklch(0.4929 0.00580 264.53)",
-          "oklch(0.6071 0.00580 264.53)",
-          "oklch(0.7214 0.00580 264.53)",
-          "oklch(0.8357 0.00580 264.53)",
-          "oklch(0.9500 0.00580 264.53)"
-        ]
-      },
-      "workspace-surface-dark": {
-        "role": "neutral",
-        "displayName": "Workspace Surface Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.01252 258.37)",
-          "oklch(0.2643 0.01252 258.37)",
-          "oklch(0.3786 0.01252 258.37)",
-          "oklch(0.4929 0.01252 258.37)",
-          "oklch(0.6071 0.01252 258.37)",
-          "oklch(0.7214 0.01252 258.37)",
-          "oklch(0.8357 0.01252 258.37)",
-          "oklch(0.9500 0.01252 258.37)"
-        ]
-      },
-      "workspace-surface-secondary-dark": {
-        "role": "neutral",
-        "displayName": "Workspace Surface Secondary Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.01434 256.78)",
-          "oklch(0.2643 0.01434 256.78)",
-          "oklch(0.3786 0.01434 256.78)",
-          "oklch(0.4929 0.01434 256.78)",
-          "oklch(0.6071 0.01434 256.78)",
-          "oklch(0.7214 0.01434 256.78)",
-          "oklch(0.8357 0.01434 256.78)",
-          "oklch(0.9500 0.01434 256.78)"
-        ]
-      },
-      "workspace-surface-tertiary-dark": {
-        "role": "neutral",
-        "displayName": "Workspace Surface Tertiary Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.01816 254.76)",
-          "oklch(0.2643 0.01816 254.76)",
-          "oklch(0.3786 0.01816 254.76)",
-          "oklch(0.4929 0.01816 254.76)",
-          "oklch(0.6071 0.01816 254.76)",
-          "oklch(0.7214 0.01816 254.76)",
-          "oklch(0.8357 0.01816 254.76)",
-          "oklch(0.9500 0.01816 254.76)"
-        ]
-      },
-      "workspace-muted-dark": {
-        "role": "neutral",
-        "displayName": "Workspace Muted Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.01991 255.56)",
-          "oklch(0.2643 0.01991 255.56)",
-          "oklch(0.3786 0.01991 255.56)",
-          "oklch(0.4929 0.01991 255.56)",
-          "oklch(0.6071 0.01991 255.56)",
-          "oklch(0.7214 0.01991 255.56)",
-          "oklch(0.8357 0.01991 255.56)",
-          "oklch(0.9500 0.01991 255.56)"
-        ]
-      },
-      "workspace-divider-dark": {
-        "role": "neutral",
-        "displayName": "Workspace Divider Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.01984 254.06)",
-          "oklch(0.2643 0.01984 254.06)",
-          "oklch(0.3786 0.01984 254.06)",
-          "oklch(0.4929 0.01984 254.06)",
-          "oklch(0.6071 0.01984 254.06)",
-          "oklch(0.7214 0.01984 254.06)",
-          "oklch(0.8357 0.01984 254.06)",
-          "oklch(0.9500 0.01984 254.06)"
-        ]
-      },
-      "workspace-accent-dark": {
-        "role": "primary",
-        "displayName": "Workspace Accent Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.05457 156.80)",
-          "oklch(0.2643 0.05457 156.80)",
-          "oklch(0.3786 0.05457 156.80)",
-          "oklch(0.4929 0.05457 156.80)",
-          "oklch(0.6071 0.05457 156.80)",
-          "oklch(0.7214 0.05457 156.80)",
-          "oklch(0.8357 0.05457 156.80)",
-          "oklch(0.9500 0.05457 156.80)"
-        ]
-      },
-      "workspace-accent-foreground-dark": {
-        "role": "neutral",
-        "displayName": "Workspace Accent Foreground Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.02668 157.50)",
-          "oklch(0.2643 0.02668 157.50)",
-          "oklch(0.3786 0.02668 157.50)",
-          "oklch(0.4929 0.02668 157.50)",
-          "oklch(0.6071 0.02668 157.50)",
-          "oklch(0.7214 0.02668 157.50)",
-          "oklch(0.8357 0.02668 157.50)",
-          "oklch(0.9500 0.02668 157.50)"
-        ]
-      },
-      "retained-background-light": {
-        "role": "neutral",
-        "displayName": "Retained Background Light",
-        "tonalRamp": [
-          "oklch(0.1500 0.00800 80.00)",
-          "oklch(0.2643 0.00800 80.00)",
-          "oklch(0.3786 0.00800 80.00)",
-          "oklch(0.4929 0.00800 80.00)",
-          "oklch(0.6071 0.00800 80.00)",
-          "oklch(0.7214 0.00800 80.00)",
-          "oklch(0.8357 0.00800 80.00)",
-          "oklch(0.9500 0.00800 80.00)"
-        ]
-      },
-      "retained-foreground-light": {
-        "role": "neutral",
-        "displayName": "Retained Foreground Light",
-        "tonalRamp": [
-          "oklch(0.1500 0.01200 65.00)",
-          "oklch(0.2643 0.01200 65.00)",
-          "oklch(0.3786 0.01200 65.00)",
-          "oklch(0.4929 0.01200 65.00)",
-          "oklch(0.6071 0.01200 65.00)",
-          "oklch(0.7214 0.01200 65.00)",
-          "oklch(0.8357 0.01200 65.00)",
-          "oklch(0.9500 0.01200 65.00)"
-        ]
-      },
-      "retained-surface-light": {
-        "role": "neutral",
-        "displayName": "Retained Surface Light",
-        "tonalRamp": [
-          "oklch(0.1500 0.00400 80.00)",
-          "oklch(0.2643 0.00400 80.00)",
-          "oklch(0.3786 0.00400 80.00)",
-          "oklch(0.4929 0.00400 80.00)",
-          "oklch(0.6071 0.00400 80.00)",
-          "oklch(0.7214 0.00400 80.00)",
-          "oklch(0.8357 0.00400 80.00)",
-          "oklch(0.9500 0.00400 80.00)"
-        ]
-      },
-      "retained-surface-secondary-light": {
-        "role": "neutral",
-        "displayName": "Retained Surface Secondary Light",
-        "tonalRamp": [
-          "oklch(0.1500 0.00900 78.00)",
-          "oklch(0.2643 0.00900 78.00)",
-          "oklch(0.3786 0.00900 78.00)",
-          "oklch(0.4929 0.00900 78.00)",
-          "oklch(0.6071 0.00900 78.00)",
-          "oklch(0.7214 0.00900 78.00)",
-          "oklch(0.8357 0.00900 78.00)",
-          "oklch(0.9500 0.00900 78.00)"
-        ]
-      },
-      "retained-surface-tertiary-light": {
-        "role": "neutral",
-        "displayName": "Retained Surface Tertiary Light",
-        "tonalRamp": [
-          "oklch(0.1500 0.01200 76.00)",
-          "oklch(0.2643 0.01200 76.00)",
-          "oklch(0.3786 0.01200 76.00)",
-          "oklch(0.4929 0.01200 76.00)",
-          "oklch(0.6071 0.01200 76.00)",
-          "oklch(0.7214 0.01200 76.00)",
-          "oklch(0.8357 0.01200 76.00)",
-          "oklch(0.9500 0.01200 76.00)"
-        ]
-      },
-      "retained-muted-light": {
-        "role": "neutral",
-        "displayName": "Retained Muted Light",
-        "tonalRamp": [
-          "oklch(0.1500 0.01800 65.00)",
-          "oklch(0.2643 0.01800 65.00)",
-          "oklch(0.3786 0.01800 65.00)",
-          "oklch(0.4929 0.01800 65.00)",
-          "oklch(0.6071 0.01800 65.00)",
-          "oklch(0.7214 0.01800 65.00)",
-          "oklch(0.8357 0.01800 65.00)",
-          "oklch(0.9500 0.01800 65.00)"
-        ]
-      },
-      "retained-divider-light": {
-        "role": "neutral",
-        "displayName": "Retained Divider Light",
-        "tonalRamp": [
-          "oklch(0.1500 0.01400 72.00)",
-          "oklch(0.2643 0.01400 72.00)",
-          "oklch(0.3786 0.01400 72.00)",
-          "oklch(0.4929 0.01400 72.00)",
-          "oklch(0.6071 0.01400 72.00)",
-          "oklch(0.7214 0.01400 72.00)",
-          "oklch(0.8357 0.01400 72.00)",
-          "oklch(0.9500 0.01400 72.00)"
-        ]
-      },
-      "retained-accent-light": {
-        "role": "primary",
-        "displayName": "Retained Accent Light",
-        "tonalRamp": [
-          "oklch(0.1500 0.11000 155.00)",
-          "oklch(0.2643 0.11000 155.00)",
-          "oklch(0.3786 0.11000 155.00)",
-          "oklch(0.4929 0.11000 155.00)",
-          "oklch(0.6071 0.11000 155.00)",
-          "oklch(0.7214 0.11000 155.00)",
-          "oklch(0.8357 0.11000 155.00)",
-          "oklch(0.9500 0.11000 155.00)"
-        ]
-      },
-      "retained-accent-foreground-light": {
-        "role": "neutral",
-        "displayName": "Retained Accent Foreground Light",
-        "tonalRamp": [
-          "oklch(0.1500 0.00400 80.00)",
-          "oklch(0.2643 0.00400 80.00)",
-          "oklch(0.3786 0.00400 80.00)",
-          "oklch(0.4929 0.00400 80.00)",
-          "oklch(0.6071 0.00400 80.00)",
-          "oklch(0.7214 0.00400 80.00)",
-          "oklch(0.8357 0.00400 80.00)",
-          "oklch(0.9500 0.00400 80.00)"
-        ]
-      },
-      "retained-danger-light": {
-        "role": "neutral",
-        "displayName": "Retained Danger Light",
-        "tonalRamp": [
-          "oklch(0.1500 0.19000 28.00)",
-          "oklch(0.2643 0.19000 28.00)",
-          "oklch(0.3786 0.19000 28.00)",
-          "oklch(0.4929 0.19000 28.00)",
-          "oklch(0.6071 0.19000 28.00)",
-          "oklch(0.7214 0.19000 28.00)",
-          "oklch(0.8357 0.19000 28.00)",
-          "oklch(0.9500 0.19000 28.00)"
-        ]
-      },
-      "retained-background-dark": {
-        "role": "neutral",
-        "displayName": "Retained Background Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.01200 70.00)",
-          "oklch(0.2643 0.01200 70.00)",
-          "oklch(0.3786 0.01200 70.00)",
-          "oklch(0.4929 0.01200 70.00)",
-          "oklch(0.6071 0.01200 70.00)",
-          "oklch(0.7214 0.01200 70.00)",
-          "oklch(0.8357 0.01200 70.00)",
-          "oklch(0.9500 0.01200 70.00)"
-        ]
-      },
-      "retained-foreground-dark": {
-        "role": "neutral",
-        "displayName": "Retained Foreground Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.00800 80.00)",
-          "oklch(0.2643 0.00800 80.00)",
-          "oklch(0.3786 0.00800 80.00)",
-          "oklch(0.4929 0.00800 80.00)",
-          "oklch(0.6071 0.00800 80.00)",
-          "oklch(0.7214 0.00800 80.00)",
-          "oklch(0.8357 0.00800 80.00)",
-          "oklch(0.9500 0.00800 80.00)"
-        ]
-      },
-      "retained-surface-dark": {
-        "role": "neutral",
-        "displayName": "Retained Surface Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.01200 70.00)",
-          "oklch(0.2643 0.01200 70.00)",
-          "oklch(0.3786 0.01200 70.00)",
-          "oklch(0.4929 0.01200 70.00)",
-          "oklch(0.6071 0.01200 70.00)",
-          "oklch(0.7214 0.01200 70.00)",
-          "oklch(0.8357 0.01200 70.00)",
-          "oklch(0.9500 0.01200 70.00)"
-        ]
-      },
-      "retained-surface-secondary-dark": {
-        "role": "neutral",
-        "displayName": "Retained Surface Secondary Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.01300 70.00)",
-          "oklch(0.2643 0.01300 70.00)",
-          "oklch(0.3786 0.01300 70.00)",
-          "oklch(0.4929 0.01300 70.00)",
-          "oklch(0.6071 0.01300 70.00)",
-          "oklch(0.7214 0.01300 70.00)",
-          "oklch(0.8357 0.01300 70.00)",
-          "oklch(0.9500 0.01300 70.00)"
-        ]
-      },
-      "retained-surface-tertiary-dark": {
-        "role": "neutral",
-        "displayName": "Retained Surface Tertiary Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.01400 70.00)",
-          "oklch(0.2643 0.01400 70.00)",
-          "oklch(0.3786 0.01400 70.00)",
-          "oklch(0.4929 0.01400 70.00)",
-          "oklch(0.6071 0.01400 70.00)",
-          "oklch(0.7214 0.01400 70.00)",
-          "oklch(0.8357 0.01400 70.00)",
-          "oklch(0.9500 0.01400 70.00)"
-        ]
-      },
-      "retained-muted-dark": {
-        "role": "neutral",
-        "displayName": "Retained Muted Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.01500 75.00)",
-          "oklch(0.2643 0.01500 75.00)",
-          "oklch(0.3786 0.01500 75.00)",
-          "oklch(0.4929 0.01500 75.00)",
-          "oklch(0.6071 0.01500 75.00)",
-          "oklch(0.7214 0.01500 75.00)",
-          "oklch(0.8357 0.01500 75.00)",
-          "oklch(0.9500 0.01500 75.00)"
-        ]
-      },
-      "retained-divider-dark": {
-        "role": "neutral",
-        "displayName": "Retained Divider Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.01400 70.00)",
-          "oklch(0.2643 0.01400 70.00)",
-          "oklch(0.3786 0.01400 70.00)",
-          "oklch(0.4929 0.01400 70.00)",
-          "oklch(0.6071 0.01400 70.00)",
-          "oklch(0.7214 0.01400 70.00)",
-          "oklch(0.8357 0.01400 70.00)",
-          "oklch(0.9500 0.01400 70.00)"
-        ]
-      },
-      "retained-accent-dark": {
-        "role": "primary",
-        "displayName": "Retained Accent Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.11000 155.00)",
-          "oklch(0.2643 0.11000 155.00)",
-          "oklch(0.3786 0.11000 155.00)",
-          "oklch(0.4929 0.11000 155.00)",
-          "oklch(0.6071 0.11000 155.00)",
-          "oklch(0.7214 0.11000 155.00)",
-          "oklch(0.8357 0.11000 155.00)",
-          "oklch(0.9500 0.11000 155.00)"
-        ]
-      },
-      "retained-accent-foreground-dark": {
-        "role": "neutral",
-        "displayName": "Retained Accent Foreground Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.01200 70.00)",
-          "oklch(0.2643 0.01200 70.00)",
-          "oklch(0.3786 0.01200 70.00)",
-          "oklch(0.4929 0.01200 70.00)",
-          "oklch(0.6071 0.01200 70.00)",
-          "oklch(0.7214 0.01200 70.00)",
-          "oklch(0.8357 0.01200 70.00)",
-          "oklch(0.9500 0.01200 70.00)"
-        ]
-      },
-      "retained-danger-dark": {
-        "role": "neutral",
-        "displayName": "Retained Danger Dark",
-        "tonalRamp": [
-          "oklch(0.1500 0.16000 28.00)",
-          "oklch(0.2643 0.16000 28.00)",
-          "oklch(0.3786 0.16000 28.00)",
-          "oklch(0.4929 0.16000 28.00)",
-          "oklch(0.6071 0.16000 28.00)",
-          "oklch(0.7214 0.16000 28.00)",
-          "oklch(0.8357 0.16000 28.00)",
-          "oklch(0.9500 0.16000 28.00)"
+          "oklch(0.150 0.0110 149.85)",
+          "oklch(0.264 0.0110 149.85)",
+          "oklch(0.379 0.0110 149.85)",
+          "oklch(0.493 0.0110 149.85)",
+          "oklch(0.607 0.0110 149.85)",
+          "oklch(0.721 0.0110 149.85)",
+          "oklch(0.836 0.0110 149.85)",
+          "oklch(0.950 0.0110 149.85)"
         ]
       },
       "graph-edge-light": {
         "role": "neutral",
-        "displayName": "Graph Edge Light",
+        "displayName": "Graph edge light",
+        "canonical": "#7b8a80",
         "tonalRamp": [
-          "oklch(0.1500 0.01991 255.56)",
-          "oklch(0.2643 0.01991 255.56)",
-          "oklch(0.3786 0.01991 255.56)",
-          "oklch(0.4929 0.01991 255.56)",
-          "oklch(0.6071 0.01991 255.56)",
-          "oklch(0.7214 0.01991 255.56)",
-          "oklch(0.8357 0.01991 255.56)",
-          "oklch(0.9500 0.01991 255.56)"
+          "oklch(0.150 0.0229 156.49)",
+          "oklch(0.264 0.0229 156.49)",
+          "oklch(0.379 0.0229 156.49)",
+          "oklch(0.493 0.0229 156.49)",
+          "oklch(0.607 0.0229 156.49)",
+          "oklch(0.721 0.0229 156.49)",
+          "oklch(0.836 0.0229 156.49)",
+          "oklch(0.950 0.0229 156.49)"
+        ]
+      },
+      "accent-light": {
+        "role": "primary",
+        "displayName": "Accent light",
+        "canonical": "#32654b",
+        "tonalRamp": [
+          "oklch(0.150 0.0702 159.69)",
+          "oklch(0.264 0.0702 159.69)",
+          "oklch(0.379 0.0702 159.69)",
+          "oklch(0.493 0.0702 159.69)",
+          "oklch(0.607 0.0702 159.69)",
+          "oklch(0.721 0.0702 159.69)",
+          "oklch(0.836 0.0702 159.69)",
+          "oklch(0.950 0.0702 159.69)"
+        ]
+      },
+      "accent-foreground-light": {
+        "role": "primary",
+        "displayName": "Accent foreground light",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(0.150 0.0000 0.00)",
+          "oklch(0.264 0.0000 0.00)",
+          "oklch(0.379 0.0000 0.00)",
+          "oklch(0.493 0.0000 0.00)",
+          "oklch(0.607 0.0000 0.00)",
+          "oklch(0.721 0.0000 0.00)",
+          "oklch(0.836 0.0000 0.00)",
+          "oklch(0.950 0.0000 0.00)"
+        ]
+      },
+      "background-dark": {
+        "role": "neutral",
+        "displayName": "Background dark",
+        "canonical": "#151a17",
+        "tonalRamp": [
+          "oklch(0.150 0.0096 159.15)",
+          "oklch(0.264 0.0096 159.15)",
+          "oklch(0.379 0.0096 159.15)",
+          "oklch(0.493 0.0096 159.15)",
+          "oklch(0.607 0.0096 159.15)",
+          "oklch(0.721 0.0096 159.15)",
+          "oklch(0.836 0.0096 159.15)",
+          "oklch(0.950 0.0096 159.15)"
+        ]
+      },
+      "foreground-dark": {
+        "role": "neutral",
+        "displayName": "Foreground dark",
+        "canonical": "#edf2ee",
+        "tonalRamp": [
+          "oklch(0.150 0.0075 151.89)",
+          "oklch(0.264 0.0075 151.89)",
+          "oklch(0.379 0.0075 151.89)",
+          "oklch(0.493 0.0075 151.89)",
+          "oklch(0.607 0.0075 151.89)",
+          "oklch(0.721 0.0075 151.89)",
+          "oklch(0.836 0.0075 151.89)",
+          "oklch(0.950 0.0075 151.89)"
+        ]
+      },
+      "surface-dark": {
+        "role": "neutral",
+        "displayName": "Surface dark",
+        "canonical": "#202823",
+        "tonalRamp": [
+          "oklch(0.150 0.0146 157.83)",
+          "oklch(0.264 0.0146 157.83)",
+          "oklch(0.379 0.0146 157.83)",
+          "oklch(0.493 0.0146 157.83)",
+          "oklch(0.607 0.0146 157.83)",
+          "oklch(0.721 0.0146 157.83)",
+          "oklch(0.836 0.0146 157.83)",
+          "oklch(0.950 0.0146 157.83)"
+        ]
+      },
+      "secondary-dark": {
+        "role": "neutral",
+        "displayName": "Secondary dark",
+        "canonical": "#29332c",
+        "tonalRamp": [
+          "oklch(0.150 0.0184 154.68)",
+          "oklch(0.264 0.0184 154.68)",
+          "oklch(0.379 0.0184 154.68)",
+          "oklch(0.493 0.0184 154.68)",
+          "oklch(0.607 0.0184 154.68)",
+          "oklch(0.721 0.0184 154.68)",
+          "oklch(0.836 0.0184 154.68)",
+          "oklch(0.950 0.0184 154.68)"
+        ]
+      },
+      "tertiary-dark": {
+        "role": "neutral",
+        "displayName": "Tertiary dark",
+        "canonical": "#344237",
+        "tonalRamp": [
+          "oklch(0.150 0.0261 151.35)",
+          "oklch(0.264 0.0261 151.35)",
+          "oklch(0.379 0.0261 151.35)",
+          "oklch(0.493 0.0261 151.35)",
+          "oklch(0.607 0.0261 151.35)",
+          "oklch(0.721 0.0261 151.35)",
+          "oklch(0.836 0.0261 151.35)",
+          "oklch(0.950 0.0261 151.35)"
+        ]
+      },
+      "muted-dark": {
+        "role": "neutral",
+        "displayName": "Muted dark",
+        "canonical": "#a5b3a9",
+        "tonalRamp": [
+          "oklch(0.150 0.0210 154.76)",
+          "oklch(0.264 0.0210 154.76)",
+          "oklch(0.379 0.0210 154.76)",
+          "oklch(0.493 0.0210 154.76)",
+          "oklch(0.607 0.0210 154.76)",
+          "oklch(0.721 0.0210 154.76)",
+          "oklch(0.836 0.0210 154.76)",
+          "oklch(0.950 0.0210 154.76)"
+        ]
+      },
+      "divider-dark": {
+        "role": "neutral",
+        "displayName": "Divider dark",
+        "canonical": "#37473c",
+        "tonalRamp": [
+          "oklch(0.150 0.0277 154.87)",
+          "oklch(0.264 0.0277 154.87)",
+          "oklch(0.379 0.0277 154.87)",
+          "oklch(0.493 0.0277 154.87)",
+          "oklch(0.607 0.0277 154.87)",
+          "oklch(0.721 0.0277 154.87)",
+          "oklch(0.836 0.0277 154.87)",
+          "oklch(0.950 0.0277 154.87)"
         ]
       },
       "graph-edge-dark": {
         "role": "neutral",
-        "displayName": "Graph Edge Dark",
+        "displayName": "Graph edge dark",
+        "canonical": "#73857a",
         "tonalRamp": [
-          "oklch(0.1500 0.02619 254.52)",
-          "oklch(0.2643 0.02619 254.52)",
-          "oklch(0.3786 0.02619 254.52)",
-          "oklch(0.4929 0.02619 254.52)",
-          "oklch(0.6071 0.02619 254.52)",
-          "oklch(0.7214 0.02619 254.52)",
-          "oklch(0.8357 0.02619 254.52)",
-          "oklch(0.9500 0.02619 254.52)"
+          "oklch(0.150 0.0267 158.68)",
+          "oklch(0.264 0.0267 158.68)",
+          "oklch(0.379 0.0267 158.68)",
+          "oklch(0.493 0.0267 158.68)",
+          "oklch(0.607 0.0267 158.68)",
+          "oklch(0.721 0.0267 158.68)",
+          "oklch(0.836 0.0267 158.68)",
+          "oklch(0.950 0.0267 158.68)"
+        ]
+      },
+      "accent-dark": {
+        "role": "primary",
+        "displayName": "Accent dark",
+        "canonical": "#afd4b6",
+        "tonalRamp": [
+          "oklch(0.150 0.0571 150.57)",
+          "oklch(0.264 0.0571 150.57)",
+          "oklch(0.379 0.0571 150.57)",
+          "oklch(0.493 0.0571 150.57)",
+          "oklch(0.607 0.0571 150.57)",
+          "oklch(0.721 0.0571 150.57)",
+          "oklch(0.836 0.0571 150.57)",
+          "oklch(0.950 0.0571 150.57)"
+        ]
+      },
+      "accent-foreground-dark": {
+        "role": "primary",
+        "displayName": "Accent foreground dark",
+        "canonical": "#151a17",
+        "tonalRamp": [
+          "oklch(0.150 0.0096 159.15)",
+          "oklch(0.264 0.0096 159.15)",
+          "oklch(0.379 0.0096 159.15)",
+          "oklch(0.493 0.0096 159.15)",
+          "oklch(0.607 0.0096 159.15)",
+          "oklch(0.721 0.0096 159.15)",
+          "oklch(0.836 0.0096 159.15)",
+          "oklch(0.950 0.0096 159.15)"
+        ]
+      },
+      "offline-accent-foreground-dark": {
+        "role": "primary",
+        "displayName": "Offline accent foreground dark",
+        "canonical": "#183321",
+        "tonalRamp": [
+          "oklch(0.150 0.0469 153.35)",
+          "oklch(0.264 0.0469 153.35)",
+          "oklch(0.379 0.0469 153.35)",
+          "oklch(0.493 0.0469 153.35)",
+          "oklch(0.607 0.0469 153.35)",
+          "oklch(0.721 0.0469 153.35)",
+          "oklch(0.836 0.0469 153.35)",
+          "oklch(0.950 0.0469 153.35)"
+        ]
+      },
+      "danger-light": {
+        "role": "tertiary",
+        "displayName": "Danger light",
+        "canonical": "oklch(0.55 0.19 28)",
+        "tonalRamp": [
+          "oklch(0.150 0.1900 28.00)",
+          "oklch(0.264 0.1900 28.00)",
+          "oklch(0.379 0.1900 28.00)",
+          "oklch(0.493 0.1900 28.00)",
+          "oklch(0.607 0.1900 28.00)",
+          "oklch(0.721 0.1900 28.00)",
+          "oklch(0.836 0.1900 28.00)",
+          "oklch(0.950 0.1900 28.00)"
+        ]
+      },
+      "danger-dark": {
+        "role": "tertiary",
+        "displayName": "Danger dark",
+        "canonical": "oklch(0.7 0.16 28)",
+        "tonalRamp": [
+          "oklch(0.150 0.1600 28.00)",
+          "oklch(0.264 0.1600 28.00)",
+          "oklch(0.379 0.1600 28.00)",
+          "oklch(0.493 0.1600 28.00)",
+          "oklch(0.607 0.1600 28.00)",
+          "oklch(0.721 0.1600 28.00)",
+          "oklch(0.836 0.1600 28.00)",
+          "oklch(0.950 0.1600 28.00)"
+        ]
+      },
+      "chart-forest-light": {
+        "role": "secondary",
+        "displayName": "Chart forest light",
+        "canonical": "oklch(0.56 0.12 155)",
+        "tonalRamp": [
+          "oklch(0.150 0.1200 155.00)",
+          "oklch(0.264 0.1200 155.00)",
+          "oklch(0.379 0.1200 155.00)",
+          "oklch(0.493 0.1200 155.00)",
+          "oklch(0.607 0.1200 155.00)",
+          "oklch(0.721 0.1200 155.00)",
+          "oklch(0.836 0.1200 155.00)",
+          "oklch(0.950 0.1200 155.00)"
+        ]
+      },
+      "chart-amber-light": {
+        "role": "secondary",
+        "displayName": "Chart amber light",
+        "canonical": "oklch(0.62 0.12 70)",
+        "tonalRamp": [
+          "oklch(0.150 0.1200 70.00)",
+          "oklch(0.264 0.1200 70.00)",
+          "oklch(0.379 0.1200 70.00)",
+          "oklch(0.493 0.1200 70.00)",
+          "oklch(0.607 0.1200 70.00)",
+          "oklch(0.721 0.1200 70.00)",
+          "oklch(0.836 0.1200 70.00)",
+          "oklch(0.950 0.1200 70.00)"
+        ]
+      },
+      "chart-ocean-light": {
+        "role": "secondary",
+        "displayName": "Chart ocean light",
+        "canonical": "oklch(0.57 0.12 235)",
+        "tonalRamp": [
+          "oklch(0.150 0.1200 235.00)",
+          "oklch(0.264 0.1200 235.00)",
+          "oklch(0.379 0.1200 235.00)",
+          "oklch(0.493 0.1200 235.00)",
+          "oklch(0.607 0.1200 235.00)",
+          "oklch(0.721 0.1200 235.00)",
+          "oklch(0.836 0.1200 235.00)",
+          "oklch(0.950 0.1200 235.00)"
+        ]
+      },
+      "chart-coral-light": {
+        "role": "secondary",
+        "displayName": "Chart coral light",
+        "canonical": "oklch(0.61 0.13 25)",
+        "tonalRamp": [
+          "oklch(0.150 0.1300 25.00)",
+          "oklch(0.264 0.1300 25.00)",
+          "oklch(0.379 0.1300 25.00)",
+          "oklch(0.493 0.1300 25.00)",
+          "oklch(0.607 0.1300 25.00)",
+          "oklch(0.721 0.1300 25.00)",
+          "oklch(0.836 0.1300 25.00)",
+          "oklch(0.950 0.1300 25.00)"
+        ]
+      },
+      "chart-iris-light": {
+        "role": "secondary",
+        "displayName": "Chart iris light",
+        "canonical": "oklch(0.55 0.1 315)",
+        "tonalRamp": [
+          "oklch(0.150 0.1000 315.00)",
+          "oklch(0.264 0.1000 315.00)",
+          "oklch(0.379 0.1000 315.00)",
+          "oklch(0.493 0.1000 315.00)",
+          "oklch(0.607 0.1000 315.00)",
+          "oklch(0.721 0.1000 315.00)",
+          "oklch(0.836 0.1000 315.00)",
+          "oklch(0.950 0.1000 315.00)"
+        ]
+      },
+      "chart-forest-dark": {
+        "role": "secondary",
+        "displayName": "Chart forest dark",
+        "canonical": "oklch(0.74 0.11 155)",
+        "tonalRamp": [
+          "oklch(0.150 0.1100 155.00)",
+          "oklch(0.264 0.1100 155.00)",
+          "oklch(0.379 0.1100 155.00)",
+          "oklch(0.493 0.1100 155.00)",
+          "oklch(0.607 0.1100 155.00)",
+          "oklch(0.721 0.1100 155.00)",
+          "oklch(0.836 0.1100 155.00)",
+          "oklch(0.950 0.1100 155.00)"
+        ]
+      },
+      "chart-amber-dark": {
+        "role": "secondary",
+        "displayName": "Chart amber dark",
+        "canonical": "oklch(0.78 0.11 75)",
+        "tonalRamp": [
+          "oklch(0.150 0.1100 75.00)",
+          "oklch(0.264 0.1100 75.00)",
+          "oklch(0.379 0.1100 75.00)",
+          "oklch(0.493 0.1100 75.00)",
+          "oklch(0.607 0.1100 75.00)",
+          "oklch(0.721 0.1100 75.00)",
+          "oklch(0.836 0.1100 75.00)",
+          "oklch(0.950 0.1100 75.00)"
+        ]
+      },
+      "chart-ocean-dark": {
+        "role": "secondary",
+        "displayName": "Chart ocean dark",
+        "canonical": "oklch(0.74 0.1 235)",
+        "tonalRamp": [
+          "oklch(0.150 0.1000 235.00)",
+          "oklch(0.264 0.1000 235.00)",
+          "oklch(0.379 0.1000 235.00)",
+          "oklch(0.493 0.1000 235.00)",
+          "oklch(0.607 0.1000 235.00)",
+          "oklch(0.721 0.1000 235.00)",
+          "oklch(0.836 0.1000 235.00)",
+          "oklch(0.950 0.1000 235.00)"
+        ]
+      },
+      "chart-coral-dark": {
+        "role": "secondary",
+        "displayName": "Chart coral dark",
+        "canonical": "oklch(0.73 0.12 30)",
+        "tonalRamp": [
+          "oklch(0.150 0.1200 30.00)",
+          "oklch(0.264 0.1200 30.00)",
+          "oklch(0.379 0.1200 30.00)",
+          "oklch(0.493 0.1200 30.00)",
+          "oklch(0.607 0.1200 30.00)",
+          "oklch(0.721 0.1200 30.00)",
+          "oklch(0.836 0.1200 30.00)",
+          "oklch(0.950 0.1200 30.00)"
+        ]
+      },
+      "chart-iris-dark": {
+        "role": "secondary",
+        "displayName": "Chart iris dark",
+        "canonical": "oklch(0.72 0.1 315)",
+        "tonalRamp": [
+          "oklch(0.150 0.1000 315.00)",
+          "oklch(0.264 0.1000 315.00)",
+          "oklch(0.379 0.1000 315.00)",
+          "oklch(0.493 0.1000 315.00)",
+          "oklch(0.607 0.1000 315.00)",
+          "oklch(0.721 0.1000 315.00)",
+          "oklch(0.836 0.1000 315.00)",
+          "oklch(0.950 0.1000 315.00)"
         ]
       }
     },
     "typographyMeta": {
-      "workspace-title": {
-        "displayName": "Workspace Title",
-        "purpose": "Application brand and inspector headings."
+      "title": {
+        "displayName": "Workspace title",
+        "purpose": "Desktop workspace heading; 28px on phones"
       },
-      "node-title": {
-        "displayName": "Node Title",
-        "purpose": "Readable two-line task summary."
-      },
-      "node-meta": {
-        "displayName": "Node Meta",
-        "purpose": "Owner, state and optional reviewer."
+      "page-headline": {
+        "displayName": "Page headline",
+        "purpose": "Fluid secondary-page heading"
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Workspace controls and ordinary content."
+        "purpose": "Interface copy and readable detail content"
       },
-      "page-title": {
-        "displayName": "Page Title",
-        "purpose": "Retained Connections/API page headings."
+      "metadata": {
+        "displayName": "Metadata",
+        "purpose": "Compact context, labels and counts"
       },
-      "statistics-title": {
-        "displayName": "Statistics Title",
-        "purpose": "Retained responsive Statistics heading."
+      "node-title": {
+        "displayName": "Task title",
+        "purpose": "Two-line task titles at native graph scale"
       },
-      "statistics-value": {
-        "displayName": "Statistics Value",
-        "purpose": "Exact KPI value sized against its widget."
+      "metric": {
+        "displayName": "Metric",
+        "purpose": "Tabular KPI values sized against their container"
       },
-      "mono": {
-        "displayName": "Mono",
-        "purpose": "Technical examples; statistics count uses the same face at 11px."
+      "avatar": {
+        "displayName": "Avatar",
+        "purpose": "Graph-node initials only"
+      },
+      "fineprint": {
+        "displayName": "Fineprint",
+        "purpose": "Compact node states, counts, inspector timestamps and footer context"
+      },
+      "chart-metadata": {
+        "displayName": "Chart metadata",
+        "purpose": "Chart labels and shares using the source rem spelling"
+      },
+      "wordmark": {
+        "displayName": "Wordmark",
+        "purpose": "Desktop workspace wordmark"
+      },
+      "wordmark-compact": {
+        "displayName": "Wordmark compact",
+        "purpose": "Compact navigation wordmark below the rail breakpoint"
+      },
+      "wordmark-phone": {
+        "displayName": "Wordmark phone",
+        "purpose": "Phone navigation wordmark"
+      },
+      "title-mobile": {
+        "displayName": "Title mobile",
+        "purpose": "Phone task workspace heading"
+      },
+      "utility-headline": {
+        "displayName": "Utility headline",
+        "purpose": "API access, API documentation and skill page headings"
+      },
+      "offline-headline": {
+        "displayName": "Offline headline",
+        "purpose": "Self-contained offline headline with an available system face"
+      },
+      "connections-headline": {
+        "displayName": "Connections headline",
+        "purpose": "Connections heading from 640px"
+      },
+      "metric-wide": {
+        "displayName": "Metric wide",
+        "purpose": "Wide and Full KPI values from the statistics desktop breakpoint"
+      },
+      "metric-empty": {
+        "displayName": "Metric empty",
+        "purpose": "Wrapped empty KPI text with a smaller maximum and 12ch measure"
       }
     },
     "shadows": [
       {
+        "name": "workspace",
+        "value": "0 2px 16px color-mix(in oklab, var(--foreground) 3%, transparent)",
+        "purpose": "Inset main workspace"
+      },
+      {
+        "name": "navigation-active",
+        "value": "0 2px 8px color-mix(in oklab, var(--foreground) 3%, transparent)",
+        "purpose": "Active desktop navigation surface"
+      },
+      {
         "name": "node-rest",
-        "value": "0 3px 12px #1a25340a, 0 1px 3px #1a253408",
-        "purpose": "Opaque workspace nodes."
+        "value": "0 2px 3px color-mix(in oklab, var(--foreground) 3%, transparent), 0 8px 24px color-mix(in oklab, var(--foreground) 6%, transparent)",
+        "purpose": "Task nodes at rest"
       },
       {
         "name": "node-hover",
-        "value": "0 5px 18px #1a253410",
-        "purpose": "Node pointer feedback."
+        "value": "0 3px 5px color-mix(in oklab, var(--foreground) 4%, transparent), 0 12px 28px color-mix(in oklab, var(--foreground) 10%, transparent)",
+        "purpose": "Pointer feedback for task nodes"
       },
       {
         "name": "camera-tray",
-        "value": "0 3px 15px #1a25340b",
-        "purpose": "Canvas controls."
+        "value": "0 6px 28px color-mix(in oklab, var(--foreground) 10%, transparent)",
+        "purpose": "Map camera controls"
       },
       {
         "name": "inspector",
-        "value": "-5px 0 30px #1a253408",
-        "purpose": "Nonmodal right inspector."
+        "value": "-8px 8px 36px color-mix(in oklab, var(--foreground) 7%, transparent)",
+        "purpose": "Nonmodal right inspector"
       },
       {
-        "name": "retained-glass",
-        "value": "inset 0 1px 0 var(--glass-light), inset 1px 0 0 color-mix(in oklab, var(--glass-light) 35%, transparent), 0 8px 32px var(--glass-shadow)",
-        "purpose": "Statistics only; solid fallback and reduced-transparency variant."
+        "name": "inspector-phone",
+        "value": "0 -12px 48px color-mix(in oklab, var(--foreground) 12%, transparent)",
+        "purpose": "Phone bottom inspector"
+      },
+      {
+        "name": "statistics-card",
+        "value": "0 8px 24px color-mix(in oklab, var(--foreground) 3%, transparent), 0 1px 3px color-mix(in oklab, var(--foreground) 4%, transparent)",
+        "purpose": "Opaque statistic widgets and empty surface"
+      },
+      {
+        "name": "soft",
+        "value": "0 8px 28px color-mix(in oklab, var(--foreground) 5%, transparent)",
+        "purpose": "Shared soft depth token"
+      },
+      {
+        "name": "float",
+        "value": "0 16px 48px color-mix(in oklab, var(--foreground) 9%, transparent)",
+        "purpose": "Shared floating dialog depth token"
       }
     ],
     "motion": [
       {
-        "name": "button-transform",
-        "value": "250ms ease",
-        "purpose": "HeroUI press feedback, scale .97 for medium buttons."
+        "name": "workspace-easing",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Shared responsive spatial easing"
       },
       {
-        "name": "button-colour",
-        "value": "100ms cubic-bezier(0, 0, 0.2, 1)",
-        "purpose": "HeroUI background and shadow feedback."
+        "name": "button-state",
+        "value": "background-color 180ms, color 180ms, box-shadow 220ms, transform 220ms var(--ease-workspace)",
+        "purpose": "Shared action feedback"
       },
       {
-        "name": "field-colour",
-        "value": "150ms ease",
-        "purpose": "HeroUI input background and border feedback."
+        "name": "node-arrival",
+        "value": "600ms var(--ease-workspace); stagger 24ms, maximum 144ms",
+        "purpose": "Bounded one-shot entrance of stable node identities"
+      },
+      {
+        "name": "node-feedback",
+        "value": "background 220ms ease, box-shadow 260ms var(--ease-workspace), translate 260ms var(--ease-workspace), outline-color 180ms ease",
+        "purpose": "Hover lift and press depth"
+      },
+      {
+        "name": "relationship-emphasis",
+        "value": "700ms var(--ease-workspace)",
+        "purpose": "One-shot emphasis of selected real dependency paths"
+      },
+      {
+        "name": "inspector-arrival",
+        "value": "360ms var(--ease-workspace)",
+        "purpose": "Right entrance on desktop, upward entrance on phones"
+      },
+      {
+        "name": "statistics-arrival",
+        "value": "540ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "One-shot canvas entrance when motion is allowed"
       },
       {
         "name": "reduced-motion",
-        "value": "0s",
-        "purpose": "Workspace descendants suppress animation and transition durations."
+        "value": "none in workspace and statistics; global duration 0.01ms",
+        "purpose": "Immediate state changes and no spatial motion"
       }
     ],
     "breakpoints": [
@@ -664,115 +684,128 @@
       {
         "name": "inspector-reserved-space",
         "value": "1024px"
+      },
+      {
+        "name": "workspace-rail",
+        "value": "1100px"
       }
     ]
   },
   "components": [
     {
-      "name": "Workspace primary button",
+      "name": "Primary button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "HeroUI primary styling with workspace height and radius overrides.",
-      "html": "<div class=\"ds-workspace\"><button class=\"ds-button-primary\">New task</button></div>",
-      "css": ".ds-workspace{--background:#f6f7f8;--foreground:#252a30;--surface:#ffffff;--surface-secondary:#eef0f2;--surface-tertiary:#e5e8ec;--muted:#626a74;--divider:#d9dee4;--accent:#35654e;--accent-foreground:#ffffff;--field-border:transparent;font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--foreground)}@media(prefers-color-scheme:dark){.ds-workspace{--background:#191c20;--foreground:#e7e9ed;--surface:#24282e;--surface-secondary:#2d3239;--surface-tertiary:#383f48;--muted:#aab3bf;--divider:#414953;--accent:#9ec5ac;--accent-foreground:#17261d;}}.ds-button-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:transform 250ms ease,background-color 100ms cubic-bezier(0,0,.2,1);background:var(--accent);color:var(--accent-foreground)}.ds-button-primary:hover{background:color-mix(in oklab,var(--accent) 90%,var(--accent-foreground) 10%)}.ds-button-primary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.ds-button-primary:active{transform:scale(.97)}.ds-button-primary:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-button-primary{transition:none;animation:none}}"
+      "description": "HeroUI primary action with the shared control shape and press feedback.",
+      "html": "<div class=\"ds-system\"><button class=\"ds-button ds-primary\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" aria-hidden=\"true\"><path d=\"M10 4v12M4 10h12\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>New task</button></div>",
+      "css": ".ds-system{--ds-background:var(--background,#f5f6f5);--ds-foreground:var(--foreground,#202724);--ds-surface:var(--surface,#ffffff);--ds-secondary:var(--surface-secondary,#edf0ed);--ds-tertiary:var(--surface-tertiary,#e3e9e4);--ds-muted:var(--muted,#65716a);--ds-divider:var(--divider,#dce3dd);--ds-accent:var(--accent,#32654b);--ds-accent-foreground:var(--accent-foreground,#ffffff);--ds-ease:var(--ease-workspace,cubic-bezier(.16,1,.3,1));font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--ds-foreground)}@media(prefers-color-scheme:dark){.ds-system{--ds-background:var(--background,#151a17);--ds-foreground:var(--foreground,#edf2ee);--ds-surface:var(--surface,#202823);--ds-secondary:var(--surface-secondary,#29332c);--ds-tertiary:var(--surface-tertiary,#344237);--ds-muted:var(--muted,#a5b3a9);--ds-divider:var(--divider,#37473c);--ds-accent:var(--accent,#afd4b6);--ds-accent-foreground:var(--accent-foreground,#151a17)}}.ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:10px;font:500 14px/20px var(--font-geist-sans,Geist),sans-serif;cursor:pointer;transition:background-color 180ms,color 180ms,box-shadow 220ms,transform 220ms var(--ds-ease)}.ds-button:active:not(:disabled){transform:scale(.98)}.ds-button:disabled{opacity:.5;cursor:not-allowed}.ds-button:focus-visible{outline:2px solid var(--ds-accent);outline-offset:3px}.ds-primary{background:var(--ds-accent);color:var(--ds-accent-foreground)}.ds-primary:hover{background:color-mix(in oklab,var(--ds-accent) 90%,var(--ds-accent-foreground) 10%)}@media(prefers-reduced-motion:reduce){.ds-system *{animation:none!important;transition:none!important;transform:none!important;translate:none!important}}"
     },
     {
-      "name": "Workspace secondary button",
+      "name": "Secondary button",
       "kind": "button",
       "refersTo": "button-secondary",
-      "description": "HeroUI secondary styling with workspace height and radius overrides.",
-      "html": "<div class=\"ds-workspace\"><button class=\"ds-button-secondary\">Edit</button></div>",
-      "css": ".ds-workspace{--background:#f6f7f8;--foreground:#252a30;--surface:#ffffff;--surface-secondary:#eef0f2;--surface-tertiary:#e5e8ec;--muted:#626a74;--divider:#d9dee4;--accent:#35654e;--accent-foreground:#ffffff;--field-border:transparent;font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--foreground)}@media(prefers-color-scheme:dark){.ds-workspace{--background:#191c20;--foreground:#e7e9ed;--surface:#24282e;--surface-secondary:#2d3239;--surface-tertiary:#383f48;--muted:#aab3bf;--divider:#414953;--accent:#9ec5ac;--accent-foreground:#17261d;}}.ds-button-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:transform 250ms ease,background-color 100ms cubic-bezier(0,0,.2,1);background:var(--surface-secondary);color:color-mix(in oklab,var(--accent) 70%,var(--foreground) 30%)}.ds-button-secondary:hover{background:color-mix(in oklab,var(--surface-secondary) 96%,var(--foreground) 4%)}.ds-button-secondary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.ds-button-secondary:active{transform:scale(.97)}.ds-button-secondary:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-button-secondary{transition:none;animation:none}}"
+      "description": "Quiet supporting action using the HeroUI secondary color formula.",
+      "html": "<div class=\"ds-system\"><button class=\"ds-button ds-secondary\">Edit task</button></div>",
+      "css": ".ds-system{--ds-background:var(--background,#f5f6f5);--ds-foreground:var(--foreground,#202724);--ds-surface:var(--surface,#ffffff);--ds-secondary:var(--surface-secondary,#edf0ed);--ds-tertiary:var(--surface-tertiary,#e3e9e4);--ds-muted:var(--muted,#65716a);--ds-divider:var(--divider,#dce3dd);--ds-accent:var(--accent,#32654b);--ds-accent-foreground:var(--accent-foreground,#ffffff);--ds-ease:var(--ease-workspace,cubic-bezier(.16,1,.3,1));font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--ds-foreground)}@media(prefers-color-scheme:dark){.ds-system{--ds-background:var(--background,#151a17);--ds-foreground:var(--foreground,#edf2ee);--ds-surface:var(--surface,#202823);--ds-secondary:var(--surface-secondary,#29332c);--ds-tertiary:var(--surface-tertiary,#344237);--ds-muted:var(--muted,#a5b3a9);--ds-divider:var(--divider,#37473c);--ds-accent:var(--accent,#afd4b6);--ds-accent-foreground:var(--accent-foreground,#151a17)}}.ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:10px;font:500 14px/20px var(--font-geist-sans,Geist),sans-serif;cursor:pointer;transition:background-color 180ms,color 180ms,box-shadow 220ms,transform 220ms var(--ds-ease)}.ds-button:active:not(:disabled){transform:scale(.98)}.ds-button:disabled{opacity:.5;cursor:not-allowed}.ds-button:focus-visible{outline:2px solid var(--ds-accent);outline-offset:3px}.ds-secondary{background:var(--ds-secondary);color:var(--accent-soft-foreground,color-mix(in oklab,var(--ds-accent) 70%,var(--ds-foreground) 30%))}.ds-secondary:hover{background:color-mix(in oklab,var(--ds-secondary) 96%,var(--ds-foreground) 4%)}@media(prefers-reduced-motion:reduce){.ds-system *{animation:none!important;transition:none!important;transform:none!important;translate:none!important}}"
     },
     {
-      "name": "Workspace ghost button",
+      "name": "Ghost button",
       "kind": "button",
       "refersTo": "button-ghost",
-      "description": "HeroUI ghost styling with workspace height and radius overrides.",
-      "html": "<div class=\"ds-workspace\"><button class=\"ds-button-ghost\">Refresh</button></div>",
-      "css": ".ds-workspace{--background:#f6f7f8;--foreground:#252a30;--surface:#ffffff;--surface-secondary:#eef0f2;--surface-tertiary:#e5e8ec;--muted:#626a74;--divider:#d9dee4;--accent:#35654e;--accent-foreground:#ffffff;--field-border:transparent;font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--foreground)}@media(prefers-color-scheme:dark){.ds-workspace{--background:#191c20;--foreground:#e7e9ed;--surface:#24282e;--surface-secondary:#2d3239;--surface-tertiary:#383f48;--muted:#aab3bf;--divider:#414953;--accent:#9ec5ac;--accent-foreground:#17261d;}}.ds-button-ghost{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:transform 250ms ease,background-color 100ms cubic-bezier(0,0,.2,1);background:transparent;color:var(--foreground)}.ds-button-ghost:hover{background:var(--surface-secondary)}.ds-button-ghost:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.ds-button-ghost:active{transform:scale(.97)}.ds-button-ghost:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-button-ghost{transition:none;animation:none}}"
+      "description": "Supporting action that gains a quiet surface on hover.",
+      "html": "<div class=\"ds-system\"><button class=\"ds-button ds-ghost\">Refresh</button></div>",
+      "css": ".ds-system{--ds-background:var(--background,#f5f6f5);--ds-foreground:var(--foreground,#202724);--ds-surface:var(--surface,#ffffff);--ds-secondary:var(--surface-secondary,#edf0ed);--ds-tertiary:var(--surface-tertiary,#e3e9e4);--ds-muted:var(--muted,#65716a);--ds-divider:var(--divider,#dce3dd);--ds-accent:var(--accent,#32654b);--ds-accent-foreground:var(--accent-foreground,#ffffff);--ds-ease:var(--ease-workspace,cubic-bezier(.16,1,.3,1));font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--ds-foreground)}@media(prefers-color-scheme:dark){.ds-system{--ds-background:var(--background,#151a17);--ds-foreground:var(--foreground,#edf2ee);--ds-surface:var(--surface,#202823);--ds-secondary:var(--surface-secondary,#29332c);--ds-tertiary:var(--surface-tertiary,#344237);--ds-muted:var(--muted,#a5b3a9);--ds-divider:var(--divider,#37473c);--ds-accent:var(--accent,#afd4b6);--ds-accent-foreground:var(--accent-foreground,#151a17)}}.ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:10px;font:500 14px/20px var(--font-geist-sans,Geist),sans-serif;cursor:pointer;transition:background-color 180ms,color 180ms,box-shadow 220ms,transform 220ms var(--ds-ease)}.ds-button:active:not(:disabled){transform:scale(.98)}.ds-button:disabled{opacity:.5;cursor:not-allowed}.ds-button:focus-visible{outline:2px solid var(--ds-accent);outline-offset:3px}.ds-ghost{background:transparent;color:var(--ds-foreground)}.ds-ghost:hover{background:var(--ds-secondary)}@media(prefers-reduced-motion:reduce){.ds-system *{animation:none!important;transition:none!important;transform:none!important;translate:none!important}}"
     },
     {
       "name": "Workspace search",
       "kind": "input",
       "refersTo": "workspace-search",
-      "description": "Search field with the implemented local field palette.",
-      "html": "<div class=\"ds-workspace\"><input class=\"ds-search\" aria-label=\"Search tasks\" placeholder=\"Search tasks\" /></div>",
-      "css": ".ds-workspace{--background:#f6f7f8;--foreground:#252a30;--surface:#ffffff;--surface-secondary:#eef0f2;--surface-tertiary:#e5e8ec;--muted:#626a74;--divider:#d9dee4;--accent:#35654e;--accent-foreground:#ffffff;--field-border:transparent;font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--foreground)}@media(prefers-color-scheme:dark){.ds-workspace{--background:#191c20;--foreground:#e7e9ed;--surface:#24282e;--surface-secondary:#2d3239;--surface-tertiary:#383f48;--muted:#aab3bf;--divider:#414953;--accent:#9ec5ac;--accent-foreground:#17261d;}}.ds-search{max-width:256px;border:0;border-radius:12px;background:var(--surface-secondary);color:var(--foreground);padding:8px 12px;font:14px/20px var(--font-geist-sans,Geist),sans-serif;box-shadow:var(--field-shadow,0 1px 3px #00000014);transition:background-color 150ms ease}.ds-search::placeholder{color:var(--muted)}.ds-search:hover{background:var(--surface-tertiary)}.ds-search:focus-visible{outline:2px solid var(--accent);outline-offset:3px;background:var(--surface-secondary)}@media(prefers-reduced-motion:reduce){.ds-search{transition:none;animation:none}}"
+      "description": "Labelled task filter with a leading line icon and readable field states.",
+      "html": "<div class=\"ds-system\"><label class=\"ds-search\"><span class=\"ds-hidden\">Search tasks</span><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" aria-hidden=\"true\"><path d=\"m14 14 4 4M15.5 8.5a6 6 0 1 1-12 0 6 6 0 0 1 12 0Z\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg><input placeholder=\"Search tasks\" /></label></div>",
+      "css": ".ds-system{--ds-background:var(--background,#f5f6f5);--ds-foreground:var(--foreground,#202724);--ds-surface:var(--surface,#ffffff);--ds-secondary:var(--surface-secondary,#edf0ed);--ds-tertiary:var(--surface-tertiary,#e3e9e4);--ds-muted:var(--muted,#65716a);--ds-divider:var(--divider,#dce3dd);--ds-accent:var(--accent,#32654b);--ds-accent-foreground:var(--accent-foreground,#ffffff);--ds-ease:var(--ease-workspace,cubic-bezier(.16,1,.3,1));font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--ds-foreground)}@media(prefers-color-scheme:dark){.ds-system{--ds-background:var(--background,#151a17);--ds-foreground:var(--foreground,#edf2ee);--ds-surface:var(--surface,#202823);--ds-secondary:var(--surface-secondary,#29332c);--ds-tertiary:var(--surface-tertiary,#344237);--ds-muted:var(--muted,#a5b3a9);--ds-divider:var(--divider,#37473c);--ds-accent:var(--accent,#afd4b6);--ds-accent-foreground:var(--accent-foreground,#151a17)}}.ds-search{display:block;position:relative;width:224px}.ds-search>svg{position:absolute;top:12px;left:12px;color:var(--ds-muted);pointer-events:none}.ds-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}.ds-search input{width:100%;height:44px;border:1px solid transparent;border-radius:10px;padding:8px 12px 8px 40px;background:var(--ds-secondary);color:var(--ds-foreground);font:14px/20px var(--font-geist-sans,Geist),sans-serif;transition:background-color 150ms,border-color 150ms}.ds-search input::placeholder{color:var(--ds-muted)}.ds-search input:hover{background:var(--ds-tertiary);border-color:var(--ds-divider)}.ds-search input:focus-visible{outline:2px solid var(--ds-accent);outline-offset:3px}.ds-search input:focus{border-color:var(--ds-accent);background:var(--ds-secondary)}@media(max-width:639px){.ds-search input{font-size:16px}}@media(prefers-reduced-motion:reduce){.ds-system *{animation:none!important;transition:none!important;transform:none!important;translate:none!important}}"
     },
     {
-      "name": "Workspace navigation",
+      "name": "Named navigation",
       "kind": "nav",
       "refersTo": "workspace-navigation",
-      "description": "Named navigation stays visible and wraps on phones.",
-      "html": "<div class=\"ds-workspace\"><nav class=\"ds-nav\" aria-label=\"Tasks\"><a href=\"#statistics\">Statistics</a><a href=\"#connections\">Connections</a></nav></div>",
-      "css": ".ds-workspace{--background:#f6f7f8;--foreground:#252a30;--surface:#ffffff;--surface-secondary:#eef0f2;--surface-tertiary:#e5e8ec;--muted:#626a74;--divider:#d9dee4;--accent:#35654e;--accent-foreground:#ffffff;--field-border:transparent;font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--foreground)}@media(prefers-color-scheme:dark){.ds-workspace{--background:#191c20;--foreground:#e7e9ed;--surface:#24282e;--surface-secondary:#2d3239;--surface-tertiary:#383f48;--muted:#aab3bf;--divider:#414953;--accent:#9ec5ac;--accent-foreground:#17261d;}}.ds-nav{display:flex;flex-wrap:wrap;align-items:center;gap:4px}.ds-nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;color:var(--foreground);font-size:14px;text-decoration:none}.ds-nav a:hover{text-decoration:underline}.ds-nav a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}@media(max-width:639px){.ds-nav{justify-content:space-between;gap:0}.ds-nav a{padding-inline:8px;font-size:12px}}@media(prefers-reduced-motion:reduce){.ds-nav{transition:none;animation:none}}"
+      "description": "Desktop rail links become a visible named row on smaller screens; counts are illustrative.",
+      "html": "<div class=\"ds-system\"><nav class=\"ds-nav\" aria-label=\"Main navigation\"><a href=\"#tasks\" aria-current=\"page\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" aria-hidden=\"true\"><path d=\"M5 4h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm2 5 2 2 4-4M7 15h6\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg><span>Tasks</span><span class=\"ds-nav-count\">12</span></a><a href=\"#statistics\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" aria-hidden=\"true\"><path d=\"M4 17V9m6 8V3m6 14v-6\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg><span>Statistics</span></a><a href=\"#connections\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" aria-hidden=\"true\"><path d=\"m8 12 4-4M7 14l-1 1a3.5 3.5 0 0 1-5-5l4-4a3.5 3.5 0 0 1 5 0m0 8a3.5 3.5 0 0 0 5 0l4-4a3.5 3.5 0 0 0-5-5l-1 1\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg><span>Connections</span></a></nav></div>",
+      "css": ".ds-system{--ds-background:var(--background,#f5f6f5);--ds-foreground:var(--foreground,#202724);--ds-surface:var(--surface,#ffffff);--ds-secondary:var(--surface-secondary,#edf0ed);--ds-tertiary:var(--surface-tertiary,#e3e9e4);--ds-muted:var(--muted,#65716a);--ds-divider:var(--divider,#dce3dd);--ds-accent:var(--accent,#32654b);--ds-accent-foreground:var(--accent-foreground,#ffffff);--ds-ease:var(--ease-workspace,cubic-bezier(.16,1,.3,1));font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--ds-foreground)}@media(prefers-color-scheme:dark){.ds-system{--ds-background:var(--background,#151a17);--ds-foreground:var(--foreground,#edf2ee);--ds-surface:var(--surface,#202823);--ds-secondary:var(--surface-secondary,#29332c);--ds-tertiary:var(--surface-tertiary,#344237);--ds-muted:var(--muted,#a5b3a9);--ds-divider:var(--divider,#37473c);--ds-accent:var(--accent,#afd4b6);--ds-accent-foreground:var(--accent-foreground,#151a17)}}.ds-nav{display:flex;flex-direction:column;gap:4px;width:192px;padding:8px;background:var(--ds-background);border-radius:12px}.ds-nav a{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 12px;border-radius:10px;color:var(--ds-muted);font-size:14px;text-decoration:none;transition:background-color 180ms,color 180ms}.ds-nav a[aria-current=page]{background:var(--ds-surface);font-weight:500;color:var(--ds-foreground);box-shadow:0 2px 8px color-mix(in oklab,var(--ds-foreground) 3%,transparent)}.ds-nav a:hover{background:var(--ds-surface);color:var(--ds-foreground)}.ds-nav a:focus-visible{outline:2px solid var(--ds-accent);outline-offset:3px}.ds-nav svg{width:18px;height:18px;flex-shrink:0}.ds-nav-count{margin-left:auto;font-size:11px;font-variant-numeric:tabular-nums}@media(max-width:1099px){.ds-nav{width:auto;flex-direction:row;flex-wrap:wrap}.ds-nav a{flex:1;gap:8px;font-size:12px}.ds-nav-count{display:none}}@media(prefers-reduced-motion:reduce){.ds-system *{animation:none!important;transition:none!important;transform:none!important;translate:none!important}}"
+    },
+    {
+      "name": "Written task state",
+      "kind": "chip",
+      "refersTo": "task-state",
+      "description": "Ready and complete states use text and a semantic symbol; owner color never replaces the label.",
+      "html": "<div class=\"ds-system\"><span class=\"ds-state\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" aria-hidden=\"true\"><path d=\"m5 10 3.5 3.5L15 7\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>Ready</span></div>",
+      "css": ".ds-system{--ds-background:var(--background,#f5f6f5);--ds-foreground:var(--foreground,#202724);--ds-surface:var(--surface,#ffffff);--ds-secondary:var(--surface-secondary,#edf0ed);--ds-tertiary:var(--surface-tertiary,#e3e9e4);--ds-muted:var(--muted,#65716a);--ds-divider:var(--divider,#dce3dd);--ds-accent:var(--accent,#32654b);--ds-accent-foreground:var(--accent-foreground,#ffffff);--ds-ease:var(--ease-workspace,cubic-bezier(.16,1,.3,1));font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--ds-foreground)}@media(prefers-color-scheme:dark){.ds-system{--ds-background:var(--background,#151a17);--ds-foreground:var(--foreground,#edf2ee);--ds-surface:var(--surface,#202823);--ds-secondary:var(--surface-secondary,#29332c);--ds-tertiary:var(--surface-tertiary,#344237);--ds-muted:var(--muted,#a5b3a9);--ds-divider:var(--divider,#37473c);--ds-accent:var(--accent,#afd4b6);--ds-accent-foreground:var(--accent-foreground,#151a17)}}.ds-state{display:inline-flex;align-items:center;gap:6px;color:var(--ds-accent);font-size:11px}.ds-state svg{width:12px;height:12px}@media(prefers-reduced-motion:reduce){.ds-system *{animation:none!important;transition:none!important;transform:none!important;translate:none!important}}"
     },
     {
       "name": "Task graph node",
       "kind": "custom",
       "refersTo": "graph-node",
-      "description": "Synthetic preview using the actual default assignee colour; production names and colours are dynamic.",
-      "html": "<div class=\"ds-workspace\"><button class=\"ds-node\" aria-pressed=\"false\" aria-label=\"Example task · Example owner · Ready\"><span class=\"ds-node-title\">Example task</span><span class=\"ds-node-footer\"><span class=\"ds-node-owner\"><span class=\"ds-avatar\" aria-hidden=\"true\">E</span>Example owner</span><span class=\"ds-state\">Ready</span></span></button></div>",
-      "css": ".ds-workspace{--background:#f6f7f8;--foreground:#252a30;--surface:#ffffff;--surface-secondary:#eef0f2;--surface-tertiary:#e5e8ec;--muted:#626a74;--divider:#d9dee4;--accent:#35654e;--accent-foreground:#ffffff;--field-border:transparent;font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--foreground)}@media(prefers-color-scheme:dark){.ds-workspace{--background:#191c20;--foreground:#e7e9ed;--surface:#24282e;--surface-secondary:#2d3239;--surface-tertiary:#383f48;--muted:#aab3bf;--divider:#414953;--accent:#9ec5ac;--accent-foreground:#17261d;}}.ds-node{--assignee-color:#7297CA;display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;gap:12px;width:244px;height:128px;padding:16px;border:0;border-radius:12px;text-align:left;color:var(--foreground);background:color-mix(in oklab,var(--assignee-color) 13%,var(--surface));box-shadow:0 3px 12px #1a25340a,0 1px 3px #1a253408;cursor:pointer;font-family:var(--font-geist-sans,Geist),sans-serif}.ds-node:hover{background:color-mix(in oklab,var(--assignee-color) 19%,var(--surface));box-shadow:0 5px 18px #1a253410}.ds-node:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.ds-node[aria-pressed=true]{outline:2px solid var(--accent);outline-offset:2px}.ds-node:active{transform:scale(.97)}.ds-node-title{font-size:14px;font-weight:500;line-height:20px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.ds-node-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;color:var(--muted)}.ds-node-owner{display:flex;align-items:center;gap:6px}.ds-avatar{display:flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:9999px;background:var(--surface-secondary);font-size:10px}.ds-state{color:var(--accent)}@media(prefers-reduced-motion:reduce){.ds-node{transition:none;animation:none}.ds-node-title{transition:none;animation:none}.ds-node-footer{transition:none;animation:none}.ds-node-owner{transition:none;animation:none}.ds-avatar{transition:none;animation:none}.ds-state{transition:none;animation:none}}"
+      "description": "Native-scale owner, title and state layout with a synthetic example and dynamic production owner tint.",
+      "html": "<div class=\"ds-system\"><button class=\"ds-node\" aria-pressed=\"false\" aria-label=\"Example task, Example owner, Ready\"><span class=\"ds-owner-row\"><span class=\"ds-owner\"><span class=\"ds-avatar\">E</span><span>Example owner</span></span><span class=\"ds-open\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" aria-hidden=\"true\"><path d=\"M4 10h12m-5-5 5 5-5 5\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></span><span class=\"ds-node-title\">Example task</span><span class=\"ds-node-footer\"><span class=\"ds-state\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" aria-hidden=\"true\"><path d=\"m5 10 3.5 3.5L15 7\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>Ready</span></span></button></div>",
+      "css": ".ds-system{--ds-background:var(--background,#f5f6f5);--ds-foreground:var(--foreground,#202724);--ds-surface:var(--surface,#ffffff);--ds-secondary:var(--surface-secondary,#edf0ed);--ds-tertiary:var(--surface-tertiary,#e3e9e4);--ds-muted:var(--muted,#65716a);--ds-divider:var(--divider,#dce3dd);--ds-accent:var(--accent,#32654b);--ds-accent-foreground:var(--accent-foreground,#ffffff);--ds-ease:var(--ease-workspace,cubic-bezier(.16,1,.3,1));font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--ds-foreground)}@media(prefers-color-scheme:dark){.ds-system{--ds-background:var(--background,#151a17);--ds-foreground:var(--foreground,#edf2ee);--ds-surface:var(--surface,#202823);--ds-secondary:var(--surface-secondary,#29332c);--ds-tertiary:var(--surface-tertiary,#344237);--ds-muted:var(--muted,#a5b3a9);--ds-divider:var(--divider,#37473c);--ds-accent:var(--accent,#afd4b6);--ds-accent-foreground:var(--accent-foreground,#151a17)}}.ds-node{--assignee-color:var(--ds-accent);display:flex;flex-direction:column;align-items:stretch;justify-content:space-between;gap:8px;width:244px;height:128px;padding:14px 16px;border:0;border-radius:16px;background:color-mix(in oklab,var(--assignee-color) 6%,var(--ds-surface));color:var(--ds-foreground);text-align:left;white-space:normal;font-family:var(--font-geist-sans,Geist),sans-serif;cursor:pointer;box-shadow:0 2px 3px color-mix(in oklab,var(--ds-foreground) 3%,transparent),0 8px 24px color-mix(in oklab,var(--ds-foreground) 6%,transparent);transition:background 220ms ease,box-shadow 260ms var(--ds-ease),translate 260ms var(--ds-ease)}.ds-node:hover{translate:0 -2px;background:color-mix(in oklab,var(--assignee-color) 9%,var(--ds-surface));box-shadow:0 3px 5px color-mix(in oklab,var(--ds-foreground) 4%,transparent),0 12px 28px color-mix(in oklab,var(--ds-foreground) 10%,transparent)}.ds-node:active{translate:0 1px}.ds-node:focus-visible{outline:2px solid var(--ds-accent);outline-offset:3px}.ds-node[aria-pressed=true]{outline:2px solid var(--ds-accent);outline-offset:3px}.ds-owner-row{display:flex;justify-content:space-between;gap:8px;color:var(--ds-muted);font-size:12px}.ds-owner{display:flex;align-items:center;gap:8px;min-width:0}.ds-avatar{display:flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:color-mix(in oklab,var(--assignee-color) 20%,var(--ds-surface));color:var(--ds-foreground);font-size:10px;font-weight:600}.ds-open{opacity:.45;transition:opacity 180ms,translate 220ms var(--ds-ease)}.ds-open svg{width:14px;height:14px}.ds-node:is(:hover,:focus-visible) .ds-open{opacity:1;translate:2px 0}.ds-node-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:14px;line-height:20px;font-weight:500;letter-spacing:-.01em}.ds-node-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--ds-muted);font-size:11px}.ds-state{display:inline-flex;align-items:center;gap:6px;color:var(--ds-accent)}.ds-state svg{width:12px;height:12px}@media(forced-colors:active){.ds-node{border:1px solid ButtonText;background:Canvas;box-shadow:none}}@media(prefers-reduced-motion:reduce){.ds-system *{animation:none!important;transition:none!important;transform:none!important;translate:none!important}}"
     },
     {
       "name": "Graph camera tray",
       "kind": "custom",
       "refersTo": "graph-controls",
-      "description": "Preview of the explicit zoom and Fit controls; no simulated camera behavior.",
-      "html": "<div class=\"ds-workspace\"><div class=\"ds-camera\"><button aria-label=\"Zoom out\">−</button><span>100%</span><button aria-label=\"Zoom in\">+</button><button>Fit</button></div></div>",
-      "css": ".ds-workspace{--background:#f6f7f8;--foreground:#252a30;--surface:#ffffff;--surface-secondary:#eef0f2;--surface-tertiary:#e5e8ec;--muted:#626a74;--divider:#d9dee4;--accent:#35654e;--accent-foreground:#ffffff;--field-border:transparent;font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--foreground)}@media(prefers-color-scheme:dark){.ds-workspace{--background:#191c20;--foreground:#e7e9ed;--surface:#24282e;--surface-secondary:#2d3239;--surface-tertiary:#383f48;--muted:#aab3bf;--divider:#414953;--accent:#9ec5ac;--accent-foreground:#17261d;}}.ds-camera{display:inline-flex;align-items:center;gap:4px;padding:4px;border-radius:12px;background:var(--surface);box-shadow:0 3px 15px #1a25340b}.ds-camera button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:transform 250ms ease,background-color 100ms cubic-bezier(0,0,.2,1);padding:0 12px;background:transparent;color:var(--foreground)}.ds-camera button:hover{background:var(--surface-secondary)}.ds-camera button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.ds-camera button:active{transform:scale(.97)}.ds-camera span{font-size:12px;font-variant-numeric:tabular-nums}@media(prefers-reduced-motion:reduce){.ds-camera{transition:none;animation:none}}"
+      "description": "Explicit zoom and Fit controls; this specimen shows appearance without simulating a camera.",
+      "html": "<div class=\"ds-system\"><div class=\"ds-camera\"><button class=\"ds-button\" aria-label=\"Zoom out\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" aria-hidden=\"true\"><path d=\"M4 10h12\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></button><span>100%</span><button class=\"ds-button\" aria-label=\"Zoom in\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" aria-hidden=\"true\"><path d=\"M10 4v12M4 10h12\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></button><button class=\"ds-button\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" aria-hidden=\"true\"><path d=\"M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>Fit</button></div></div>",
+      "css": ".ds-system{--ds-background:var(--background,#f5f6f5);--ds-foreground:var(--foreground,#202724);--ds-surface:var(--surface,#ffffff);--ds-secondary:var(--surface-secondary,#edf0ed);--ds-tertiary:var(--surface-tertiary,#e3e9e4);--ds-muted:var(--muted,#65716a);--ds-divider:var(--divider,#dce3dd);--ds-accent:var(--accent,#32654b);--ds-accent-foreground:var(--accent-foreground,#ffffff);--ds-ease:var(--ease-workspace,cubic-bezier(.16,1,.3,1));font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--ds-foreground)}@media(prefers-color-scheme:dark){.ds-system{--ds-background:var(--background,#151a17);--ds-foreground:var(--foreground,#edf2ee);--ds-surface:var(--surface,#202823);--ds-secondary:var(--surface-secondary,#29332c);--ds-tertiary:var(--surface-tertiary,#344237);--ds-muted:var(--muted,#a5b3a9);--ds-divider:var(--divider,#37473c);--ds-accent:var(--accent,#afd4b6);--ds-accent-foreground:var(--accent-foreground,#151a17)}}.ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:10px;font:500 14px/20px var(--font-geist-sans,Geist),sans-serif;cursor:pointer;transition:background-color 180ms,color 180ms,box-shadow 220ms,transform 220ms var(--ds-ease)}.ds-button:active:not(:disabled){transform:scale(.98)}.ds-button:disabled{opacity:.5;cursor:not-allowed}.ds-button:focus-visible{outline:2px solid var(--ds-accent);outline-offset:3px}.ds-camera{display:inline-flex;align-items:center;gap:4px;padding:6px;border-radius:16px;background:var(--ds-surface);box-shadow:0 6px 28px color-mix(in oklab,var(--ds-foreground) 10%,transparent)}.ds-camera .ds-button{min-width:44px;padding:0 12px;border-radius:12px;background:transparent;color:var(--ds-foreground)}.ds-camera .ds-button:hover{background:var(--ds-secondary)}.ds-camera>span{min-width:44px;text-align:center;font-size:12px;font-variant-numeric:tabular-nums;color:var(--ds-muted)}@media(prefers-reduced-motion:reduce){.ds-system *{animation:none!important;transition:none!important;transform:none!important;translate:none!important}}"
     },
     {
-      "name": "Retained Statistics card",
+      "name": "Statistics card",
       "kind": "card",
       "refersTo": "statistics-card",
-      "description": "Existing warm mineral-glass widget; sample value is illustrative.",
-      "html": "<article class=\"ds-stat\"><h3>Example statistic</h3><p class=\"ds-stat-value\">24</p><p class=\"ds-stat-note\">Example task count</p></article>",
-      "css": ".ds-stat{max-width:320px;min-height:240px;padding:24px;border:1px solid var(--glass-edge,color-mix(in oklab,var(--surface,oklch(.995 .004 80)) 80%,var(--divider,oklch(.83 .014 72))));border-radius:24px;background:var(--surface,oklch(.995 .004 80));color:var(--foreground,oklch(.22 .012 65));font-family:var(--font-geist-sans,Geist),sans-serif;box-shadow:inset 0 1px 0 var(--glass-light,#ffffffad),0 8px 32px var(--glass-shadow,#00000012);container-type:inline-size}.ds-stat h3{margin:0;font-size:16px;font-weight:600;letter-spacing:-.025em}.ds-stat-value{margin:32px 0 0;font-size:clamp(2rem,20cqi,5rem);font-weight:550;line-height:1.05;letter-spacing:-.04em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.ds-stat-note{margin:16px 0 0;font-size:12px;color:var(--muted,oklch(.52 .018 65))}@supports(backdrop-filter:blur(1px)){.ds-stat{background:var(--glass-surface,color-mix(in oklab,var(--surface,oklch(.995 .004 80)) 76%,transparent));backdrop-filter:blur(24px) saturate(115%)}}.ds-stat:hover{box-shadow:inset 0 1px 0 var(--glass-light,#ffffffad),0 8px 32px var(--glass-shadow,#00000012)}.ds-stat:focus-within{outline:2px solid var(--accent,oklch(.54 .11 155));outline-offset:3px}@media(prefers-reduced-transparency:reduce){.ds-stat{background:var(--surface,oklch(.995 .004 80));backdrop-filter:none}}@media(forced-colors:active){.ds-stat{border:1px solid CanvasText;background:Canvas;color:CanvasText;box-shadow:none;backdrop-filter:none}}@media(prefers-reduced-motion:reduce){.ds-stat{transition:none;animation:none}.ds-stat-value{transition:none;animation:none}.ds-stat-note{transition:none;animation:none}}"
+      "description": "Opaque mineral card with one named overflow action; native details provides a portable visual translation of the production HeroUI menu, with illustrative content.",
+      "html": "<div class=\"ds-system\"><article class=\"ds-card\"><header class=\"ds-card-header\"><div><h3>Example statistic</h3><p class=\"ds-card-description\">Example task count</p></div><details class=\"ds-card-actions\"><summary aria-label=\"Actions: Example statistic\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" aria-hidden=\"true\"><path d=\"M4 10h.01M10 10h.01M16 10h.01\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></summary><div class=\"ds-card-menu\"><button disabled><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" aria-hidden=\"true\"><path d=\"M4 10h12m-5-5 5 5-5 5\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>Move earlier</button><button><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" aria-hidden=\"true\"><path d=\"M4 10h12m-5-5 5 5-5 5\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>Move later</button><button><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" aria-hidden=\"true\"><path d=\"m12.8 4.2 3 3L7 16H4v-3l8.8-8.8Z\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>Edit</button><button class=\"ds-card-danger\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" aria-hidden=\"true\"><path d=\"M3.5 5.5h13M8 3h4l1 2.5M5.5 5.5l.8 11h7.4l.8-11M8.5 8.5v5M11.5 8.5v5\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>Delete</button></div></details></header><p class=\"ds-metric\">24</p><p class=\"ds-card-note\">Illustrative value</p></article></div>",
+      "css": ".ds-system{--ds-background:var(--background,#f5f6f5);--ds-foreground:var(--foreground,#202724);--ds-surface:var(--surface,#ffffff);--ds-secondary:var(--surface-secondary,#edf0ed);--ds-tertiary:var(--surface-tertiary,#e3e9e4);--ds-muted:var(--muted,#65716a);--ds-divider:var(--divider,#dce3dd);--ds-accent:var(--accent,#32654b);--ds-accent-foreground:var(--accent-foreground,#ffffff);--ds-ease:var(--ease-workspace,cubic-bezier(.16,1,.3,1));font-family:var(--font-geist-sans,Geist),sans-serif;color:var(--ds-foreground)}@media(prefers-color-scheme:dark){.ds-system{--ds-background:var(--background,#151a17);--ds-foreground:var(--foreground,#edf2ee);--ds-surface:var(--surface,#202823);--ds-secondary:var(--surface-secondary,#29332c);--ds-tertiary:var(--surface-tertiary,#344237);--ds-muted:var(--muted,#a5b3a9);--ds-divider:var(--divider,#37473c);--ds-accent:var(--accent,#afd4b6);--ds-accent-foreground:var(--accent-foreground,#151a17)}}.ds-card{display:flex;flex-direction:column;max-width:320px;min-height:240px;padding:24px;border-radius:16px;background:var(--ds-surface);color:var(--ds-foreground);container-type:inline-size;box-shadow:0 8px 24px color-mix(in oklab,var(--ds-foreground) 3%,transparent),0 1px 3px color-mix(in oklab,var(--ds-foreground) 4%,transparent)}.ds-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.ds-card-header>div{min-width:0;flex:1}.ds-card h3{margin:0;font-size:16px;font-weight:600;letter-spacing:-.025em;overflow-wrap:anywhere}.ds-card-description{margin:8px 0 0;color:var(--ds-muted);font-size:12px;line-height:1.625}.ds-card-actions{position:relative;flex:none;width:44px;margin:-4px -4px 0 0}.ds-card-actions summary{display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;border-radius:10px;list-style:none;cursor:pointer;transition:background-color 180ms,transform 220ms var(--ds-ease)}.ds-card-actions summary::-webkit-details-marker{display:none}.ds-card-actions summary:hover{background:var(--ds-secondary)}.ds-card-actions summary:active{transform:scale(.98)}.ds-card-actions summary:focus-visible{outline:2px solid var(--ds-accent);outline-offset:3px}.ds-card-menu{position:absolute;right:0;top:calc(100% + 4px);z-index:2;min-width:192px;max-width:calc(100vw - 2rem);border-radius:12px;padding:10px;background:var(--ds-surface);box-shadow:var(--shadow-overlay,0 16px 48px color-mix(in oklab,var(--ds-foreground) 9%,transparent))}.ds-card-menu button{display:flex;align-items:center;justify-content:flex-start;gap:12px;width:100%;min-height:44px;border:0;border-radius:16px;padding:6px 10px;background:transparent;color:var(--ds-foreground);font:14px/20px var(--font-geist-sans,Geist),sans-serif;text-align:left;cursor:pointer}.ds-card-menu button:hover{background:var(--ds-secondary)}.ds-card-menu button:focus-visible{outline:2px solid var(--ds-accent);outline-offset:3px}.ds-card-menu button:disabled{opacity:.5;cursor:not-allowed}.ds-card-menu .ds-card-danger{color:var(--danger,oklch(.55 .19 28))}.ds-card-menu svg{width:16px;height:16px;flex:none}.ds-card-menu button:first-child svg{rotate:180deg}.ds-metric{margin:32px 0 0;font-size:clamp(2rem,20cqi,5rem);font-weight:550;font-variant-numeric:tabular-nums;line-height:1.05;letter-spacing:-.04em;overflow-wrap:anywhere}.ds-card-note{margin:16px 0 0;color:var(--ds-muted);font-size:12px}@media(forced-colors:active){.ds-card,.ds-card-menu{border:1px solid CanvasText;background:Canvas;box-shadow:none}}@media(prefers-reduced-motion:reduce){.ds-system *{animation:none!important;transition:none!important;transform:none!important;translate:none!important}}"
     }
   ],
   "narrative": {
     "northStar": "Work routes",
-    "overview": "A minimal operating canvas makes real tasks, responsible parties and prerequisites visible together. Cool neutrals, softly elevated nodes and compact Geist typography give the graph room; owner-selected tints identify responsibility without colouring the text. The user rejected brutalism, decorative rules and explanatory dashboard filler.\n\nThe workspace theme is local to the graph and its themed editing/management surfaces. Statistics keeps its existing warm mineral-glass presentation; Connections, API access, API documentation and authentication keep the shared warm editorial foundation. This document captures those boundaries rather than prescribing a whole-app reskin.",
+    "overview": "The interface is a quiet working instrument for real tasks, responsible parties and prerequisites. A persistent navigation rail frames a spacious dependency map. Mineral green neutrals, forest accents, precise Geist typography and soft physical depth make relationships easier to follow without turning the workspace into a dashboard of decorative information.\n\nTasks, statistics, connections and authentication share the same light and dark palette. Stored owner colors remain identity signals inside that system. The original PNG artwork in `src/app/icon.png` remains the app identity and appears through `AppLogo`; preserve its artwork and proportions. Titles, subtitles and brand marks never contain periods or decorative dot separators.",
     "keyCharacteristics": [
-      "Actual directed dependencies and project lanes.",
-      "Readable native-scale entry, with an explicit overview control.",
-      "Quiet chrome, dynamic owner colours and full-contrast task text.",
-      "Persistent drafts and graph context during background synchronization."
+      "Real dependency paths, project context and explicit responsibility",
+      "A calm navigation frame around an expressive, readable map",
+      "Soft surface depth and brief, purposeful spatial feedback",
+      "Continuous graph context and preserved drafts during synchronization"
     ],
     "rules": [
       {
-        "name": "Context before colour",
-        "body": "Owner tint supplements the written assignee and state; completed tasks keep full-opacity text.",
+        "name": "Context before color",
+        "body": "Owner tint supplements the written assignee and state; completed tasks retain full-opacity text. Danger colors identify errors and destructive actions.",
         "section": "colors"
       },
       {
         "name": "Readable entry",
-        "body": "Open the graph at scale 1, including constrained desktops and phones; Fit is the explicit full-graph overview. The project, responsible-party and refresh-interval selectors keep their accessible labels visually hidden at every viewport width.",
+        "body": "Enter a populated graph at scale 1; Fit is the explicit overview action. Keep project, responsible-party and refresh selectors labelled even when their labels are visually hidden.",
         "section": "typography"
       },
       {
-        "name": "Scoped materials",
-        "body": "Opaque graph surfaces and retained Statistics glass coexist; do not spread either treatment to unrelated routes.",
+        "name": "Purposeful motion",
+        "body": "Motion explains arrival, selection and spatial relationships. Use the shared `cubic-bezier(0.16, 1, 0.3, 1)` easing, short state transitions and one-shot entrances. Node arrival takes 600ms with a bounded 24ms stagger; relationship emphasis takes 700ms; the inspector takes 360ms. Polling must not replay arrivals. Reduced motion removes workspace animation and transforms and reduces global durations; surfaces remain opaque.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "Do use HeroUI v3 compound primitives and Tailwind CSS 4, with existing Geist fonts.",
-      "Do render stored projects, owners and dependency relationships, retaining prerequisite ancestors when filtering.",
-      "Do preserve camera position, selection and typed drafts through ordinary polling updates.",
-      "Do keep English/Spanish labels, keyboard activation, visible focus and textual state cues.",
-      "Do check native-scale entry and explicit Fit separately at desktop and phone sizes."
+      "Do use HeroUI v3 compound primitives, Tailwind CSS 4 and the existing Geist fonts",
+      "Do preserve the original PNG identity and its proportions",
+      "Do render stored projects, owners, workflow states and real dependency relationships",
+      "Do preserve camera position, selection and typed drafts through ordinary polling updates",
+      "Do keep English and Spanish labels, keyboard activation, visible focus and textual state cues",
+      "Do verify light and dark themes, narrow screens, reduced motion, editing and secondary navigation"
     ],
     "donts": [
-      "Don't introduce brutalist framing, grid overlays, decorative rules or descriptive dashboard filler.",
-      "Don't reduce completed-node opacity or use owner colour as the only identity signal.",
-      "Don't auto-fit a populated graph when polling adds or removes tasks.",
-      "Don't turn the inspector into a blocking modal or let outside clicks dismiss task editing.",
-      "Don't hard-code agent names, schedule models or restore retired webhook UI.",
-      "Don't describe Statistics or Connections as using the graph's cool palette."
+      "Don't add periods or decorative dot separators to titles, subtitles or brand marks",
+      "Don't restore brutalist framing, decorative rules or explanatory dashboard filler",
+      "Don't use owner color as the only identity signal or fade completed task text",
+      "Don't auto-fit the graph when polling adds or removes tasks",
+      "Don't make inspection modal or allow outside clicks to discard an editing draft",
+      "Don't hard-code agent names, invoke models or cache private task data for offline use"
     ]
   }
 }

@@ -141,7 +141,7 @@ export const es: Record<keyof typeof en, string> = {
   'color.hex': 'Color hexadecimal',
   'auth.brand': 'Simple Tasks',
   'auth.heading': 'Tu tablero',
-  'auth.instruction': 'Introduce la contraseña para continuar.',
+  'auth.instruction': 'Introduce la contraseña para continuar',
   'auth.password': 'Contraseña',
   'auth.signIn': 'Iniciar sesión',
   'auth.signingIn': 'Iniciando sesión…',
@@ -150,7 +150,7 @@ export const es: Record<keyof typeof en, string> = {
   'ai.integration': 'Integración con IA',
   'ai.heading': 'Conectar Simple Tasks',
   'ai.instructions':
-    'Descarga la skill y la configuración. En tu entorno del agente, establece {clientEnv} con el mismo valor que {serverEnv} en el servidor.',
+    'Descarga la skill y la configuración y establece {clientEnv} en el entorno del agente con el mismo valor que {serverEnv} en el servidor',
   'ai.downloadSkill': 'Descargar SKILL.md',
   'ai.downloadConfig': 'Descargar configuración de MCP',
   'ai.mcpToken': 'Token de MCP',

@@ -51,6 +51,25 @@ JSON successes use `{ "data": ... }` except task pages, which also have
 | GET, POST          | /properties                         | List / create (name, type, optional options)                           |
 | GET, PATCH, DELETE | /properties/{id}                    | Get / safely edit / permanently delete                                 |
 | PUT                | /properties/order                   | propertyIds: complete exact order                                      |
+| DELETE             | /projects/{id}                      | Optional JSON destinationProjectId; preserve all tasks before deletion |
+
+Project deletion accepts either no body for an empty project or JSON such as
+`{"destinationProjectId":"EXISTING_PROJECT_ID"}` with
+`Content-Type: application/json`. The destination must differ from the deleted
+project. All active and completed tasks transfer atomically, preserving their
+content, ownership, states, completion dates and dependency graph. The default
+and last remaining project are protected; pending or approved reviews require
+explicit reassignment through the task editor first. Conflicts return 409,
+missing projects return 404, invalid identifiers/self-transfers return 422,
+and success returns 204. Read-only tokens cannot delete projects. As with other
+deletions, obtain user confirmation unless already explicitly requested.
+
+```sh
+curl -X DELETE 'https://tasks.alejandrofernandezcamello.me/api/v1/projects/SOURCE_ID' \
+  -H "Authorization: Bearer $SIMPLE_TASKS_API_TOKEN" \
+  -H 'Content-Type: application/json' \
+  --data '{"destinationProjectId":"DESTINATION_ID"}'
+```
 
 Create a task:
 

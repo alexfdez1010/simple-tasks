@@ -49,10 +49,11 @@ function operation(endpoint: Endpoint) {
     ],
     security: [{ bearerAuth: [] }],
     parameters,
-    ...(['POST', 'PUT', 'PATCH'].includes(method)
+    ...(['POST', 'PUT', 'PATCH'].includes(method) ||
+    (method === 'DELETE' && Object.keys(json.properties ?? {}).length > 0)
       ? {
           requestBody: {
-            required: true,
+            required: method !== 'DELETE',
             content: { 'application/json': { schema: json } },
           },
         }

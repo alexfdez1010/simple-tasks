@@ -1,27 +1,29 @@
 import { redirect } from 'next/navigation';
 
 import { LoginForm } from '@/app/(auth)/login/login-form';
+import { AppLogo } from '@/components/app-logo';
 import { isAuthenticated } from '@/lib/auth/session';
 import { getCurrentLanguage } from '@/lib/i18n/server';
 import { translate } from '@/lib/i18n/translations';
+import './login.css';
 
-/** Renders the minimal password gateway for unauthenticated visitors. */
+/**
+ * Renders the localized password gateway, redirecting authenticated visitors.
+ * @returns The existing password form within the shared mineral visual system.
+ */
 export default async function LoginPage(): Promise<React.JSX.Element> {
   if (await isAuthenticated()) redirect('/');
   const language = await getCurrentLanguage();
   return (
-    <main className="grid min-h-dvh place-items-center bg-background px-5 text-foreground">
-      <section className="w-full max-w-sm rounded-3xl border border-border bg-surface p-7 shadow-sm sm:p-9">
-        <div className="mb-8 space-y-2">
-          <p className="text-sm font-medium text-muted">
-            {translate(language, 'auth.brand')}
-          </p>
-          <h1 className="text-2xl font-semibold tracking-tight">
-            {translate(language, 'auth.heading')}
-          </h1>
-          <p className="text-sm leading-6 text-muted">
-            {translate(language, 'auth.instruction')}
-          </p>
+    <main className="login-page">
+      <header className="login-brand">
+        <AppLogo className="size-10" />
+        <span>{translate(language, 'auth.brand')}</span>
+      </header>
+      <section className="login-surface">
+        <div className="login-heading">
+          <h1>{translate(language, 'auth.heading')}</h1>
+          <p>{translate(language, 'auth.instruction')}</p>
         </div>
         <LoginForm />
       </section>

@@ -1,0 +1,120 @@
+@reference '../../app/globals.css';
+
+.workspace-navigation {
+  @apply flex min-h-0 flex-col px-4 py-5;
+}
+.workspace-wordmark {
+  @apply mb-9 flex min-h-11 items-center gap-2.5 px-3 text-[20px] tracking-[-0.035em] text-foreground no-underline;
+}
+.workspace-logo {
+  @apply size-9 shrink-0 object-contain;
+}
+.workspace-primary-nav {
+  @apply flex flex-col gap-1;
+}
+.workspace-nav-link,
+.workspace .workspace-project-link {
+  @apply flex min-h-11 w-full items-center justify-start gap-3 rounded-[10px] px-3 text-sm text-muted no-underline;
+  transition:
+    background-color 180ms,
+    color 180ms;
+}
+.workspace-nav-link[aria-current='page'] {
+  @apply bg-surface font-medium text-foreground;
+  box-shadow: 0 2px 8px color-mix(in oklab, var(--foreground) 3%, transparent);
+}
+.workspace-nav-link:hover,
+.workspace .workspace-project-link:hover {
+  @apply bg-surface text-foreground;
+}
+.workspace-nav-link > svg,
+.workspace-project-link > svg {
+  @apply size-[18px] shrink-0;
+}
+.workspace-nav-count {
+  @apply ml-auto text-[11px] font-medium tabular-nums text-muted;
+}
+.workspace-projects {
+  @apply mt-9 min-h-0 overflow-y-auto;
+}
+.workspace-nav-heading {
+  @apply mb-2 px-3 text-xs font-medium text-muted;
+}
+.workspace .workspace-project-link {
+  @apply gap-2.5 text-xs;
+}
+.workspace-project-link[aria-pressed='true'] {
+  @apply bg-surface-secondary text-foreground;
+}
+.workspace-project-dot {
+  @apply mx-1 size-2 shrink-0 rounded-[3px] bg-accent/50;
+}
+.workspace-nav-footer {
+  @apply mt-auto flex flex-col items-stretch gap-1 pt-8;
+}
+.workspace-nav-footer > .button,
+.workspace-nav-footer > [data-slot='button'] {
+  @apply justify-start bg-transparent px-3 text-sm font-normal text-muted;
+}
+.workspace-footer-note {
+  @apply mt-5 px-3 text-[11px] leading-relaxed text-muted;
+}
+@media (max-width: 1099px) {
+  .workspace-navigation {
+    @apply flex-row items-center gap-3 px-5 py-2;
+  }
+  .workspace-wordmark {
+    @apply mr-auto mb-0 gap-2 px-0 text-lg;
+  }
+  .workspace-logo {
+    @apply size-8;
+  }
+  .workspace-primary-nav {
+    @apply flex-row;
+  }
+  .workspace-nav-link {
+    @apply gap-2 px-3 text-xs;
+  }
+  .workspace-projects,
+  .workspace-nav-count,
+  .workspace-footer-note {
+    @apply hidden;
+  }
+  .workspace-nav-footer {
+    @apply mt-0 flex-row pt-0;
+  }
+  .workspace-nav-footer > .button {
+    @apply px-2 text-xs;
+  }
+}
+@media (min-width: 640px) and (max-width: 899px) {
+  .workspace-navigation {
+    @apply flex-wrap;
+  }
+  .workspace-primary-nav {
+    @apply order-3 w-full;
+  }
+  .workspace-nav-link {
+    @apply flex-1 justify-center;
+  }
+}
+@media (max-width: 639px) {
+  .workspace-navigation {
+    @apply flex-wrap gap-x-2 gap-y-0 px-4 py-1.5;
+  }
+  .workspace-primary-nav {
+    @apply order-3 w-full gap-1;
+  }
+  .workspace-nav-link {
+    @apply flex-1 justify-center gap-2 px-2;
+  }
+  .workspace-nav-link[aria-current='page'] {
+    @apply bg-surface-secondary shadow-none;
+  }
+  .workspace-wordmark {
+    @apply text-[17px];
+  }
+  .workspace-nav-footer .button {
+    @apply text-[11px];
+  }
+}

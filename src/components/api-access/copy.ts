@@ -1,8 +1,7 @@
 export const apiCopy = {
   en: {
     title: 'API access',
-    intro:
-      'Connect your tools to the same board. Give each integration its own token.',
+    intro: 'Connect your tools to the board with a token for each integration',
     back: 'Back to board',
     docs: 'API documentation',
     create: 'Create token',
@@ -53,7 +52,7 @@ export const apiCopy = {
       'Limits reset each UTC minute. A 429 response includes Retry-After. The API returns up to 100 tasks per page, including the full completed history.',
     contract: 'Download OpenAPI',
     documentationIntro:
-      'Tasks, workflow and properties. Everything you need to connect your own tools.',
+      'Connect your own tools to tasks, workflow and properties',
     authentication: 'Authentication',
     authHelp:
       'Create a token in API access. Send Authorization: Bearer YOUR_TOKEN with each request. Read-only tokens reject writes with 403. Revoked tokens return 401.',
@@ -77,7 +76,7 @@ export const apiCopy = {
   es: {
     title: 'Acceso a la API',
     intro:
-      'Conecta tus herramientas al tablero. Usa un token distinto para cada integración.',
+      'Conecta tus herramientas al tablero con un token para cada integración',
     back: 'Volver al tablero',
     docs: 'Documentación de la API',
     create: 'Crear token',
@@ -130,7 +129,7 @@ export const apiCopy = {
       'Los límites se reinician cada minuto UTC. La respuesta 429 incluye Retry-After. La API devuelve hasta 100 tareas por página e incluye todo el historial de tareas terminadas.',
     contract: 'Descargar OpenAPI',
     documentationIntro:
-      'Tareas, estados y propiedades. Todo lo necesario para conectar tus herramientas.',
+      'Conecta tus herramientas con las tareas, estados y propiedades',
     authentication: 'Autenticación',
     authHelp:
       'Crea un token en Acceso a la API. Envía Authorization: Bearer TU_TOKEN en cada petición. Los tokens de solo lectura rechazan escrituras con 403. Los revocados devuelven 401.',

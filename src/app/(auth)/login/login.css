@@ -1,0 +1,62 @@
+@reference '../../globals.css';
+
+.login-page {
+  @apply relative grid min-h-dvh place-items-center bg-background px-5 py-28 text-foreground;
+}
+
+.login-brand {
+  @apply absolute left-6 top-6 flex items-center gap-3 text-sm font-semibold tracking-tight sm:left-10 sm:top-8;
+}
+
+.login-surface {
+  @apply w-full max-w-[25rem] rounded-2xl bg-surface px-7 py-9 sm:px-10 sm:py-11;
+  box-shadow:
+    0 18px 54px color-mix(in oklab, var(--foreground) 5%, transparent),
+    0 2px 6px color-mix(in oklab, var(--foreground) 3%, transparent);
+}
+
+.login-heading {
+  @apply mb-8;
+}
+
+.login-heading h1 {
+  @apply text-[2rem] font-semibold leading-tight;
+  letter-spacing: -0.035em;
+}
+
+.login-heading p {
+  @apply mt-3 text-sm leading-6 text-muted;
+}
+
+.login-surface .input,
+.login-surface .button {
+  @apply min-h-12 rounded-[10px];
+}
+
+.login-surface .input {
+  @apply text-base;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .login-surface {
+    animation: login-arrive 540ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@keyframes login-arrive {
+  from {
+    transform: translateY(10px);
+    clip-path: inset(0 0 10px 0 round 16px);
+  }
+  to {
+    transform: translateY(0);
+    clip-path: inset(0 0 0 0 round 16px);
+  }
+}
+
+@media (forced-colors: active) {
+  .login-surface {
+    border: 1px solid CanvasText;
+    box-shadow: none;
+  }
+}

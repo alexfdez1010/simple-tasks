@@ -79,5 +79,5 @@ export function getStatisticDescription(
   if (definition.dateRange !== StatisticDateRange.ALL_TIME) {
     parts.push(getDateRangeLabel(language, definition.dateRange));
   }
-  return parts.join(' · ');
+  return parts.join(', ');
 }

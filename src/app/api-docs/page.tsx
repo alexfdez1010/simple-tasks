@@ -1,3 +1,4 @@
+import { AppLogo } from '@/components/app-logo';
 import { ApiNavigation } from '@/components/api-access/api-navigation';
 import { getCurrentLanguage } from '@/lib/i18n/server';
 import { apiCopy } from '@/components/api-access/copy';
@@ -22,7 +23,10 @@ export default async function ApiDocsPage() {
     <main className="mx-auto min-h-dvh w-full max-w-4xl space-y-10 px-5 py-8 sm:px-8 sm:py-12">
       <ApiNavigation copy={copy} documentation />
       <header className="space-y-3">
-        <h1 className="text-3xl font-semibold tracking-tight">{copy.docs}</h1>
+        <h1 className="flex items-center gap-3 text-3xl font-semibold tracking-tight">
+          <AppLogo className="size-10 shrink-0" />
+          {copy.docs}
+        </h1>
         <p className="max-w-prose text-sm leading-6 text-muted">
           {copy.documentationIntro}
         </p>

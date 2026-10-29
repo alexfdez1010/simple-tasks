@@ -2,6 +2,7 @@ import { endpoint } from '@/lib/api/endpoint';
 import { coordinationService } from '@/lib/coordination';
 import {
   assigneeFields,
+  deleteProjectFields,
   projectFields,
   readyQuery,
   startTaskSchema,
@@ -63,6 +64,14 @@ export const coordinationEndpoints = [
     updateProjectSchema.omit({ id: true }).strict(),
     'Project',
     (input, { id }) => coordinationService.updateProject({ ...input, id }),
+  ),
+  endpoint(
+    'DELETE',
+    '/projects/{id}',
+    'Delete a project and preserve its tasks',
+    deleteProjectFields.omit({ id: true }),
+    'Empty',
+    (input, { id }) => coordinationService.deleteProject({ ...input, id }),
   ),
   endpoint(
     'GET',

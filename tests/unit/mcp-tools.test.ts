@@ -15,6 +15,7 @@ const EXPECTED_TOOLS = [
   'list_projects',
   'create_project',
   'update_project',
+  'delete_project',
   'list_ready_tasks',
   'start_task',
   'search_tasks',
@@ -77,6 +78,7 @@ describe('MCP tool catalog', () => {
     expect(descriptions.delete_property).toMatch(/confirm/i);
     expect(descriptions.delete_statistic).toMatch(/confirm/i);
     expect(descriptions.delete_assignee).toMatch(/confirm/i);
+    expect(descriptions.delete_project).toMatch(/confirm/i);
   });
 
   /** Proves MCP exposes atomic task movement fields with bounded input validation. */

@@ -93,8 +93,8 @@ export async function handleApiRequest(
         'VALIDATION_ERROR',
         'Mutation endpoints do not accept query parameters.',
       );
-    const raw = ['POST', 'PATCH', 'PUT'].includes(request.method)
-      ? await readJsonBody(request)
+    const raw = ['POST', 'PATCH', 'PUT', 'DELETE'].includes(request.method)
+      ? await readJsonBody(request, { allowEmpty: request.method === 'DELETE' })
       : Object.fromEntries(query);
     const result = await match.endpoint.handle(raw, match.params);
     await db.apiToken.updateMany({

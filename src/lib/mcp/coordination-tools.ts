@@ -4,6 +4,7 @@ import { coordinationService } from '@/lib/coordination';
 import {
   assigneeFields,
   deleteAssigneeSchema,
+  deleteProjectFields,
   projectFields,
   readyQuery,
   startTaskSchema,
@@ -95,6 +96,21 @@ export function registerCoordinationTools(server: McpServer): void {
       inputSchema: updateProjectSchema.shape,
     },
     async (input) => runMcpTool(() => coordinationService.updateProject(input)),
+  );
+  server.registerTool(
+    'delete_project',
+    {
+      title: 'Delete a project',
+      description:
+        'Delete a project, optionally transferring all active and completed tasks to destinationProjectId. A destination is required for occupied projects; default/last projects and pending or approved reviews are protected. Confirm user intent unless deletion was already explicitly requested.',
+      inputSchema: deleteProjectFields.shape,
+      annotations: { destructiveHint: true },
+    },
+    async (input) =>
+      runMcpTool(async () => {
+        await coordinationService.deleteProject(input);
+        return { deleted: input.id };
+      }),
   );
   server.registerTool(
     'list_ready_tasks',

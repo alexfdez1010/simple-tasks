@@ -1,193 +1,143 @@
 @import './workspace-theme.css';
+@import './workspace-navigation.css';
+@import './workspace-graph.css';
+@import './workspace-detail.css';
+@import './workspace-motion.css';
 @reference '../../app/globals.css';
 
 .workspace {
-  @apply flex h-dvh min-h-[560px] flex-col;
+  @apply grid h-dvh min-h-[560px] grid-cols-[224px_minmax(0,1fr)] p-3 pl-0;
+}
+.workspace-main {
+  @apply flex min-w-0 flex-col overflow-hidden rounded-[20px] bg-surface;
+  box-shadow: 0 2px 16px color-mix(in oklab, var(--foreground) 3%, transparent);
 }
 .workspace .button,
 .workspace-theme .button {
-  @apply min-h-11 rounded-lg shadow-none;
+  @apply min-h-11;
 }
 .workspace-header {
-  @apply flex flex-wrap items-end gap-4 px-5 py-4 sm:px-8;
+  @apply flex flex-wrap items-center gap-3 px-8 pt-8 pb-6;
+}
+.workspace-heading {
+  @apply mr-auto min-w-0;
 }
 .workspace-brand {
-  @apply mr-5 flex min-h-11 items-center text-lg font-semibold tracking-tight;
+  @apply flex items-center gap-3 text-[32px] font-semibold leading-tight tracking-[-0.035em];
 }
-.workspace-header nav {
-  @apply flex flex-wrap items-center gap-1;
+.workspace-heading-count {
+  @apply flex min-h-7 min-w-7 items-center justify-center rounded-lg bg-surface-secondary px-2 text-xs font-medium tracking-normal text-muted;
 }
-.workspace-header .select {
-  @apply min-w-44;
+.workspace-subtitle {
+  @apply mt-2 flex flex-wrap items-center gap-2 text-xs text-muted;
+}
+.workspace-ready-summary {
+  @apply ml-1 inline-flex items-center gap-1 text-accent;
+}
+.workspace-project-select {
+  @apply w-48;
 }
 .workspace-header [data-slot='label'],
 .workspace-toolbar [data-slot='label'] {
   @apply sr-only;
 }
 .workspace-toolbar {
-  @apply flex flex-wrap items-end gap-3 px-5 pb-3 sm:px-8;
+  @apply flex flex-wrap items-end gap-3 px-8 pb-5;
 }
-.workspace-toolbar .text-field {
-  @apply w-full max-w-64;
+.workspace-search {
+  @apply relative w-full max-w-56;
+}
+.workspace-search > svg {
+  @apply pointer-events-none absolute top-3 left-3 z-10 size-5 text-muted;
+}
+.workspace-search .input {
+  @apply pl-10;
 }
 .workspace-toolbar .input,
-.workspace-toolbar .checkbox {
+.workspace-toolbar .checkbox,
+.workspace [data-slot='select-trigger'],
+.workspace-theme [data-slot='select-trigger'] {
   @apply h-11;
 }
 .workspace-toolbar .checkbox {
-  @apply justify-center;
+  @apply justify-center text-xs;
+}
+.workspace-assignee-select {
+  @apply w-40;
 }
 .workspace-sync {
-  @apply ml-auto flex items-end gap-2 text-xs text-muted;
+  @apply ml-auto flex items-end gap-1 text-xs text-muted;
+}
+.workspace-sync > .button {
+  @apply gap-2 px-3 text-xs;
+}
+.workspace-interval-select {
+  @apply w-24;
 }
 .workspace-content {
-  @apply relative min-h-0 flex-1;
-}
-.task-graph {
-  @apply relative h-full min-h-80 overflow-hidden;
-}
-.graph-viewport {
-  @apply relative h-full w-full touch-none overflow-hidden;
-  cursor: grab;
-}
-.graph-viewport:active {
-  cursor: grabbing;
-}
-.graph-world {
-  @apply absolute left-0 top-0 origin-top-left;
-}
-.graph-edges {
-  @apply pointer-events-none absolute inset-0 overflow-visible;
-  color: #aab3bf;
-}
-.graph-edge {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.4;
-}
-.graph-edge-active {
-  color: var(--accent);
-  stroke-width: 2;
-}
-.graph-project-label {
-  @apply absolute text-sm font-medium text-muted;
-}
-.workspace .graph-node {
-  @apply absolute flex flex-col items-stretch justify-between gap-3 rounded-xl bg-surface p-4 text-left whitespace-normal;
-  box-shadow:
-    0 3px 12px #1a25340a,
-    0 1px 3px #1a253408;
-}
-.workspace .graph-node {
-  background: color-mix(in oklab, var(--assignee-color) 13%, var(--surface));
-}
-.workspace .graph-node:hover {
-  background: color-mix(in oklab, var(--assignee-color) 19%, var(--surface));
-  box-shadow: 0 5px 18px #1a253410;
-}
-.workspace .graph-node[aria-pressed='true'] {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-.workspace .graph-node[data-related='true'] {
-  background: color-mix(in oklab, var(--assignee-color) 20%, var(--surface));
-}
-.graph-node-title {
-  @apply line-clamp-2 text-sm font-medium leading-5;
-}
-.graph-node-footer {
-  @apply flex w-full items-center justify-between gap-2 text-[11px] text-muted;
-}
-.graph-assignee {
-  @apply flex min-w-0 items-center gap-1.5 truncate;
-}
-.graph-avatar {
-  @apply flex size-5 shrink-0 items-center justify-center rounded-full bg-surface-secondary text-[10px];
-}
-.graph-state {
-  @apply shrink-0;
-}
-.graph-state[data-ready='true'] {
-  color: var(--accent);
-}
-.graph-controls {
-  @apply absolute bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-xl bg-surface p-1;
-  box-shadow: 0 3px 15px #1a25340b;
-}
-.graph-empty {
-  @apply flex h-full items-center justify-center px-8 text-center text-sm text-muted;
-}
-.workspace-detail {
-  @apply absolute inset-y-0 right-0 z-10 w-[360px] overflow-y-auto bg-surface p-6;
-  box-shadow: -5px 0 30px #1a253408;
-}
-.workspace-detail-header {
-  @apply mb-6 flex items-start justify-between gap-3;
-}
-.workspace-detail h2 {
-  @apply text-lg font-semibold leading-snug tracking-tight;
-}
-.workspace-detail-fields {
-  @apply flex flex-col gap-5;
-}
-.workspace-dependency {
-  @apply flex items-center justify-between gap-3 py-2 text-sm;
+  @apply relative mx-3 mb-3 min-h-0 flex-1 overflow-hidden rounded-2xl bg-background;
 }
 .workspace-feedback {
-  @apply px-6 py-2 text-sm text-danger;
+  @apply mx-8 mb-3 rounded-lg bg-danger/10 px-4 py-3 text-sm text-danger;
 }
 .workspace-demo {
   @apply px-5 py-2 text-xs text-muted sm:px-8;
 }
+@media (max-width: 1099px) {
+  .workspace {
+    @apply flex flex-col p-0;
+  }
+  .workspace-main {
+    @apply min-h-0 flex-1 rounded-none shadow-none;
+  }
+  .workspace-header {
+    @apply pt-5;
+  }
+}
 @media (max-width: 639px) {
   .workspace-header {
-    @apply grid grid-cols-[1fr_auto] gap-2 px-4 py-3;
+    @apply gap-3 px-4 pt-5 pb-4;
+  }
+  .workspace-heading {
+    @apply basis-[calc(100%-150px)];
   }
   .workspace-brand {
-    @apply mr-auto;
+    @apply text-[28px];
   }
-  .workspace-header nav {
-    @apply col-span-2 row-start-3 w-full justify-between gap-0;
+  .workspace-subtitle {
+    @apply text-[11px];
   }
-  .workspace-header > div {
-    @apply col-span-2 row-start-2 w-full;
+  .workspace-project-select {
+    @apply order-3 w-full;
   }
   .workspace-header #new-task {
-    @apply col-start-2 row-start-1;
-  }
-  .workspace-header nav .button,
-  .workspace-header nav a {
-    @apply min-h-11 items-center px-2 text-xs;
-  }
-  .workspace-header .select {
-    @apply w-full;
+    @apply ml-auto gap-1.5 px-3 text-xs;
   }
   .workspace-toolbar {
-    @apply px-4;
+    @apply gap-2 px-4 pb-4;
   }
-  .workspace-detail {
-    @apply fixed inset-x-0 bottom-0 top-auto max-h-[78dvh] w-full rounded-t-2xl p-5 pb-8;
+  .workspace-search {
+    @apply max-w-none flex-1;
   }
-  .graph-controls {
-    @apply bottom-4;
+  .workspace-assignee-select {
+    @apply w-32;
   }
-}
-@media (prefers-reduced-motion: reduce) {
-  .workspace *,
-  .workspace *::before,
-  .workspace *::after {
-    animation-duration: 0s !important;
-    transition-duration: 0s !important;
+  .workspace-toolbar .checkbox {
+    @apply mr-auto;
   }
-}
-
-.workspace [data-slot='select-trigger'],
-.workspace-theme [data-slot='select-trigger'] {
-  @apply min-h-11;
-}
-
-@media (min-width: 1024px) {
-  .workspace-content[data-inspecting='true'] .task-graph {
-    width: calc(100% - 360px);
+  .workspace-sync {
+    @apply ml-0;
+  }
+  .workspace-refresh-label {
+    @apply sr-only;
+  }
+  .workspace-sync > .button {
+    @apply w-11 px-0;
+  }
+  .workspace-interval-select {
+    @apply w-[76px];
+  }
+  .workspace-content {
+    @apply mx-2 mb-2 rounded-xl;
   }
 }

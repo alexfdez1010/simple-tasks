@@ -61,10 +61,42 @@ test.describe('statistics', () => {
     await expect(widget).toHaveAttribute('data-color', 'OCEAN');
     await expect(widget).toHaveAttribute('data-size', 'SQUARE');
     await expect(
-      page.getByText('Task count · All tasks · Last 30 days', { exact: true }),
+      widget.getByText('Task count, All tasks, Last 30 days', { exact: true }),
     ).toBeVisible();
 
-    await page.getByRole('button', { name: `Edit: ${name}` }).click();
+    const headings = page
+      .locator('.statistics-widget')
+      .getByRole('heading', { level: 3 });
+    const originalOrder = await headings.allTextContents();
+    const movedOrder = [...originalOrder];
+    const last = movedOrder.length - 1;
+    [movedOrder[last - 1], movedOrder[last]] = [
+      movedOrder[last],
+      movedOrder[last - 1],
+    ];
+    const actions = widget.getByRole('button', {
+      name: `Statistic actions: ${name}`,
+      exact: true,
+    });
+    await actions.focus();
+    await actions.press('Enter');
+    await expect(
+      page.getByRole('menuitem', { name: `Move ${name} later`, exact: true }),
+    ).toBeDisabled();
+    await page
+      .getByRole('menuitem', { name: `Move ${name} earlier`, exact: true })
+      .press('Enter');
+    await expect(headings).toHaveText(movedOrder);
+    await actions.focus();
+    await actions.press('Enter');
+    await page
+      .getByRole('menuitem', { name: `Move ${name} later`, exact: true })
+      .press('Enter');
+    await expect(headings).toHaveText(originalOrder);
+    await actions.click();
+    await page
+      .getByRole('menuitem', { name: `Edit: ${name}`, exact: true })
+      .click();
     const editDialog = page.getByRole('dialog', { name: 'Edit statistic' });
     await editDialog.getByLabel('Name').fill(renamed);
     await editDialog.getByText('Coral', { exact: true }).click();
@@ -77,7 +109,15 @@ test.describe('statistics', () => {
     await expect(renamedWidget).toHaveAttribute('data-color', 'CORAL');
     await expect(renamedWidget).toHaveAttribute('data-size', 'WIDE');
 
-    await page.getByRole('button', { name: `Delete: ${renamed}` }).click();
+    await renamedWidget
+      .getByRole('button', {
+        name: `Statistic actions: ${renamed}`,
+        exact: true,
+      })
+      .click();
+    await page
+      .getByRole('menuitem', { name: `Delete: ${renamed}`, exact: true })
+      .click();
     const deleteDialog = page.getByRole('dialog', { name: 'Delete statistic' });
     await deleteDialog.getByRole('button', { name: 'Delete' }).click();
     await expect(page.getByRole('heading', { name: renamed })).toHaveCount(0);
@@ -90,23 +130,27 @@ test('focus view hides editing controls without changing statistics', async ({
 }) => {
   await login(page);
   await page.getByRole('link', { name: 'Statistics' }).click();
-  const edit = page.getByRole('button', {
-    name: 'Edit: Completed tasks',
+  const actions = page.getByRole('button', {
+    name: 'Statistic actions: Completed tasks',
     exact: true,
   });
   const focus = page.getByRole('button', { name: 'Focus view' });
   const values = await page
     .locator('.statistics-metric-value')
     .allTextContents();
-  await expect(edit).toBeVisible();
+  await expect(actions).toBeVisible();
   await focus.focus();
   await page.keyboard.press('Enter');
   await expect(focus).toHaveAttribute('aria-pressed', 'true');
-  await expect(edit).toBeHidden();
+  await expect(actions).toBeHidden();
   await expect(page.locator('.statistics-metric-value')).toHaveText(values);
   await page.keyboard.press('Enter');
   await expect(focus).toHaveAttribute('aria-pressed', 'false');
-  await edit.click();
+  await actions.focus();
+  await actions.press('Enter');
+  await page
+    .getByRole('menuitem', { name: 'Edit: Completed tasks', exact: true })
+    .press('Enter');
   await expect(
     page.getByRole('dialog', { name: 'Edit statistic' }),
   ).toBeVisible();

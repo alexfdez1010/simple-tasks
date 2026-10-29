@@ -142,7 +142,7 @@ export const en = {
   'color.hex': 'Hex color',
   'auth.brand': 'Simple Tasks',
   'auth.heading': 'Your board',
-  'auth.instruction': 'Enter the password to continue.',
+  'auth.instruction': 'Enter the password to continue',
   'auth.password': 'Password',
   'auth.signIn': 'Sign in',
   'auth.signingIn': 'Signing in…',
@@ -151,7 +151,7 @@ export const en = {
   'ai.integration': 'AI integration',
   'ai.heading': 'Connect Simple Tasks',
   'ai.instructions':
-    'Download the skill and configuration. In your agent environment, set {clientEnv} to the same value as {serverEnv} on the server.',
+    'Download the skill and configuration, then set {clientEnv} in your agent environment to the same value as {serverEnv} on the server',
   'ai.downloadSkill': 'Download SKILL.md',
   'ai.downloadConfig': 'Download MCP configuration',
   'ai.mcpToken': 'MCP token',

@@ -1,6 +1,7 @@
 'use client';
 
-import { Button, Card } from '@heroui/react';
+import { Card } from '@heroui/react';
+import { StatisticActions } from '@/components/statistics/statistic-actions';
 
 import { getStatisticsCopy } from '@/components/statistics/copy';
 import { StatisticChart } from '@/components/statistics/statistic-chart';
@@ -47,55 +48,15 @@ export function StatisticCard({
             {getStatisticDescription(definition, language)}
           </Card.Description>
         </div>
-        <div
-          className="statistics-widget-actions"
-          aria-label={getStatisticsCopy(language, 'actions')}
-        >
-          <Button
-            isIconOnly
-            isDisabled={!canMoveEarlier || isPending}
-            size="sm"
-            variant="ghost"
-            aria-label={getStatisticsCopy(language, 'moveEarlier', {
-              name: definition.name,
-            })}
-            onPress={() => onMove(-1)}
-          >
-            <span aria-hidden="true">←</span>
-          </Button>
-          <Button
-            isIconOnly
-            isDisabled={!canMoveLater || isPending}
-            size="sm"
-            variant="ghost"
-            aria-label={getStatisticsCopy(language, 'moveLater', {
-              name: definition.name,
-            })}
-            onPress={() => onMove(1)}
-          >
-            <span aria-hidden="true">→</span>
-          </Button>
-          <Button
-            isIconOnly
-            isDisabled={isPending}
-            size="sm"
-            variant="ghost"
-            aria-label={`${getStatisticsCopy(language, 'edit')}: ${definition.name}`}
-            onPress={onEdit}
-          >
-            <span aria-hidden="true">✎</span>
-          </Button>
-          <Button
-            isIconOnly
-            isDisabled={isPending}
-            size="sm"
-            variant="ghost"
-            aria-label={`${getStatisticsCopy(language, 'delete')}: ${definition.name}`}
-            onPress={onDelete}
-          >
-            <span aria-hidden="true">×</span>
-          </Button>
-        </div>
+        <StatisticActions
+          name={definition.name}
+          canMoveEarlier={canMoveEarlier}
+          canMoveLater={canMoveLater}
+          isPending={isPending}
+          onMove={onMove}
+          onEdit={onEdit}
+          onDelete={onDelete}
+        />
       </Card.Header>
       <Card.Content className="statistics-widget-content">
         {result.kind === 'KPI' ? (

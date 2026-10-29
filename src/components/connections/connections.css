@@ -1,0 +1,89 @@
+@reference '../../app/globals.css';
+
+.connections-page {
+  @apply mx-auto min-h-dvh max-w-5xl px-5 py-6 text-foreground sm:px-8 sm:py-8;
+}
+
+.connections-back {
+  @apply inline-flex min-h-11 items-center gap-2 rounded-lg px-2 text-sm font-medium text-muted;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.connections-back:hover {
+  @apply bg-surface-secondary text-foreground;
+}
+
+.connections-heading {
+  @apply pb-12 pt-10 sm:pb-14 sm:pt-14;
+}
+
+.connections-heading h1 {
+  @apply text-[2rem] font-semibold leading-tight sm:text-[2.75rem];
+  letter-spacing: -0.035em;
+}
+
+.connections-heading > p {
+  @apply mt-4 max-w-xl text-base leading-7 text-muted;
+}
+
+.connections-paths {
+  @apply divide-y divide-divider;
+}
+
+.connections-path {
+  @apply grid gap-7 py-9 first:pt-0 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] sm:gap-12 sm:py-11;
+}
+
+.connections-path h2 {
+  @apply text-xl font-semibold tracking-tight;
+}
+
+.connections-path-heading > p {
+  @apply mt-3 max-w-sm text-sm leading-6 text-muted;
+}
+
+.connections-path-setup {
+  @apply min-w-0;
+}
+
+.connections-steps {
+  @apply list-decimal space-y-4 pl-6 text-sm leading-6;
+}
+
+.connections-steps li {
+  @apply pl-2;
+}
+
+.connections-steps li::marker {
+  @apply text-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.connections-action {
+  @apply mt-7 inline-flex min-h-11 items-center justify-between gap-4 rounded-[10px] bg-surface-secondary px-4 py-3 text-sm font-medium text-foreground;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.connections-action:hover {
+  @apply bg-accent text-accent-foreground;
+}
+
+.connections-action svg {
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.connections-action:hover svg {
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .connections-page *,
+  .connections-page *::before,
+  .connections-page *::after {
+    transition: none !important;
+  }
+}

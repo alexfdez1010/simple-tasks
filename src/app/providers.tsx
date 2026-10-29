@@ -2,6 +2,7 @@
 
 import { I18nProvider as ReactAriaI18nProvider } from '@react-aria/i18n';
 
+import { PwaRegistration } from '@/components/pwa/pwa-registration';
 import { I18nProvider } from '@/lib/i18n/provider';
 import { LANGUAGE_LOCALES, type Language } from '@/lib/i18n/config';
 
@@ -23,6 +24,7 @@ export function AppProviders({
   return (
     <I18nProvider language={language}>
       <ReactAriaI18nProvider locale={LANGUAGE_LOCALES[language]}>
+        <PwaRegistration />
         {children}
       </ReactAriaI18nProvider>
     </I18nProvider>
