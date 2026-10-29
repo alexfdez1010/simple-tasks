@@ -20,7 +20,8 @@
 .workspace-header .select {
   @apply min-w-44;
 }
-.workspace-header [data-slot='label'] {
+.workspace-header [data-slot='label'],
+.workspace-toolbar [data-slot='label'] {
   @apply sr-only;
 }
 .workspace-toolbar {
@@ -163,9 +164,6 @@
   }
   .workspace-toolbar {
     @apply px-4;
-  }
-  .workspace-toolbar [data-slot='label'] {
-    @apply sr-only;
   }
   .workspace-detail {
     @apply fixed inset-x-0 bottom-0 top-auto max-h-[78dvh] w-full rounded-t-2xl p-5 pb-8;
