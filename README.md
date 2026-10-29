@@ -177,7 +177,7 @@ Production should always run over HTTPS.
 
 If you bring another PostgreSQL provider, omit the Neon store and set
 `DATABASE_URL` yourself. It must be reachable during the Vercel build because
-Prisma migrations run before Next.js compiles.
+Prisma migrations run before Next.js compiles. When your provider supplies `DATABASE_URL_UNPOOLED`, Prisma CLI uses that direct connection for migrations; otherwise it uses `DATABASE_URL`. Runtime requests continue to use `DATABASE_URL`. This avoids migration advisory locks being retained by a transaction pool. See [Prisma’s pooler guidance](https://www.prisma.io/docs/orm/v6/prisma-client/setup-and-configuration/databases-connections/pgbouncer).
 
 ## 🛠 Run locally
 
