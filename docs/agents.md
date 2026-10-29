@@ -94,6 +94,12 @@ statistics and deletion tools remain available.
    "Use the task's acceptance criteria; report sources and unresolved issues."
    and color "#7297CA". Keep its returned id. list_assignees reads all owners;
    update_assignee edits selected fields by id.
+   To remove it later, call delete_assignee with {"id":"RETURNED_ID"} after
+   the user requests or confirms deletion. Reassign every owned task and review,
+   including completed history, first; otherwise deletion returns a conflict.
+   The default owner is protected. Legacy Responsable/Assignee SELECT choices
+   remove the deleted name atomically, retaining the default owner's name if
+   the list would become empty. Other properties and tasks are preserved.
 2. Call create_project with name "Documentation" and a description containing
    the shared scope. list_projects and update_project read/edit these definitions.
 3. Call create_task with title, description, assigneeId, projectId and optional
@@ -124,18 +130,19 @@ All paths below are relative to /api/v1 and use existing bearer-token scopes and
 rate limits. Creation returns 201; reads/edits/start return 200. Requests and
 responses are documented in /api/openapi.
 
-| Operation                | Endpoint               | Body or query                               |
-| ------------------------ | ---------------------- | ------------------------------------------- |
-| List responsible parties | GET /assignees         | None                                        |
-| Create responsible party | POST /assignees        | name, kind, description, color              |
-| Edit responsible party   | PATCH /assignees/{id}  | Selected fields                             |
-| List projects            | GET /projects          | None                                        |
-| Create project           | POST /projects         | name, description                           |
-| Edit project             | PATCH /projects/{id}   | Selected fields                             |
-| Read available work      | GET /tasks/ready       | assigneeId, optional projectId, limit       |
-| Start task               | POST /tasks/{id}/start | assigneeId                                  |
-| Edit relationships       | PATCH /tasks/{id}      | assigneeId, projectId, dependencyIds        |
-| Search history           | GET /tasks             | Existing filters plus assigneeId, projectId |
+| Operation                | Endpoint               | Body or query                                               |
+| ------------------------ | ---------------------- | ----------------------------------------------------------- |
+| List responsible parties | GET /assignees         | None                                                        |
+| Create responsible party | POST /assignees        | name, kind, description, color                              |
+| Edit responsible party   | PATCH /assignees/{id}  | Selected fields                                             |
+| Delete unused party      | DELETE /assignees/{id} | None; returns 204, 404 if missing, 409 if in use or default |
+| List projects            | GET /projects          | None                                                        |
+| Create project           | POST /projects         | name, description                                           |
+| Edit project             | PATCH /projects/{id}   | Selected fields                                             |
+| Read available work      | GET /tasks/ready       | assigneeId, optional projectId, limit                       |
+| Start task               | POST /tasks/{id}/start | assigneeId                                                  |
+| Edit relationships       | PATCH /tasks/{id}      | assigneeId, projectId, dependencyIds                        |
+| Search history           | GET /tasks             | Existing filters plus assigneeId, projectId                 |
 
 For example, an authenticated script can GET /api/v1/tasks/ready?assigneeId=ID,
 then POST /api/v1/tasks/TASK_ID/start with {"assigneeId":"ID"}. A read-only token
@@ -167,6 +174,8 @@ redeploying. Do not drop these tables or reset data as a rollback. Referenced
 prerequisite deletion remains restricted at the database boundary.
 
 References: [Next.js Route Handlers](https://nextjs.org/docs/app/api-reference/file-conventions/route),
+[MCP tools](https://modelcontextprotocol.io/specification/2025-11-25/server/tools),
+[Prisma 6 transactions](https://www.prisma.io/docs/orm/v6/prisma-client/queries/transactions),
 [React effects](https://react.dev/reference/react/useEffect),
 [HeroUI Select](https://heroui.com/en/docs/react/components/select),
 [PostgreSQL transaction isolation](https://www.postgresql.org/docs/current/transaction-iso.html).

@@ -11,6 +11,10 @@ export const coordinationErrorsEs: Record<string, string> = {
   'Every task needs a responsible party.':
     'Cada tarea necesita un responsable.',
   'The responsible party does not exist.': 'El responsable no existe.',
+  'The default responsible party cannot be deleted.':
+    'No se puede eliminar el responsable predeterminado.',
+  'Reassign all tasks and reviews before deleting this responsible party.':
+    'Reasigna todas las tareas y revisiones antes de eliminar este responsable.',
   'The project does not exist.': 'El proyecto no existe.',
   'A responsible party already has this name.':
     'Ya existe un responsable con ese nombre.',

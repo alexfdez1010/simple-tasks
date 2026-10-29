@@ -3,6 +3,7 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { coordinationService } from '@/lib/coordination';
 import {
   assigneeFields,
+  deleteAssigneeSchema,
   projectFields,
   readyQuery,
   startTaskSchema,
@@ -49,6 +50,21 @@ export function registerCoordinationTools(server: McpServer): void {
     },
     async (input) =>
       runMcpTool(() => coordinationService.updateAssignee(input)),
+  );
+  server.registerTool(
+    'delete_assignee',
+    {
+      title: 'Delete a responsible party',
+      description:
+        'Delete an unused human or agent by id. Reassign all owned tasks and reviews first, including completed history. The default responsible party is protected. Confirm with the user before calling.',
+      inputSchema: deleteAssigneeSchema.shape,
+      annotations: { destructiveHint: true },
+    },
+    async (input) =>
+      runMcpTool(async () => {
+        await coordinationService.deleteAssignee(input);
+        return { deleted: input.id };
+      }),
   );
   server.registerTool(
     'list_projects',

@@ -37,6 +37,14 @@ export const coordinationEndpoints = [
     'Assignee',
     (input, { id }) => coordinationService.updateAssignee({ ...input, id }),
   ),
+  endpoint(
+    'DELETE',
+    '/assignees/{id}',
+    'Delete an unused responsible party',
+    empty,
+    'Empty',
+    (_, { id }) => coordinationService.deleteAssignee({ id }),
+  ),
   endpoint('GET', '/projects', 'List projects', empty, 'Projects', () =>
     coordinationService.listProjects(),
   ),

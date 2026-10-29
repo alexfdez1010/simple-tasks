@@ -241,6 +241,14 @@ Finish evidence: the independent review resolved native-scale constrained views,
 
 Sources: `src/components/workspace/workspace-theme.css`, `workspace.css`, `graph-layout.ts`, `use-graph-camera.ts`, panel/editor/polling components; `src/app/globals.css`, `glass.css`; retained Statistics and Connections implementations. Sidecar ramps are generated previews only; they are not additional runtime colour tokens. Component snippets expand the actual styling for a framework-free preview; they are not alternate production components.
 
+## Responsible-party deletion through MCP
+
+`delete_assignee` removes an unused configured owner through the shared service;
+REST exposes the same operation. Reassign owned or reviewed tasks, including
+completed history, before deletion. The default owner remains protected for
+legacy clients. Deletion also removes the name from legacy assignment SELECT
+options in the same transaction. No new UI pattern or visual token is needed.
+
 ## Do's and Don'ts
 
 ### Do:

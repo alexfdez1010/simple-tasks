@@ -1,6 +1,7 @@
 import type { CoordinationRepository } from '@/lib/coordination/repository';
 import {
   assigneeFields,
+  deleteAssigneeSchema,
   projectFields,
   readyQuery,
   startTaskSchema,
@@ -24,6 +25,10 @@ export class CoordinationService {
   /** Validates partial changes to one responsible party. */
   updateAssignee(input: z.input<typeof updateAssigneeSchema>) {
     return this.repository.updateAssignee(updateAssigneeSchema.parse(input));
+  }
+  /** Validates an owner ID and deletes it only when no tasks or reviews refer to it. */
+  deleteAssignee(input: z.input<typeof deleteAssigneeSchema>) {
+    return this.repository.deleteAssignee(deleteAssigneeSchema.parse(input).id);
   }
   /** Returns all persisted project definitions. */
   listProjects() {

@@ -6,6 +6,7 @@ export const spanishEndpointSummaries: Record<string, string> = {
   'GET /assignees': 'Consultar personas y agentes',
   'POST /assignees': 'Crear un responsable con instrucciones y color',
   'PATCH /assignees/{id}': 'Editar un responsable sin perder sus asignaciones',
+  'DELETE /assignees/{id}': 'Eliminar un responsable sin tareas ni revisiones',
   'GET /projects': 'Consultar los proyectos',
   'POST /projects': 'Crear un proyecto',
   'PATCH /projects/{id}': 'Editar un proyecto',

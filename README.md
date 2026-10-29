@@ -111,13 +111,14 @@ not configure that platform limit. See the
 
 ### MCP capabilities
 
-| Area            | Read tools                          | Mutation tools                                                                   |
-| --------------- | ----------------------------------- | -------------------------------------------------------------------------------- |
-| Tasks           | `list_board`, `get_task`            | `create_task`, `update_task`, `move_task`, `reorder_tasks`, `delete_task`        |
-| Workflow        | `list_statuses`                     | `create_status`, `update_status`, `reorder_statuses`, `delete_status`            |
-| Properties      | `list_properties`                   | `create_property`, `update_property`, `reorder_properties`, `delete_property`    |
-| Property values | —                                   | `set_task_property_value`, `delete_task_property_value`                          |
-| Statistics      | `get_statistics`, `list_statistics` | `create_statistic`, `update_statistic`, `reorder_statistics`, `delete_statistic` |
+| Area                | Read tools                          | Mutation tools                                                                   |
+| ------------------- | ----------------------------------- | -------------------------------------------------------------------------------- |
+| Tasks               | `list_board`, `get_task`            | `create_task`, `update_task`, `move_task`, `reorder_tasks`, `delete_task`        |
+| Responsible parties | `list_assignees`                    | `create_assignee`, `update_assignee`, `delete_assignee`                          |
+| Workflow            | `list_statuses`                     | `create_status`, `update_status`, `reorder_statuses`, `delete_status`            |
+| Properties          | `list_properties`                   | `create_property`, `update_property`, `reorder_properties`, `delete_property`    |
+| Property values     | —                                   | `set_task_property_value`, `delete_task_property_value`                          |
+| Statistics          | `get_statistics`, `list_statistics` | `create_statistic`, `update_statistic`, `reorder_statistics`, `delete_statistic` |
 
 For example, an agent can create a rolling completion KPI with
 `create_statistic`:
@@ -143,6 +144,13 @@ confirmation first. The web UI and MCP use the same application services, so
 validation and behavior stay consistent. `create_statistic` and
 `update_statistic` accept `color` (`FOREST`, `OCEAN`, `IRIS`, `AMBER`, `CORAL`,
 or `GRAPHITE`) and `size` (`AUTO`, `COMPACT`, `SQUARE`, `WIDE`, or `FULL`).
+
+`delete_assignee` accepts `{"id":"ASSIGNEE_ID"}` and returns
+`{"deleted":"ASSIGNEE_ID"}`. It removes an unused human or agent after the user
+requests or confirms deletion. Reassign all tasks and reviews first, including
+completed history; the default owner cannot be deleted. The equivalent REST
+operation is `DELETE /api/v1/assignees/ASSIGNEE_ID`. See [agent coordination](docs/agents.md)
+for conflict behavior and legacy assignment compatibility.
 
 ## 🚀 Deploy your private instance
 

@@ -1,4 +1,5 @@
 import { readGraphSnapshot } from '@/lib/coordination/graph-repository';
+import { deleteUnusedAssignee } from '@/lib/coordination/assignee-deletion';
 import type { Assignee, PrismaClient, Project } from '@/generated/prisma';
 import { runSerializable } from '@/lib/db/transaction';
 import {
@@ -27,6 +28,7 @@ export interface CoordinationRepository {
   updateAssignee(
     input: z.infer<typeof updateAssigneeSchema>,
   ): Promise<Assignee>;
+  deleteAssignee(id: string): Promise<void>;
   listProjects(): Promise<Project[]>;
   createProject(input: ProjectInput): Promise<Project>;
   updateProject(input: z.infer<typeof updateProjectSchema>): Promise<Project>;
@@ -80,6 +82,10 @@ export class PrismaCoordinationRepository implements CoordinationRepository {
       }
       return assignee;
     });
+  }
+  /** Deletes an unused owner by ID, preserving task history and legacy defaults. */
+  deleteAssignee(id: string) {
+    return deleteUnusedAssignee(this.client, id);
   }
   /** Lists persisted projects without inventing sample content. */
   listProjects() {

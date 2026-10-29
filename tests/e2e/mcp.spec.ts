@@ -12,6 +12,7 @@ const EXPECTED_TOOLS = [
   'list_assignees',
   'create_assignee',
   'update_assignee',
+  'delete_assignee',
   'list_projects',
   'create_project',
   'update_project',
@@ -349,6 +350,77 @@ test.describe('remote MCP server', () => {
           arguments: { id: terminalStatusId },
         });
       }
+      await transport.close();
+    }
+  });
+
+  /** Proves the official client can delete unused owners while protecting task references and defaults. */
+  test('deletes unused responsible parties safely', async () => {
+    const { client, transport } = await connectMcp();
+    let ownerId: string | undefined;
+    let taskId: string | undefined;
+    try {
+      const owner = parseToolJson<{ id: string }>(
+        await client.callTool({
+          name: 'create_assignee',
+          arguments: { name: `E2E deletion ${process.pid}`, kind: 'AGENT' },
+        }),
+      );
+      ownerId = owner.id;
+      expect(
+        await client.callTool({
+          name: 'delete_assignee',
+          arguments: { id: 'assignee-default' },
+        }),
+      ).toMatchObject({ isError: true });
+      const task = parseToolJson<{ id: string }>(
+        await client.callTool({
+          name: 'create_task',
+          arguments: { title: 'E2E protected owner', assigneeId: owner.id },
+        }),
+      );
+      taskId = task.id;
+      expect(
+        await client.callTool({
+          name: 'delete_assignee',
+          arguments: { id: owner.id },
+        }),
+      ).toMatchObject({ isError: true });
+      await client.callTool({
+        name: 'delete_task',
+        arguments: { id: task.id },
+      });
+      taskId = undefined;
+      expect(
+        parseToolJson(
+          await client.callTool({
+            name: 'delete_assignee',
+            arguments: { id: owner.id },
+          }),
+        ),
+      ).toEqual({ deleted: owner.id });
+      ownerId = undefined;
+      const owners = parseToolJson<Array<{ id: string }>>(
+        await client.callTool({ name: 'list_assignees', arguments: {} }),
+      );
+      expect(owners.some(({ id }) => id === owner.id)).toBe(false);
+      expect(
+        await client.callTool({
+          name: 'delete_assignee',
+          arguments: { id: owner.id },
+        }),
+      ).toMatchObject({ isError: true });
+    } finally {
+      if (taskId)
+        await client.callTool({
+          name: 'delete_task',
+          arguments: { id: taskId },
+        });
+      if (ownerId)
+        await client.callTool({
+          name: 'delete_assignee',
+          arguments: { id: ownerId },
+        });
       await transport.close();
     }
   });

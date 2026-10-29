@@ -13,6 +13,7 @@ export const assigneeFields = z.object({
 export const updateAssigneeSchema = assigneeFields
   .partial()
   .extend({ id: idSchema });
+export const deleteAssigneeSchema = z.object({ id: idSchema });
 export const projectFields = z.object({
   name: z.string().trim().min(1).max(100),
   description: z.string().max(20_000).default(''),
