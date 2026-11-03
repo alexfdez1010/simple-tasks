@@ -14,6 +14,12 @@ The auth secret encrypts TOTP and recovery material as well as signing cookies;
 back it up securely and plan recovery before rotating it.
 
 Sessions are database-backed, expire after 12 hours, and are revoked on sign-out.
+The page proxy validates cookies against the canonical `/api/auth/get-session`
+endpoint with `disableRefresh=true`, no caching, a ten-second timeout and no redirects.
+For example, a newly registered owner requesting `/` is redirected to `/security`
+until enrollment completes. Validation failures return 503 and never grant access.
+Prisma stays in the Node.js auth route instead of Vercel's isolated proxy bundle;
+protected server actions and pages also validate the session directly.
 Enrollment invalidates every existing password-only session. Unenrolled owners
 cannot read the workspace, mutate data, issue REST keys or authorize MCP clients.
 TOTP is required at every sign-in; trusted-device bypass is disabled. Authentication

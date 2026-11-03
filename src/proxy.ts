@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { auth } from '@/lib/auth/server';
+import { getProxySession } from '@/lib/auth/proxy-session';
 
 const PUBLIC_PATHS = [
   '/login',
@@ -19,7 +19,15 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
     PUBLIC_PATHS.some((entry) => path === entry || path.startsWith(`${entry}/`))
   )
     return NextResponse.next();
-  const session = await auth.api.getSession({ headers: request.headers });
+  let session: Awaited<ReturnType<typeof getProxySession>>;
+  try {
+    session = await getProxySession(request.headers);
+  } catch {
+    return new NextResponse('Session validation temporarily unavailable.', {
+      status: 503,
+      headers: { 'Retry-After': '5', 'Cache-Control': 'no-store' },
+    });
+  }
   if (!session) {
     const url = new URL('/login', request.url);
     url.searchParams.set('next', `${path}${request.nextUrl.search}`);
