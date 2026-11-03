@@ -6,6 +6,9 @@ import { jwt, twoFactor } from 'better-auth/plugins';
 import { apiKey } from '@better-auth/api-key';
 import { generateApiToken } from '@/lib/api-tokens/crypto';
 import { mcp } from '@better-auth/mcp';
+import { getCurrentAdapter } from '@better-auth/core/context';
+import { requireOwnerInvitation } from '@/lib/auth/registration';
+import { OWNER_INVITATION_HEADER } from '@/lib/auth/registration-constants';
 import { APIError, createAuthMiddleware } from 'better-auth/api';
 import { db } from '@/lib/db/client';
 import { getAuthConfig } from '@/lib/auth/config';
@@ -29,7 +32,7 @@ export const auth = betterAuth({
   },
   emailAndPassword: {
     enabled: true,
-    disableSignUp: true,
+    disableSignUp: false,
     minPasswordLength: 12,
   },
   disabledPaths: [
@@ -55,6 +58,7 @@ export const auth = betterAuth({
     window: 60,
     max: 100,
     customRules: {
+      '/sign-up/email': { window: 60, max: 5 },
       '/sign-in/email': { window: 60, max: 5 },
       '/two-factor/*': { window: 60, max: 5 },
       '/oauth2/register': { window: 60, max: 10 },
@@ -62,6 +66,20 @@ export const auth = betterAuth({
   },
   databaseHooks: {
     user: {
+      create: {
+        /** Consumes the invitation atomically with Better Auth's user, password and session writes. */
+        before: async (user, ctx) => {
+          if (!ctx || ctx.path !== '/sign-up/email')
+            throw new APIError('FORBIDDEN');
+          await requireOwnerInvitation(
+            await getCurrentAdapter(ctx.context.adapter),
+            user.email,
+            ctx.headers?.get(OWNER_INVITATION_HEADER),
+            true,
+          );
+          return { data: { ...user, emailVerified: true } };
+        },
+      },
       update: {
         /** Revokes every password-only session when enrollment enables the second factor. */
         after: async (user) => {
@@ -73,6 +91,12 @@ export const auth = betterAuth({
   },
   hooks: {
     before: createAuthMiddleware(async (ctx) => {
+      if (ctx.path === '/sign-up/email')
+        await requireOwnerInvitation(
+          await getCurrentAdapter(ctx.context.adapter),
+          ctx.body?.email,
+          ctx.headers?.get(OWNER_INVITATION_HEADER),
+        );
       if (
         ctx.path === '/two-factor/verify-totp' ||
         ctx.path === '/two-factor/verify-backup-code'

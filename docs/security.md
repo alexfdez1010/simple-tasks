@@ -1,7 +1,7 @@
 # Authentication and security operations
 
 Better Auth owns email/password sessions, TOTP, recovery codes, OAuth MCP grants
-and REST API-key verification. Public sign-up is disabled. PostgreSQL enforces a
+and REST API-key verification. Account creation requires a private one-use invitation. PostgreSQL enforces a
 unique true-only owner slot, so neither concurrent sign-ups nor direct inserts can
 create a second user. Assignees remain workflow records, separate from this owner.
 
@@ -10,9 +10,6 @@ create a second user. Assignees remain workflow records, separate from this owne
 Set `BETTER_AUTH_URL` to the canonical origin and `BETTER_AUTH_SECRET` to an
 independent random value of at least 32 characters. Use HTTPS in production.
 Application authentication does not read `PASSWORD`, `AUTH_SECRET` or `MCP_TOKEN`.
-For migration only, the build can consume `LEGACY_OWNER_EMAIL` and the existing
-protected `PASSWORD` directly inside Vercel. It skips an existing owner and never
-extracts or logs the legacy secret. Remove these temporary variables afterward.
 The auth secret encrypts TOTP and recovery material as well as signing cookies;
 back it up securely and plan recovery before rotating it.
 
@@ -24,28 +21,35 @@ rate limits persist in PostgreSQL across Vercel instances, with tighter limits f
 password, second-factor and client-registration endpoints. The second-factor plugin
 also limits failed attempts per account. Error responses never disclose passwords.
 
-## Provision the owner
+## Invite the owner to create a new account
 
-Apply migrations, then invoke `bun run auth:provision` in a trusted operator shell
-with `DATABASE_URL`, `AUTH_OWNER_EMAIL` and `AUTH_OWNER_PASSWORD` provided through
-secure process input. Example invocation: `bun run auth:provision` after loading
-those values from a password manager. Do not put passwords in command history,
-source control, build logs or Vercel runtime variables.
+Apply migrations, then invoke `bun run auth:invite` in a trusted operator shell with
+`DATABASE_URL`, `BETTER_AUTH_URL` and `AUTH_OWNER_EMAIL`. The command saves a private
+24-hour invitation to `.vercel/owner-invitation.txt` with owner-only file permissions.
+Set `OWNER_INVITATION_FILE` to choose another private destination. No password is
+generated or migrated. Existing owners are never replaced implicitly.
 
-Provisioning hashes the password through Better Auth and atomically creates the
-user and credential account. A repeat invocation fails without modifying the owner.
-Legacy REST hashes are re-encoded from hexadecimal SHA-256 to Better Auth's base64url
-SHA-256 representation inside the same transaction, preserving existing keys without
-ever recovering their original values. Existing revocations and read/write modes
-are retained. New keys are issued and verified by Better Auth; the existing API-token
-table retains non-secret presentation metadata and per-token rate-limit identities.
+Open the saved link to `/register`. Its secret lives in a URL fragment, which browsers
+do not send to the server or in referrers. The form sends it in a request header and
+asks for name, the invited email, and a new password with confirmation. Better Auth
+hashes the chosen password and creates the user, credential and session. Registration
+requires an empty owner slot and an unexpired invitation. The invitation is consumed
+inside Better Auth's transaction; failed signup rolls it back. PostgreSQL prevents
+concurrent registrations from creating a second user. The form and endpoint close
+once the account exists. Anonymous requests without an invitation are rejected.
 
-On first sign-in, the owner confirms the password, scans the locally rendered QR,
-verifies a TOTP code and saves the one-use recovery codes. No external QR service
-receives the secret. Passwords shorter than 12 characters may be migrated only for
-this restricted onboarding; the owner must replace them before accessing the board
-or issuing delegated credentials. Password replacement invalidates all sessions and
-requires a new password-plus-TOTP sign-in. New passwords require 12–128 characters.
+An explicit correction can replace an incorrectly provisioned owner by additionally
+setting `REPLACE_OWNER_ID` to that exact current id. This revokes and removes its auth
+records and REST keys, then issues a fresh invitation in one transaction. Tasks,
+projects, assignees, properties and statistics are preserved. Never pass an owner id
+unless replacement was explicitly requested. The old password is not retained.
+
+After signup, the owner scans the locally rendered QR, verifies a TOTP code and saves
+the one-use recovery codes. The board and delegated access remain blocked until
+verification. No external QR service receives the secret. Passwords require 12–128
+characters. There is no automatic account creation in the build and no fallback to
+a legacy shared password. REST API keys are created and verified by Better Auth;
+the existing API-token table retains non-secret presentation metadata and budgets.
 
 ## Connect an MCP client
 
@@ -79,9 +83,8 @@ revoke all sessions, OAuth grants and refresh tokens, remove the lost factor and
 public sign-up. Recovery should not be automated from an unauthenticated request.
 
 Migrations are additive and preserve board data. Test first against the disposable
-Compose database. Provision the production owner while the old deployment is still
-available, configure the new Vercel variables, deploy and verify discovery plus
-unauthorized responses. Remove obsolete secrets after the new deployment is healthy.
+Compose database. Configure the Vercel variables, deploy and verify discovery plus unauthorized
+responses, then issue the private invitation. The owner chooses their own credentials.
 Reverting application code requires deliberately restoring its old credentials;
 rolling back to the old shared-auth design reintroduces its weaker security model.
 

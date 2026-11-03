@@ -201,8 +201,10 @@ Reuse the mineral login composition and HeroUI controls for email/password,
 TOTP challenges and mandatory authenticator enrollment. Keep persistent labels,
 inline alerts, password manager autocomplete, keyboard access and 44px targets.
 Enrollment shows a locally rendered QR, manual key and recovery codes that must
-be acknowledged. The board remains blocked until verification. Registration is
-closed; an operator provisions the single database-enforced owner through the CLI.
+be acknowledged. The board remains blocked until verification. The owner creates a new account through Better Auth with a private one-use invitation.
+The form asks for name, email and a new password with confirmation. The invitation
+travels only in a URL fragment and a request header; it is never embedded in server
+HTML or reused as a password. Signup closes atomically when the single owner is created.
 OAuth consent identifies the client and offers Solo lectura by default or Acceso
 completo when write access was requested. Scopes can only be reduced from the
 signed request. Authorization requires 2FA. Connection settings allow revocation.

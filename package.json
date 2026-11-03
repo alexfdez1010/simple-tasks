@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "bun run database && next dev && bun run database:down",
-    "build": "prisma generate && prisma migrate deploy && prisma db seed && bun scripts/migrate-legacy-owner.ts && next build --webpack",
+    "build": "prisma generate && prisma migrate deploy && prisma db seed && next build --webpack",
     "postinstall": "prisma generate",
     "start": "next start",
     "lint": "eslint . && bun run database:format",
@@ -38,10 +38,11 @@
     "database:studio": "bun run database && bunx prisma studio && bun run database:down",
     "database:format": "prisma format",
     "playwright": "bunx playwright test --ui",
-    "auth:provision": "bun scripts/provision-owner.ts"
+    "auth:invite": "bun scripts/invite-owner.ts"
   },
   "dependencies": {
     "@better-auth/api-key": "1.7.15",
+    "@better-auth/core": "1.7.15",
     "@better-auth/mcp": "1.7.15",
     "@better-auth/oauth-provider": "1.7.15",
     "@dnd-kit/helpers": "^0.5.0",

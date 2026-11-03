@@ -3,6 +3,7 @@ import { auth } from '@/lib/auth/server';
 
 const PUBLIC_PATHS = [
   '/login',
+  '/register',
   '/api/auth',
   '/api/mcp',
   '/api/v1',

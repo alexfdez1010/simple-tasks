@@ -162,7 +162,7 @@ and asks for the authentication URL and encryption secret.
 2. Create a new Neon database or connect an existing Neon product.
 3. Set `BETTER_AUTH_URL` to the canonical HTTPS origin and generate `BETTER_AUTH_SECRET`.
 4. Deploy. The build applies migrations and creates the starter workflow.
-5. Provision the single owner using the operator command in [security operations](docs/security.md), then enroll an authenticator on first sign-in.
+5. Issue a private invitation using `bun run auth:invite`, following [security operations](docs/security.md). Open the link, create your account with a new password and enroll an authenticator.
 
 Neon injects `DATABASE_URL` automatically. Vercel never receives secret values
 through the button URL; it asks you for them inside the deployment flow. See the
@@ -180,9 +180,8 @@ through the button URL; it asks you for them inside the deployment flow. See the
 Generate the auth secret with `openssl rand -base64 48`. Passwords are stored only
 as Better Auth salted scrypt hashes in the credential account table. TOTP secrets
 and recovery codes are encrypted. Keep the auth secret stable: rotating it requires
-an explicit 2FA recovery plan. Provisioning credentials are temporary operator inputs,
-never runtime environment variables. Public sign-up is disabled and PostgreSQL
-permits exactly one owner. See [security operations](docs/security.md).
+an explicit 2FA recovery plan. Signup requires a private one-use invitation; the owner chooses a new password
+through Better Auth. PostgreSQL permits exactly one owner. See [security operations](docs/security.md).
 
 If you bring another PostgreSQL provider, omit the Neon store and set
 `DATABASE_URL` yourself. It must be reachable during the Vercel build because
