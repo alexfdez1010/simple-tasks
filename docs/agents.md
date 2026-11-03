@@ -92,7 +92,7 @@ stale or concurrent decisions cannot approve another version. Database guards
 also invalidate old approvals for legacy content/property writers. Color changes
 are presentation metadata and do not change the reviewed deliverable.
 
-MCP uses the existing shared deployment credential. Explicit owner/reviewer IDs
+MCP uses owner-authorized OAuth connections with read-only or full-access scopes. Explicit owner/reviewer IDs
 coordinate trusted clients; they do not prove individual identity or introduce
 per-agent authorization. The authenticated human interface can manage the shared
 workspace and record a decision for the selected reviewer.

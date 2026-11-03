@@ -1,3 +1,4 @@
+import { loginOwner } from './auth-fixture';
 import { expect, test } from '@playwright/test';
 import {
   clearWorkspace,
@@ -63,13 +64,7 @@ test('keeps Spanish navigation within a tablet viewport', async ({
       url: baseURL ?? 'http://localhost:3000',
     },
   ]);
-  await page.goto('/login');
-  await page
-    .getByLabel('Contraseña')
-    .fill(process.env.PASSWORD ?? 'test-password');
-  await page
-    .getByRole('button', { name: 'Iniciar sesión', exact: true })
-    .click();
+  await loginOwner(page);
   await expect(
     page.getByRole('heading', { name: 'Tareas', exact: true }),
   ).toBeVisible();

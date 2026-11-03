@@ -1,12 +1,22 @@
 import 'server-only';
+import { db } from '@/lib/db/client';
 
-import { timingSafeMatch } from '@/lib/auth/token';
-import { getMcpToken } from '@/lib/mcp/config';
-
-/** Validates a bearer token through fixed-length digest comparison. */
-export async function isValidMcpToken(
-  token: string | undefined,
+/** Checks live consent so revoked clients and permission reductions take effect immediately. */
+export async function hasActiveMcpGrant(
+  userId: string,
+  clientId: string,
+  scopes: string[],
 ): Promise<boolean> {
-  if (!token) return false;
-  return timingSafeMatch(token, getMcpToken(), 'simple-tasks:mcp:v1');
+  const grant = await db.oauthConsent.findFirst({
+    where: {
+      userId,
+      clientId,
+      user: { twoFactorEnabled: true, passwordChangeRequired: false },
+      oauthclient: { disabled: false },
+    },
+    select: { scopes: true },
+  });
+  return Boolean(
+    grant && scopes.every((scope) => grant.scopes.includes(scope)),
+  );
 }

@@ -1,13 +1,15 @@
-export type AuthConfig = {
-  password: string;
-  secret: string;
-};
-
-/** Reads and validates the shared-password authentication configuration. */
-export function getAuthConfig(): AuthConfig {
-  const password = process.env.PASSWORD;
-  const secret = process.env.AUTH_SECRET;
-  if (!password) throw new Error('PASSWORD is required.');
-  if (!secret) throw new Error('AUTH_SECRET is required.');
-  return { password, secret };
+/** Returns the canonical origin and strong encryption secret; fails closed. */
+export function getAuthConfig() {
+  const secret = process.env.BETTER_AUTH_SECRET;
+  const baseURL = process.env.BETTER_AUTH_URL;
+  if (!secret || secret.length < 32)
+    throw new Error('BETTER_AUTH_SECRET must contain at least 32 characters.');
+  if (!baseURL) throw new Error('BETTER_AUTH_URL is required.');
+  const url = new URL(baseURL);
+  if (
+    url.protocol !== 'https:' &&
+    !['localhost', '127.0.0.1'].includes(url.hostname)
+  )
+    throw new Error('BETTER_AUTH_URL must use HTTPS outside localhost.');
+  return { secret, baseURL: url.origin };
 }

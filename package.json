@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "bun run database && next dev && bun run database:down",
-    "build": "prisma generate && prisma migrate deploy && prisma db seed && next build --webpack",
+    "build": "prisma generate && prisma migrate deploy && prisma db seed && bun scripts/migrate-legacy-owner.ts && next build --webpack",
     "postinstall": "prisma generate",
     "start": "next start",
     "lint": "eslint . && bun run database:format",
@@ -37,9 +37,13 @@
     "database:create": "prisma generate && prisma migrate deploy && prisma db seed",
     "database:studio": "bun run database && bunx prisma studio && bun run database:down",
     "database:format": "prisma format",
-    "playwright": "bunx playwright test --ui"
+    "playwright": "bunx playwright test --ui",
+    "auth:provision": "bun scripts/provision-owner.ts"
   },
   "dependencies": {
+    "@better-auth/api-key": "1.7.15",
+    "@better-auth/mcp": "1.7.15",
+    "@better-auth/oauth-provider": "1.7.15",
     "@dnd-kit/helpers": "^0.5.0",
     "@dnd-kit/react": "^0.5.0",
     "@heroui/react": "^3.2.4",
@@ -50,9 +54,11 @@
     "@react-aria/i18n": "^3.13.1",
     "@react-aria/ssr": "^3.10.1",
     "@react-aria/utils": "^3.34.1",
+    "better-auth": "1.7.15",
     "dotenv": "^17.4.2",
     "mcp-handler": "^1.1.0",
     "next": "^16.3.4",
+    "qrcode": "^1.5.4",
     "react": "19.2.8",
     "react-aria": "^3.52.1",
     "react-aria-components": "^1.21.1",
@@ -65,9 +71,11 @@
     "zod-to-json-schema": "^3.25.1"
   },
   "devDependencies": {
+    "@better-auth/utils": "0.5.1",
     "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^20.19.43",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.5",
     "eslint": "^9.39.5",

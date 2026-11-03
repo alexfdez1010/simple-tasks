@@ -1,3 +1,4 @@
+import { loginOwner } from './auth-fixture';
 import { expect, test } from '@playwright/test';
 
 for (const language of ['en', 'es'] as const) {
@@ -15,16 +16,7 @@ for (const language of ['en', 'es'] as const) {
         url: process.env.PLAYWRIGHT_BASE_URL ?? 'http://localhost:3000',
       },
     ]);
-    await page.goto('/login');
-    await page
-      .getByLabel(spanish ? 'Contraseña' : 'Password')
-      .fill(process.env.PASSWORD ?? 'test-password');
-    await page
-      .getByRole('button', {
-        name: spanish ? 'Iniciar sesión' : 'Sign in',
-        exact: true,
-      })
-      .click();
+    await loginOwner(page);
     await expect(
       page.getByRole('heading', {
         name: spanish ? 'Tareas' : 'Tasks',

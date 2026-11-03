@@ -2,7 +2,7 @@
 
 > A private task workspace for humans and agents, connected by clear dependencies.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Falexfdez1010%2Fsimple-tasks&project-name=simple-tasks&repository-name=simple-tasks&env=PASSWORD,AUTH_SECRET,MCP_TOKEN&envDescription=Choose%20a%20shared%20login%20password%20and%20two%20independent%20random%20secrets.%20Keep%20all%20three%20private.&envLink=https%3A%2F%2Fgithub.com%2Falexfdez1010%2Fsimple-tasks%23environment-variables&stores=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22neon%22%2C%22productSlug%22%3A%22neon%22%2C%22protocol%22%3A%22storage%22%2C%22allowConnectExistingProduct%22%3Atrue%7D%5D)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Falexfdez1010%2Fsimple-tasks&project-name=simple-tasks&repository-name=simple-tasks&env=BETTER_AUTH_SECRET,BETTER_AUTH_URL&envDescription=Configure%20the%20canonical%20URL%20and%20a%20random%20authentication%20secret.&envLink=https%3A%2F%2Fgithub.com%2Falexfdez1010%2Fsimple-tasks%23environment-variables&stores=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22neon%22%2C%22productSlug%22%3A%22neon%22%2C%22protocol%22%3A%22storage%22%2C%22allowConnectExistingProduct%22%3Atrue%7D%5D)
 
 Simple Tasks gives one person or a small trusted team a shared view of work:
 who owns each task, what it needs first, and what can start now. Group work by
@@ -90,24 +90,22 @@ Simple Tasks exposes the board as an authenticated
 can capture work, update properties, move tasks, maintain your workflow, and
 create or refine statistics without receiving database access.
 
-After deployment, sign in and open `/skill`. The setup page lets you:
+The Streamable HTTP endpoint is `/api/mcp/mcp`. Connect with OAuth; the server
+advertises authorization and resource metadata through `/.well-known` endpoints.
+The owner signs in with email, password and an authenticator, then selects
+**Read only** (`tasks:read`) or **Full access** (`tasks:read tasks:write`). The
+consent page defaults to read-only and cannot add scopes the client did not request.
+Read-only connections expose only query tools and reject direct mutation calls.
 
-1. download a ready-to-use `SKILL.md`;
-2. download the MCP client configuration;
-3. reveal and copy the MCP token only when you choose to.
+Download the skill and a secret-free client configuration from `/skill`. Shared
+`MCP_TOKEN` credentials and old browser cookies are no longer accepted. OAuth uses
+S256 PKCE, exact redirect matching, five-minute access tokens and rotating refresh
+tokens. `/security` lists connections and revokes their grants immediately, including
+already-issued access tokens through the server's live consent check.
 
-The Streamable HTTP endpoint is `/api/mcp/mcp` and requires
-`Authorization: Bearer <MCP_TOKEN>`. The generated client configuration reads
-that value from `SIMPLE_TASKS_MCP_TOKEN`, so the credential is not written into
-the downloaded file.
-
-Authenticated `HEAD` probes return an empty `405 Method Not Allowed` response
-immediately, with `Allow: POST`. For example, probe with
-`curl --head --max-time 5 -H "Authorization: Bearer $SIMPLE_TASKS_MCP_TOKEN" https://tasks.alejandrofernandezcamello.me/api/mcp/mcp`.
-Missing or invalid credentials still receive `401`. The route exports a
-60-second Vercel execution limit; the adapter's own `maxDuration` option does
-not configure that platform limit. See the
-[Vercel duration documentation](https://vercel.com/docs/functions/configuring-functions/duration).
+Authenticated non-POST probes return `405` with `Allow: POST`; missing or invalid
+credentials receive `401` with an OAuth discovery challenge. The route keeps the
+60-second Vercel execution limit.
 
 ### MCP capabilities
 
@@ -156,14 +154,15 @@ for conflict behavior and legacy assignment compatibility.
 
 The Deploy Button follows Vercel's official project-creation flow: it clones
 this repository into your Git provider, provisions a Neon Postgres database,
-and asks for the three private values the application needs.
+and asks for the authentication URL and encryption secret.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Falexfdez1010%2Fsimple-tasks&project-name=simple-tasks&repository-name=simple-tasks&env=PASSWORD,AUTH_SECRET,MCP_TOKEN&envDescription=Choose%20a%20shared%20login%20password%20and%20two%20independent%20random%20secrets.%20Keep%20all%20three%20private.&envLink=https%3A%2F%2Fgithub.com%2Falexfdez1010%2Fsimple-tasks%23environment-variables&stores=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22neon%22%2C%22productSlug%22%3A%22neon%22%2C%22protocol%22%3A%22storage%22%2C%22allowConnectExistingProduct%22%3Atrue%7D%5D)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Falexfdez1010%2Fsimple-tasks&project-name=simple-tasks&repository-name=simple-tasks&env=BETTER_AUTH_SECRET,BETTER_AUTH_URL&envDescription=Configure%20the%20canonical%20URL%20and%20a%20random%20authentication%20secret.&envLink=https%3A%2F%2Fgithub.com%2Falexfdez1010%2Fsimple-tasks%23environment-variables&stores=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22neon%22%2C%22productSlug%22%3A%22neon%22%2C%22protocol%22%3A%22storage%22%2C%22allowConnectExistingProduct%22%3Atrue%7D%5D)
 
 1. Click **Deploy with Vercel** and choose your Git account.
 2. Create a new Neon database or connect an existing Neon product.
-3. Enter `PASSWORD`, `AUTH_SECRET`, and `MCP_TOKEN` with independent values.
+3. Set `BETTER_AUTH_URL` to the canonical HTTPS origin and generate `BETTER_AUTH_SECRET`.
 4. Deploy. The build applies migrations and creates the starter workflow.
+5. Provision the single owner using the operator command in [security operations](docs/security.md), then enroll an authenticator on first sign-in.
 
 Neon injects `DATABASE_URL` automatically. Vercel never receives secret values
 through the button URL; it asks you for them inside the deployment flow. See the
@@ -172,16 +171,18 @@ through the button URL; it asks you for them inside the deployment flow. See the
 
 ### Environment variables
 
-| Variable       | Purpose                                                      |
-| -------------- | ------------------------------------------------------------ |
-| `DATABASE_URL` | PostgreSQL connection string; supplied automatically by Neon |
-| `PASSWORD`     | Shared sign-in password for the web application              |
-| `AUTH_SECRET`  | Independent random secret used to sign `HttpOnly` sessions   |
-| `MCP_TOKEN`    | Independent bearer token protecting the MCP endpoint         |
+| Variable             | Purpose                                                              |
+| -------------------- | -------------------------------------------------------------------- |
+| `DATABASE_URL`       | PostgreSQL connection string, supplied by Neon                       |
+| `BETTER_AUTH_SECRET` | Independent random encryption/signing secret, at least 32 characters |
+| `BETTER_AUTH_URL`    | Canonical origin, HTTPS in production                                |
 
-Use a strong passphrase for `PASSWORD`. Generate each of the other secrets
-separately, for example with `openssl rand -base64 32`. Do not reuse values.
-Production should always run over HTTPS.
+Generate the auth secret with `openssl rand -base64 48`. Passwords are stored only
+as Better Auth salted scrypt hashes in the credential account table. TOTP secrets
+and recovery codes are encrypted. Keep the auth secret stable: rotating it requires
+an explicit 2FA recovery plan. Provisioning credentials are temporary operator inputs,
+never runtime environment variables. Public sign-up is disabled and PostgreSQL
+permits exactly one owner. See [security operations](docs/security.md).
 
 If you bring another PostgreSQL provider, omit the Neon store and set
 `DATABASE_URL` yourself. It must be reachable during the Vercel build because

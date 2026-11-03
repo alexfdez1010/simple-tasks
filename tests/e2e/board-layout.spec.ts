@@ -1,3 +1,4 @@
+import { loginOwner } from './auth-fixture';
 import { expect, test } from '@playwright/test';
 import { expectCenteredSelectText } from './select-alignment';
 
@@ -13,16 +14,7 @@ for (const width of [768, 900, 1440]) {
           url: 'http://localhost:3000',
         },
       ]);
-      await page.goto('/login');
-      await page
-        .getByLabel(language === 'es' ? 'Contraseña' : 'Password')
-        .fill(process.env.PASSWORD ?? 'test-password');
-      await page
-        .getByRole('button', {
-          name: language === 'es' ? 'Iniciar sesión' : 'Sign in',
-          exact: true,
-        })
-        .click();
+      await loginOwner(page);
       await expect(
         page.getByRole('heading', {
           name: language === 'es' ? 'Tareas' : 'Tasks',

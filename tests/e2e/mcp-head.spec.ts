@@ -1,6 +1,5 @@
+import { createOAuthToken } from './oauth-fixture';
 import { expect, test } from '@playwright/test';
-
-const MCP_TOKEN = process.env.MCP_TOKEN ?? 'dev-mcp-token';
 
 test.describe('MCP HEAD probes', () => {
   /** Exercises Next.js routing so HEAD cannot silently fall back to GET. */
@@ -8,7 +7,9 @@ test.describe('MCP HEAD probes', () => {
     request,
   }) => {
     const response = await request.head('/api/mcp/mcp', {
-      headers: { Authorization: `Bearer ${MCP_TOKEN}` },
+      headers: {
+        Authorization: `Bearer ${(await createOAuthToken()).access_token}`,
+      },
       timeout: 5_000,
     });
 

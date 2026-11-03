@@ -1,3 +1,4 @@
+import { createOAuthToken } from './oauth-fixture';
 import { expect, test } from '@playwright/test';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
@@ -33,7 +34,7 @@ async function reviewClient() {
     {
       requestInit: {
         headers: {
-          Authorization: `Bearer ${process.env.MCP_TOKEN ?? 'test-mcp-token-at-least-thirty-two-characters'}`,
+          Authorization: `Bearer ${(await createOAuthToken()).access_token}`,
         },
       },
     },

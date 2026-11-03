@@ -100,7 +100,9 @@ describe('REST API contract', () => {
     expect(document.paths['/tasks'].get).toMatchObject({
       security: [{ bearerAuth: [] }],
     });
-    expect(JSON.stringify(document)).not.toContain(process.env.MCP_TOKEN);
+    expect(JSON.stringify(document)).not.toContain(
+      process.env.BETTER_AUTH_SECRET,
+    );
     expect(JSON.stringify(document.paths)).not.toContain('/statistics');
     expect(document.components.schemas.TasksPage).toBeDefined();
   });

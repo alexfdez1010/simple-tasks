@@ -1,3 +1,4 @@
+import { seedApiOwner } from './auth-owner';
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { db } from '@/lib/db/client';
 import { coordinationService } from '@/lib/coordination';
@@ -43,6 +44,7 @@ function remove(token: string, id: string) {
 
 describe('persisted responsible-party deletion', () => {
   beforeEach(async () => {
+    await seedApiOwner();
     await cleanup();
     ownerId = (
       await coordinationService.createAssignee({

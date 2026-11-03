@@ -3,6 +3,38 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import * as route from '@/app/api/mcp/[transport]/route';
 
 vi.mock('@/lib/mcp/tools', () => ({ registerSimpleTaskTools: vi.fn() }));
+vi.mock('@/lib/auth/server', () => ({
+  auth: {},
+  mcpResource: 'http://localhost/api/mcp/mcp',
+  mcpScopes: ['tasks:read', 'tasks:write'],
+}));
+vi.mock('@/lib/mcp/auth', () => ({
+  hasActiveMcpGrant: vi.fn(async () => true),
+}));
+vi.mock('@better-auth/mcp', () => ({
+  requireMcpAuth:
+    (
+      _auth: unknown,
+      handler: (request: Request, claims: unknown) => Promise<Response>,
+    ) =>
+    async (request: Request) => {
+      if (
+        request.headers.get('Authorization') !== 'Bearer mcp-route-test-token'
+      )
+        return new Response(null, {
+          status: 401,
+          headers: {
+            'WWW-Authenticate':
+              'Bearer resource_metadata="http://localhost/.well-known/oauth-protected-resource"',
+          },
+        });
+      return handler(request, {
+        sub: 'owner',
+        azp: 'client',
+        scope: 'tasks:read tasks:write',
+      });
+    },
+}));
 
 const MCP_URL = 'http://localhost/api/mcp/mcp';
 const TOKEN = 'mcp-route-test-token';
@@ -35,6 +67,16 @@ describe('MCP HTTP route', () => {
     expect(response.headers.get('Allow')).toBe('POST');
     expect(await response.text()).toBe('');
   }, 1_000);
+
+  it('rejects unknown transport paths without entering the adapter', async () => {
+    const response = await route.POST(
+      new Request('http://localhost/api/mcp/unknown', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${TOKEN}` },
+      }),
+    );
+    expect(response.status).toBe(404);
+  });
 
   /** Prevents the adapter's configuration being mistaken for Vercel's limit. */
   it('exports the platform execution limit', () => {

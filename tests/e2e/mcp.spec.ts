@@ -1,9 +1,10 @@
+import { createOAuthToken } from './oauth-fixture';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 import { expect, request, test } from '@playwright/test';
 
 const BASE_URL = process.env.PLAYWRIGHT_BASE_URL ?? 'http://localhost:3000';
-const MCP_TOKEN = process.env.MCP_TOKEN ?? 'dev-mcp-token';
+
 const MCP_URL = new URL('/api/mcp/mcp', BASE_URL);
 const EXPECTED_TOOLS = [
   'list_pending_reviews',
@@ -48,10 +49,11 @@ const EXPECTED_TOOLS = [
 ];
 
 /** Connects an official MCP client with the configured bearer credential. */
-async function connectMcp(token = MCP_TOKEN): Promise<{
+async function connectMcp(token?: string): Promise<{
   client: Client;
   transport: StreamableHTTPClientTransport;
 }> {
+  token ??= (await createOAuthToken()).access_token;
   const transport = new StreamableHTTPClientTransport(MCP_URL, {
     requestInit: { headers: { Authorization: `Bearer ${token}` } },
   });

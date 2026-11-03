@@ -1,3 +1,4 @@
+import { seedApiOwner } from './auth-owner';
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { db } from '@/lib/db/client';
 import { coordinationService } from '@/lib/coordination';
@@ -55,6 +56,7 @@ function remove(token: string, id: string, body?: unknown) {
 
 describe('persisted project deletion', () => {
   beforeEach(async () => {
+    await seedApiOwner();
     await cleanup();
     source = (
       await coordinationService.createProject({ name: prefix + 'source' })

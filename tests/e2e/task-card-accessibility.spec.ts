@@ -22,6 +22,7 @@ test('opens a dependency node by keyboard and restores focus on dismissal', asyn
 }) => {
   await loginWorkspace(page);
   const node = page.getByRole('button', { name: new RegExp(fixtures.b.title) });
+  await node.click({ trial: true });
   await node.focus();
   await node.press('Enter');
   await expect(page.getByRole('complementary')).toBeVisible();

@@ -1,37 +1,22 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-
 import { getAuthConfig } from '@/lib/auth/config';
 
-describe('authentication configuration', () => {
-  /** Restores process configuration after every isolation case. */
-  afterEach(() => {
-    vi.unstubAllEnvs();
+describe('Better Auth configuration', () => {
+  afterEach(() => vi.unstubAllEnvs());
+  it('requires an independent strong secret', () => {
+    vi.stubEnv('BETTER_AUTH_SECRET', 'short');
+    expect(getAuthConfig).toThrow('32');
   });
-
-  /** Proves both required secrets are returned without transformation. */
-  it('reads a complete shared-password configuration', () => {
-    vi.stubEnv('PASSWORD', 'unit-password');
-    vi.stubEnv('AUTH_SECRET', 'unit-secret');
-
+  it('requires a canonical URL and HTTPS outside localhost', () => {
+    vi.stubEnv('BETTER_AUTH_SECRET', 'a'.repeat(48));
+    vi.stubEnv('BETTER_AUTH_URL', '');
+    expect(getAuthConfig).toThrow('BETTER_AUTH_URL');
+    vi.stubEnv('BETTER_AUTH_URL', 'http://example.com');
+    expect(getAuthConfig).toThrow('HTTPS');
+    vi.stubEnv('BETTER_AUTH_URL', 'https://tasks.example.com/');
     expect(getAuthConfig()).toEqual({
-      password: 'unit-password',
-      secret: 'unit-secret',
+      secret: 'a'.repeat(48),
+      baseURL: 'https://tasks.example.com',
     });
-  });
-
-  /** Proves startup cannot silently proceed without the shared password. */
-  it('rejects a missing password', () => {
-    vi.stubEnv('PASSWORD', '');
-    vi.stubEnv('AUTH_SECRET', 'unit-secret');
-
-    expect(() => getAuthConfig()).toThrow('PASSWORD is required.');
-  });
-
-  /** Proves startup cannot silently proceed without the signing secret. */
-  it('rejects a missing authentication secret', () => {
-    vi.stubEnv('PASSWORD', 'unit-password');
-    vi.stubEnv('AUTH_SECRET', '');
-
-    expect(() => getAuthConfig()).toThrow('AUTH_SECRET is required.');
   });
 });

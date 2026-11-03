@@ -1,3 +1,4 @@
+import { seedApiOwner } from './auth-owner';
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { db } from '@/lib/db/client';
 import {
@@ -32,6 +33,7 @@ async function cleanup() {
     },
   });
   await db.apiToken.deleteMany({ where: { name: { startsWith: prefix } } });
+  await db.apikey.deleteMany({ where: { name: { startsWith: prefix } } });
   await db.task.deleteMany({
     where: { status: { name: { startsWith: prefix } } },
   });
@@ -53,7 +55,10 @@ function request(token: string, path: string, method = 'GET', body?: unknown) {
 }
 
 describe('persistent REST API', () => {
-  beforeEach(cleanup);
+  beforeEach(async () => {
+    await seedApiOwner();
+    await cleanup();
+  });
   afterAll(async () => {
     await cleanup();
     await db.$disconnect();
@@ -72,6 +77,13 @@ describe('persistent REST API', () => {
     expect(JSON.stringify(await listApiTokens())).not.toContain(
       stored.tokenHash,
     );
+    await expect(
+      authenticateApi(request(created.token, '/tasks')),
+    ).resolves.toMatchObject({ canWrite: false });
+    await db.apiToken.update({
+      where: { id: created.metadata.id },
+      data: { canWrite: true },
+    });
     await expect(
       authenticateApi(request(created.token, '/tasks')),
     ).resolves.toMatchObject({ canWrite: false });

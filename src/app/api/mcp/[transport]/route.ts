@@ -1,41 +1,50 @@
-import { createMcpHandler, withMcpAuth } from 'mcp-handler';
-
-import { isValidMcpToken } from '@/lib/mcp/auth';
+import { createMcpHandler } from 'mcp-handler';
+import { requireMcpAuth } from '@better-auth/mcp';
+import { auth, mcpResource, mcpScopes } from '@/lib/auth/server';
+import { hasActiveMcpGrant } from '@/lib/mcp/auth';
+import { scopedMcpServer } from '@/lib/mcp/permissions';
 import { registerSimpleTaskTools } from '@/lib/mcp/tools';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
 
-const handler = createMcpHandler(
-  (server) => registerSimpleTaskTools(server),
-  { serverInfo: { name: 'simple-tasks', version: '1.0.0' } },
-  { basePath: '/api/mcp', maxDuration: 60, disableSse: true },
-);
-
-/**
- * Handles authenticated transport requests without leaving HEAD probes pending.
- * @param request - The bearer-validated HTTP request.
- * @returns An empty 405 for HEAD, otherwise the adapter response and tool effects.
- */
-function handleMcpRequest(request: Request): Response | Promise<Response> {
-  if (request.method === 'HEAD') {
-    return new Response(null, { status: 405, headers: { Allow: 'POST' } });
-  }
-  return handler(request);
-}
-
-const authenticatedHandler = withMcpAuth(
-  handleMcpRequest,
-  async (_request, bearerToken) => {
-    if (!(await isValidMcpToken(bearerToken))) return undefined;
-    return {
-      token: bearerToken!,
-      scopes: ['tasks:read', 'tasks:write'],
-      clientId: 'simple-tasks',
-    };
+const authenticatedHandler = requireMcpAuth(
+  auth,
+  async (request, claims) => {
+    const scopes =
+      typeof claims.scope === 'string' ? claims.scope.split(' ') : [];
+    if (
+      typeof claims.sub !== 'string' ||
+      typeof claims.azp !== 'string' ||
+      !(await hasActiveMcpGrant(claims.sub, claims.azp, scopes))
+    ) {
+      return Response.json(
+        { error: 'invalid_token' },
+        {
+          status: 401,
+          headers: {
+            'WWW-Authenticate': `Bearer resource_metadata="${new URL(mcpResource).origin}/.well-known/oauth-protected-resource/api/mcp/mcp"`,
+          },
+        },
+      );
+    }
+    if (new URL(request.url).pathname !== '/api/mcp/mcp')
+      return new Response(null, { status: 404 });
+    if (request.method !== 'POST')
+      return new Response(null, { status: 405, headers: { Allow: 'POST' } });
+    const handler = createMcpHandler(
+      (server) => registerSimpleTaskTools(scopedMcpServer(server, scopes)),
+      { serverInfo: { name: 'simple-tasks', version: '2.0.0' } },
+      { basePath: '/api/mcp', maxDuration: 60, disableSse: true },
+    );
+    return handler(request);
   },
-  { required: true },
+  {
+    resource: mcpResource,
+    requiredScopes: ['tasks:read'],
+    challengeScopes: mcpScopes,
+  },
 );
 
 export {

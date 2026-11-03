@@ -1,13 +1,10 @@
+import { loginOwner } from './auth-fixture';
 import type { Page } from '@playwright/test';
 import { expect, test } from '@playwright/test';
 
-const PASSWORD = process.env.PASSWORD ?? 'dev-password';
-
 /** Authenticates the emulated mobile browser and opens statistics. */
 async function openStatistics(page: Page): Promise<void> {
-  await page.goto('/login');
-  await page.getByLabel('Password').fill(PASSWORD);
-  await page.getByRole('button', { name: 'Sign in' }).click();
+  await loginOwner(page);
   await page.getByRole('link', { name: 'Statistics' }).click();
   await expect(page.getByRole('heading', { name: 'Statistics' })).toBeVisible();
 }

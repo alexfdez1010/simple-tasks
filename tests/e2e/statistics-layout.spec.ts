@@ -1,6 +1,6 @@
+import { loginOwner } from './auth-fixture';
 import { expect, test } from '@playwright/test';
 
-const PASSWORD = process.env.PASSWORD ?? 'dev-password';
 const FORMATS = ['Compact', 'Automatic', 'Wide', 'Full width'] as const;
 
 for (const format of FORMATS) {
@@ -13,9 +13,7 @@ for (const format of FORMATS) {
     page,
   }) => {
     const name = `E2E KPI layout ${format} ${Date.now()}`;
-    await page.goto('/login');
-    await page.getByLabel('Password').fill(PASSWORD);
-    await page.getByRole('button', { name: 'Sign in' }).click();
+    await loginOwner(page);
     await page.getByRole('link', { name: 'Statistics' }).click();
     await page.getByRole('button', { name: 'Add statistic' }).click();
     const dialog = page.getByRole('dialog', { name: 'Create statistic' });

@@ -12,7 +12,7 @@ export const connectionsCopy = {
         action: 'Set up an agent',
         steps: [
           'Download the skill and MCP configuration.',
-          'Add the configuration and token to your agent.',
+          'Connect with OAuth and choose Read only or Full access.',
           'Ask your agent to list the board.',
         ],
       },
@@ -42,7 +42,7 @@ export const connectionsCopy = {
         action: 'Configurar un agente',
         steps: [
           'Descarga la skill y la configuración de MCP.',
-          'Añade la configuración y el token a tu agente.',
+          'Conecta con OAuth y elige Solo lectura o Acceso completo.',
           'Pide a tu agente que consulte el tablero.',
         ],
       },

@@ -195,6 +195,19 @@ components:
 
 ## Overview
 
+### Authentication and delegated access
+
+Reuse the mineral login composition and HeroUI controls for email/password,
+TOTP challenges and mandatory authenticator enrollment. Keep persistent labels,
+inline alerts, password manager autocomplete, keyboard access and 44px targets.
+Enrollment shows a locally rendered QR, manual key and recovery codes that must
+be acknowledged. The board remains blocked until verification. Registration is
+closed; an operator provisions the single database-enforced owner through the CLI.
+OAuth consent identifies the client and offers Solo lectura by default or Acceso
+completo when write access was requested. Scopes can only be reduced from the
+signed request. Authorization requires 2FA. Connection settings allow revocation.
+Reuse existing tokens, spacing, themes and reduced-motion behavior.
+
 **Creative North Star: "Work routes"**
 
 The interface is a quiet working instrument for real tasks, responsible parties and prerequisites. A persistent navigation rail frames a spacious dependency map. Mineral green neutrals, forest accents, precise Geist typography and soft physical depth make relationships easier to follow without turning the workspace into a dashboard of decorative information.

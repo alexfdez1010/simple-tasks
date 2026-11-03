@@ -1,3 +1,4 @@
+import { loginOwner } from './auth-fixture';
 import { expect, test } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 
@@ -6,11 +7,7 @@ test('creates scoped tokens, performs REST operations and revokes access', async
   page,
   request,
 }) => {
-  await page.goto('/login');
-  await page
-    .getByLabel('Password', { exact: true })
-    .fill(process.env.PASSWORD ?? 'dev-password');
-  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
+  await loginOwner(page);
   await page.getByRole('link', { name: 'Connections', exact: true }).click();
   await page
     .getByRole('link', { name: 'Manage API access', exact: true })

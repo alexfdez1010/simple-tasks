@@ -1,13 +1,11 @@
+import { loginOwner } from './auth-fixture';
 import { expect, test, type Page } from '@playwright/test';
 
 const LANGUAGE_COOKIE_NAME = 'simple-tasks-language';
-const PASSWORD = 'test-password';
 
 /** Authenticates through the English-default password gateway. */
 async function login(page: Page): Promise<void> {
-  await page.goto('/login');
-  await page.getByLabel('Password').fill(PASSWORD);
-  await page.getByRole('button', { name: 'Sign in' }).click();
+  await loginOwner(page);
   await expect(page.getByRole('heading', { name: 'Tasks' })).toBeVisible();
 }
 
@@ -68,7 +66,7 @@ test.describe('language preference', () => {
 
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
     await expect(
-      page.getByRole('heading', { name: 'Your board' }),
+      page.getByRole('heading', { name: 'Sign in', exact: true }),
     ).toBeVisible();
   });
 });

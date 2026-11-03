@@ -1,6 +1,5 @@
 import 'server-only';
 
-export const MCP_CLIENT_TOKEN_ENV = 'SIMPLE_TASKS_MCP_TOKEN';
 export const SKILL_FILENAME = 'SKILL.md';
 export const MCP_CONFIG_FILENAME = 'simple-tasks.mcp.json';
 
@@ -13,7 +12,7 @@ description: Manage the user's private Kanban board and configurable analytics t
 
 # Simple Tasks
 
-Use the MCP server at \`${serverUrl}\`. Discover exact input schemas with \`tools/list\`.
+Use the MCP server at \`${serverUrl}\`. Connect using OAuth, sign in with your password and authenticator, then choose Read only or Full access. Discover exact input schemas with \`tools/list\`.
 
 | Tool | Purpose |
 |---|---|
@@ -64,7 +63,7 @@ Use the MCP server at \`${serverUrl}\`. Discover exact input schemas with \`tool
 - Call submit_task_for_review with id and assigneeId when the deliverable is ready. It enters REVIEW and does not unlock dependents yet.
 - Check list_pending_reviews with your reviewerId as well as list_ready_tasks with your assigneeId.
 - Call review_task with id, reviewerId, expectedUpdatedAt from the version inspected, and APPROVE or REQUEST_CHANGES. Requested changes require a note and return the work to its owner; approval completes it.
-- Content/assignment/dependency changes invalidate pending or approved review. Re-read stale tasks instead of approving a newer version blindly. Responsible-party IDs coordinate trusted clients using the existing shared MCP credential; they are not separate authentication identities.
+- Content/assignment/dependency changes invalidate pending or approved review. Re-read stale tasks instead of approving a newer version blindly. Responsible-party IDs coordinate trusted clients using the owner-authorized OAuth connection; they are not separate authentication identities.
 
 ## Rules
 
@@ -83,7 +82,7 @@ Use the MCP server at \`${serverUrl}\`. Discover exact input schemas with \`tool
 `;
 }
 
-/** Builds a remote HTTP MCP config that reads its bearer token from the client environment. */
+/** Builds a remote HTTP MCP config using OAuth discovery. */
 export function buildMcpConfig(serverUrl: string): string {
   return JSON.stringify(
     {
@@ -91,7 +90,6 @@ export function buildMcpConfig(serverUrl: string): string {
         'simple-tasks': {
           type: 'http',
           url: serverUrl,
-          headers: { Authorization: `Bearer \${${MCP_CLIENT_TOKEN_ENV}}` },
         },
       },
     },

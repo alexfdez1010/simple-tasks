@@ -1,3 +1,4 @@
+import { loginOwner } from './auth-fixture';
 import { PrismaClient } from '@/generated/prisma';
 import { expect, type Page, type Locator } from '@playwright/test';
 
@@ -11,11 +12,7 @@ export const WORKSPACE_PREFIX = 'E2E workspace ';
 
 /** Authenticates through the visible gateway using the disposable server password. */
 export async function loginWorkspace(page: Page): Promise<void> {
-  await page.goto('/login');
-  await page
-    .getByLabel('Password')
-    .fill(process.env.PASSWORD ?? 'test-password');
-  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
+  await loginOwner(page);
   await expect(
     page.getByRole('heading', { name: 'Tasks', exact: true }),
   ).toBeVisible();

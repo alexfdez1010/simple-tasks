@@ -1,55 +1,28 @@
 import 'server-only';
-
-import { cookies } from 'next/headers';
-
-import { getAuthConfig } from '@/lib/auth/config';
-import { AUTH_COOKIE, SESSION_MAX_AGE_SECONDS } from '@/lib/auth/constants';
-import { createSessionToken, timingSafeMatch } from '@/lib/auth/token';
+import { headers } from 'next/headers';
+import { auth } from '@/lib/auth/server';
 import { DomainError } from '@/lib/validation/errors';
 
-/** Verifies the shared password and creates a hardened browser session cookie. */
-export async function createSession(password: string): Promise<boolean> {
-  const config = getAuthConfig();
-  const isValid = await timingSafeMatch(
-    password,
-    config.password,
-    config.secret,
-  );
-  if (!isValid) return false;
-  const cookieStore = await cookies();
-  cookieStore.set(
-    AUTH_COOKIE,
-    await createSessionToken(config.password, config.secret),
-    {
-      httpOnly: true,
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: SESSION_MAX_AGE_SECONDS,
-      path: '/',
-    },
-  );
-  return true;
+/** Reads the revocable database session; never trusts legacy cookies. */
+export async function getSession() {
+  return auth.api.getSession({ headers: await headers() });
 }
 
-/** Removes the browser session cookie. */
-export async function destroySession(): Promise<void> {
-  const cookieStore = await cookies();
-  cookieStore.delete(AUTH_COOKIE);
-}
-
-/** Checks the current request's session cookie against current credentials. */
+/** Returns true only after mandatory 2FA enrollment has been verified. */
 export async function isAuthenticated(): Promise<boolean> {
-  const config = getAuthConfig();
-  const cookieStore = await cookies();
-  const candidate = cookieStore.get(AUTH_COOKIE)?.value;
-  if (!candidate) return false;
-  const expected = await createSessionToken(config.password, config.secret);
-  return timingSafeMatch(candidate, expected, config.secret);
+  const session = await getSession();
+  return Boolean(
+    session?.user.twoFactorEnabled && !session.user.passwordChangeRequired,
+  );
 }
 
-/** Rejects unauthenticated server-side mutations. */
+/** Rejects mutations until password and mandatory 2FA are satisfied. */
 export async function requireAuthenticated(): Promise<void> {
-  if (!(await isAuthenticated())) {
+  if (!(await isAuthenticated()))
     throw new DomainError('The session has expired.', 'UNAUTHORIZED');
-  }
+}
+
+/** Revokes the current session and clears its browser cookie. */
+export async function destroySession(): Promise<void> {
+  await auth.api.signOut({ headers: await headers() });
 }
